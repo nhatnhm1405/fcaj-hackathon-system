@@ -1,0 +1,51 @@
+section,name,status_or_role,related,details
+EVENT,SEAL Summer 2026,OPEN,SUMMER 2026,Registration 2026-07-16 to 2026-08-05; Event 2026-08-10 to 2026-08-30; Mode RANDOM; Topic AI-Driven Smart Operations
+ROUND,Vong loai,PENDING,SEAL Summer 2026,Order 1; Deadline 2026-08-16; Top 2 per track advance
+ROUND,Vong chung ket,PENDING,SEAL Summer 2026,Order 2; Deadline 2026-08-23; Final round
+TRACK,Web Application,,SEAL Summer 2026,Category seeded; No team assigned in S1; Track draw happens after OPEN
+TRACK,AI Solution,,SEAL Summer 2026,Category seeded; No team assigned in S1; Track draw happens after OPEN
+TRACK,Education Tech,,SEAL Summer 2026,Category seeded; No team assigned in S1; Track draw happens after OPEN
+TRACK,Social Impact,,SEAL Summer 2026,Category seeded; No team assigned in S1; Track draw happens after OPEN
+MENTOR,No mentor assigned in S1,NO_ASSIGNMENT,SEAL Summer 2026,S1 returns before mentor assignment; mentor accounts exist but are not linked to tracks yet
+JUDGE,No judge assigned in S1,NO_ASSIGNMENT,SEAL Summer 2026,S1 returns before judge assignment; judge accounts exist but are not linked to rounds yet
+TEAM,Arsenal,APPROVED,No track assigned,Leader p1@fpt.edu.vn; Members 3
+TEAM,Barcelona,APPROVED,No track assigned,Leader p4@fpt.edu.vn; Members 3
+TEAM,Real Madrid (pending),PENDING,No track assigned,Leader p7@fpt.edu.vn; Members 3
+TEAM,Chelsea (solo),APPROVED,No track assigned,Leader p10@fpt.edu.vn; Members 1; Solo team for leftover grouping
+TEAM,Juventus (solo),APPROVED,No track assigned,Leader p11@fpt.edu.vn; Members 1; Solo team for leftover grouping
+TEAM,Bayern (pair),APPROVED,No track assigned,Leader p12@fpt.edu.vn; Members 2; Pair team for leftover grouping
+TEAM,Liverpool,APPROVED,No track assigned,Leader p14@fpt.edu.vn; Members 3
+TEAM,Manchester City,APPROVED,No track assigned,Leader p17@fpt.edu.vn; Members 3
+TEAM,PSG,APPROVED,No track assigned,Leader p20@fpt.edu.vn; Members 3
+TEAM,AC Milan,APPROVED,No track assigned,Leader p23@fpt.edu.vn; Members 3
+TEAM,Inter Milan,APPROVED,No track assigned,Leader p26@fpt.edu.vn; Members 3
+TEAM,Tottenham,APPROVED,No track assigned,Leader p29@fpt.edu.vn; Members 3
+TEAM,Napoli,APPROVED,No track assigned,Leader p32@fpt.edu.vn; Members 3
+TEAM,Atletico Madrid,APPROVED,No track assigned,Leader p35@fpt.edu.vn; Members 3
+TEAM,Borussia Dortmund,APPROVED,No track assigned,Leader p38@fpt.edu.vn; Members 3
+MEMBER,Lionel Messi,LEADER,Arsenal,p1@fpt.edu.vn; FPT_STUDENT
+MEMBER,Cristiano Ronaldo,MEMBER,Arsenal,p2@fpt.edu.vn; FPT_STUDENT
+MEMBER,Kylian Mbappe,MEMBER,Arsenal,p3@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Erling Haaland,LEADER,Barcelona,p4@fpt.edu.vn; FPT_STUDENT
+MEMBER,Kevin De Bruyne,MEMBER,Barcelona,p5@fpt.edu.vn; FPT_STUDENT
+MEMBER,Vinicius Junior,MEMBER,Barcelona,p6@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Mohamed Salah,LEADER,Real Madrid (pending),p7@fpt.edu.vn; FPT_STUDENT
+MEMBER,Harry Kane,MEMBER,Real Madrid (pending),p8@fpt.edu.vn; FPT_STUDENT
+MEMBER,Robert Lewandowski,MEMBER,Real Madrid (pending),p9@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Luka Modric,LEADER,Chelsea (solo),p10@fpt.edu.vn; FPT_STUDENT
+MEMBER,Neymar Jr,LEADER,Juventus (solo),p11@fpt.edu.vn; FPT_STUDENT
+MEMBER,Sadio Mane,LEADER,Bayern (pair),p12@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Bukayo Saka,MEMBER,Bayern (pair),p13@fpt.edu.vn; FPT_STUDENT
+MEMBER,Jude Bellingham,LEADER,Liverpool,p14@fpt.edu.vn; FPT_STUDENT
+MEMBER,Rodri,MEMBER,Liverpool,p15@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Bernardo Silva,MEMBER,Liverpool,p16@fpt.edu.vn; FPT_STUDENT
+MEMBER,Phil Foden,LEADER,Manchester City,p17@fpt.edu.vn; FPT_STUDENT
+MEMBER,Martin Odegaard,MEMBER,Manchester City,p18@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Rafael Leao,MEMBER,Manchester City,p19@fpt.edu.vn; FPT_STUDENT
+MEMBER,Federico Valverde,LEADER,PSG,p20@fpt.edu.vn; FPT_STUDENT
+MEMBER,Pedri,MEMBER,PSG,p21@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Gavi,MEMBER,PSG,p22@fpt.edu.vn; FPT_STUDENT
+MEMBER,Jamal Musiala,LEADER,AC Milan,p23@fpt.edu.vn; FPT_STUDENT
+MEMBER,Florian Wirtz,MEMBER,AC Milan,p24@fpt.edu.vn; EXTERNAL_STUDENT
+MEMBER,Antoine Griezmann,MEMBER,AC Milan,p25@fpt.edu.vn; FPT_STUDENT
+MEMBER,Toni Kroos,LEADER,Inter Milan,p26@fpt.edu.vn; FPT_STUDENT

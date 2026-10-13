@@ -1,0 +1,3102 @@
+{
+  "info": {
+    "name": "SEAL Hackathon – Full API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "coordinatorToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "participantToken",
+      "value": ""
+    },
+    {
+      "key": "judgeToken",
+      "value": ""
+    },
+    {
+      "key": "mentorToken",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": "1"
+    },
+    {
+      "key": "trackId",
+      "value": "1"
+    },
+    {
+      "key": "roundId",
+      "value": "1"
+    },
+    {
+      "key": "teamId",
+      "value": "1"
+    },
+    {
+      "key": "submissionId",
+      "value": "1"
+    },
+    {
+      "key": "criteriaId",
+      "value": "1"
+    },
+    {
+      "key": "inviteId",
+      "value": "1"
+    },
+    {
+      "key": "notificationId",
+      "value": "1"
+    },
+    {
+      "key": "prizeId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. AUTH",
+      "item": [
+        {
+          "name": "Register – FPT Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student.test@fpt.edu.vn\",\n  \"password\": \"Test@1234\",\n  \"fullName\": \"Nguyen Van Test\",\n  \"userType\": \"FPT_STUDENT\",\n  \"studentId\": \"SE210001\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register – External Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student.ext@hcmut.edu.vn\",\n  \"password\": \"Test@1234\",\n  \"fullName\": \"Tran Thi External\",\n  \"userType\": \"EXTERNAL_STUDENT\",\n  \"studentId\": \"BK2100999\",\n  \"university\": \"HCMUT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register – Staff (self)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"staff.new@fpt.edu.vn\",\n  \"password\": \"Test@1234\",\n  \"fullName\": \"Le Van Staff\",\n  \"userType\": \"STAFF\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login – Admin (lưu token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.token !== undefined && res.data && res.data.token !== null) {",
+                  "  pm.collectionVariables.set('adminToken', String(res.data && res.data.token));",
+                  "  console.log('adminToken =', res.data && res.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@fpt.edu.vn\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login – Coordinator (lưu token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.token) {",
+                  "  pm.collectionVariables.set('coordinatorToken', res.data.token);",
+                  "  console.log('Coordinator token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"coordinator@fpt.edu.vn\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login – Participant (lưu token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.token) {",
+                  "  pm.collectionVariables.set('participantToken', res.data.token);",
+                  "  pm.collectionVariables.set('userId', String(res.data.userId));",
+                  "  console.log('Participant token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"leader1@fpt.edu.vn\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login – Judge (lưu token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.token) {",
+                  "  pm.collectionVariables.set('judgeToken', res.data.token);",
+                  "  console.log('Judge token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"judge.binh@fpt.edu.vn\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login – Mentor (lưu token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.token) {",
+                  "  pm.collectionVariables.set('mentorToken', res.data.token);",
+                  "  console.log('Mentor token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mentor.an@fpt.edu.vn\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login – Trước khi được duyệt (expect 403)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student.test@fpt.edu.vn\",\n  \"password\": \"Test@1234\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /me – Xem profile hiện tại",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/me"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/logout"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. ADMIN – USER & ROLE MGMT",
+      "item": [
+        {
+          "name": "GET all users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users"
+          }
+        },
+        {
+          "name": "GET user by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users/{{userId}}"
+          }
+        },
+        {
+          "name": "POST create staff (Guest Judge) – lưu userId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.userId !== undefined && res.data && res.data.userId !== null) {",
+                  "  pm.collectionVariables.set('userId', String(res.data && res.data.userId));",
+                  "  console.log('userId =', res.data && res.data.userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"guestjudge@company.com\",\n  \"password\": \"Test@1234\",\n  \"fullName\": \"Nguyen Guest Judge\",\n  \"userType\": \"STAFF\",\n  \"judgeType\": \"GUEST\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST create staff (Mentor)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mentor.new@fpt.edu.vn\",\n  \"password\": \"Test@1234\",\n  \"fullName\": \"Tran Van Mentor\",\n  \"userType\": \"STAFF\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET all role grants",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/roles"
+          }
+        },
+        {
+          "name": "POST grant role – COORDINATOR (Admin only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/roles/grant",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 2,\n  \"roleName\": \"EVENT_COORDINATOR\",\n  \"eventId\": null\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE revoke role",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/roles/revoke",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 2,\n  \"roleName\": \"EVENT_COORDINATOR\",\n  \"eventId\": null\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT activate user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users/{{userId}}/activate"
+          }
+        },
+        {
+          "name": "PUT deactivate user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users/{{userId}}/deactivate"
+          }
+        },
+        {
+          "name": "GET system logs (Admin only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/system-logs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. ACCOUNT APPROVAL",
+      "item": [
+        {
+          "name": "GET pending approvals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/account-approvals/pending"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT approve user",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/account-approvals/{{userId}}/approve"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT reject user",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/account-approvals/{{userId}}/reject"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. HACKATHON EVENTS",
+      "item": [
+        {
+          "name": "GET all events (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET event by ID (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST create event (lưu eventId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.eventId) {",
+                  "  pm.collectionVariables.set('eventId', String(res.data.eventId));",
+                  "  console.log('eventId saved: ' + res.data.eventId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"SEAL Spring 2027\",\n  \"season\": \"SPRING\",\n  \"year\": 2027,\n  \"description\": \"New season event (one event per season, no time overlap)\",\n  \"registrationStart\": \"2026-12-15T00:00:00\",\n  \"registrationEnd\": \"2027-01-31T23:59:59\",\n  \"startDate\": \"2027-02-01T08:00:00\",\n  \"endDate\": \"2027-04-30T23:59:59\",\n  \"status\": \"DRAFT\"\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT update event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"SEAL Hackathon 2026 (Updated)\",\n  \"description\": \"Annual hackathon competition – updated description\",\n  \"status\": \"OPEN\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. TRACKS",
+      "item": [
+        {
+          "name": "GET all tracks for event (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET track by ID (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST create track (lưu trackId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.trackId) {",
+                  "  pm.collectionVariables.set('trackId', String(res.data.trackId));",
+                  "  console.log('trackId saved: ' + res.data.trackId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"AI & Machine Learning\",\n  \"description\": \"Build innovative AI/ML solutions to solve real-world problems\"\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT update track",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"AI & Machine Learning (Updated)\",\n  \"description\": \"Updated description for the AI/ML track\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE track",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6. ROUNDS",
+      "item": [
+        {
+          "name": "GET all rounds for event (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET round details (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST create round (lưu roundId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.roundId) {",
+                  "  pm.collectionVariables.set('roundId', String(res.data.roundId));",
+                  "  console.log('roundId saved: ' + res.data.roundId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vòng 1 – Sơ loại\",\n  \"orderNumber\": 1,\n  \"startTime\": \"2026-06-25T08:00:00\",\n  \"endTime\": \"2026-06-27T18:00:00\",\n  \"submissionDeadline\": \"2026-06-27T17:00:00\",\n  \"topNAdvance\": 10,\n  \"isFinal\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "POST create round (Final – isFinal=true)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vòng Final\",\n  \"orderNumber\": 3,\n  \"startTime\": \"2026-07-05T08:00:00\",\n  \"endTime\": \"2026-07-08T18:00:00\",\n  \"submissionDeadline\": \"2026-07-08T17:00:00\",\n  \"isFinal\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT update round",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vòng 1 – Sơ loại (Updated)\",\n  \"topNAdvance\": 8,\n  \"isFinal\": false,\n  \"status\": \"ACTIVE\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "7. COORDINATOR – ASSIGNMENTS",
+      "item": [
+        {
+          "name": "POST assign Mentor to track",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/coordinator/assignments/mentors",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mentorUserId\": 3,\n  \"trackId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "POST assign Judge – preliminary (trackId required)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/coordinator/assignments/judges",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"judgeUserId\": 4,\n  \"roundId\": 1,\n  \"trackId\": 2\n}"
+            }
+          }
+        },
+        {
+          "name": "POST assign Judge – final (trackId null)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/coordinator/assignments/judges",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"judgeUserId\": 4,\n  \"roundId\": 3,\n  \"trackId\": null\n}"
+            }
+          }
+        },
+        {
+          "name": "POST assign Judge – preliminary missing trackId (expect 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/coordinator/assignments/judges",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"judgeUserId\": 4,\n  \"roundId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. TEAMS",
+      "item": [
+        {
+          "name": "GET active events with tracks (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/teams/active-events"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST create team (lưu teamId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.teamId) {",
+                  "  pm.collectionVariables.set('teamId', String(res.data.teamId));",
+                  "  console.log('teamId saved: ' + res.data.teamId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": {{eventId}},\n  \"trackId\": {{trackId}},\n  \"name\": \"Team Alpha\",\n  \"description\": \"A passionate team building AI solutions\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET my team (Participant)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/my"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET all teams for event (Coordinator)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/event/{{eventId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET team details by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/{{teamId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT approve team",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/{{teamId}}/approve"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT reject team",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/{{teamId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Team does not meet the minimum requirements\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT disqualify team",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/{{teamId}}/disqualify"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST leave event (teamless, event OPEN, Participant)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/event/{{eventId}}/leave-event"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST leave event – still has a team (expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/event/{{eventId}}/leave-event"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 400 (still on a team)', function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT coordinator-remove member (Coordinator, IN_PROGRESS)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/{{teamId}}/members/{{userId}}/coordinator-remove",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Absent at round roll-call\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT coordinator-remove member – Participant calls (expect 403)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/{{teamId}}/members/{{userId}}/coordinator-remove",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Absent at round roll-call\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST manually place free agent onto existing team (leftover override, Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/event/{{eventId}}/leftover-grouping/manual-assign",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userIds\": [{{userId}}],\n  \"targetTeamId\": {{teamId}},\n  \"reason\": \"Manually placing a leftover free agent onto an existing under-sized team\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST force-create solo team from leftover free agent (leftover override, Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/teams/event/{{eventId}}/leftover-grouping/manual-assign",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userIds\": [{{userId}}],\n  \"targetTeamId\": null,\n  \"reason\": \"Force-approving a lone leftover participant as a solo team\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "9. TEAM INVITES",
+      "item": [
+        {
+          "name": "POST send invite (lưu inviteId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.inviteId) {",
+                  "  pm.collectionVariables.set('inviteId', String(res.data.inviteId));",
+                  "  console.log('inviteId saved: ' + res.data.inviteId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/invites/teams/{{teamId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invitedUserId\": 6,\n  \"message\": \"Mời bạn tham gia team Alpha của tụi mình nhé!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET pending invites (Participant)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/invites/pending"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT accept invite",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/invites/{{inviteId}}/accept"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT decline invite",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/invites/{{inviteId}}/decline"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "10. SUBMISSIONS",
+      "item": [
+        {
+          "name": "POST submit work (lưu submissionId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.submissionId) {",
+                  "  pm.collectionVariables.set('submissionId', String(res.data.submissionId));",
+                  "  console.log('submissionId saved: ' + res.data.submissionId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/submissions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roundId\": {{roundId}},\n  \"repoUrl\": \"https://github.com/team-alpha/hackathon-project\",\n  \"demoUrl\": \"https://team-alpha-demo.vercel.app\",\n  \"slideUrl\": \"https://drive.google.com/file/d/abc123\",\n  \"description\": \"An AI-powered solution to automate student scheduling using machine learning\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET my submission for round (Participant)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/submissions/my/round/{{roundId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET all submissions for round (Judge/Coordinator)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/submissions/round/{{roundId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET submission by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/submissions/{{submissionId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "11. SCORING",
+      "item": [
+        {
+          "name": "GET scoring criteria for round (Authenticated)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/criteria"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST create criteria (lưu criteriaId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.criteriaId) {",
+                  "  pm.collectionVariables.set('criteriaId', String(res.data.criteriaId));",
+                  "  console.log('criteriaId saved: ' + res.data.criteriaId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/criteria",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Innovation\",\n  \"description\": \"How novel and creative is the solution?\",\n  \"weight\": 0.30,\n  \"maxScore\": 10,\n  \"orderNumber\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "POST create criteria – Feasibility",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/criteria",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Feasibility\",\n  \"description\": \"How practical and implementable is the solution?\",\n  \"weight\": 0.25,\n  \"maxScore\": 10,\n  \"orderNumber\": 2\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST create criteria – Presentation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/criteria",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Presentation\",\n  \"description\": \"Quality of the presentation and communication\",\n  \"weight\": 0.20,\n  \"maxScore\": 10,\n  \"orderNumber\": 3\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST submit scores (Judge – Final)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/scores",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": {{submissionId}},\n  \"draft\": false,\n  \"scores\": [\n    {\n      \"criteriaId\": {{criteriaId}},\n      \"value\": 8.5,\n      \"comment\": \"Very innovative approach\"\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST submit scores (Judge – Save as Draft)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/scores",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": {{submissionId}},\n  \"draft\": true,\n  \"scores\": [\n    {\n      \"criteriaId\": {{criteriaId}},\n      \"value\": 7.0,\n      \"comment\": \"Draft score – to be reviewed later\"\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET scores for submission (Judge/Coordinator)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/scores/submission/{{submissionId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET my scores for round (Judge)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/scores/my/round/{{roundId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "12. ROUND RESULTS",
+      "item": [
+        {
+          "name": "GET published results (Public)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/results"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET all results including unpublished (Coordinator)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/results/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST finalize round results (Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/results/finalize"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST publish round results (Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/results/publish"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "13. ASSIGNMENTS – MY DASHBOARD (Mentor/Judge)",
+      "item": [
+        {
+          "name": "GET mentor's assigned teams (Mentor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{mentorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/mentor/assignments"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET judge's assigned teams (Judge)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/judge/assignments"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "14. NOTIFICATIONS",
+      "item": [
+        {
+          "name": "GET my notifications",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.length > 0) {",
+                  "  pm.collectionVariables.set('notificationId', String(res.data[0].notificationId));",
+                  "  console.log('notificationId saved: ' + res.data[0].notificationId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/notifications"
+          }
+        },
+        {
+          "name": "GET unread notification count",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/notifications/unread-count"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT mark notification as read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/notifications/{{notificationId}}/read"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT mark all notifications as read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/notifications/read-all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "15. SECURITY TESTS",
+      "item": [
+        {
+          "name": "Không có token → expect 401",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/me"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 401', function () { pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Token sai → expect 401",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer token_gia_mao_abc123"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/me"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 401', function () { pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Participant gọi API coordinator → expect 403",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/account-approvals/pending"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Participant tạo event → expect 403",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Hack Event\",\n  \"season\": \"FALL\",\n  \"year\": 2026,\n  \"startDate\": \"2026-09-01T08:00:00\",\n  \"endDate\": \"2026-09-10T18:00:00\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Judge gọi submit (Participant only) → expect 403",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{judgeToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/submissions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roundId\": {{roundId}},\n  \"repoUrl\": \"https://github.com/test\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Participant score (Judge only) → expect 403",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/scores",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": 1,\n  \"draft\": false,\n  \"scores\": [{ \"criteriaId\": 1, \"value\": 9.0 }]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Participant gọi API admin → expect 403",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/users"
+          }
+        },
+        {
+          "name": "Coordinator gọi API admin (system-log) → expect 403",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/system-logs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "16. TRACK PROBLEMS (ĐỀ THI)",
+      "item": [
+        {
+          "name": "POST upload problem (Coordinator, multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "PDF/DOC/DOCX/ZIP, ≤ 20MB. Event must be SETUP or IN_PROGRESS."
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET all problems for event (Coordinator)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/problems"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET problem metadata (Coordinator / participant in track)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT release problem (Coordinator)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem/release"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET download problem (participant in track)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem/download"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT retract problem (Coordinator)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem/retract"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Participant downloads unreleased problem → expect 403",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem/download"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE remove problem (Coordinator)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/tracks/{{trackId}}/problem"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "17. ROUND TIMERS",
+      "item": [
+        {
+          "name": "START – Contest timer (Coordinator, 30 min)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/start",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"durationSeconds\": 1800,\n  \"milestoneMinutes\": [30, 15, 5, 1],\n  \"notifyAtHalf\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": { "exec": [
+                "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                "var d = pm.response.json().data; if (d) { console.log('CONTEST status', d.status, 'endsAt', d.endsAt, 'remaining', d.remainingSeconds); }"
+              ] }
+            }
+          ]
+        },
+        {
+          "name": "GET – Contest state (Participant)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{participantToken}}" } ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": { "exec": [
+                "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                "var d = pm.response.json().data; if (d) { console.log('serverNow', d.serverNow, 'remaining', d.remainingSeconds); }"
+              ] }
+            }
+          ]
+        },
+        {
+          "name": "EXTEND – Contest +5 min (Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/extend",
+            "body": { "mode": "raw", "raw": "{\n  \"seconds\": 300\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 200', function () { pm.response.to.have.status(200); });" ] } }
+          ]
+        },
+        {
+          "name": "PAUSE – Contest (Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" } ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/pause"
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 200', function () { pm.response.to.have.status(200); });" ] } }
+          ]
+        },
+        {
+          "name": "RESUME – Contest (Coordinator)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" } ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/resume"
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 200', function () { pm.response.to.have.status(200); });" ] } }
+          ]
+        },
+        {
+          "name": "STOP – Contest (Coordinator, ends now)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" } ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/stop"
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 200', function () { pm.response.to.have.status(200); });" ] } }
+          ]
+        },
+        {
+          "name": "START – Judging timer (Coordinator, 60 min)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/JUDGING/start",
+            "body": { "mode": "raw", "raw": "{\n  \"durationSeconds\": 3600\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 200', function () { pm.response.to.have.status(200); });" ] } }
+          ]
+        },
+        {
+          "name": "GET – Judging state (Judge)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{judgeToken}}" } ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/JUDGING"
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 200', function () { pm.response.to.have.status(200); });" ] } }
+          ]
+        },
+        {
+          "name": "Participant starts timer → expect 403",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{participantToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/start",
+            "body": { "mode": "raw", "raw": "{\n  \"durationSeconds\": 600\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 403', function () { pm.response.to.have.status(403); });" ] } }
+          ]
+        },
+        {
+          "name": "Start with duration < 30s → expect 400",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{coordinatorToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/rounds/{{roundId}}/timer/CONTEST/start",
+            "body": { "mode": "raw", "raw": "{\n  \"durationSeconds\": 10\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 400', function () { pm.response.to.have.status(400); });" ] } }
+          ]
+        },
+        {
+          "name": "Submit after CONTEST stopped → expect 400 (run STOP first)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{participantToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/submissions",
+            "body": { "mode": "raw", "raw": "{\n  \"roundId\": {{roundId}},\n  \"repoUrl\": \"https://github.com/team-alpha/after-deadline\"\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [ "pm.test('status 400 (time is up)', function () { pm.response.to.have.status(400); });" ] } }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "18. PRIZES (EVENT-WIDE AWARDS)",
+      "item": [
+        {
+          "name": "GET prizes (Public = announced only)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET prizes (Coordinator = all incl. drafts)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST auto-generate from final ranking (topN)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.length > 0) {",
+                  "  pm.collectionVariables.set('prizeId', String(res.data[0].prizeId));",
+                  "  console.log('prizeId saved: ' + res.data[0].prizeId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes/auto-generate",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"topN\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "POST create prize slot (manual)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.prizeId) {",
+                  "  pm.collectionVariables.set('prizeId', String(res.data.prizeId));",
+                  "  console.log('prizeId saved: ' + res.data.prizeId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Best Overall\",\n  \"description\": \"Doi xuat sac nhat su kien\",\n  \"rankPosition\": 1,\n  \"teamId\": {{teamId}}\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT update prize (assign/override team)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes/{{prizeId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Champion\",\n  \"teamId\": {{teamId}}\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST announce prizes (notify winners)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes/announce"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE prize slot (draft only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coordinatorToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes/{{prizeId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Participant auto-generate prizes -> expect 403",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{participantToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/prizes/auto-generate",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"topN\": 3\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status 403', function () { pm.response.to.have.status(403); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

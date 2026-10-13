@@ -1,0 +1,58 @@
+export const S1_DEMO = {
+  eventName: 'SEAL Summer 2026',
+  targetTeamName: 'Arsenal',
+  pendingTeamName: 'Real Madrid (pending)',
+  password: 'Test@1234',
+  coordinator: {
+    email: 'coordinator@fpt.edu.vn',
+    roleLabel: 'Coordinator',
+  },
+  arsenalLeader: {
+    email: 'p1@fpt.edu.vn',
+  },
+  inviteMember: {
+    email: 'p42@fpt.edu.vn',
+    displayName: 'Aurélien Tchouaméni',
+  },
+  mentors: [
+    { email: 'mentor1@fpt.edu.vn', roleLabel: 'Mentor', trackName: 'Web Application' },
+    { email: 'mentor2@fpt.edu.vn', roleLabel: 'Mentor', trackName: 'AI Solution' },
+    { email: 'mentor3@fpt.edu.vn', roleLabel: 'Mentor', trackName: 'Education Tech' },
+    { email: 'mentor4@fpt.edu.vn', roleLabel: 'Mentor', trackName: 'Social Impact' },
+  ],
+  judges: [
+    { email: 'judge1@fpt.edu.vn', roleLabel: 'Judge' },
+    { email: 'judge2@fpt.edu.vn', roleLabel: 'Judge' },
+    { email: 'judge3@fpt.edu.vn', roleLabel: 'Judge' },
+    { email: 'judge4@fpt.edu.vn', roleLabel: 'Judge' },
+    { email: 'guestjudge@gmail.com', roleLabel: 'Judge' },
+  ],
+  setupGuestJudges: [
+    { fullName: 'S1 Guest Judge 1', email: 's1.guestjudge.1@example.com', roleLabel: 'Judge' },
+    { fullName: 'S1 Guest Judge 2', email: 's1.guestjudge.2@example.com', roleLabel: 'Judge' },
+    { fullName: 'S1 Guest Judge 3', email: 's1.guestjudge.3@example.com', roleLabel: 'Judge' },
+  ],
+  submissionLeaders: [
+    { teamName: 'Arsenal', email: 'p1@fpt.edu.vn' },
+    { teamName: 'Barcelona', email: 'p4@fpt.edu.vn' },
+    { teamName: 'Real Madrid (pending)', email: 'p7@fpt.edu.vn' },
+    { teamName: 'Bayern (pair)', email: 'p12@fpt.edu.vn' },
+    { teamName: 'Liverpool', email: 'p14@fpt.edu.vn' },
+    { teamName: 'Manchester City', email: 'p17@fpt.edu.vn' },
+    { teamName: 'PSG', email: 'p20@fpt.edu.vn' },
+    { teamName: 'AC Milan', email: 'p23@fpt.edu.vn' },
+    { teamName: 'Inter Milan', email: 'p26@fpt.edu.vn' },
+    { teamName: 'Tottenham', email: 'p29@fpt.edu.vn' },
+    { teamName: 'Napoli', email: 'p32@fpt.edu.vn' },
+    { teamName: 'Atlético Madrid', email: 'p35@fpt.edu.vn' },
+    { teamName: 'Borussia Dortmund', email: 'p38@fpt.edu.vn' },
+  ],
+  tracks: [
+    'Web Application',
+    'AI Solution',
+    'Education Tech',
+    'Social Impact',
+  ],
+  expectedRoundCount: 2,
+  expectedCriteriaCountPerRound: 5,
+} as const;

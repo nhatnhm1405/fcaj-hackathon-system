@@ -1,0 +1,26 @@
+section,item,additions,deletions,note
+category,package-lock.json (auto),22703,18349,File tu sinh boi npm
+category,shadcn-ui components (lib),12268,7183,Thu vien UI third-party
+category,figma-import (auto),2544,1272,Figma export tu dong
+category,assets (anh),27,54,Binary asset
+category,sql/db-scripts,1881,1381,Don script DB trung
+category,docs (md/txt),4091,1588,Don tai lieu trung
+category,other-json (config/Postman),3380,1003,Collection/config
+category,code-tay (.tsx/.ts/.java),90389,57014,Phan lon la rewrite
+author,Nhat Nguyen,37807,38319,git log all branches no-merges
+author,KhanhNLH,22918,13392,git log all branches no-merges
+author,KTrangg,22498,2179,git log thuc (bieu do GitHub ghi sai 36907)
+author,Dao Hoang Nhat,18634,1822,git log all branches no-merges
+author,hoangnhat1407,5939,14,git log all branches no-merges
+abnormal,9684b59 package-lock.json,7966,2,auto vitest setup
+abnormal,de9750e package-lock.json,5876,337,auto shadcn setup
+abnormal,fb4ddb3 package-lock.json,3164,8407,auto rebuild FE
+abnormal,73095d5 package-lock.json,2768,0,auto init Vite
+abnormal,f0a6066 package-lock.json,2504,362,auto install deps
+abnormal,bdfe0d4 Postman_Full_Collection.json,1674,412,auto API collection export
+abnormal,7e2c879 TeamServiceTest.java,1169,0,file test hop le
+abnormal,eebbda5 Postman_Full_Collection.json,1031,0,auto export
+abnormal,fb4ddb3 ParticipantDashboard.tsx,951,74,feature moi
+abnormal,d80f23a ui/sidebar.tsx,726,0,thu vien shadcn
+anomaly,aa3cd62 merge commit (KTrangg),0,9239,Merge develop - GitHub gan sai cho KTrangg
+total,all (period),125246,86165,Tang rong ~39k dong

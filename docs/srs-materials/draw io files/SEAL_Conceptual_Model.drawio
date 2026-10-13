@@ -1,0 +1,228 @@
+<mxfile host="Electron" agent="Codex">
+  <diagram id="seal-conceptual-model" name="SEAL Conceptual Model">
+    <mxGraphModel dx="2520" dy="1797" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1180" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="coordinator" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Coordinator" vertex="1">
+          <mxGeometry height="50" width="120" x="-10" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="hackathon-event" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="HackathonEvent" vertex="1">
+          <mxGeometry height="50" width="130" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="8bS5I9RiIwMYKD7uW9wy-6" edge="1" parent="1" source="prize" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.155;entryY=-0.006;entryDx=0;entryDy=0;startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;entryPerimeter=0;" target="team">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365.02" y="-39.96" />
+              <mxPoint x="890" y="-39.96" />
+              <mxPoint x="890" y="149.68" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="prize" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Prize" vertex="1">
+          <mxGeometry height="45" width="100" x="315" y="-10" as="geometry" />
+        </mxCell>
+        <mxCell id="round" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Round" vertex="1">
+          <mxGeometry height="50" width="100" x="315" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="criterion" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Scoring Criteria" vertex="1">
+          <mxGeometry height="50" width="100" x="315" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="mentor" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Mentor" vertex="1">
+          <mxGeometry height="45" width="100" x="595" y="-10" as="geometry" />
+        </mxCell>
+        <mxCell id="track" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Track" vertex="1">
+          <mxGeometry height="50" width="100" x="595" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="submission" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Submission" vertex="1">
+          <mxGeometry height="50" width="100" x="595" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="judge" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Judge" vertex="1">
+          <mxGeometry height="50" width="100" x="595" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="score" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Score" vertex="1">
+          <mxGeometry height="50" width="100" x="595" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="student" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Participant" vertex="1">
+          <mxGeometry height="45" width="100" x="1030" y="67.5" as="geometry" />
+        </mxCell>
+        <mxCell id="team" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="Team" vertex="1">
+          <mxGeometry height="50" width="100" x="875" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-manages" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="manages" vertex="1">
+          <mxGeometry height="60" width="90" x="190" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-awards" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="has" vertex="1">
+          <mxGeometry height="60" width="90" x="320" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-event-contains-round" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="contains" vertex="1">
+          <mxGeometry height="60" width="90" x="320" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-uses" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="uses" vertex="1">
+          <mxGeometry height="60" width="90" x="320" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-defines" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="defines" vertex="1">
+          <mxGeometry height="60" width="90" x="320" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-includes" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="includes" vertex="1">
+          <mxGeometry height="60" width="90" x="465" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-mentors" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="mentors" vertex="1">
+          <mxGeometry height="60" width="90" x="600" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-has" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="has" vertex="1">
+          <mxGeometry height="60" width="90" x="735" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-participates" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="participates" vertex="1">
+          <mxGeometry height="60" width="90" x="900" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-round-contains-submission" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="contains" vertex="1">
+          <mxGeometry height="60" width="90" x="465" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-submits" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="submits" vertex="1">
+          <mxGeometry height="60" width="90" x="1000" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-evaluates" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="evaluates" vertex="1">
+          <mxGeometry height="60" width="90" x="600" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-gives" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="gives" vertex="1">
+          <mxGeometry height="60" width="90" x="600" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-receives" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="receives" vertex="1">
+          <mxGeometry height="60" width="90" x="780" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-coordinator-manages" edge="1" parent="1" source="coordinator" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;" target="rel-manages">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-manages-event" edge="1" parent="1" source="rel-manages" style="endArrow=ERmany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="hackathon-event">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-prize-awards" edge="1" parent="1" source="prize" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERmany;startFill=0;" target="rel-awards">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-awards-event" edge="1" parent="1" source="rel-awards" style="endArrow=ERone;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="hackathon-event">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-event-contains-round-1" edge="1" parent="1" source="hackathon-event" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;endFill=0;" target="rel-event-contains-round">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-event-contains-round-2" edge="1" parent="1" source="rel-event-contains-round" style="endArrow=ERmany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="round">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-round-uses-1" edge="1" parent="1" source="round" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERmany;startFill=0;" target="rel-uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-round-uses-2" edge="1" parent="1" source="rel-uses" style="endArrow=ERmany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="criterion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-criterion-defines" edge="1" parent="1" source="criterion" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERmany;startFill=0;" target="rel-defines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-defines-score" edge="1" parent="1" source="rel-defines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=ERmany;strokeColor=#000000;endFill=0;" target="score">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365" y="710" />
+              <mxPoint x="645" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-event-includes" edge="1" parent="1" source="hackathon-event" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;" target="rel-includes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-includes-track" edge="1" parent="1" source="rel-includes" style="endArrow=ERmany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="track">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-mentor-mentors" edge="1" parent="1" source="mentor" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERoneToMany;startFill=0;" target="rel-mentors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-mentors-track" edge="1" parent="1" source="rel-mentors" style="endArrow=ERone;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="track">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-track-has" edge="1" parent="1" source="track" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;" target="rel-has">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-has-team" edge="1" parent="1" source="rel-has" style="endArrow=ERmany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="team">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-student-participates" edge="1" parent="1" source="student" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERmany;startFill=0;" target="rel-participates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-participates-team" edge="1" parent="1" source="rel-participates" style="endArrow=ERone;html=1;rounded=0;strokeColor=#000000;endFill=0;entryX=0.704;entryY=0.009;entryDx=0;entryDy=0;entryPerimeter=0;" target="team">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-round-contains-submission-1" edge="1" parent="1" source="round" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;" target="rel-round-contains-submission">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-round-contains-submission-2" edge="1" parent="1" source="rel-round-contains-submission" style="endArrow=ERoneToMany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="submission">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-team-submits" edge="1" parent="1" source="team" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#000000;startArrow=ERone;startFill=0;" target="rel-submits">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1045" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-submits-submission" edge="1" parent="1" source="rel-submits" style="endArrow=ERzeroToMany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="submission">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-submission-evaluates" edge="1" parent="1" source="submission" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERzeroToMany;startFill=0;" target="rel-evaluates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-evaluates-judge" edge="1" parent="1" style="endArrow=ERoneToMany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="judge">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="435" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-judge-gives" edge="1" parent="1" source="judge" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERoneToMany;startFill=0;" target="rel-gives">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-gives-score" edge="1" parent="1" source="rel-gives" style="endArrow=ERoneToMany;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="score">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-submission-receives" edge="1" parent="1" source="submission" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;" target="rel-receives">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-receives-score" edge="1" parent="1" source="rel-receives" style="endArrow=ERone;html=1;rounded=0;strokeColor=#000000;endFill=0;" target="score">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8bS5I9RiIwMYKD7uW9wy-1" parent="1" style="whiteSpace=wrap;html=1;align=center;verticalAlign=middle;rounded=0;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="System Admin" vertex="1">
+          <mxGeometry height="50" width="120" x="-10" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="8bS5I9RiIwMYKD7uW9wy-2" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="manages" vertex="1">
+          <mxGeometry height="60" width="90" x="190" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="8bS5I9RiIwMYKD7uW9wy-3" edge="1" parent="1" source="8bS5I9RiIwMYKD7uW9wy-1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;startArrow=ERone;startFill=0;" target="8bS5I9RiIwMYKD7uW9wy-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8bS5I9RiIwMYKD7uW9wy-4" edge="1" parent="1" source="8bS5I9RiIwMYKD7uW9wy-2" style="endArrow=ERmany;html=1;rounded=0;strokeColor=#000000;endFill=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" target="hackathon-event">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="258" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8bS5I9RiIwMYKD7uW9wy-7" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="awards" vertex="1">
+          <mxGeometry height="60" width="90" x="670" y="-70" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq3b0yeNWY7CSZrMzcii-1" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;strokeColor=#000000;fillColor=#ffffff;fontSize=12;" value="has" vertex="1">
+          <mxGeometry height="60" width="90" x="680" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq3b0yeNWY7CSZrMzcii-2" edge="1" parent="1" source="team" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#000000;startArrow=ERzeroToMany;startFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Cq3b0yeNWY7CSZrMzcii-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="925" y="265" />
+            </Array>
+            <mxPoint x="1090" y="290" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cq3b0yeNWY7CSZrMzcii-3" edge="1" parent="1" source="Cq3b0yeNWY7CSZrMzcii-1" style="endArrow=ERone;html=1;rounded=0;strokeColor=#000000;endFill=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="hackathon-event">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="265" />
+            </Array>
+            <mxPoint x="810" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

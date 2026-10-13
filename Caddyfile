@@ -1,0 +1,39 @@
+:80 {
+    handle /api/* {
+        reverse_proxy seal-backend:8080
+    }
+
+    handle /oauth2/authorization/* {
+        reverse_proxy seal-backend:8080
+    }
+
+    handle /login/oauth2/* {
+        reverse_proxy seal-backend:8080
+    }
+
+    handle {
+        reverse_proxy seal-frontend:80
+    }
+}
+
+sealhackathon.io.vn {
+    handle /api/* {
+        reverse_proxy seal-backend:8080
+    }
+
+    handle /oauth2/authorization/* {
+        redir https://api.sealhackathon.io.vn{uri} 308
+    }
+
+    handle /login/oauth2/* {
+        redir https://api.sealhackathon.io.vn{uri} 308
+    }
+
+    handle {
+        reverse_proxy seal-frontend:80
+    }
+}
+
+api.sealhackathon.io.vn {
+    reverse_proxy seal-backend:8080
+}

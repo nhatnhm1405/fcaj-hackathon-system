@@ -1,0 +1,13 @@
+# IDE — JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build output
+target/
+build/
+
+# OS
+.DS_Store
+Thumbs.db

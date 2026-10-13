@@ -1,0 +1,487 @@
+Project seal_hackathon {
+  database_type: 'MySQL'
+  Note: 'Generated from current Spring JPA entities. Plain Integer id fields are kept as scalar columns unless the entity declares @ManyToOne/@JoinColumn.'
+}
+
+Table Role {
+  role_id int [pk, increment]
+  role_name varchar(50) [not null, unique]
+  description varchar(255)
+}
+
+Table User {
+  user_id int [pk, increment]
+  email varchar(255) [not null, unique]
+  password_hash varchar(255)
+  full_name varchar(255) [not null]
+  user_type varchar(20) [not null, note: 'FPT_STUDENT | EXTERNAL_STUDENT | STAFF']
+  judge_type varchar(20) [note: 'INTERNAL | GUEST; only for judge users']
+  student_id varchar(50)
+  university varchar(255)
+  is_approved boolean [not null, note: 'Application default: false']
+  is_active boolean [not null, note: 'Application default: true']
+  created_at datetime [not null]
+  expired_at datetime
+  provider varchar(20) [not null, note: 'Application default: LOCAL; LOCAL | GOOGLE | GITHUB']
+  provider_id varchar(255)
+  avatar_url varchar(500)
+}
+
+Table UserEventRole {
+  id int [pk, increment]
+  user_id int [not null]
+  role_id int [not null]
+  event_id int [note: 'Plain Integer in JPA; NULL for system-wide role grants; no @ManyToOne FK declared']
+
+  indexes {
+    (user_id, role_id, event_id) [unique, name: 'uq_user_role_event']
+  }
+}
+
+Table HackathonEvent {
+  event_id int [pk, increment]
+  name varchar(255) [not null]
+  season varchar(20) [not null]
+  year int [not null]
+  description text
+  topic varchar(500)
+  registration_start datetime
+  registration_end datetime
+  start_date datetime [not null]
+  end_date datetime [not null]
+  status varchar(20) [not null, note: 'Application default: DRAFT']
+  track_selection_mode varchar(20) [not null, note: 'Application default: SELF_SELECT']
+  created_at datetime [not null]
+}
+
+Table Track {
+  track_id int [pk, increment]
+  event_id int [not null]
+  name varchar(255) [not null]
+  description text
+  capacity int
+  problem_storage_key varchar(500)
+  problem_file_name varchar(255)
+  problem_file_size bigint
+  problem_content_type varchar(100)
+  problem_released boolean [not null, note: 'Application default: false']
+  problem_uploaded_at datetime
+  problem_released_at datetime
+  created_at datetime [not null]
+
+  indexes {
+    (event_id, name) [unique, name: 'uq_track_event_name']
+  }
+}
+
+Table Round {
+  round_id int [pk, increment]
+  event_id int [not null]
+  name varchar(255) [not null]
+  order_number int [not null]
+  start_time datetime [not null]
+  end_time datetime [not null]
+  submission_deadline datetime [not null]
+  top_n_advance int
+  is_final boolean [not null, note: 'Application default: false']
+  status varchar(20) [not null, note: 'Application default: PENDING']
+
+  indexes {
+    (event_id, order_number) [unique, name: 'uq_round_event_order']
+  }
+}
+
+Table RoundTimer {
+  timer_id int [pk, increment]
+  round_id int [not null]
+  phase varchar(20) [not null, note: 'CONTEST | JUDGING']
+  status varchar(20) [not null, note: 'Application default: IDLE']
+  duration_seconds int
+  started_at datetime
+  ends_at datetime
+  paused_at datetime
+  remaining_at_pause int
+  milestone_minutes varchar(100) [not null, note: 'Application default: 30,15,5,1']
+  notify_at_half boolean [not null, note: 'Application default: true']
+  updated_at datetime
+
+  indexes {
+    (round_id, phase) [unique, name: 'uq_roundtimer_round_phase']
+  }
+}
+
+Table RoundTimerNotice {
+  id int [pk, increment]
+  round_id int [not null, note: 'Plain Integer in JPA; logical round id, no @ManyToOne FK declared']
+  phase varchar(20) [not null]
+  milestone_key varchar(30) [not null, note: 'STARTED | REM_30 | REM_15 | REM_5 | REM_1 | HALF | EXPIRED | STOPPED']
+  created_at datetime [not null]
+
+  indexes {
+    (round_id, phase, milestone_key) [unique, name: 'uq_timer_notice']
+  }
+}
+
+Table JudgeAssignment {
+  id int [pk, increment]
+  judge_user_id int [not null]
+  round_id int [not null]
+  track_id int [note: 'NULL means final round judge scores all tracks']
+  is_active boolean [not null, note: 'Application default: true']
+
+  indexes {
+    (judge_user_id, round_id, track_id) [unique, name: 'uq_judge_round_track']
+  }
+}
+
+Table MentorAssignment {
+  id int [pk, increment]
+  mentor_user_id int [not null]
+  track_id int [not null]
+  is_active boolean [not null, note: 'Application default: true']
+
+  indexes {
+    (mentor_user_id, track_id) [unique, name: 'uq_mentor_track']
+  }
+}
+
+Table Team {
+  team_id int [pk, increment]
+  name varchar(255) [not null]
+  description text
+  is_active boolean [not null, note: 'Application default: true']
+  created_at datetime [not null]
+}
+
+Table TeamEventEntry {
+  id int [pk, increment]
+  team_id int [not null]
+  event_id int [not null]
+  track_id int
+  status varchar(20) [not null, note: 'Application default: PENDING']
+  disqualified_reason text
+  disqualified_at datetime
+  created_at datetime [not null]
+
+  indexes {
+    (team_id, event_id) [unique, name: 'uq_tee_team_event']
+  }
+}
+
+Table TeamMember {
+  id int [pk, increment]
+  team_id int [not null]
+  user_id int [not null]
+  member_role varchar(20) [not null, note: 'Application default: MEMBER; LEADER | MEMBER']
+  joined_at datetime [not null]
+
+  indexes {
+    (team_id, user_id) [unique, name: 'uq_team_member_team_user']
+  }
+}
+
+Table TeamInvite {
+  invite_id int [pk, increment]
+  team_id int [not null]
+  event_id int [not null, note: 'Plain Integer in JPA; logical event id, no @ManyToOne FK declared']
+  invited_user_id int [not null]
+  invited_by int [not null]
+  message text
+  status varchar(20) [not null, note: 'Application default: PENDING; PENDING | ACCEPTED | DECLINED']
+  created_at datetime [not null]
+  responded_at datetime
+
+  indexes {
+    (team_id, invited_user_id) [unique, name: 'uq_invite_team_user']
+  }
+}
+
+Table JoinRequest {
+  request_id int [pk, increment]
+  team_id int [not null]
+  event_id int [not null, note: 'Plain Integer in JPA; logical event id, no @ManyToOne FK declared']
+  requester_user_id int [not null]
+  message text
+  status varchar(20) [not null, note: 'Application default: PENDING; PENDING | ACCEPTED | DECLINED']
+  created_at datetime [not null]
+  responded_at datetime
+
+  indexes {
+    (team_id, requester_user_id) [unique, name: 'uq_join_team_user']
+  }
+}
+
+Table TeamRejoinRequest {
+  request_id int [pk, increment]
+  team_id int [not null]
+  event_id int [not null, note: 'Plain Integer in JPA; logical target event id, no @ManyToOne FK declared']
+  requested_by int [not null]
+  status varchar(20) [not null, note: 'Application default: PENDING']
+  requested_at datetime [not null]
+  resolved_at datetime
+  resolved_by int [note: 'Plain Integer in JPA; no @ManyToOne FK declared']
+}
+
+Table ParticipantEventHistory {
+  id int [pk, increment]
+  user_id int [not null]
+  event_id int [not null, note: 'Plain Integer in JPA; intentionally not a live FK']
+  snapshot_reason varchar(30) [not null, note: 'COMPLETED | LEFT_TEAM | REMOVED_BY_LEADER | REMOVED_BY_COORDINATOR']
+  snapshot_at datetime [not null]
+  result_json text [not null]
+
+  indexes {
+    (user_id, event_id) [unique, name: 'uq_participant_event_history_user_event']
+  }
+}
+
+Table Submission {
+  submission_id int [pk, increment]
+  team_id int [not null]
+  round_id int [not null]
+  repo_url varchar(500)
+  demo_url varchar(500)
+  slide_url varchar(500)
+  description text
+  submitted_at datetime [not null]
+  submitted_by int [not null]
+  status varchar(20) [not null, note: 'Application default: SUBMITTED; DRAFT | SUBMITTED | LATE | INVALID']
+
+  indexes {
+    (team_id, round_id) [unique, name: 'uq_submission_team_round']
+  }
+}
+
+Table ScoringCriteriaTemplate {
+  template_id int [pk, increment]
+  name varchar(255) [not null]
+  description text
+  is_default boolean [not null, note: 'Application default: false']
+  created_at datetime [not null]
+}
+
+Table ScoringCriteria {
+  criteria_id int [pk, increment]
+  event_id int
+  round_id int
+  template_id int
+  name varchar(255) [not null]
+  description text
+  weight decimal(5,2) [not null, note: 'Application default: 1.00']
+  max_score decimal(5,2) [not null, note: 'Application default: 10.00']
+  order_number int
+}
+
+Table Score {
+  score_id int [pk, increment]
+  submission_id int [not null]
+  judge_user_id int [not null]
+  criteria_id int [not null]
+  value decimal(5,2) [not null]
+  comment text
+  is_draft boolean [not null, note: 'Application default: true']
+  scored_at datetime [not null]
+  updated_at datetime
+
+  indexes {
+    (submission_id, judge_user_id, criteria_id) [unique, name: 'uq_score']
+  }
+}
+
+Table RoundResult {
+  result_id int [pk, increment]
+  team_id int [not null]
+  round_id int [not null]
+  total_score decimal(7,2) [not null]
+  rank_position int [not null]
+  is_published boolean [not null, note: 'Application default: false']
+  finalized_at datetime
+  finalized_by int
+
+  indexes {
+    (team_id, round_id) [unique, name: 'uq_result_team_round']
+  }
+}
+
+Table Prize {
+  prize_id int [pk, increment]
+  event_id int [not null]
+  track_id int [note: 'NULL for event-wide prizes']
+  name varchar(255) [not null]
+  description text
+  rank_position int [not null]
+  team_id int [note: 'Set when awarded']
+  awarded_at datetime
+}
+
+Table ReopenRequest {
+  request_id int [pk, increment]
+  event_id int [not null]
+  requested_by int [not null]
+  reason text
+  status varchar(20) [not null, note: 'Application default: PENDING; PENDING | APPROVED | REJECTED']
+  resolved_by int
+  created_at datetime [not null]
+  resolved_at datetime
+}
+
+Table ParticipationAccessRequest {
+  request_id int [pk, increment]
+  user_id int [not null]
+  email varchar(255) [not null]
+  status varchar(20) [not null, note: 'Application default: PENDING']
+  requested_at datetime [not null]
+  resolved_at datetime
+  resolved_by int [note: 'Plain Integer in JPA; no @ManyToOne FK declared']
+}
+
+Table PasswordResetOtp {
+  id bigint [pk, increment]
+  user_id int [not null]
+  otp_hash varchar(255) [not null]
+  reset_token_hash varchar(255) [unique]
+  expires_at datetime [not null]
+  verified_at datetime
+  used_at datetime
+  attempt_count int [not null, note: 'Application default: 0']
+  created_at datetime [not null]
+}
+
+Table Announcement {
+  announcement_id int [pk, increment]
+  sender_user_id int [not null]
+  sender_role varchar(20) [not null, note: 'MENTOR | COORDINATOR']
+  scope varchar(20) [not null, note: 'TRACK | EVENT']
+  audience varchar(20) [note: 'PARTICIPANT | JUDGE | MENTOR']
+  event_id int [not null]
+  track_id int [note: 'NULL when scope = EVENT']
+  title varchar(255) [not null]
+  content text
+  link_url varchar(1000)
+  recipient_count int [not null, note: 'Application default: 0']
+  created_at datetime [not null]
+}
+
+Table Notification {
+  notification_id int [pk, increment]
+  recipient_user_id int [not null]
+  title varchar(255) [not null]
+  content text
+  type varchar(50) [note: 'ANNOUNCEMENT | RESULT | REMINDER | ASSIGNMENT | APPROVAL']
+  announcement_id int
+  sender_user_id int
+  sender_role varchar(100)
+  scope_label varchar(255)
+  is_read boolean [not null, note: 'Application default: false']
+  created_at datetime [not null]
+}
+
+Table MentorSupportRequest {
+  request_id int [pk, increment]
+  team_id int [not null]
+  track_id int [not null]
+  requester_user_id int [not null]
+  category varchar(20) [not null, note: 'RULES | TECHNICAL | DIRECTION | OTHER']
+  description text
+  status varchar(20) [not null, note: 'Application default: OPEN; OPEN | RESOLVED | CANCELLED']
+  created_at datetime [not null]
+  resolved_by_user_id int
+  resolved_at datetime
+}
+
+Table AuditLog {
+  log_id int [pk, increment]
+  actor_user_id int [not null]
+  action varchar(50) [not null]
+  target_type varchar(50)
+  target_id int
+  reason text
+  metadata_json text
+  ip_address varchar(45)
+  created_at datetime [not null]
+}
+
+Table SystemLog {
+  log_id int [pk, increment]
+  actor_user_id int [not null]
+  action varchar(50) [not null]
+  detail text
+  created_at datetime [not null]
+}
+
+Ref: UserEventRole.user_id > User.user_id
+Ref: UserEventRole.role_id > Role.role_id
+
+Ref: Track.event_id > HackathonEvent.event_id
+Ref: Round.event_id > HackathonEvent.event_id
+Ref: RoundTimer.round_id > Round.round_id [delete: cascade]
+
+Ref: JudgeAssignment.judge_user_id > User.user_id
+Ref: JudgeAssignment.round_id > Round.round_id
+Ref: JudgeAssignment.track_id > Track.track_id
+
+Ref: MentorAssignment.mentor_user_id > User.user_id
+Ref: MentorAssignment.track_id > Track.track_id
+
+Ref: TeamEventEntry.team_id > Team.team_id
+Ref: TeamEventEntry.event_id > HackathonEvent.event_id
+Ref: TeamEventEntry.track_id > Track.track_id
+
+Ref: TeamMember.team_id > Team.team_id
+Ref: TeamMember.user_id > User.user_id
+
+Ref: TeamInvite.team_id > Team.team_id
+Ref: TeamInvite.invited_user_id > User.user_id
+Ref: TeamInvite.invited_by > User.user_id
+
+Ref: JoinRequest.team_id > Team.team_id
+Ref: JoinRequest.requester_user_id > User.user_id
+
+Ref: TeamRejoinRequest.team_id > Team.team_id [delete: cascade]
+Ref: TeamRejoinRequest.requested_by > User.user_id
+
+Ref: ParticipantEventHistory.user_id > User.user_id
+
+Ref: Submission.team_id > Team.team_id
+Ref: Submission.round_id > Round.round_id
+Ref: Submission.submitted_by > User.user_id
+
+Ref: ScoringCriteria.event_id > HackathonEvent.event_id
+Ref: ScoringCriteria.round_id > Round.round_id
+Ref: ScoringCriteria.template_id > ScoringCriteriaTemplate.template_id
+
+Ref: Score.submission_id > Submission.submission_id
+Ref: Score.judge_user_id > User.user_id
+Ref: Score.criteria_id > ScoringCriteria.criteria_id
+
+Ref: RoundResult.team_id > Team.team_id
+Ref: RoundResult.round_id > Round.round_id
+Ref: RoundResult.finalized_by > User.user_id
+
+Ref: Prize.event_id > HackathonEvent.event_id
+Ref: Prize.track_id > Track.track_id
+Ref: Prize.team_id > Team.team_id
+
+Ref: ReopenRequest.event_id > HackathonEvent.event_id
+Ref: ReopenRequest.requested_by > User.user_id
+Ref: ReopenRequest.resolved_by > User.user_id
+
+Ref: ParticipationAccessRequest.user_id > User.user_id [delete: cascade]
+
+Ref: PasswordResetOtp.user_id > User.user_id
+
+Ref: Announcement.sender_user_id > User.user_id
+Ref: Announcement.event_id > HackathonEvent.event_id
+Ref: Announcement.track_id > Track.track_id
+
+Ref: Notification.recipient_user_id > User.user_id
+Ref: Notification.announcement_id > Announcement.announcement_id
+Ref: Notification.sender_user_id > User.user_id
+
+Ref: MentorSupportRequest.team_id > Team.team_id
+Ref: MentorSupportRequest.track_id > Track.track_id
+Ref: MentorSupportRequest.requester_user_id > User.user_id
+Ref: MentorSupportRequest.resolved_by_user_id > User.user_id
+
+Ref: AuditLog.actor_user_id > User.user_id
+Ref: SystemLog.actor_user_id > User.user_id

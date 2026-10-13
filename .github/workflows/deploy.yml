@@ -1,0 +1,120 @@
+name: Deploy preview branch to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: aws-preview-deploy
+  cancel-in-progress: true
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front-end/src/seal-web
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: front-end/src/seal-web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run vitest
+        run: npm test
+
+  test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: back-end/src/seal-api
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Run JUnit tests
+        run: ./mvnw test -Dspring.profiles.active=test
+
+  deploy:
+    needs: [test-frontend, test-backend]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_BRANCH: ${{ github.ref_name }}
+      DEPLOY_HOST: ${{ secrets.HOST || secrets.SSH_HOST || secrets.EC2_HOST }}
+      DEPLOY_USER: ${{ secrets.USERNAME || secrets.SSH_USERNAME || secrets.EC2_USER }}
+      DEPLOY_KEY: ${{ secrets.SSH_KEY || secrets.SSH_PRIVATE_KEY || secrets.EC2_SSH_KEY }}
+      DEPLOY_PORT: ${{ secrets.SSH_PORT || '22' }}
+      APP_DIR: ${{ secrets.APP_DIR }}
+      CSRF_COOKIE_DOMAIN: sealhackathon.io.vn
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate SSH configuration
+        run: |
+          missing=0
+          for name in DEPLOY_HOST DEPLOY_USER DEPLOY_KEY DEPLOY_BRANCH; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is missing. Configure HOST/USERNAME/SSH_KEY or SSH_HOST/SSH_USERNAME/SSH_PRIVATE_KEY secrets."
+              missing=1
+            fi
+          done
+          if [ -n "$DEPLOY_KEY" ] && ! grep -q "PRIVATE KEY" <<< "$DEPLOY_KEY"; then
+            echo "::error::DEPLOY_KEY does not look like a PEM private key. Store the private key content, not the .pub key."
+            missing=1
+          fi
+          exit "$missing"
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          APP_DIR: ${{ env.APP_DIR }}
+          DEPLOY_BRANCH: ${{ env.DEPLOY_BRANCH }}
+          CSRF_COOKIE_DOMAIN: ${{ env.CSRF_COOKIE_DOMAIN }}
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_KEY }}
+          port: ${{ env.DEPLOY_PORT }}
+          envs: APP_DIR,DEPLOY_BRANCH,CSRF_COOKIE_DOMAIN
+          script_stop: true
+          script: |
+            set -eu
+
+            APP_DIR="${APP_DIR:-$HOME/seal-hackathon-system}"
+            if [ -z "${DEPLOY_BRANCH:-}" ]; then
+              echo "DEPLOY_BRANCH is empty; refusing to deploy an unknown ref."
+              exit 1
+            fi
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "Deploy directory is not a git repository: $APP_DIR"
+              echo "Set the APP_DIR repository secret if the project lives elsewhere on the server."
+              exit 1
+            fi
+
+            cd "$APP_DIR"
+            git fetch origin "$DEPLOY_BRANCH"
+            git checkout -B "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
+            sudo env CSRF_COOKIE_DOMAIN="$CSRF_COOKIE_DOMAIN" \
+              docker compose up -d --build --remove-orphans
+            sudo docker compose ps

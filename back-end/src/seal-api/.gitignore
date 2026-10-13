@@ -1,0 +1,42 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Local secrets (OAuth2 client id/secret, DB password, mail) — share via chat, never commit.
+.env
+
+# Runtime upload dirs — user files stored on disk, never source.
+# uploads/   = public files served at /uploads/** (avatars, ...)
+# protected/ = access-controlled files streamed via API (track "đề thi", ...)
+uploads/
+protected/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: seal_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345 # Phù hợp với file .env mặc định của bạn
+      MYSQL_DATABASE: seal_hackathon
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      # Code-first: Hibernate (ddl-auto=update) sinh schema từ entity, còn DataSeeder /
+      # DemoSeeder nạp dữ liệu — không nạp seal_*.sql qua initdb.d nữa (khớp local dev).
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p12345"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - seal_network
+
+  seal-backend:
+    build:
+      context: ./back-end/src/seal-api
+      dockerfile: Dockerfile
+    container_name: seal_backend
+    restart: unless-stopped
+    env_file:
+      - ./back-end/src/seal-api/.env
+    environment:
+      # Biến môi trường đè lên cấu hình mặc định trong application.properties
+      # Trỏ DB_URL về service `mysql-db` thay vì localhost
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/seal_hackathon?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8
+      - SERVER_FORWARD_HEADERS_STRATEGY=framework
+      # Caddy always fronts this stack with HTTPS, so the auth/CSRF cookies can be Secure.
+      - JWT_COOKIE_SECURE=true
+      # Blank on localhost; the deploy workflow supplies the shared production domain
+      # so the frontend can read the XSRF-TOKEN issued by the API subdomain.
+      - CSRF_COOKIE_DOMAIN=${CSRF_COOKIE_DOMAIN:-}
+      # Dữ liệu demo (tùy chọn): S0|S1|S2|S3 để seed kịch bản; mặc định NONE = không data giả.
+      # - SEED_SCENARIO=S3
+      # Khóa schema khi DB đã có dữ liệu thật không muốn bị tự động ALTER lúc redeploy
+      # (mặc định là "update" nếu bỏ comment dòng dưới — không set = giữ nguyên "update").
+      # - DDL_AUTO=validate
+    expose:
+      - "8080"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - seal_network
+
+  seal-frontend:
+    build:
+      context: ./front-end/src/seal-web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-https://api.sealhackathon.io.vn}
+    container_name: seal_frontend
+    restart: unless-stopped
+    expose:
+      - "80"
+    depends_on:
+      - seal-backend
+    networks:
+      - seal_network
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: seal_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - seal-frontend
+      - seal-backend
+    networks:
+      - seal_network
+
+networks:
+  seal_network:
+    driver: bridge
+
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:
