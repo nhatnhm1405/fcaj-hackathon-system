@@ -97,7 +97,7 @@ Event management is currently handled manually, which leads to:
 
 ## Tech Stack
 
-**Frontend** (`front-end/src/seal-web`)
+**Frontend** (`front-end/src/fcaj-web`)
 - React 18 + TypeScript
 - Vite (dev server/build tool)
 - React Router
@@ -107,7 +107,7 @@ Event management is currently handled manually, which leads to:
 - Recharts (dashboards/statistics)
 - Vitest + Testing Library (unit/integration tests)
 
-**Backend** (`back-end/src/seal-api`)
+**Backend** (`back-end/src/fcaj-api`)
 - Java 21
 - Spring Boot 4 (Web MVC, Data JPA, Security, Mail)
 - Spring Security with JWT authentication
@@ -131,8 +131,8 @@ seal-hackathon-system/
 ├── docs/
 ├── .github/workflows/
 │
-├── back-end/src/seal-api/
-│   └── src/main/java/com/seal/hackathon/
+├── back-end/src/fcaj-api/
+│   └── src/main/java/com/fcaj/hackathon/
 │       ├── controller/
 │       ├── service/
 │       │   └── grouping/
@@ -150,7 +150,7 @@ seal-hackathon-system/
 │       └── resources/
 │   └── src/test/
 │
-└── front-end/src/seal-web/
+└── front-end/src/fcaj-web/
     ├── public/
     └── src/
         ├── app/
@@ -191,25 +191,30 @@ seal-hackathon-system/
 
 ## Getting Started
 
+The technical project names are now FCAJ: backend `back-end/src/fcaj-api`
+(`com.fcaj.hackathon`) and frontend `front-end/src/fcaj-web`. This rename keeps
+the existing `seal_hackathon` database, Docker data volumes, domains, browser
+storage keys, and visible SEAL branding. See [the phase 1 migration notes](docs/fcaj-technical-rename.md).
+
 ### 1. Clone the repository
 
 ```bash
 git clone <repository-url>
-cd seal-hackathon-system
+cd fcaj-hackathon-system
 ```
 
-### 2. Backend setup (`back-end/src/seal-api`)
+### 2. Backend setup (`back-end/src/fcaj-api`)
 
 1. Create a MySQL database user/credentials (the database itself, e.g. `seal_hackathon`, is created automatically on first run since `createDatabaseIfNotExist=true` is set).
 2. Configure local secrets. Copy the example file and fill in what you need — every variable is commented with what it's for and what happens if you leave it blank:
 
    ```bash
-   cp back-end/src/seal-api/.env.example back-end/src/seal-api/.env
+   cp back-end/src/fcaj-api/.env.example back-end/src/fcaj-api/.env
    ```
 
    At minimum, set `DB_USERNAME`/`DB_PASSWORD` and `JWT_SECRET`. Everything else (OAuth2, Gemini AI, mail, GitHub token) is optional and only needed if you're using that feature.
 
-3. Run the API (from `back-end/src/seal-api`):
+3. Run the API (from `back-end/src/fcaj-api`):
 
    ```bash
    ./mvnw spring-boot:run
@@ -226,15 +231,15 @@ cd seal-hackathon-system
 6. Run backend tests:
 
    ```bash
-   ./mvnw test
+   ./mvnw test -Dspring.profiles.active=test
    ```
 
-### 3. Frontend setup (`front-end/src/seal-web`)
+### 3. Frontend setup (`front-end/src/fcaj-web`)
 
 1. Install dependencies:
 
    ```bash
-   cd front-end/src/seal-web
+   cd front-end/src/fcaj-web
    npm install
    ```
 

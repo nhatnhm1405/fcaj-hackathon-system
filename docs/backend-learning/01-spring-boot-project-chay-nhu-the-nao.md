@@ -5,13 +5,13 @@
 Bài này giải thích file:
 
 ```text
-back-end/src/seal-api/src/main/java/com/seal/hackathon/HackathonApplication.java
+back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/HackathonApplication.java
 ```
 
 Source thực tế:
 
 ```java
-package com.seal.hackathon;
+package com.fcaj.hackathon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,7 +34,7 @@ Với Spring Boot, file `HackathonApplication.java` là điểm khởi động �
 Nó làm 3 việc lớn:
 
 1. Khởi động Spring Boot app.
-2. Báo Spring quét các package bên dưới `com.seal.hackathon`.
+2. Báo Spring quét các package bên dưới `com.fcaj.hackathon`.
 3. Tạo và quản lý các object như controller, service, repository, security config.
 
 ## Giải thích từng dòng
@@ -42,20 +42,20 @@ Nó làm 3 việc lớn:
 ### Dòng 1
 
 ```java
-package com.seal.hackathon;
+package com.fcaj.hackathon;
 ```
 
-Dòng này khai báo class `HackathonApplication` thuộc package `com.seal.hackathon`.
+Dòng này khai báo class `HackathonApplication` thuộc package `com.fcaj.hackathon`.
 
-Trong Java, `package` giống như folder logic để sắp xếp class. Dự án này đặt package gốc là `com.seal.hackathon`, nên các package con như sau đều nằm bên dưới nó:
+Trong Java, `package` giống như folder logic để sắp xếp class. Dự án này đặt package gốc là `com.fcaj.hackathon`, nên các package con như sau đều nằm bên dưới nó:
 
 ```text
-com.seal.hackathon.config
-com.seal.hackathon.controller
-com.seal.hackathon.entity
-com.seal.hackathon.repository
-com.seal.hackathon.service
-com.seal.hackathon.security
+com.fcaj.hackathon.config
+com.fcaj.hackathon.controller
+com.fcaj.hackathon.entity
+com.fcaj.hackathon.repository
+com.fcaj.hackathon.service
+com.fcaj.hackathon.security
 ```
 
 Đây là điểm rất quan trọng. Vì class main nằm ở package gốc, Spring Boot có thể tự động scan các class trong package con.
@@ -109,14 +109,14 @@ Bạn không cần học thuộc tên annotation con ngay lập tức, nhưng c�
 - Nó bật auto-configuration: Spring tự cấu hình nhiều thứ dựa trên dependency trong `pom.xml`.
 - Nó bật component scanning: Spring tìm các class có `@Controller`, `@Service`, `@Repository`, `@Component`, `@Configuration`.
 
-Vì class này nằm ở `com.seal.hackathon`, Spring sẽ scan các package con bên dưới package này.
+Vì class này nằm ở `com.fcaj.hackathon`, Spring sẽ scan các package con bên dưới package này.
 
 Ví dụ:
 
 ```text
-com.seal.hackathon.service.AuthService
-com.seal.hackathon.controller.AuthController
-com.seal.hackathon.repository.UserRepository
+com.fcaj.hackathon.service.AuthService
+com.fcaj.hackathon.controller.AuthController
+com.fcaj.hackathon.repository.UserRepository
 ```
 
 Nếu một class nằm ngoài package gốc, Spring có thể không tự scan thấy.
@@ -177,7 +177,7 @@ Sau dòng này, Spring Boot sẽ:
 2. Đọc `application.properties` để lấy cấu hình.
 3. Khởi tạo embedded web server.
 4. Tạo Spring ApplicationContext.
-5. Scan các package con của `com.seal.hackathon`.
+5. Scan các package con của `com.fcaj.hackathon`.
 6. Tạo bean cho controller, service, repository, config, security.
 7. Kết nối database nếu có JPA/DataSource.
 8. Sẵn sàng nhận HTTP request.
@@ -224,7 +224,7 @@ main()
 
 ## Câu giáo viên có thể hỏi
 
-### Vì sao class main đặt ở package `com.seal.hackathon`?
+### Vì sao class main đặt ở package `com.fcaj.hackathon`?
 
 Vì đây là package gốc. Đặt class main ở đây giúp Spring Boot component-scan được các package con như `controller`, `service`, `repository`, `security`.
 

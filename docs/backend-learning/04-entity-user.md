@@ -5,7 +5,7 @@
 Bài này giải thích file:
 
 ```text
-back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/User.java
+back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/User.java
 ```
 
 Source này dài 97 dòng theo lần đọc hiện tại.
@@ -37,7 +37,7 @@ TeamMember = user nằm trong team nào
 ### Dòng 1
 
 ```java
-package com.seal.hackathon.entity;
+package com.fcaj.hackathon.entity;
 ```
 
 Class `User` nằm trong package `entity`, nghĩa là nó thuộc tầng model/database.
