@@ -1,24 +1,24 @@
 :80 {
     handle /api/* {
-        reverse_proxy seal-backend:8080
+        reverse_proxy fcaj-backend:8080
     }
 
     handle /oauth2/authorization/* {
-        reverse_proxy seal-backend:8080
+        reverse_proxy fcaj-backend:8080
     }
 
     handle /login/oauth2/* {
-        reverse_proxy seal-backend:8080
+        reverse_proxy fcaj-backend:8080
     }
 
     handle {
-        reverse_proxy seal-frontend:80
+        reverse_proxy fcaj-frontend:80
     }
 }
 
 sealhackathon.io.vn {
     handle /api/* {
-        reverse_proxy seal-backend:8080
+        reverse_proxy fcaj-backend:8080
     }
 
     handle /oauth2/authorization/* {
@@ -30,10 +30,10 @@ sealhackathon.io.vn {
     }
 
     handle {
-        reverse_proxy seal-frontend:80
+        reverse_proxy fcaj-frontend:80
     }
 }
 
 api.sealhackathon.io.vn {
-    reverse_proxy seal-backend:8080
+    reverse_proxy fcaj-backend:8080
 }

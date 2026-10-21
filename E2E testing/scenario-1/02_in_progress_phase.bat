@@ -4,8 +4,8 @@ setlocal
 set "ROOT=%~dp0..\.."
 for %%I in ("%ROOT%") do set "ROOT=%%~fI"
 
-set "BACKEND=%ROOT%\back-end\src\seal-api"
-set "FRONTEND=%ROOT%\front-end\src\seal-web"
+set "BACKEND=%ROOT%\back-end\src\fcaj-api"
+set "FRONTEND=%ROOT%\front-end\src\fcaj-web"
 set "REPORT_DIR=%ROOT%\E2E testing\scenario-1\playwright-report\02_in_progress_phase"
 set "REVIEW_SCRIPT=%~dp0open-review-edge.ps1"
 set "API_PORT=8080"
