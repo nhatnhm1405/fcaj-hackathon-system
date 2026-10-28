@@ -1,0 +1,6 @@
+back-end/src/fcaj-api/mvnw text eol=lf
+back-end/src/fcaj-api/Test/*.sh text eol=lf
+back-end/src/fcaj-api/deploy/*.sh.example text eol=lf
+back-end/src/fcaj-api/src/main/resources/db/** text eol=lf
+docs/contracts/ai-job-v1/** text eol=lf
+docs/checks/** text eol=lf

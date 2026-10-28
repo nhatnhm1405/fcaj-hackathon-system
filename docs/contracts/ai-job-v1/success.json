@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "fcaj.ai.message.v1",
+  "eventType": "AI_JOB_COMPLETED",
+  "messageId": "97f94759-f7ec-4018-9037-2e6b307643a2",
+  "occurredAt": "2026-10-27T03:00:06Z",
+  "jobId": "b61f34f3-f73a-4a26-915a-401dd9d3dce1",
+  "submissionId": 101,
+  "inputRevision": "147f667f5d2074dd28a84508624e0cf3622003f29cbcf8acb659f9a55f355507",
+  "commitSha": "0123456789abcdef0123456789abcdef01234567",
+  "processingVersion": "mock-pipeline-v1",
+  "modelConfigVersion": "mock-model-config-v1",
+  "promptVersion": "mock-prompt-v1",
+  "rubricVersion": "mock-rubric-v1",
+  "status": "SUCCEEDED",
+  "result": {
+    "key": "results/b61f34f3-f73a-4a26-915a-401dd9d3dce1/success-output.json",
+    "sha256": "7b5e8cda43203fbc723c78f01e6ffe870a1c6def28e0b897f588fff2d0f03f47",
+    "sizeBytes": 1615,
+    "contentType": "application/json",
+    "versionId": null
+  }
+}

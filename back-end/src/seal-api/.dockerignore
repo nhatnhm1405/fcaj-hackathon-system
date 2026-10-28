@@ -1,7 +1,0 @@
-target/
-.idea/
-.vscode/
-.mvn/
-.env
-*.log
-hs_err_pid*.log

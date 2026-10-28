@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "fcaj.ai.rubric.v1",
+  "rubricVersion": "mock-rubric-v1",
+  "criteria": [
+    {
+      "criteriaId": 501,
+      "name": "Technical implementation",
+      "description": "Explain the implementation using evidence from supplied source.",
+      "maxScore": 10,
+      "weight": 1
+    }
+  ]
+}

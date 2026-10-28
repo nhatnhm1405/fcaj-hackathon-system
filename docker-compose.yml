@@ -24,12 +24,12 @@ services:
 
   seal-backend:
     build:
-      context: ./back-end/src/seal-api
+      context: ./back-end/src/fcaj-api
       dockerfile: Dockerfile
     container_name: seal_backend
     restart: unless-stopped
     env_file:
-      - ./back-end/src/seal-api/.env
+      - ./back-end/src/fcaj-api/.env
     environment:
       # Biến môi trường đè lên cấu hình mặc định trong application.properties
       # Trỏ DB_URL về service `mysql-db` thay vì localhost

@@ -4,7 +4,7 @@ setlocal
 set "ROOT=%~dp0..\.."
 for %%I in ("%ROOT%") do set "ROOT=%%~fI"
 
-set "BACKEND=%ROOT%\back-end\src\seal-api"
+set "BACKEND=%ROOT%\back-end\src\fcaj-api"
 set "FRONTEND=%ROOT%\front-end\src\seal-web"
 set "REPORT_DIR=%ROOT%\E2E testing\scenario-2\playwright-report\00_s25_results_publish_awards"
 set "DOWNLOAD_DIR=%ROOT%\E2E testing\scenario-2\downloads"

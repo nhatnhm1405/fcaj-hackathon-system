@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: back-end/src/seal-api
+        working-directory: back-end/src/fcaj-api
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -52,7 +52,13 @@ jobs:
           cache: maven
 
       - name: Run JUnit tests
-        run: ./mvnw test -Dspring.profiles.active=test
+        run: sh ./mvnw test -Dspring.profiles.active=test
+
+      - name: Verify MySQL 8.4 migrations and AI job delivery
+        run: bash Test/run-ai-mysql-tests.sh
+
+      - name: Verify failed deployment gate preserves the backend
+        run: node --test Test/deploy-verified.test.mjs
 
   deploy:
     needs: [test-frontend, test-backend]
@@ -115,6 +121,14 @@ jobs:
             cd "$APP_DIR"
             git fetch origin "$DEPLOY_BRANCH"
             git checkout -B "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
-            sudo env CSRF_COOKIE_DOMAIN="$CSRF_COOKIE_DOMAIN" \
-              docker compose up -d --build --remove-orphans
-            sudo docker compose ps
+            export CANDIDATE_REVISION='${{ github.sha }}'
+            test "$(git rev-parse HEAD)" = "$CANDIDATE_REVISION"
+            # BE2 provisions this private operator config on the host (paths/settings, no stdout).
+            if [ ! -f /etc/seal/deploy-settings.sh ]; then
+              echo "BE2 target deployment settings are missing; existing backend has not been replaced."
+              exit 1
+            fi
+            set -a
+            . /etc/seal/deploy-settings.sh
+            set +a
+            bash back-end/src/fcaj-api/Test/deploy-verified.sh

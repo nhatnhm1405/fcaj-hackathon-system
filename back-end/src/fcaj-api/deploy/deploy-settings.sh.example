@@ -1,0 +1,13 @@
+# Private operator settings on the Linux deploy host. Never commit filled-in secrets.
+# Existing workflow reads /etc/seal/deploy-settings.sh; its path is intentionally unchanged.
+DEPLOY_COMPOSE_FILE=/etc/fcaj/compose.aws.yml
+DEPLOY_RUNTIME_ENV_FILE=/etc/fcaj/runtime.env
+DEPLOY_MIGRATION_ENV_FILE=/etc/fcaj/migration.env
+DEPLOY_DB_CATALOG=fcaj_poc
+DEPLOY_RUNTIME_JDBC_URL='jdbc:mysql://REPLACE_RDS_ENDPOINT:3306/fcaj_poc?sslMode=VERIFY_IDENTITY&serverTimezone=UTC&connectTimeout=5000&socketTimeout=30000'
+DEPLOY_DB_TRUSTSTORE_FILE=/etc/fcaj/rds-truststore.p12
+DEPLOY_SPRING_PROFILES_ACTIVE=aws
+# First provision ONLY: choose initialize-empty explicitly after verifying the target.
+# Accepts an empty database or an already valid V3 database. Does not upgrade old schemas.
+DEPLOY_DB_MODE=verify-only
+# CANDIDATE_REVISION is supplied by CI or the operator from the exact committed checkout.

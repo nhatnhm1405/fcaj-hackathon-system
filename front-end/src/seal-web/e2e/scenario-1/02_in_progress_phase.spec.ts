@@ -59,7 +59,7 @@ function submissionPayload(teamName: string, roundId: number) {
   const slug = teamName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'team';
   return {
     roundId,
-    repoUrl: `https://github.com/seal-demo/e2e-${slug}`,
+    repoUrl: `https://github.com/fcaj-demo/e2e-${slug}`,
     demoUrl: `https://demo.seal.dev/e2e-${slug}`,
     slideUrl: `https://slides.seal.dev/e2e-${slug}`,
     description: `S1 E2E submission for ${teamName}.`,
