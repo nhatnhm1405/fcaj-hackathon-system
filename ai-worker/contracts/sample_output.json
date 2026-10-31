@@ -6,7 +6,7 @@
   "evaluated_at": "2026-10-28T15:05:00Z",
   "execution_time_seconds": 3.82,
   "model_name": "mock-evaluator-v1",
-  "overall_score": 8.15,
+  "overall_score": 8.05,
   "criteria_results": [
     {
       "criteria_id": 1,
