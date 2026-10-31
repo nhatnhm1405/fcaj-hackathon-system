@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AIGradingInputContract",
+  "description": "Schema hợp đồng dữ liệu đầu vào cho AI Worker từ Backend qua SQS hoặc S3",
+  "type": "object",
+  "required": ["job_id", "submission_id", "repository", "rubrics"],
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Mã định danh duy nhất của lượt chấm (UUID do BE tạo)"
+    },
+    "submission_id": {
+      "type": "integer",
+      "description": "ID của submission trong database (bảng Submission)"
+    },
+    "round_id": {
+      "type": "integer",
+      "description": "ID vòng thi hiện tại (bảng Round)"
+    },
+    "repository": {
+      "type": "object",
+      "required": ["url", "commit_sha"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Đường dẫn repo GitHub của thí sinh (repo_url)"
+        },
+        "commit_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{40}$",
+          "description": "Mã 40 ký tự SHA của commit cố định cần chấm"
+        },
+        "branch": {
+          "type": "string",
+          "default": "main",
+          "description": "Nhánh mặc định nếu cần tham khảo"
+        },
+        "access_token": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "GitHub Personal Access Token nếu là repo private của ban tổ chức"
+        }
+      }
+    },
+    "rubrics": {
+      "type": "array",
+      "description": "Danh sách các tiêu chí kỹ thuật cần chấm trong vòng này",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["criteria_id", "name", "weight", "max_score"],
+        "properties": {
+          "criteria_id": {
+            "type": "integer",
+            "description": "ID của tiêu chí trong bảng ScoringCriteria"
+          },
+          "name": {
+            "type": "string",
+            "description": "Tên tiêu chí (ví dụ: Clean Architecture, Security, Testing)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Mô tả chi tiết và yêu cầu đánh giá của tiêu chí"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Trọng số của tiêu chí (tổng trọng số nên là 1.0)"
+          },
+          "max_score": {
+            "type": "number",
+            "minimum": 1.0,
+            "default": 10.0,
+            "description": "Điểm tối đa của tiêu chí (mặc định 10.00 theo ScoringCriteria entity)"
+          }
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "target_languages": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ngôn ngữ lập trình chính của bài thi (vd: java, python, typescript)"
+        },
+        "ignore_paths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Các thư mục hoặc file bỏ qua không quét (vd: node_modules, dist, target)"
+        }
+      }
+    }
+  }
+}
