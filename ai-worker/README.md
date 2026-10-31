@@ -13,8 +13,6 @@ ai-worker/
 │   ├── output_schema.json    # JSON Schema chuẩn kết quả đầu ra lưu S3
 │   ├── sample_input.json     # Dữ liệu mẫu thực tế của 1 job chấm thi
 │   └── sample_output.json    # Kết quả mẫu thực tế kèm điểm và evidence
-├── docs/
-│   └── model_benchmark_decision.md # Báo cáo nghiệm thu Week 2 chuyển sang Cloud AI
 ├── src/
 │   ├── __init__.py
 │   ├── schema.py             # Data models & validation
