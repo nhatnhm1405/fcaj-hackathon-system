@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AIGradingOutputContract",
+  "description": "Schema hợp đồng dữ liệu đầu ra từ AI Worker gửi về cho Backend qua S3/SQS",
+  "type": "object",
+  "required": [
+    "job_id",
+    "submission_id",
+    "status",
+    "evaluated_at",
+    "execution_time_seconds",
+    "overall_score",
+    "criteria_results",
+    "evidence",
+    "summary"
+  ],
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Khớp với job_id của input"
+    },
+    "submission_id": {
+      "type": "integer",
+      "description": "ID submission tương ứng"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["SUCCESS", "FAILED"],
+      "description": "Trạng thái thực thi của lượt chấm"
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "Thông báo lỗi chi tiết nếu status = FAILED"
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Thời điểm hoàn thành chấm (ISO 8601 UTC)"
+    },
+    "execution_time_seconds": {
+      "type": "number",
+      "description": "Thời gian AI xử lý tính bằng giây"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "Tên model AI thực hiện (vd: gemini-1.5-flash, mock-worker)"
+    },
+    "overall_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 10.0,
+      "description": "Điểm tổng kết (thang 10, làm tròn 2 chữ số thập phân)"
+    },
+    "criteria_results": {
+      "type": "array",
+      "description": "Kết quả chấm từng tiêu chí (map trực tiếp với bảng Score trong DB)",
+      "items": {
+        "type": "object",
+        "required": ["criteria_id", "score", "feedback"],
+        "properties": {
+          "criteria_id": {
+            "type": "integer",
+            "description": "Khớp với criteria_id trong bảng ScoringCriteria"
+          },
+          "score": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10.0,
+            "description": "Điểm đạt được (giá trị lưu vào Score.value)"
+          },
+          "feedback": {
+            "type": "string",
+            "description": "Lời nhận xét cho tiêu chí này (giá trị lưu vào Score.comment)"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Danh sách dẫn chứng chi tiết (evidence) trích từ code tại commit SHA",
+      "items": {
+        "type": "object",
+        "required": ["criteria_id", "type", "file_path", "line_start", "line_end", "snippet", "comment"],
+        "properties": {
+          "criteria_id": {
+            "type": "integer",
+            "description": "Tiêu chí liên quan đến dẫn chứng này"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["PENALTY", "POSITIVE", "NEUTRAL"],
+            "description": "Loại dẫn chứng: vi phạm bị trừ điểm (PENALTY), điểm cộng (POSITIVE), ghi chú tham khảo (NEUTRAL)"
+          },
+          "file_path": {
+            "type": "string",
+            "description": "Đường dẫn file trong repository (vd: src/main/java/.../UserService.java)"
+          },
+          "line_start": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Dòng bắt đầu của đoạn code"
+          },
+          "line_end": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Dòng kết thúc của đoạn code"
+          },
+          "snippet": {
+            "type": "string",
+            "description": "Đoạn mã trích xuất từ source code làm bằng chứng"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Giải thích tại sao đoạn mã này được khen ngợi hoặc bị trừ điểm"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "description": "Nhận xét tổng quan toàn bộ bài làm của thí sinh"
+    }
+  }
+}

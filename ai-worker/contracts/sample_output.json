@@ -1,0 +1,62 @@
+{
+  "job_id": "c7a8e801-b27b-40b5-9d36-fa28dbfa9801",
+  "submission_id": 101,
+  "status": "SUCCESS",
+  "error_message": null,
+  "evaluated_at": "2026-10-28T15:05:00Z",
+  "execution_time_seconds": 3.82,
+  "model_name": "mock-evaluator-v1",
+  "overall_score": 8.15,
+  "criteria_results": [
+    {
+      "criteria_id": 1,
+      "score": 8.5,
+      "feedback": "Cấu trúc Spring Boot phân tầng rõ ràng (controller, service, repository, entity). DTO được tách biệt tốt với JPA Entity."
+    },
+    {
+      "criteria_id": 2,
+      "score": 7.0,
+      "feedback": "Cần lưu ý chuyển các secret như database password và JWT key sang biến môi trường (environment variables) hoặc file .env thay vì commit vào repo."
+    },
+    {
+      "criteria_id": 3,
+      "score": 8.0,
+      "feedback": "Có viết service test với Mockito khá đầy đủ cho luồng chấm điểm (AdminScoreDistributionServiceTest)."
+    },
+    {
+      "criteria_id": 4,
+      "score": 9.5,
+      "feedback": "Quy chuẩn commit message theo Conventional Commits, có ghi chú chi tiết và tài liệu Markdown hướng dẫn rõ ràng."
+    }
+  ],
+  "evidence": [
+    {
+      "criteria_id": 2,
+      "type": "PENALTY",
+      "file_path": "back-end/src/seal-api/src/main/resources/application.properties",
+      "line_start": 10,
+      "line_end": 12,
+      "snippet": "spring.datasource.password=secret123\njwt.token.secret=base64SecretKeyHere...",
+      "comment": "Trừ 3.0 điểm: Mật khẩu và JWT Secret được khai báo trực tiếp trong file cấu hình, có nguy cơ lộ lọt khi push mã nguồn."
+    },
+    {
+      "criteria_id": 1,
+      "type": "POSITIVE",
+      "file_path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Score.java",
+      "line_start": 10,
+      "line_end": 12,
+      "snippet": "@Table(name = \"Score\", uniqueConstraints = {\n    @UniqueConstraint(name = \"uq_score\", columnNames = {\"submission_id\", \"judge_user_id\", \"criteria_id\"})\n})",
+      "comment": "Cộng điểm: Đã thiết lập ràng buộc duy nhất (Unique Constraint) đảm bảo tính toàn vẹn dữ liệu cho việc chấm điểm."
+    },
+    {
+      "criteria_id": 3,
+      "type": "POSITIVE",
+      "file_path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AdminScoreDistributionServiceTest.java",
+      "line_start": 25,
+      "line_end": 35,
+      "snippet": "@ExtendWith(MockitoExtension.class)\nclass AdminScoreDistributionServiceTest {\n    @Mock\n    private ScoreRepository scoreRepository;",
+      "comment": "Cộng điểm: Sử dụng Mockito để viết unit test độc lập cho business logic tính toán phân phối điểm."
+    }
+  ],
+  "summary": "Repository thể hiện kỹ năng tổ chức backend Spring Boot rất tốt, tuân thủ đúng kiến trúc chuẩn và có unit test kèm theo. Điểm cần tối ưu hóa quan trọng nhất là bảo mật secret trong môi trường triển khai."
+}
