@@ -15,8 +15,8 @@ local_secrets.json
 test_output.json
 leads_grading_result.json
 
-# Internal Benchmark scripts & reports (chỉ dùng nội bộ máy cá nhân, không push git)
+# Internal Benchmark scripts & docs (chỉ lưu nội bộ, không công khai lên GitHub)
+docs/
 benchmark_lead_project.py
-docs/lead_benchmark_report.md
 lead_*.json
 lead_*.md

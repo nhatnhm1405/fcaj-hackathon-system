@@ -15,22 +15,29 @@ ai-worker/
 │   └── sample_output.json    # Kết quả mẫu thực tế kèm điểm và evidence
 ├── src/
 │   ├── __init__.py
-│   ├── schema.py             # Data models & validation
+│   ├── schema.py             # Data models & validation (Input/Output contracts)
+│   ├── code_cleaner.py       # Quét, lọc mã nguồn & đánh số thứ tự dòng
+│   ├── github_fetcher.py     # Tải snapshot repository tại commit SHA cố định
+│   ├── ai_grader.py          # Chấm điểm qua Cloud AI API (DeepSeek / Gemini)
 │   └── mock_worker.py        # Worker giả lập để BE test luồng AWS độc lập
 ├── tests/
+│   ├── __init__.py
+│   └── test_ai_worker.py     # Bộ unit test kiểm định contract, prompt & grader
 └── requirements.txt
 ```
 
 ---
 
-## 🚀 Hướng dẫn Chạy Thử Mock Worker
+## 🚀 Hướng dẫn Chạy Thử
 
-Mock Worker không yêu cầu cài thêm thư viện bên ngoài (dùng Python standard library):
-
+### 1. Chạy Mock Worker (Không cần API Key)
 ```bash
-# Di chuyển vào thư mục ai-worker
 cd ai-worker
-
-# Chạy mock worker với sample input
 python src/mock_worker.py --input contracts/sample_input.json --output contracts/test_output.json
+```
+
+### 2. Chạy Kiểm thử Tự động (Unit Tests)
+```bash
+cd ai-worker
+pytest -v
 ```

@@ -9,6 +9,7 @@
     "status",
     "evaluated_at",
     "execution_time_seconds",
+    "model_name",
     "overall_score",
     "criteria_results",
     "evidence",
@@ -45,7 +46,7 @@
     },
     "model_name": {
       "type": "string",
-      "description": "Tên model AI thực hiện (vd: gemini-1.5-flash, mock-worker)"
+      "description": "Tên model AI thực hiện (vd: deepseek-chat, gemini-2.5-flash, mock-evaluator-v1)"
     },
     "overall_score": {
       "type": "number",

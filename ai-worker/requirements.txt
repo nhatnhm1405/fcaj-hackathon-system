@@ -1,8 +1,4 @@
-# Thư viện core cho AI Worker
-pydantic>=2.0.0
-requests>=2.31.0
-google-genai>=0.1.0
-
-# Testing & Dev
+# AI Worker sử dụng Python standard library cho core runtime (zero external dependencies)
+# Các thư viện bên dưới phục vụ kiểm thử tự động (Automated Testing)
 pytest>=8.0.0
 pytest-mock>=3.12.0
