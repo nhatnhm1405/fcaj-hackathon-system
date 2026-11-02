@@ -76,12 +76,12 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
 
     overall_score = compute_weighted_overall_score(criteria_results, job_input.rubrics)
 
-    # Danh sách evidence mẫu chuẩn (khớp đúng file thật và số dòng tại commit f42a168)
+    # Danh sách evidence mẫu chuẩn (khớp đúng file thật fcaj-api và số dòng trên develop/main)
     all_mock_evidence = [
         CodeEvidence(
             criteria_id=1,
             type="POSITIVE",
-            file_path="back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Score.java",
+            file_path="back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Score.java",
             line_start=10,
             line_end=12,
             snippet='@Table(name = "Score", uniqueConstraints = {\n    @UniqueConstraint(name = "uq_score", columnNames = {"submission_id", "judge_user_id", "criteria_id"})\n})',
@@ -90,7 +90,7 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
         CodeEvidence(
             criteria_id=2,
             type="PENALTY",
-            file_path="back-end/src/seal-api/src/main/resources/application.properties",
+            file_path="back-end/src/fcaj-api/src/main/resources/application.properties",
             line_start=13,
             line_end=14,
             snippet="spring.datasource.username=${DB_USERNAME:root}\nspring.datasource.password=${DB_PASSWORD:***REDACTED***}",
@@ -99,7 +99,7 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
         CodeEvidence(
             criteria_id=3,
             type="POSITIVE",
-            file_path="back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AdminScoreDistributionServiceTest.java",
+            file_path="back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AdminScoreDistributionServiceTest.java",
             line_start=21,
             line_end=28,
             snippet="@ExtendWith(MockitoExtension.class)\nclass AdminScoreDistributionServiceTest {\n\n    @Mock private HackathonEventRepository eventRepository;\n    @Mock private RoundRepository roundRepository;\n    @Mock private TrackRepository trackRepository;\n    @Mock private ScoringCriteriaRepository criteriaRepository;\n    @Mock private ScoreRepository scoreRepository;",
@@ -108,10 +108,10 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
         CodeEvidence(
             criteria_id=4,
             type="POSITIVE",
-            file_path="back-end/src/seal-api/Test/ScoringServiceTest.md",
+            file_path="back-end/src/fcaj-api/Test/ScoringServiceTest.md",
             line_start=1,
             line_end=5,
-            snippet="# ScoringService Validation & Test Report\n\nFile service: `src/main/java/com/seal/hackathon/service/ScoringService.java`\n\nFile test: `src/test/java/com/seal/hackathon/service/ScoringServiceTest.java`",
+            snippet="# ScoringService Validation & Test Report\n\nFile service: `src/main/java/com/fcaj/hackathon/service/ScoringService.java`\n\nFile test: `src/test/java/com/fcaj/hackathon/service/ScoringServiceTest.java`",
             comment="Cộng điểm: Tài liệu hóa rõ ràng các kịch bản kiểm thử và quy ước nghiệp vụ đi kèm từng service trong mã nguồn.",
         ),
     ]
