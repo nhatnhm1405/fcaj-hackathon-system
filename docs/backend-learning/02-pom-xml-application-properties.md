@@ -5,8 +5,8 @@
 Bài này giải thích hai file:
 
 ```text
-back-end/src/seal-api/pom.xml
-back-end/src/seal-api/src/main/resources/application.properties
+back-end/src/fcaj-api/pom.xml
+back-end/src/fcaj-api/src/main/resources/application.properties
 ```
 
 Hai file này không chứa nghiệp vụ hackathon trực tiếp. Chúng trả lời hai câu hỏi nền tảng:
@@ -93,16 +93,16 @@ Source đang khai báo Spring Boot `4.0.6`. Tài liệu này chỉ ghi nhận đ
 ### Dòng 12-16: thông tin project
 
 ```xml
-<groupId>com.seal</groupId>
+<groupId>com.fcaj</groupId>
 <artifactId>hackathon</artifactId>
 <version>0.0.1-SNAPSHOT</version>
-<name>seal-hackathon</name>
-<description>SEAL Software Engineering Hackathon Management System</description>
+<name>fcaj-hackathon</name>
+<description>FCAJ Hackathon Management System</description>
 ```
 
 Ý nghĩa:
 
-- `groupId`: nhóm/tổ chức của project, ở đây là `com.seal`.
+- `groupId`: nhóm/tổ chức của project, ở đây là `com.fcaj`.
 - `artifactId`: tên artifact khi build, ở đây là `hackathon`.
 - `version`: version project, `SNAPSHOT` nghĩa là bản đang phát triển.
 - `name`: tên hiển thị của project.
@@ -442,10 +442,10 @@ Mail gửi bằng host nào?
 ### Dòng 1
 
 ```properties
-spring.application.name=seal-hackathon
+spring.application.name=fcaj-hackathon
 ```
 
-Đặt tên ứng dụng Spring Boot là `seal-hackathon`.
+Đặt tên ứng dụng Spring Boot là `fcaj-hackathon`.
 
 Tên này có thể xuất hiện trong log, monitoring, hoặc cấu hình Spring.
 

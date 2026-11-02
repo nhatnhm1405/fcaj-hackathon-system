@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: front-end/src/seal-web
+        working-directory: front-end/src/fcaj-web
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: front-end/src/seal-web/package-lock.json
+          cache-dependency-path: front-end/src/fcaj-web/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: back-end/src/seal-api
+        working-directory: back-end/src/fcaj-api
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4

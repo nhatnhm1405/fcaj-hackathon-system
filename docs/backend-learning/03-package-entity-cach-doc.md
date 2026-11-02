@@ -5,7 +5,7 @@
 Bài này giải thích package:
 
 ```text
-back-end/src/seal-api/src/main/java/com/seal/hackathon/entity
+back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity
 ```
 
 Đã xác minh package này có 31 file entity:
