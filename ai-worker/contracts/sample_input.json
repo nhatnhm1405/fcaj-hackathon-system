@@ -1,0 +1,45 @@
+{
+  "job_id": "c7a8e801-b27b-40b5-9d36-fa28dbfa9801",
+  "submission_id": 101,
+  "round_id": 2,
+  "repository": {
+    "url": "https://github.com/nhatnhm1405/fcaj-hackathon-system",
+    "commit_sha": "f42a168d9cb0613a43801edca632a2de64837099",
+    "branch": "main",
+    "access_token": null
+  },
+  "rubrics": [
+    {
+      "criteria_id": 1,
+      "name": "Kiến trúc & Phân tầng hệ thống",
+      "description": "Tuân thủ Clean Architecture, phân chia rõ ràng giữa Controller, Service, Repository, DTO và Entity.",
+      "weight": 0.35,
+      "max_score": 10.0
+    },
+    {
+      "criteria_id": 2,
+      "name": "Bảo mật & Quản lý Thông tin nhạy cảm",
+      "description": "Không hardcode credentials, mật khẩu, JWT secret trong code hay file git; kiểm tra validate dữ liệu đầu vào.",
+      "weight": 0.35,
+      "max_score": 10.0
+    },
+    {
+      "criteria_id": 3,
+      "name": "Kiểm thử tự động & Coverage",
+      "description": "Có viết unit test và integration test cho các service quan trọng; mock phụ thuộc hợp lý.",
+      "weight": 0.15,
+      "max_score": 10.0
+    },
+    {
+      "criteria_id": 4,
+      "name": "Quy chuẩn mã nguồn & Git Convention",
+      "description": "Commit message rõ ràng, format code đồng bộ, tài liệu hoá cấu hình và API đầy đủ.",
+      "weight": 0.15,
+      "max_score": 10.0
+    }
+  ],
+  "options": {
+    "target_languages": ["java", "typescript", "python"],
+    "ignore_paths": ["node_modules", "dist", "target", ".git", "docs/draw io files"]
+  }
+}

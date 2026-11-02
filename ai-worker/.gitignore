@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local Environment & Secrets
+.env
+*.env
+local_secrets.json
+
+# Temporary outputs & logs
+*.log
+test_output.json
+leads_grading_result.json
+
+# Internal Benchmark scripts & docs (chỉ lưu nội bộ, không công khai lên GitHub)
+docs/
+benchmark_lead_project.py
+lead_*.json
+lead_*.md
