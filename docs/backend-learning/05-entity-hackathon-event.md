@@ -5,7 +5,7 @@
 Bài này giải thích file:
 
 ```text
-back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/HackathonEvent.java
+back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/HackathonEvent.java
 ```
 
 Source này dài 74 dòng theo lần đọc hiện tại.
@@ -37,7 +37,7 @@ Entity này lưu:
 ### Dòng 1
 
 ```java
-package com.seal.hackathon.entity;
+package com.fcaj.hackathon.entity;
 ```
 
 Class nằm trong package `entity`, nghĩa là đây là model map với database.

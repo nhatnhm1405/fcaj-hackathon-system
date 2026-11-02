@@ -16,7 +16,7 @@ from typing import Dict, Tuple, Any, Optional
 # Import code_cleaner
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from src.code_cleaner import scan_and_collect_sources, format_code_with_line_numbers
-from src.schema import RepositoryInfo
+from src.schema import RepositoryInfo, GradingOptions
 
 
 def parse_github_owner_repo(repo_url: str) -> Tuple[str, str]:
@@ -29,12 +29,14 @@ def parse_github_owner_repo(repo_url: str) -> Tuple[str, str]:
 
 def fetch_repository_at_commit(
     repo_info: RepositoryInfo,
-    max_total_files: int = 100
+    options: Optional[GradingOptions] = None,
+    max_total_files: int = 100,
 ) -> Tuple[Dict[str, str], Dict[str, Any], str]:
     """
     Tải zipball của repository tại đúng commit SHA qua GitHub REST API,
-    sau đó lọc sạch và đánh số dòng.
-    
+    sau đó lọc sạch (áp dụng options.ignore_paths và options.target_languages)
+    và đánh số dòng.
+
     Trả về:
       - files_dict: { rel_path: file_content }
       - stats: Thống kê số lượng file, số dòng, tokens
@@ -68,11 +70,23 @@ def fetch_repository_at_commit(
             z.extractall(temp_dir)
 
         # GitHub zipball thường bọc bên trong 1 thư mục gốc dạng: owner-repo-sha/
-        subdirs = [os.path.join(temp_dir, d) for d in os.listdir(temp_dir) if os.path.isdir(os.path.join(temp_dir, d))]
+        subdirs = [
+            os.path.join(temp_dir, d)
+            for d in os.listdir(temp_dir)
+            if os.path.isdir(os.path.join(temp_dir, d))
+        ]
         extract_root = subdirs[0] if subdirs else temp_dir
 
+        custom_ignore = options.ignore_paths if options else None
+        target_langs = options.target_languages if options else None
+
         # Quét và lọc file
-        files_dict, stats = scan_and_collect_sources(extract_root, max_total_files=max_total_files)
+        files_dict, stats = scan_and_collect_sources(
+            extract_root,
+            custom_ignore_dirs=custom_ignore,
+            target_languages=target_langs,
+            max_total_files=max_total_files,
+        )
         code_context = format_code_with_line_numbers(files_dict)
 
     return files_dict, stats, code_context

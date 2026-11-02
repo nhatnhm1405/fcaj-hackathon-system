@@ -1,0 +1,348 @@
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* ── SEAL Hackathon: Pixel-Tech Design System ── */
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* Pixel grid background */
+.pixel-grid-bg {
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.pixel-grid-dense {
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* Glow effects */
+.pixel-glow {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3), 0 0 40px rgba(34, 197, 94, 0.1);
+}
+
+.pixel-glow-sm {
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4), 0 0 16px rgba(34, 197, 94, 0.15);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(34, 197, 94, 0.9), 0 0 40px rgba(34, 197, 94, 0.5);
+}
+
+.text-glow-sm {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
+}
+
+/* Pixel border (double-border retro effect) */
+.pixel-border {
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 0 1px rgba(10, 15, 10, 1), 0 0 0 3px rgba(34, 197, 94, 0.3), inset 0 0 0 1px rgba(34, 197, 94, 0.1);
+}
+
+.pixel-border-subtle {
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.08);
+}
+
+/* Animations */
+@keyframes pixelFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(2deg); }
+  66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+  50% { box-shadow: 0 0 24px rgba(34, 197, 94, 0.9), 0 0 48px rgba(34, 197, 94, 0.3); }
+}
+
+@keyframes textGlowPulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(34, 197, 94, 0.6); }
+  50% { text-shadow: 0 0 30px rgba(34, 197, 94, 1), 0 0 60px rgba(34, 197, 94, 0.5); }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes pixelFadeIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes matrixRain {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: var(--progress-width, 50%); }
+}
+
+/* Auto-dismiss countdown bar for the unified notification banner */
+@keyframes notificationBannerShrink {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.pixel-float { animation: pixelFloat 4s ease-in-out infinite; }
+.pixel-float-slow { animation: pixelFloat 6s ease-in-out infinite; }
+.pixel-float-fast { animation: pixelFloat 2.5s ease-in-out infinite; }
+.glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+.text-glow-pulse { animation: textGlowPulse 2s ease-in-out infinite; }
+.cursor-blink::after { content: '█'; animation: blink 1s step-end infinite; }
+.pixel-fade-in { animation: pixelFadeIn 0.4s ease-out forwards; }
+
+/* Scrollbar pixel style */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0a0f0a; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #22c55e, #3b82f6); }
+::-webkit-scrollbar-thumb:hover { background: #4ade80; }
+
+/* ── Cyber-Tech Enhancements ── */
+
+/* Dual-tone grid: green lines + faint blue wash */
+.cyber-grid-bg {
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(34, 197, 94, 0.04) 0%, transparent 55%),
+    linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+}
+
+/* Gradient border card */
+.gradient-border-card {
+  position: relative;
+  background: #0d1117;
+}
+.gradient-border-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34,197,94,0.35), rgba(59,130,246,0.25), rgba(34,197,94,0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Neon blue glow */
+.blue-glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.1);
+}
+.blue-glow-sm {
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.45);
+}
+.cyan-glow {
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.4), 0 0 32px rgba(6, 182, 212, 0.12);
+}
+
+/* Text gradient green→blue */
+.gradient-text {
+  background: linear-gradient(135deg, #22c55e 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-rev {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 60%, #22c55e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient surface overlays */
+.surface-gradient {
+  background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(59,130,246,0.04) 100%);
+}
+.surface-gradient-blue {
+  background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.04) 100%);
+}
+
+/* New keyframes */
+@keyframes cyberPulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(34,197,94,0.3), 0 0 16px rgba(59,130,246,0.15);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(34,197,94,0.7), 0 0 40px rgba(59,130,246,0.35), 0 0 60px rgba(34,197,94,0.15);
+  }
+}
+
+@keyframes dataFlow {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(200%); opacity: 0; }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96%           { opacity: 0.6; }
+  97%           { opacity: 1; }
+  98%           { opacity: 0.7; }
+}
+
+.cyber-pulse      { animation: cyberPulse 2.5s ease-in-out infinite; }
+.data-flow        { animation: dataFlow 3s linear infinite; }
+.gradient-shift   { background-size: 200% 200%; animation: gradientShift 4s ease infinite; }
+.orbit-spin       { animation: orbitSpin 8s linear infinite; }
+.fade-slide-up    { animation: fadeSlideUp 0.5s ease-out forwards; }
+.flicker          { animation: flicker 6s ease-in-out infinite; }
+
+/* Seamless marquee — the track's content is duplicated (×2) in markup, so
+   translating by -50% lands copy #2 exactly where copy #1 began → gapless loop.
+   Kept separate from `dataFlow` (a sweep-and-fade used elsewhere). */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.landing-marquee { animation: marqueeScroll 60s linear infinite; }
+
+/* Section "boot" — a neon line sweeps top→bottom once when a section reveals. */
+@keyframes landingSweep {
+  0%   { top: 0;                opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: calc(100% - 2px); opacity: 0; }
+}
+.landing-sweep { animation: landingSweep 0.9s ease-out forwards; }
+
+/* Gallery photos glitch into view (RGB/hue jitter + clip-path wipe). */
+@keyframes glitchIn {
+  0%   { opacity: 0; transform: translateX(-10px); clip-path: inset(0 0 100% 0); filter: hue-rotate(80deg) saturate(1.4); }
+  35%  { opacity: 1; clip-path: inset(0 0 0 0); }
+  45%  { transform: translateX(7px);  filter: hue-rotate(-50deg); }
+  60%  { transform: translateX(-4px); }
+  78%  { transform: translateX(2px);  filter: none; }
+  100% { opacity: 1; transform: translateX(0); filter: none; }
+}
+.landing-glitch-in { animation: glitchIn 0.65s ease-out both; }
+
+/* Gallery hero-tile RGB-ish glitch while hovered (keeps the hover zoom). */
+@keyframes imgGlitch {
+  0%, 100% { filter: none;                            transform: translate(0,0)   scale(1.06); }
+  20%      { filter: hue-rotate(40deg) saturate(1.35); transform: translate(-2px,1px) scale(1.06); }
+  40%      { filter: hue-rotate(-30deg);              transform: translate(2px,-1px) scale(1.06); }
+  60%      { filter: saturate(1.2);                   transform: translate(-1px,0) scale(1.06); }
+  80%      { filter: none;                            transform: translate(1px,1px) scale(1.06); }
+}
+.landing-img-glitch { animation: imgGlitch 0.5s steps(2, end) infinite; }
+
+/* Honour OS-level reduced-motion: stop every landing animation and reveal
+   content immediately, so nothing animates for motion-sensitive visitors. */
+@media (prefers-reduced-motion: reduce) {
+  .landing-marquee { animation: none; }
+  .landing-reveal  { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .landing-sweep, .landing-glitch-in, .landing-img-glitch { animation: none !important; }
+}
+
+/* Glitch — animated RGB-split + jitter for event cards */
+@keyframes glitchText {
+  0%, 100% { text-shadow: 2px 0 rgba(6,182,212,0.8), -2px 0 rgba(239,68,68,0.8); transform: translate(0, 0); }
+  20%      { text-shadow: -2px 0 rgba(6,182,212,0.8), 2px 0 rgba(239,68,68,0.8); transform: translate(1px, -1px); }
+  40%      { text-shadow: 2px 0 rgba(139,92,246,0.8), -2px 0 rgba(6,182,212,0.8); transform: translate(-1px, 1px); }
+  60%      { text-shadow: -1px 0 rgba(239,68,68,0.8), 1px 0 rgba(139,92,246,0.8); transform: translate(1px, 0); }
+  80%      { text-shadow: 1px 0 rgba(6,182,212,0.8), -1px 0 rgba(239,68,68,0.8); transform: translate(0, 1px); }
+}
+.glitch-text { animation: glitchText 2.2s steps(2, end) infinite; will-change: transform, text-shadow; }

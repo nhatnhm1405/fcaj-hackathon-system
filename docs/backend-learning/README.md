@@ -21,8 +21,8 @@ Thứ tự học hiện tại:
 
 Nhận định đã xác minh từ source:
 
-- Backend Spring Boot nằm ở `back-end/src/seal-api`.
-- Package gốc là `com.seal.hackathon`.
+- Backend Spring Boot nằm ở `back-end/src/fcaj-api`.
+- Package gốc là `com.fcaj.hackathon`.
 - Có 261 file Java production trong `src/main/java`.
 - Có 22 file test trong `src/test/java`.
 - Backend dùng Java 21, Spring Boot, JPA/Hibernate, Spring Security, OAuth2, MySQL, JWT, Mail, Swagger/OpenAPI.
