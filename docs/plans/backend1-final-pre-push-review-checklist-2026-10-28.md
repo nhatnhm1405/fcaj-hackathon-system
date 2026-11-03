@@ -1,5 +1,7 @@
 # Checklist review cùng người dùng trước commit/push BE1
 
+**Mốc mới03/11:** xem [báo cáo candidate SEAL](../report/seal-be1-local-completion-2026-11-03.md) và [evidence mới](../checks/seal-be1-local-2026-11-03/README.md). Module/package đã SEAL; 418 file gốc được giữ, 614 test thực thi/9 MySQL-only skipped trong full package, 36/36 MySQL và26/26 component/API smoke đạt. Candidate mới **chưa stage/commit/push**, HEAD chỉ là baseline. Các số/count/SHA/checklist còn lại dưới đây giữ checkpoint review ngày28, không dùng làm chứng nhận candidate mới. Path/class trong các lệnh đang dùng đã cập nhật SEAL.
+
 Cập nhật sau review: người dùng đã xác nhận OK và yêu cầu commit/push nhánh mới,không dùng tên codex/openai. Nhánh bàn giao được chọn là feature/backend1-be2-handoff. Các trạng thái chưa commit/push bên dưới là checkpoint lúc lập checklist; trạng thái hiện hành và SHA lấy từ Git của nhánh bàn giao. Các mục AWS/FE/AI chưa nghiệm thu vẫn giữ nguyên.
 
 Ngày28/10/2026, Asia/Saigon. Người dùng yêu cầu review kỹ và chỉ push sau khi xác nhận OK. **Chưa stage, commit, push hoặc mở PR.** Checklist này không phải xác nhận người dùng đã duyệt. Dấu[x] là phần agent đã kiểm; dấu[ ] là phần còn cần người dùng/bên liên quan xác nhận hoặc kiểm thực tế.
@@ -19,13 +21,13 @@ Giải thích: khi chuẩn bị commit cần đưa cả xóa module cũ và thê
 
 ## 2. Đổi tên và tương thích lệnh chạy
 
-- [x] Đã chốt với người dùng: back-end/src/fcaj-api; Java com.fcaj.hackathon; Maven groupId com.fcaj.
+- [x] Đã chốt với người dùng: back-end/src/seal-api; Java com.seal.hackathon; Maven groupId com.seal.
 - [x] Main, migration main, worker main, entity scanner, source/import/test, Docker context, CI, runner và E2E references đã đổi.
-- [x] JAR local: Start-Class com.fcaj.hackathon.HackathonApplication; không có class com/seal. Build/test sau rename đạt.
+- [x] JAR local: Start-Class com.seal.hackathon.HackathonApplication; không có class com/fcaj. Build/test sau rename đạt.
 - [ ] BE2 cập nhật checkout/scripts của họ theo path/package mới.
 - [ ] Người dùng biết một số tên vận hành vẫn còn seal-backend,seal_backend,seal-hackathon,artifactId hackathon và /etc/seal/deploy-settings.sh. Đây là các tên riêng được giữ trong mapping, không cản compile. Đợt này chưa đổi giao diện/logo/domain hoặc toàn bộ tên tài nguyên AWS.
 
-Xem [mapping đầy đủ](../report/backend1-be2-integration-readiness-review-2026-10-28.md). Khi kiểm tay, mở [pom.xml](../../back-end/src/fcaj-api/pom.xml),[Dockerfile](../../back-end/src/fcaj-api/Dockerfile),[workflow](../../.github/workflows/deploy.yml).
+Xem [mapping đầy đủ](../report/backend1-be2-integration-readiness-review-2026-10-28.md). Khi kiểm tay, mở [pom.xml](../../back-end/src/seal-api/pom.xml),[Dockerfile](../../back-end/src/seal-api/Dockerfile),[workflow](../../.github/workflows/deploy.yml).
 
 ## 3. Database và bảo toàn dữ liệu
 
@@ -39,7 +41,7 @@ Xem [mapping đầy đủ](../report/backend1-be2-integration-readiness-review-2
 
 V3 tăng version khi entity thay đổi để từ chối ghi từ dữ liệu cũ; API conflict trả409 CONCURRENT_UPDATE. Giúp tránh profile update khôi phục avatar key đã xóa hoặc release đề ghi ngược file cũ. Không tự retry bằng entity cũ. Test đã bao phủ6 race trên H2/MySQL.
 
-Nguồn: [migration directory](../../back-end/src/fcaj-api/src/main/resources/db/migration/),[DatabaseMigrationMain](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/db/DatabaseMigrationMain.java),[runbook](backend1-review-fixes-operator-runbook-2026-10-28.md). Runbook cũ có tên module lịch sử; dùng fcaj-api/com.fcaj theo mapping mới.
+Nguồn: [migration directory](../../back-end/src/seal-api/src/main/resources/db/migration/),[DatabaseMigrationMain](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/db/DatabaseMigrationMain.java),[runbook](backend1-review-fixes-operator-runbook-2026-10-28.md). Runbook cũ có tên module lịch sử; dùng seal-api/com.seal theo mapping mới.
 
 ## 4. Admin, demo và cách khởi động
 
@@ -51,7 +53,7 @@ Nguồn: [migration directory](../../back-end/src/fcaj-api/src/main/resources/db
 - [ ] Demo đã có quyền thiếu: cấp bằng System Admin cho đúng event như quyết định trước; không thêm tool backfill.
 - [ ] Biết run-demo.ps1 là runner reset DB local có xác nhận; không dùng để migrate/triển khai DB đang giữ dữ liệu. Lượt review này không chạy runner reset.
 
-Nguồn: [BootstrapAdminSeeder](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/BootstrapAdminSeeder.java),[DataSeeder](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/DataSeeder.java),[run-demo.ps1](../../back-end/src/fcaj-api/run-demo.ps1).
+Nguồn: [BootstrapAdminSeeder](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/config/BootstrapAdminSeeder.java),[DataSeeder](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/config/DataSeeder.java),[run-demo.ps1](../../back-end/src/seal-api/run-demo.ps1).
 
 ## 5. File đề thi và avatar
 
@@ -64,7 +66,7 @@ Nguồn: [BootstrapAdminSeeder](../../back-end/src/fcaj-api/src/main/java/com/fc
 
 Kiểm tay sau khi có môi trường test: đổi avatar→đọc lại; thay đề→phát đề→tải bằng user đúng/sai track,event; hai lần cập nhật xen kẽ phải có conflict hợp lệ. Không dùng tài khoản nghiệp vụ thật để thử trước khi xác nhận dữ liệu test.
 
-Nguồn: [AvatarStorage](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/AvatarStorage.java),[TrackProblemService](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TrackProblemService.java),[S3ObjectStorage](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/S3ObjectStorage.java).
+Nguồn: [AvatarStorage](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/AvatarStorage.java),[TrackProblemService](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TrackProblemService.java),[S3ObjectStorage](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/S3ObjectStorage.java).
 
 ## 6. Quyền truy cập,JWT và OAuth
 
@@ -75,7 +77,7 @@ Nguồn: [AvatarStorage](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hack
 - [ ] Người dùng review các thay đổi auth này như một phần của bộ BE1,cùng nhận biết tài khoản demo grant global có thể không đủ quyền.
 - [ ] Browser OAuth/callback/domain/SMTP thật chưa kiểm; chưa có flow UI/OTP link-account riêng hoặc refresh-token mới.
 
-Nguồn: [JobAccess](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobAccess.java),[AiJudgeAssistantService](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AiJudgeAssistantService.java),[JwtService](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/JwtService.java),[OAuth user service](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/CustomOAuth2UserService.java).
+Nguồn: [JobAccess](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobAccess.java),[AiJudgeAssistantService](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AiJudgeAssistantService.java),[JwtService](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/security/JwtService.java),[OAuth user service](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/CustomOAuth2UserService.java).
 
 ## 7. AI job,SQS và contract FE/AI
 
@@ -89,7 +91,7 @@ Nguồn: [JobAccess](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackatho
 - [ ] FE/AI/BE2 review DTO/protocol; chưa có JSON Schema độc lập hoặc sign-off liên nhóm. Worker MOCK không phải strict input validator đầy đủ cho model thật.
 - [ ] BE2 áp queue defaults120s; IAM/transport/redrive/DLQ/application restart và thời gian xử lý thật còn cần test.
 
-Nguồn: [CURRENT.md](../contracts/ai-job-v1/CURRENT.md),[sample HTTP create](../contracts/ai-job-v1/current-examples/success/http-create.json),[sample result](../contracts/ai-job-v1/current-examples/success/http-result.json),[JobDelivery](../../back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobDelivery.java).
+Nguồn: [CURRENT.md](../contracts/ai-job-v1/CURRENT.md),[sample HTTP create](../contracts/ai-job-v1/current-examples/success/http-create.json),[sample result](../contracts/ai-job-v1/current-examples/success/http-result.json),[JobDelivery](../../back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobDelivery.java).
 
 ## 8. Cấu hình AWS,health và log
 
@@ -99,11 +101,11 @@ Nguồn: [CURRENT.md](../contracts/ai-job-v1/CURRENT.md),[sample HTTP create](..
 - [ ] BE2 xác nhận prefix/provider Java,worker owner/queue window; role/16 Outputs đã giao theo nguồn,chưa verify live.
 - [ ] BE2 cấu hình nơi thu log,network,IAM,TLS và thực sự kiểm log/health trên runtime. Có log group không chứng minh backend đã gửi log.
 
-Nguồn: [.env.aws.example](../../back-end/src/fcaj-api/.env.aws.example),[application-aws.properties](../../back-end/src/fcaj-api/src/main/resources/application-aws.properties),[đầu vào AWS](backend1-be2-aws-smoke-inputs-2026-10-28.md).
+Nguồn: [.env.aws.example](../../back-end/src/seal-api/.env.aws.example),[application-aws.properties](../../back-end/src/seal-api/src/main/resources/application-aws.properties),[đầu vào AWS](backend1-be2-aws-smoke-inputs-2026-10-28.md).
 
 ## 9. CI và đường deploy
 
-- [x] CI backend dùng path fcaj-api,JUnit+MySQL8.4+deploy gate tests. sh ./mvnw tránh phụ thuộc executable bit; LF cho script Linux.
+- [x] CI backend dùng path seal-api,JUnit+MySQL8.4+deploy gate tests. sh ./mvnw tránh phụ thuộc executable bit; LF cho script Linux.
 - [x] Workflow chỉ deploy trên push main; PR target main chạy test. Push branch riêng hiện tại không kích hoạt workflow này nếu không có PR phù hợp.
 - [x] Gate chọn đúng candidate artifact,kiểm schema/history V3 trước compose up;2 command-recording tests pass.
 - [x] Đã sửa đường khởi tạo catalog rỗng: mode initialize-empty có kiểm target trước ghi, V1→V2→V3 rồi gate; verify-only vẫn mặc định. Test deploy được mở rộng lên8 ca; DB không rõ nguồn/pre-V3 vẫn bị chặn.
@@ -112,7 +114,7 @@ Nguồn: [.env.aws.example](../../back-end/src/fcaj-api/.env.aws.example),[appli
 - [x] Ở lượt bổ sung RDS rỗng: Dockerfile thật build đạt;Compose template được parse và probe container shell với env giả đạt. CI remote và ứng dụng trên AWS vẫn chưa chạy; xem bằng chứng mới.
 - [ ] Compose hiện có vẫn MySQL8.0/dev env,không phải production AWS compose. BE2 phải cung cấp production compose/service mapping/settings trước deploy.
 
-Nguồn: [workflow](../../.github/workflows/deploy.yml),[deploy gate](../../back-end/src/fcaj-api/Test/deploy-verified.sh),[compose](../../docker-compose.yml).
+Nguồn: [workflow](../../.github/workflows/deploy.yml),[deploy gate](../../back-end/src/seal-api/Test/deploy-verified.sh),[compose](../../docker-compose.yml).
 
 ## 10. Bằng chứng kiểm thử và tính đầy đủ của gói
 
@@ -125,7 +127,7 @@ Nguồn: [workflow](../../.github/workflows/deploy.yml),[deploy gate](../../back
 
 ## Phạm vi đề xuất để người dùng duyệt
 
-**A — source bắt buộc:** toàn module fcaj-api (trừ file ignored),xóa tracked module seal-api cũ;root .gitattributes;workflow;compose;5 E2E bat;1 Playwright path change.
+**A — source bắt buộc:** toàn module seal-api (trừ file ignored),xóa tracked module seal-api cũ;root .gitattributes;workflow;compose;5 E2E bat;1 Playwright path change.
 
 **B — bàn giao và chạy lại bắt buộc:** docs/contracts/ai-job-v1/**;docs/checks/** đã lọc (schema references,static comparison,SQL inventory chỉ đọc,BE1–BE2 evidence/manifest);báo cáo readiness review;checklist này;AWS smoke inputs;runbook sửa R1–R5;báo cáo kiểm chứng ngày28 và completion ngày27 được dẫn chiếu.
 

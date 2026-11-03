@@ -1,0 +1,470 @@
+{
+  "stage": "clean package Java21 profile test",
+  "baseline": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "suites": [
+    {
+      "name": "com.seal.hackathon.aijob.AiJobIntegrationTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 14.112
+    },
+    {
+      "name": "com.seal.hackathon.aijob.ApiSmokeRehearsalTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 4.381
+    },
+    {
+      "name": "com.seal.hackathon.aijob.AwsMockWorkerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.04
+    },
+    {
+      "name": "com.seal.hackathon.aijob.BoundedHttpTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.967
+    },
+    {
+      "name": "com.seal.hackathon.aijob.GitHubSourceReaderTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.054
+    },
+    {
+      "name": "com.seal.hackathon.aijob.JobEnvironmentConfigurationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.005
+    },
+    {
+      "name": "com.seal.hackathon.aijob.JobSnapshotLimitsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.033
+    },
+    {
+      "name": "com.seal.hackathon.config.AwsEnvironmentConfigurationTest",
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.107
+    },
+    {
+      "name": "com.seal.hackathon.config.BootstrapAdminSeederTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.535
+    },
+    {
+      "name": "com.seal.hackathon.config.DataSeederTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.222
+    },
+    {
+      "name": "com.seal.hackathon.config.EnvironmentProfilesTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.064
+    },
+    {
+      "name": "com.seal.hackathon.config.MigrationAndStoragePolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.005
+    },
+    {
+      "name": "com.seal.hackathon.config.OperationalTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.195
+    },
+    {
+      "name": "com.seal.hackathon.config.SecurityConfigTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.011
+    },
+    {
+      "name": "com.seal.hackathon.config.seed.DemoEventGrantTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 12.371
+    },
+    {
+      "name": "com.seal.hackathon.config.seed.DemoFixturesAdminTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.014
+    },
+    {
+      "name": "com.seal.hackathon.db.DatabaseMigrationTargetTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.009
+    },
+    {
+      "name": "com.seal.hackathon.db.FreshDatabaseDeploymentTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "seconds": 0.001
+    },
+    {
+      "name": "com.seal.hackathon.exception.ConcurrentUpdateResponseTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.025
+    },
+    {
+      "name": "com.seal.hackathon.HackathonApplicationTests",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.458
+    },
+    {
+      "name": "com.seal.hackathon.mockdemo.LocalMockJobAccessTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.25
+    },
+    {
+      "name": "com.seal.hackathon.mockdemo.LocalMockJobApiTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 2.012
+    },
+    {
+      "name": "com.seal.hackathon.mockdemo.LocalMockJobStoreTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.74
+    },
+    {
+      "name": "com.seal.hackathon.mockdemo.MockDemoConfigurationTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.033
+    },
+    {
+      "name": "com.seal.hackathon.security.InactiveParticipantWriteFilterTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.006
+    },
+    {
+      "name": "com.seal.hackathon.security.JwtServiceTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.019
+    },
+    {
+      "name": "com.seal.hackathon.security.oauth2.GoogleOAuthIdentityTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.134
+    },
+    {
+      "name": "com.seal.hackathon.service.AccountServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.582
+    },
+    {
+      "name": "com.seal.hackathon.service.AdminScoreDistributionServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.631
+    },
+    {
+      "name": "com.seal.hackathon.service.AiJudgeAssistantAccessTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.112
+    },
+    {
+      "name": "com.seal.hackathon.service.AiJudgeAssistantRepoAnalysisTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.01
+    },
+    {
+      "name": "com.seal.hackathon.service.AuthServiceTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.255
+    },
+    {
+      "name": "com.seal.hackathon.service.GitHubRepoServiceTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.717
+    },
+    {
+      "name": "com.seal.hackathon.service.grouping.LeftoverGroupingPlannerTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.048
+    },
+    {
+      "name": "com.seal.hackathon.service.HackathonEventServiceTest",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.421
+    },
+    {
+      "name": "com.seal.hackathon.service.JoinRequestServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.132
+    },
+    {
+      "name": "com.seal.hackathon.service.JudgeAssignmentServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.124
+    },
+    {
+      "name": "com.seal.hackathon.service.JudgeScoringCompletenessServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.011
+    },
+    {
+      "name": "com.seal.hackathon.service.LeftoverGroupingFreeAgentTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.378
+    },
+    {
+      "name": "com.seal.hackathon.service.MentorAssignmentServiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.233
+    },
+    {
+      "name": "com.seal.hackathon.service.ParticipantHistorySnapshotServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.142
+    },
+    {
+      "name": "com.seal.hackathon.service.PasswordResetServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.154
+    },
+    {
+      "name": "com.seal.hackathon.service.RoundResultServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.144
+    },
+    {
+      "name": "com.seal.hackathon.service.RoundTimerServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.348
+    },
+    {
+      "name": "com.seal.hackathon.service.ScoringServiceTest",
+      "tests": 35,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.084
+    },
+    {
+      "name": "com.seal.hackathon.service.SubmissionServiceTest",
+      "tests": 53,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.128
+    },
+    {
+      "name": "com.seal.hackathon.service.SystemLogServiceTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.141
+    },
+    {
+      "name": "com.seal.hackathon.service.TeamInviteServiceTest",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.059
+    },
+    {
+      "name": "com.seal.hackathon.service.TeamMembershipServiceTest",
+      "tests": 38,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.221
+    },
+    {
+      "name": "com.seal.hackathon.service.TeamModerationServiceTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.048
+    },
+    {
+      "name": "com.seal.hackathon.service.TeamQueryServiceTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.048
+    },
+    {
+      "name": "com.seal.hackathon.service.TeamRejoinRequestServiceTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.028
+    },
+    {
+      "name": "com.seal.hackathon.service.TeamTrackAssignmentServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.013
+    },
+    {
+      "name": "com.seal.hackathon.service.TrackProblemServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.02
+    },
+    {
+      "name": "com.seal.hackathon.service.TrackServiceTest",
+      "tests": 67,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.416
+    },
+    {
+      "name": "com.seal.hackathon.storage.FileReferenceConcurrencyTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.314
+    },
+    {
+      "name": "com.seal.hackathon.storage.ObjectStorageTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.507
+    },
+    {
+      "name": "com.seal.hackathon.validation.FptStudentIdValidatorTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.007
+    }
+  ]
+}

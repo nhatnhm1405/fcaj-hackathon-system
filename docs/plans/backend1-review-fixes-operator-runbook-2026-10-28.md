@@ -1,21 +1,23 @@
 # Bàn giao vận hành sau sửa lỗi review BE1
 
+Mốc03/11: dùng [runtime/ALB runbook](seal-be1-runtime-config-runbook.md), [data/API runbook](seal-be1-smoke-data-runbook.md) và [báo cáo local mới](../report/seal-be1-local-completion-2026-11-03.md). Template ALB direct chỉ là đề xuất chờ BE2; source working tree SEAL chưa có release SHA mới.
+
 Các sửa lỗi local chưa phải sự cho phép triển khai lên cloud. Target, identity, compose production và thời điểm cutover/rollback vẫn chờ BE2 xác nhận.
 
-Cập nhật bàn giao RDS mới: module hiện là `back-end/src/fcaj-api`, package `com.fcaj.hackathon`. Xem [hướng dẫn tích hợp hiện hành](backend1-be2-current-handoff-2026-10-28.md) và templates trong `back-end/src/fcaj-api/deploy/` để chuẩn bị runtime/migration env, Compose và CA truststore. Bộ migration vẫn V1→V2→V3.
+Cập nhật bàn giao RDS mới: module hiện là `back-end/src/seal-api`, package `com.seal.hackathon`. Xem [hướng dẫn tích hợp hiện hành](backend1-be2-current-handoff-2026-10-28.md) và templates trong `back-end/src/seal-api/deploy/` để chuẩn bị runtime/migration env, Compose và CA truststore. Bộ migration vẫn V1→V2→V3.
 
 ## Kiểm tra artifact trước deploy
 
 Workflow hiện có yêu cầu file `/etc/seal/deploy-settings.sh` trên host. File phải cung cấp `DEPLOY_COMPOSE_FILE` (đường dẫn tuyệt đối tới compose production của BE2), `DEPLOY_MIGRATION_ENV_FILE` (file biến môi trường riêng), `DEPLOY_DB_CATALOG` và `DEPLOY_RUNTIME_JDBC_URL`. Không dùng compose cũ trong repository vì nó trỏ tới MySQL 8.0. Không có cấu hình dự phòng tự động.
 
-File biến môi trường riêng cung cấp `BE1_MIGRATION_JDBC_URL`, `BE1_MIGRATION_USERNAME`, `BE1_MIGRATION_PASSWORD`. URL phải trùng URL runtime đã duyệt; tài khoản migration và runtime có thể khác nhau. URL kết nối từ xa phải dùng `sslMode=VERIFY_IDENTITY`, đồng thời artifact phải có cấu hình tin cậy CA phù hợp. Không đặt thông tin đăng nhập trong URL hoặc Git. Compose production phải dùng `${CANDIDATE_BACKEND_IMAGE}` tại `seal-backend.image`, chọn profile `aws` và khai báo rõ cùng URL runtime đó. Các image khác phải được chuẩn bị sẵn; lệnh thay service dùng `--no-build`.
+File biến môi trường riêng cung cấp `BE1_MIGRATION_JDBC_URL`, `BE1_MIGRATION_USERNAME`, `BE1_MIGRATION_PASSWORD`. URL phải trùng URL runtime đã duyệt; tài khoản migration và runtime có thể khác nhau. URL kết nối từ xa phải dùng `sslMode=VERIFY_IDENTITY`, đồng thời artifact phải có cấu hình tin cậy CA phù hợp. Không đặt thông tin đăng nhập trong URL hoặc Git. Compose production phải dùng `${CANDIDATE_BACKEND_IMAGE}` tại `seal-backend.image`, chọn profile `aws` và khai báo rõ cùng URL runtime đó. Dependencies phải được operator chuẩn bị sẵn; lệnh thay service hiện là `up -d --no-deps --no-build seal-backend`, không thay DB/FE/proxy.
 
 `Test/deploy-verified.sh` build image dự định deploy từ SHA đã xác minh. Mặc định `DEPLOY_DB_MODE=verify-only` chỉ chạy gate đọc trước compose up. Operator chọn `initialize-empty` cho lần đầu vào RDS/catalog rỗng: CLI cùng candidate kiểm đúng runtime URL, engine/case/catalog/charset/collation rồi chạy V1→V2→V3; gate đầy đủ phải đạt trước thay service. Nếu DB không rỗng, mode này chỉ nhận DB đã đạt V3, không tự migrate DB cũ. Không tự baseline/repair/clean. DDL lỗi có thể để lại schema/history một phần và không tự rollback; cần đối soát/recovery riêng. Fingerprint cấu trúc V3 cố định là resource đã duyệt cho artifact; thay đổi schema sau này phải được review và cập nhật tham chiếu tương ứng, không bỏ qua phép kiểm này.
 
 Lệnh CLI đã đóng gói, chạy bên trong image dự định deploy:
 
 ```sh
-java -Dloader.main=com.fcaj.hackathon.db.DatabaseMigrationMain \
+java -Dloader.main=com.seal.hackathon.db.DatabaseMigrationMain \
   -cp /app/app.jar org.springframework.boot.loader.launch.PropertiesLauncher \
   verify-deploy TARGET_CATALOG
 ```

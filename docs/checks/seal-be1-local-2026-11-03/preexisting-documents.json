@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/README.md",
+    "sha256": "5ee71539d3996215e2ce8806fe17e8b8dc8b190e62e137f694ee7c474ca9545a",
+    "originalPreservedUnder": "back-end/src/seal-api/target/preexisting-documents/"
+  },
+  {
+    "path": "docs/plans/backend1-ai-engineering-discussion-handoff-plan-2026-10-28.md",
+    "sha256": "d3fe55bb84a4c1034178dbd80d0190a3ab4b995705bd755f3220fd85c7dee23e",
+    "originalPreservedUnder": "back-end/src/seal-api/target/preexisting-documents/"
+  },
+  {
+    "path": "docs/plans/backend1-be2-predeploy-execution-discussion-plan-2026-11-03.md",
+    "sha256": "d495421112dd97789f4216b25b24a00bdeefb876ac71a58a7cf4875495787b11",
+    "originalPreservedUnder": "back-end/src/seal-api/target/preexisting-documents/"
+  },
+  {
+    "path": "docs/plans/seal-be1-ai-execution-plan-2026-11-03.md",
+    "sha256": "0fcb0993fc182da4c190b7b70b3a9c30a306bf6f48cfff525b4b7a5ba9abd5fc",
+    "originalPreservedUnder": "back-end/src/seal-api/target/preexisting-documents/"
+  },
+  {
+    "path": "docs/plans/seal-be1-tra-loi-be2-truoc-deploy-2026-11-03.md",
+    "sha256": "f5865c6ae7a97448a127dcb30b727b981a6c25e496cdc7e80bb469a5b0c68cd2",
+    "originalPreservedUnder": "back-end/src/seal-api/target/preexisting-documents/"
+  }
+]

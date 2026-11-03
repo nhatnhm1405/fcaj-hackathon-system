@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: back-end/src/fcaj-api
+        working-directory: back-end/src/seal-api
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -61,6 +61,9 @@ jobs:
         run: node --test Test/deploy-verified.test.mjs
 
   deploy:
+    # Legacy SSH transport. A route from GitHub-hosted runners to the proposed private
+    # EC2 has NOT been accepted; BE2 must confirm delivery/operator access before use.
+    # ALB HTTP routing does not provide SSH access. No ECR/SSM pipeline is added here.
     needs: [test-frontend, test-backend]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -131,4 +134,4 @@ jobs:
             set -a
             . /etc/seal/deploy-settings.sh
             set +a
-            bash back-end/src/fcaj-api/Test/deploy-verified.sh
+            bash back-end/src/seal-api/Test/deploy-verified.sh

@@ -2,7 +2,7 @@
 
 Hướng dẫn tích hợp mới nhất, gồm DB rỗng V1–V3 và deploy templates: [current handoff](backend1-be2-current-handoff-2026-10-28.md). Các số612/27 bên dưới ghi nhận bản rename trước khi bổ sung khởi tạo DB; xem [bằng chứng mới](../checks/be1-be2-integration-2026-10-28/fresh-db-verification.md) khi nghiệm thu bản mới.
 
-BE1 đã đổi module sang `back-end/src/fcaj-api`, package `com.fcaj.hackathon`;612 test backend/package và27 test MySQL8.4 riêng đạt. Contract hiện hành: [CURRENT.md](../contracts/ai-job-v1/CURRENT.md). Báo cáo: [review tích hợp](../report/backend1-be2-integration-readiness-review-2026-10-28.md). Tài liệu này để người dùng chuyển cho BE2 khi phù hợp; chưa gửi tự động.
+BE1 đã đổi module sang `back-end/src/seal-api`, package `com.seal.hackathon`;612 test backend/package và27 test MySQL8.4 riêng đạt. Contract hiện hành: [CURRENT.md](../contracts/ai-job-v1/CURRENT.md). Báo cáo: [review tích hợp](../report/backend1-be2-integration-readiness-review-2026-10-28.md). Tài liệu này để người dùng chuyển cho BE2 khi phù hợp; chưa gửi tự động.
 
 ## Đã nhận, không cần cấp lại từ đầu
 
@@ -31,4 +31,4 @@ Khi đủ cấu hình, hai bên ghi identity/account/region/prefix/queue pair/re
 
 ## Đầu vào cho giai đoạn deploy sau
 
-BE2 dựng EC2/RDS8.4, case1 ngay khi tạo DB, TLS VERIFY_IDENTITY, catalog/user/runtime-migration identities, CA/trust/network/HTTPS và compose production. Dùng V1→V2→V3; DB cũ qua backup/rehearsal/baseline1 được kiểm. Xác nhận mapping fcaj-api/com.fcaj, service gate hiện còn seal-backend và settings /etc/seal/deploy-settings.sh. Không dùng compose MySQL8.0 hiện có làm target AWS.
+BE2 dựng EC2/RDS8.4, case1 ngay khi tạo DB, TLS VERIFY_IDENTITY, catalog/user/runtime-migration identities, CA/trust/network/HTTPS và compose production. Dùng V1→V2→V3; DB cũ qua backup/rehearsal/baseline1 được kiểm. Xác nhận mapping seal-api/com.seal, service gate hiện còn seal-backend và settings /etc/seal/deploy-settings.sh. Không dùng compose MySQL8.0 hiện có làm target AWS.

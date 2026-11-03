@@ -2,13 +2,13 @@
 
 **Đọc [contract triển khai ngày28/10](CURRENT.md) trước khi tích hợp.** Các phần bên dưới giữ nguyên bối cảnh lúc soạn fixture ngày27/10; các câu “chưa implement/chưa bàn giao” không mô tả trạng thái hiện tại. IAM role và Outputs đã được BE2 giao theo tài liệu ngày28/10; prefix/provider và AWS smoke vẫn chờ xác nhận. Fixture cũ dùng mock-source.json, khác key source.json của producer/worker hiện tại.
 
-Cập nhật triển khai: checkout đã có job API/business DB, S3/SQS adapters và worker mock CLI; xem [bàn giao hiện hành](../../report/backend1-local-completion-2026-10-27.md). Mô tả "chưa implement" bên dưới ghi thời điểm soạn fixtures. Bộ fixture vẫn chỉ để review; chưa có xác nhận liên nhóm hay nghiệm thu AWS.
+Cập nhật triển khai: checkout đã có job API/business DB, S3/SQS adapters và worker mock CLI; xem [bàn giao hiện hành](../../plans/backend1-be2-current-handoff-2026-10-28.md). Mô tả "chưa implement" bên dưới ghi thời điểm soạn fixtures. Bộ fixture vẫn chỉ để review; chưa có xác nhận liên nhóm hay nghiệm thu AWS.
 
 Ngày: 27/10/2026, Asia/Saigon. Source đối chiếu: `f42a168d9cb0613a43801edca632a2de64837099`.
 
 Người dùng đã chọn **PENDING_DISPATCH / QUEUED / SUCCEEDED / FAILED**, mock trước và nhóm review trước tích hợp AWS. Người dùng xác nhận **chưa có môi trường hoặc contract do BE2/AI bàn giao**. Các JSON này là bản đề xuất để review, chưa phải API đã chạy hoặc giao thức đã được FE/AI/BE2 duyệt.
 
-Cập nhật thực thi: đã có [local mock ba API](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/mockdemo/README.md)
+Cập nhật thực thi: đã có [local mock ba API](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/README.md)
 trong profile opt-in, có private H2 persistence và quyền event/requester. Response
 ghi rõ LOCAL_MOCK; input revision/result là synthetic. Luồng này không phải
 implementation contract S3/SQS/worker thật dưới đây. Xem [report/tests](../../report/local-mock-job-completion-2026-10-27.md).
@@ -144,7 +144,7 @@ Nghiệm thu cần round trip mock; duplicate/conflict; completion trước mark
 Implementation update 28/10/2026 (BE1 local; inter-team protocol review remains pending): producer and worker share `JobLimits`. Limits count actual serialized UTF-8 bytes: rubric, manifest and output 262144; source artifact JSON 8000000; queue message 32768. The collector's 1MB text budget is separate. Oversized rubric/source returns400 `RUBRIC_TOO_LARGE`/`SOURCE_TOO_LARGE` before uploads or job/outbox commit. A final manifest over its limit returns400 `MANIFEST_TOO_LARGE`; already-prepared immutable inputs require reference-aware orphan reconciliation. Nothing silently truncates the official rubric. GitHub body/snapshot timeout returns504 `REPOSITORY_FETCH_TIMEOUT`, cancels the request/subscription, and commits no job/outbox. These limits preserve the existing worker ceiling; no protocol limit increase has been approved.
 
 - [Kế hoạch Backend1](../../plans/backend-1-implementation-plan.md)
-- [AiController](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/controller/AiController.java) và [AiJudgeAssistantService](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/service/AiJudgeAssistantService.java)
-- [Submission](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/entity/Submission.java) và [SubmissionRepository](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/repository/SubmissionRepository.java)
-- [UserPrincipal](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/security/UserPrincipal.java), [UserEventRole](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/entity/UserEventRole.java), [UserEventRoleRepository](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/repository/UserEventRoleRepository.java)
-- [AiInsightResponse](../../../back-end/src/fcaj-api/src/main/java/com/seal/hackathon/dto/response/AiInsightResponse.java)
+- [AiController](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AiController.java) và [AiJudgeAssistantService](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AiJudgeAssistantService.java)
+- [Submission](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Submission.java) và [SubmissionRepository](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/SubmissionRepository.java)
+- [UserPrincipal](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/security/UserPrincipal.java), [UserEventRole](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/UserEventRole.java), [UserEventRoleRepository](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/UserEventRoleRepository.java)
+- [AiInsightResponse](../../../back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/AiInsightResponse.java)

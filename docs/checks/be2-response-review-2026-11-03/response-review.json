@@ -1,0 +1,82 @@
+{
+  "checkedAtUTC": "2026-11-03T07:46:06.700Z",
+  "timezone": "Asia/Saigon",
+  "scope": "Read-only review and BE2 response; existing source/test/evidence unchanged; no new test run or release",
+  "localBranch": "feature/backend1-be2-handoff",
+  "localHead": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "remoteHandoffBranch": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "remoteMain": "a52bf7a1f80df9e3cd162ced8b541f74c543bba4",
+  "remoteComparison": [
+    1,
+    13
+  ],
+  "questionSourceName": "E:/FA26/AWS/be2-hoi-be1-truoc-deploy-2026-11-01.md",
+  "questionSourceSha256": "699c259212b6f28e69eea5fc6084663d4ea16f43f6e3d4c5e9fd18659d79dfca",
+  "questionSnapshot": {
+    "path": "docs/checks/be1-be2-handoff-review-2026-11-03/be2-question-source-2026-11-01.md",
+    "sha256": "699c259212b6f28e69eea5fc6084663d4ea16f43f6e3d4c5e9fd18659d79dfca"
+  },
+  "previousCheckpoint": {
+    "path": "docs/checks/jwt-session-regression-2026-11-03/checkpoint.json",
+    "sha256": "aad8aeca8e0762d6de94a8776d7451fa965b591bb9bc3bc304303aefe5308ab7"
+  },
+  "reportPath": "docs/report/be1-tra-loi-be2-truoc-deploy-2026-11-03.md",
+  "newFiles": [
+    {
+      "path": "docs/report/be1-tra-loi-be2-truoc-deploy-2026-11-03.md",
+      "sha256": "9ba0cc4053c0652fa068750d5137d3b252324d328fc184109b63ac4a7426f30b"
+    },
+    {
+      "path": "docs/checks/be2-response-review-2026-11-03/verify-response.mjs",
+      "sha256": "429097244f6de4ceb88bae6c5d6b836623cb34dac314db8c33041bb21735c1dc"
+    }
+  ],
+  "reviewedRemoteFiles": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "gitBlob": "98a5018a77f5c2d071053f1b84e20b6ec194553a"
+    },
+    {
+      "path": "docker-compose.yml",
+      "gitBlob": "63bfdf6569a8a0b1ef11e7b6841f1f626c4fd1f4"
+    },
+    {
+      "path": "ai-worker/README.md",
+      "gitBlob": "011373aebe3226928ac379ebd79af5ae93689736"
+    },
+    {
+      "path": "ai-worker/contracts/input_schema.json",
+      "gitBlob": "37d048f853fc007a89cfb3c2562bd81f943a40a0"
+    },
+    {
+      "path": "ai-worker/contracts/output_schema.json",
+      "gitBlob": "c2219432c9fc920ad06c27e82fb07c03d136e898"
+    },
+    {
+      "path": "ai-worker/src/mock_worker.py",
+      "gitBlob": "6d760ade35c333d79984f17d8ae306ae5b7f058a"
+    }
+  ],
+  "namedTestEvidence": {
+    "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.AiJobIntegrationTest.xml",
+    "sha256": "7a6287e986bf2e919d632b6710be40e3182996407b2833e7676ca754a4801578",
+    "cases": [
+      {
+        "name": "productionWorkerRoundTripSuccessFailureAndDuplicate",
+        "status": "passed; testcase present with no failure/error/skipped"
+      },
+      {
+        "name": "roundTripCommitsBeforeAckAndKeepsScoresUntouched",
+        "status": "passed; testcase present with no failure/error/skipped"
+      }
+    ]
+  },
+  "checks": {
+    "previousCheckpointBeforeDocs": "PASS 904 preserved / 6 edits / 11 additions / 52 links",
+    "currentContractExamples": "PASS; checked during response review",
+    "mysql": "36/36 saved local checkpoint, not rerun",
+    "fullPackage": "624 executed pass / 9 skipped, completed 2026-11-03T14:33:53+07:00; not rerun",
+    "liveAws": "not performed",
+    "newReleaseSha": null
+  }
+}

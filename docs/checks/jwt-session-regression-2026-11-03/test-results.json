@@ -1,0 +1,1603 @@
+{
+  "capturedAt": "2026-11-03T07:36:23.233Z",
+  "scope": "Local test-only JWT/session fix; suites overlap; no AWS/browser/release acceptance",
+  "tools": {
+    "java": "21.0.10",
+    "mavenWrapper": "3.9.16",
+    "node": "v24.15.0"
+  },
+  "runs": [
+    {
+      "name": "helper-red",
+      "exitCode": 1,
+      "command": "./mvnw.cmd -o -B -Dspring.profiles.active=test -Dtest=CookieSessionClientTest test",
+      "scope": "cookie-only helper; before fix",
+      "totals": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "executed": 1,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.testsupport.CookieSessionClientTest",
+          "tests": 1,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:27:19+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/helper-red.log",
+        "sha256": "e1de92e1930a6579edcdfaf912446e666b6b782068fcef16541a84e4c89f20cb"
+      }
+    },
+    {
+      "name": "helper-green",
+      "exitCode": 0,
+      "command": "./mvnw.cmd -o -B -Dspring.profiles.active=test -Dtest=CookieSessionClientTest test",
+      "scope": "session-aware helper",
+      "totals": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "executed": 3,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.testsupport.CookieSessionClientTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:28:21+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/helper-green.log",
+        "sha256": "11e1c1c9e1fba32e0318cf89f0f4b3b7ba8c943503aed33f8c2d08be153ff907"
+      }
+    },
+    {
+      "name": "auth-helper-targeted",
+      "exitCode": 0,
+      "command": "./mvnw.cmd -o -B -Dspring.profiles.active=test -Dtest=JwtCookieSessionIsolationTest,CookieSessionClientTest test",
+      "scope": "auth/helper; before API test integration",
+      "totals": {
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "executed": 10,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.security.JwtCookieSessionIsolationTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.testsupport.CookieSessionClientTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:29:36+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/auth-targeted.log",
+        "sha256": "814c921307465a96539ba4510fcda039ae4531a348a3f91453c6e53ac552e45a"
+      }
+    },
+    {
+      "name": "api-security-targeted",
+      "exitCode": 0,
+      "command": "./mvnw.cmd -o -B -Dspring.profiles.active=test -Dtest=ApiSmokeRehearsalTest,SecurityConfigTest,JwtServiceTest test",
+      "scope": "final test source",
+      "totals": {
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "executed": 15,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.aijob.ApiSmokeRehearsalTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.SecurityConfigTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.JwtServiceTest",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:30:45+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/api-security-targeted.log",
+        "sha256": "83ba9f5986272d0e463713f77e8a5a67241a1cddfca96a7e6fa76a0f1876aca6"
+      }
+    },
+    {
+      "name": "component-smoke",
+      "exitCode": 0,
+      "command": "./Test/run-integration-smoke.ps1",
+      "scope": "final test source; sandbox",
+      "totals": {
+        "tests": 36,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "executed": 36,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.aijob.AiJobIntegrationTest",
+          "tests": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.ApiSmokeRehearsalTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.AwsMockWorkerTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.JwtCookieSessionIsolationTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.testsupport.CookieSessionClientTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:31:33+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/component-smoke.log",
+        "sha256": "ad82c83fff38b735e0a7bfef77fe2fa6809fb437f6fd2376e257f9e2a9c6a444"
+      }
+    },
+    {
+      "name": "full-package-sandbox",
+      "exitCode": 1,
+      "command": "./mvnw.cmd -o -B -Dspring.profiles.active=test package",
+      "scope": "final test source; sandbox loopback denied",
+      "totals": {
+        "tests": 633,
+        "failures": 0,
+        "errors": 1,
+        "skipped": 9
+      },
+      "executed": 624,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.aijob.AiJobIntegrationTest",
+          "tests": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.ApiSmokeRehearsalTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.AwsMockWorkerTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.BoundedHttpTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 1,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.GitHubSourceReaderTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.JobEnvironmentConfigurationTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.JobSnapshotLimitsTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.AwsEnvironmentConfigurationTest",
+          "tests": 32,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.BootstrapAdminSeederTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.DataSeederTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.EnvironmentProfilesTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.MigrationAndStoragePolicyTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.OperationalTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.SecurityConfigTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.seed.DemoEventGrantTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.seed.DemoFixturesAdminTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.db.DatabaseMigrationTargetTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.db.FreshDatabaseDeploymentTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 9
+        },
+        {
+          "name": "com.seal.hackathon.exception.ConcurrentUpdateResponseTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.HackathonApplicationTests",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.LocalMockJobAccessTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.LocalMockJobApiTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.LocalMockJobStoreTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.MockDemoConfigurationTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.InactiveParticipantWriteFilterTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.JwtCookieSessionIsolationTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.JwtServiceTest",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.oauth2.GoogleOAuthIdentityTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AccountServiceTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AdminScoreDistributionServiceTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AiJudgeAssistantAccessTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AiJudgeAssistantRepoAnalysisTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AuthServiceTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.GitHubRepoServiceTest",
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.grouping.LeftoverGroupingPlannerTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.HackathonEventServiceTest",
+          "tests": 26,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.JoinRequestServiceTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.JudgeAssignmentServiceTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.JudgeScoringCompletenessServiceTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.LeftoverGroupingFreeAgentTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.MentorAssignmentServiceTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.ParticipantHistorySnapshotServiceTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.PasswordResetServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.RoundResultServiceTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.RoundTimerServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.ScoringServiceTest",
+          "tests": 35,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.SubmissionServiceTest",
+          "tests": 53,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.SystemLogServiceTest",
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamInviteServiceTest",
+          "tests": 26,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamMembershipServiceTest",
+          "tests": 38,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamModerationServiceTest",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamQueryServiceTest",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamRejoinRequestServiceTest",
+          "tests": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamTrackAssignmentServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TrackProblemServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TrackServiceTest",
+          "tests": 67,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.storage.FileReferenceConcurrencyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.storage.ObjectStorageTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.testsupport.CookieSessionClientTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.validation.FptStudentIdValidatorTest",
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:32:39+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox.log",
+        "sha256": "165ab58777bc624a1a646f2601687a23c16b2f29c79c249457ea929b21c35aab"
+      },
+      "environmentFailure": "BoundedHttpTest: loopback Permission denied"
+    },
+    {
+      "name": "full-package",
+      "exitCode": 0,
+      "command": "./mvnw.cmd -o -B -Dspring.profiles.active=test package",
+      "scope": "final test source; approved host execution",
+      "totals": {
+        "tests": 633,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 9
+      },
+      "executed": 624,
+      "suites": [
+        {
+          "name": "com.seal.hackathon.aijob.AiJobIntegrationTest",
+          "tests": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.ApiSmokeRehearsalTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.AwsMockWorkerTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.BoundedHttpTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.GitHubSourceReaderTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.JobEnvironmentConfigurationTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.aijob.JobSnapshotLimitsTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.AwsEnvironmentConfigurationTest",
+          "tests": 32,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.BootstrapAdminSeederTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.DataSeederTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.EnvironmentProfilesTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.MigrationAndStoragePolicyTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.OperationalTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.SecurityConfigTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.seed.DemoEventGrantTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.config.seed.DemoFixturesAdminTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.db.DatabaseMigrationTargetTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.db.FreshDatabaseDeploymentTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 9
+        },
+        {
+          "name": "com.seal.hackathon.exception.ConcurrentUpdateResponseTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.HackathonApplicationTests",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.LocalMockJobAccessTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.LocalMockJobApiTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.LocalMockJobStoreTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.mockdemo.MockDemoConfigurationTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.InactiveParticipantWriteFilterTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.JwtCookieSessionIsolationTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.JwtServiceTest",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.security.oauth2.GoogleOAuthIdentityTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AccountServiceTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AdminScoreDistributionServiceTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AiJudgeAssistantAccessTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AiJudgeAssistantRepoAnalysisTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.AuthServiceTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.GitHubRepoServiceTest",
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.grouping.LeftoverGroupingPlannerTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.HackathonEventServiceTest",
+          "tests": 26,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.JoinRequestServiceTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.JudgeAssignmentServiceTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.JudgeScoringCompletenessServiceTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.LeftoverGroupingFreeAgentTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.MentorAssignmentServiceTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.ParticipantHistorySnapshotServiceTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.PasswordResetServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.RoundResultServiceTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.RoundTimerServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.ScoringServiceTest",
+          "tests": 35,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.SubmissionServiceTest",
+          "tests": 53,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.SystemLogServiceTest",
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamInviteServiceTest",
+          "tests": 26,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamMembershipServiceTest",
+          "tests": 38,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamModerationServiceTest",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamQueryServiceTest",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamRejoinRequestServiceTest",
+          "tests": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TeamTrackAssignmentServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TrackProblemServiceTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.service.TrackServiceTest",
+          "tests": 67,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.storage.FileReferenceConcurrencyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.storage.ObjectStorageTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.testsupport.CookieSessionClientTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.seal.hackathon.validation.FptStudentIdValidatorTest",
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "finishedAt": "2026-11-03T14:33:53+07:00",
+      "log": {
+        "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package.log",
+        "sha256": "6c0af487cc93bd40779b6d850a73ca815bd9057dde009f17c0c4c575d5b4dab5"
+      }
+    }
+  ],
+  "rawEvidence": [
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/targeted-reports/TEST-com.seal.hackathon.security.JwtCookieSessionIsolationTest.xml",
+      "sha256": "f2df07c0bd4ded6487af3d60ffb378b7be2bf9531ee284eb02528648b9435ea2"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/targeted-reports/TEST-com.seal.hackathon.testsupport.CookieSessionClientTest.xml",
+      "sha256": "c3dc83dce8c4d555253ca0225cc8771b60df3ad18b06686e526fa24a5ff70d9b"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/component-reports/TEST-com.seal.hackathon.aijob.AiJobIntegrationTest.xml",
+      "sha256": "1301c433174ea658d9cf23807d5422a3de26fa5f49115c684d709b6fcb664358"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/component-reports/TEST-com.seal.hackathon.aijob.ApiSmokeRehearsalTest.xml",
+      "sha256": "fc6abd5774c13a00b5be90f2a4159b0c2fef78af0d557e72cf0e749193f89fb9"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/component-reports/TEST-com.seal.hackathon.aijob.AwsMockWorkerTest.xml",
+      "sha256": "b177caaea7bdf35768af6ff72ea6a35978aa0a945c6e7e13bf4d63194f4438af"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/component-reports/TEST-com.seal.hackathon.security.JwtCookieSessionIsolationTest.xml",
+      "sha256": "b37436237350e2be1af20ea971c742c5e47259464a946859fab75bea6eacc245"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/component-reports/TEST-com.seal.hackathon.testsupport.CookieSessionClientTest.xml",
+      "sha256": "a28e5f3725a6942bcc035af40a1e7ddaec7f4aa60da125e4ecdc7eab0b66adb4"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.HackathonApplicationTests.xml",
+      "sha256": "7b29a6a4a8cbb6c0d72c35fa36e23580f1e544a372224a1d7f971b7398267d18"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.AiJobIntegrationTest.xml",
+      "sha256": "7a6287e986bf2e919d632b6710be40e3182996407b2833e7676ca754a4801578"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.ApiSmokeRehearsalTest.xml",
+      "sha256": "41a0b3ab4517ca1038a41012616097a4c7d56cb884d442131167f27fd1d6ae64"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.AwsMockWorkerTest.xml",
+      "sha256": "41f968c91973952dedfbd7b742d6909e9668e2ec521d798c56f3266b0b73199f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.BoundedHttpTest.xml",
+      "sha256": "c4f4990415b5463592f6d17c86eab34c5ff53e66487a59cdb85e46b2481e01b0"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.GitHubSourceReaderTest.xml",
+      "sha256": "42a1c8742ab9fa0a1ab9883621f5eb15da67964af71df1c8e5f9c1af1074c401"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.JobEnvironmentConfigurationTest.xml",
+      "sha256": "39c0c3061ddb203f2d8667b807c80f93d3e3e10467eb1db5c4378de964de71a9"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.aijob.JobSnapshotLimitsTest.xml",
+      "sha256": "34cc60b1ac79cfc5d426e8e846ce4292d0646d8eef29e7b753ab2537d420b2ea"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.AwsEnvironmentConfigurationTest.xml",
+      "sha256": "f09bb28a8bc7668482a8d9c822d3f4d8fd1b09844c379ca38b94b5ffbe6b1eb0"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.BootstrapAdminSeederTest.xml",
+      "sha256": "613a3866c1adb9873ff1d46104f5b68521a7b8658933ed85bf3932f730a3b6d2"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.DataSeederTest.xml",
+      "sha256": "751fd48f46109df4082be1f59accb5e017810f270a9b012bc0fcfb213df57362"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.EnvironmentProfilesTest.xml",
+      "sha256": "d96acc38b7c49ba9149b983ca00ee395ec44d59f8c0896a31a309777913d3b97"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.MigrationAndStoragePolicyTest.xml",
+      "sha256": "b81c3c6af898ae7db27c03b0ddcd1b6b29584bb2412fc57b52ca471ca8721265"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.OperationalTest.xml",
+      "sha256": "27e82c94651ec76525b2e82aa33a4a59bb7f88442ea1bed217e787374a8e3c23"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.SecurityConfigTest.xml",
+      "sha256": "52ef9ab1a4572d40c400cecfec0e5909f91a6eadc0e1016b2a7163d4b8984861"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.seed.DemoEventGrantTest.xml",
+      "sha256": "bd7a979274fed680d58dccc322c4d7dc6bd56ced7c297863195f38cbba2ae787"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.config.seed.DemoFixturesAdminTest.xml",
+      "sha256": "364edbd779b0d50a12bcddbfcf85197d226301fa04a1a45887c8ab9741d9abd8"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.db.DatabaseMigrationTargetTest.xml",
+      "sha256": "2967a8808dd209b8c0d3ea8874056747c62c5be03ba812d455060954c7da0765"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.db.FreshDatabaseDeploymentTest.xml",
+      "sha256": "211b28e1f4f955ff3a8e4801c25af4389e7db1ea96db41e21e167c73758afe03"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.exception.ConcurrentUpdateResponseTest.xml",
+      "sha256": "39f5117fd53ee75c5bd9830ebc92cc59fe00651fb7eb9a5e4b71b1f5d1bf5c6d"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.mockdemo.LocalMockJobAccessTest.xml",
+      "sha256": "07d78b8b7f7fe9b9ad91b0c8c70e533b500856ee0b0e96174887bc8887151bfd"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.mockdemo.LocalMockJobApiTest.xml",
+      "sha256": "6296caf499be086bf85c6fed07936f2ee1a5d86b38153867c3f71a6c91d9806f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.mockdemo.LocalMockJobStoreTest.xml",
+      "sha256": "e2483c8c0d5d7bd0d215ea8ca85a0cca394330d4db354e6f5b85f8028918729f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.mockdemo.MockDemoConfigurationTest.xml",
+      "sha256": "dee10b2bd75ded4f8d9049dcabd9f8a0ff6af9790b746d3bcde7596f81ed44bb"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.security.InactiveParticipantWriteFilterTest.xml",
+      "sha256": "f8328bc9a49a2e4ee4f1562dfefd0aa732b9e1cd2761e1180350b4a8b6b3f4ef"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.security.JwtCookieSessionIsolationTest.xml",
+      "sha256": "b85e9fe49201272a9796655f5b6729085c159f2ff3a540891b5cda0d4df797b8"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.security.JwtServiceTest.xml",
+      "sha256": "e624d277e79e509b190588f87645a14742964a0f5705324d4d11ddae8b607408"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.security.oauth2.GoogleOAuthIdentityTest.xml",
+      "sha256": "81e7fafd192e5c4fc87b9008438613e062d50b5d5a050f46a5e72cc299353051"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.AccountServiceTest.xml",
+      "sha256": "6d0d4458ca98896a317b25911d10fdb72f47ecd081390c1902d9997c0f375c41"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.AdminScoreDistributionServiceTest.xml",
+      "sha256": "8337f2baf4f8353ed614c26c1e99511f86d6cdf1bc525d7d80234879cde7bf7e"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.AiJudgeAssistantAccessTest.xml",
+      "sha256": "f728896c58d92d5759c6be7e19cc9ff85e4fbc4e7e33d0eb71402d5efaabfaf2"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.AiJudgeAssistantRepoAnalysisTest.xml",
+      "sha256": "8d87185a3da81e0607d603c7be1ce7a9f9e768843c41a32a94f2dc95c68b8907"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.AuthServiceTest.xml",
+      "sha256": "0e6ca8dbbea1bf8408f49b57536589401d20330aeda4602e07c1f43e8f0aca72"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.GitHubRepoServiceTest.xml",
+      "sha256": "2233f7c79ebdc62027f3681dc45c8f50d90f8a8e91e75d2a279c6bf49062747e"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.HackathonEventServiceTest.xml",
+      "sha256": "b039ac3151bb010deb2cb0369d70cd2aec6aac9a4efad894abe0e352af56ab1b"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.JoinRequestServiceTest.xml",
+      "sha256": "61bc574c75552b6049a8ff4f7e654e3680135ee9e84a370275619ffccd4283cb"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.JudgeAssignmentServiceTest.xml",
+      "sha256": "d5956b716609aa43fcf53aecaa1d0626781259da84716aa5a9ca5f8cf12cf0bc"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.JudgeScoringCompletenessServiceTest.xml",
+      "sha256": "44e2d83e5aaa91cd28cbc3fef65a8e99c47a8c4623d050b6105ac8abfcd38dce"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.LeftoverGroupingFreeAgentTest.xml",
+      "sha256": "9ca8053ea418b4db7e15b07c45037177526258cafaec3d724432fbc8b733c351"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.MentorAssignmentServiceTest.xml",
+      "sha256": "1f985530b05e112347a37e7166478e753818c9d17cbadf9dac879ddf38688969"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.ParticipantHistorySnapshotServiceTest.xml",
+      "sha256": "04486c03d4453eae82ad4fc2117065f6d49cba65c29850e09ee875c08c4e0915"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.PasswordResetServiceTest.xml",
+      "sha256": "d8d0acb7169402c21df20fb1f5a5062a2cafa272359541bd0dce903d7b52d99d"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.RoundResultServiceTest.xml",
+      "sha256": "42ed89aa91e15c1b8807e77062df3eceb1b5893aa0aee6d5a070cdde5d03cdc8"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.RoundTimerServiceTest.xml",
+      "sha256": "a9ba36487eef35d542e301c37d78ed81d425b5d5591ff31d43402b356746906d"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.ScoringServiceTest.xml",
+      "sha256": "e364ef0a100fa0e2678844af013ffb36e1de145310d5c8f56fb15168ff29b312"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.SubmissionServiceTest.xml",
+      "sha256": "8d033d97a616390d31e8119a08660d4de80d97e027ea8b02fefc1b89b5d56477"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.SystemLogServiceTest.xml",
+      "sha256": "5d41495618f4ecc3b98229834bd77f48416003dc4adf46327c27fc0e7e02bd87"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TeamInviteServiceTest.xml",
+      "sha256": "76343961c2cca827367191bcdd8aaf367b704eaa73cb459fc05d32f90afb2cbf"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TeamMembershipServiceTest.xml",
+      "sha256": "836d3f7788b7be228b21f6b93bdf4fa274457326ac1c205ac97d7993926d9a39"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TeamModerationServiceTest.xml",
+      "sha256": "2f7f455bbcc751dab226de800df89202003de50490ac5900102064879b17e9aa"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TeamQueryServiceTest.xml",
+      "sha256": "c96ee667b29bd9f1e6a13a442a356b6ca623086cb48854a50cf053775775fcaf"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TeamRejoinRequestServiceTest.xml",
+      "sha256": "6dc8b11bad603f3eb9ead9d8e537d4474696a8a49492f20fbf899887d0200cfc"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TeamTrackAssignmentServiceTest.xml",
+      "sha256": "8b320a7cfbcc58c3f0600f593b9297008e758053384c9172e534d1c8820c60b9"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TrackProblemServiceTest.xml",
+      "sha256": "33df08714723e72fbda8af3b5f22024b1feaaa3fcd0db2abe0e6c1d01987a25f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.TrackServiceTest.xml",
+      "sha256": "c4a39a2483809ee136e422039a47be5e8062d97af0998ffcbbc6726e797a3f77"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.service.grouping.LeftoverGroupingPlannerTest.xml",
+      "sha256": "827d8af9a21c02a45f18ab240acf62ecac1e35051416aaf685fdd5023620625c"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.storage.FileReferenceConcurrencyTest.xml",
+      "sha256": "15133f21beab6c2d07846ba7883713ed7ce7a56f143abc820f3733c4f916462d"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.storage.ObjectStorageTest.xml",
+      "sha256": "e01580991c9f69277fae1222a7ff2fa09b4b70185641562735fde567044bc024"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.testsupport.CookieSessionClientTest.xml",
+      "sha256": "05115feef01836b67ac580403622094acfa9beead64ec394a112f79d17ac0984"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-reports/TEST-com.seal.hackathon.validation.FptStudentIdValidatorTest.xml",
+      "sha256": "900259b449a8fe25de5d897c8b6500f9300f2717cb99611a0485652b3bb7691f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.HackathonApplicationTests.xml",
+      "sha256": "99d73416d89a572ce4f8f21c15952fb36e2f29c98bac68d99537b95dcc8edec3"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.AiJobIntegrationTest.xml",
+      "sha256": "7e857d2a00b2363ef115146d8a3fb5782d0c2e0436aff1c951da56dbc2340147"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.ApiSmokeRehearsalTest.xml",
+      "sha256": "3c56ecc18a6fc510ddb6ef39ce7643fa86eb654f6c9b0e65a326bf69313427bc"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.AwsMockWorkerTest.xml",
+      "sha256": "d5398d1560925a8d10255d3b6321d3d07a23ea873c75b2a8e53cd1495fafa569"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.BoundedHttpTest.xml",
+      "sha256": "a459d4471d03870f3aa3cba271097c2c1fbc8e06891e76e18873a84892076344"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.GitHubSourceReaderTest.xml",
+      "sha256": "37c9ca5b21a20053e5f5b1c6f812c3812a1b21ce12d07b7a71f4120e905349c1"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.JobEnvironmentConfigurationTest.xml",
+      "sha256": "74309a96d062aae55ccc5f022c43dfa21d89327569214acfb2817922fb776546"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.aijob.JobSnapshotLimitsTest.xml",
+      "sha256": "65212b84571d749e3721e812cd9e82f8e4fb212a3faed30745c7b03f9d01d61f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.AwsEnvironmentConfigurationTest.xml",
+      "sha256": "5074f625778412a13e9b8c641e6aa54e5890483514f58c3ef3ecdf9a6d8f4ba6"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.BootstrapAdminSeederTest.xml",
+      "sha256": "bcf26af07271f0451c211be9dbcd099f4c81877b9cb4927c487137a423d1b0df"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.DataSeederTest.xml",
+      "sha256": "f2f747957543b166f7e32c5911c680011eb94fba687e0ae75738801357347dba"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.EnvironmentProfilesTest.xml",
+      "sha256": "c567cfb6e84fba3fa8390cd65aabc5be725595375f3c9309e9638ecf159dcfa3"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.MigrationAndStoragePolicyTest.xml",
+      "sha256": "b222cb8df340b26cf06985505397d6866d425dc1a52d581e0eef517775b93d42"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.OperationalTest.xml",
+      "sha256": "7c97375b420b2e84cba6f8ef7336e53bd2565d7ef49d7f81b788f59909f0a8d0"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.SecurityConfigTest.xml",
+      "sha256": "56bcb73edbeb23e838d4c7d07c720a896d2e99a1ebfbf5ea6887a2977bf1dd68"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.seed.DemoEventGrantTest.xml",
+      "sha256": "d0815a6a473b597d637cfb2c65182952a45ae9a418b9fb8d832b283207f4e9ea"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.config.seed.DemoFixturesAdminTest.xml",
+      "sha256": "c0730122ddd6973fe4d150c7f60f17139868ab3f95cb6163f76ba57adb2647ee"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.db.DatabaseMigrationTargetTest.xml",
+      "sha256": "bbef228045a0904eae10f07bda09b730b98e2138719c2a5601cdb49c54a12ee0"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.db.FreshDatabaseDeploymentTest.xml",
+      "sha256": "835159a06396d74908a733357706b6416a46efeecc32426ab3eb9b68b7a96800"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.exception.ConcurrentUpdateResponseTest.xml",
+      "sha256": "d19718aeb70775ed94b62b5bcd4a09d46e4ca7e0a36cc3e88200549e6fb977d1"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.mockdemo.LocalMockJobAccessTest.xml",
+      "sha256": "ba213b4616cda72e919bd1563c29204c74e91be94ce4630d7ff6740e61387916"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.mockdemo.LocalMockJobApiTest.xml",
+      "sha256": "68bb74a8e6546be1a174e750423ceb6e8670883996c316ce5827e07224ece7b9"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.mockdemo.LocalMockJobStoreTest.xml",
+      "sha256": "ac33d25e363dfa0b36cd54982cbc1a7fcda43f2c6429612c08c3aaba16891c79"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.mockdemo.MockDemoConfigurationTest.xml",
+      "sha256": "72bc9bb425a857fdc9ec48c20be4f9c267f0e0764f55dec8962c985998adf4e7"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.security.InactiveParticipantWriteFilterTest.xml",
+      "sha256": "b6b13cf434bbc85df787f8145451e6b62b9a4d652cb86ee9b11be0c441331368"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.security.JwtCookieSessionIsolationTest.xml",
+      "sha256": "84a59c849e25fe9fd21f63f541cfdc19139724789a4825e7241f49a75146df8e"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.security.JwtServiceTest.xml",
+      "sha256": "4281c7f027c56feefa10476839327cf39b2ac33091246ad4c1791279a62772c0"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.security.oauth2.GoogleOAuthIdentityTest.xml",
+      "sha256": "8441786f4a3a565f8c7acbb79d730c967915ca3f0fd2a51b51da85a3e6b2f201"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.AccountServiceTest.xml",
+      "sha256": "b1ea5c4f6a47a06c1194a005c461a534c098831d4d06b9d37148b3b2c55656b6"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.AdminScoreDistributionServiceTest.xml",
+      "sha256": "9292bb81b883a8f48474aef6e314bafe4ded1f3e137584b9d8273b7d4dc86a98"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.AiJudgeAssistantAccessTest.xml",
+      "sha256": "830525c6edb247c893834f9300e1e4c155378d5001564a6d7c0d1a2614b286af"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.AiJudgeAssistantRepoAnalysisTest.xml",
+      "sha256": "a1b17fe511f32d2738a2f2f0c8a96af3abb29748d3b23f406dd353f3a98b4dab"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.AuthServiceTest.xml",
+      "sha256": "1d4d4aaa96ccca88fdd38b73b2fd6179b9e288442aae5062942161bcdcad55e5"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.GitHubRepoServiceTest.xml",
+      "sha256": "3a0f1d17b517cf6957a522edbbb468aca14d4579527f7f29adc7a2d04eb50c45"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.HackathonEventServiceTest.xml",
+      "sha256": "92390ba0bbdd737082634407e4cd4598f454b34bb37c1e3ab6c9bf7ab81e7ad2"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.JoinRequestServiceTest.xml",
+      "sha256": "8a3eb637e94fca25aad52cb41180debe37c2d28e9606243d22e9e0f84359d806"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.JudgeAssignmentServiceTest.xml",
+      "sha256": "4ce4ec050a6055c61cb2dbf23ca884ad62cc1766f982bd1cb1877999f758d23f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.JudgeScoringCompletenessServiceTest.xml",
+      "sha256": "e1bbd3eef9668b39ee753d3ee5cbaadcdd47ded23e48d506c228e4fbea30d19f"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.LeftoverGroupingFreeAgentTest.xml",
+      "sha256": "329bbade708cd819a1ebf6df9bc542f840d5a976eb9db528ab0851ed66dfdd0b"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.MentorAssignmentServiceTest.xml",
+      "sha256": "fb79906670143b3e2ce17259f68860b14c57be753dae53ce85b9f2601a5e37b5"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.ParticipantHistorySnapshotServiceTest.xml",
+      "sha256": "f3d37ee71f7e2af5b4a12a5d2adf115339835e983adb17217fb8e11a38d7ecbb"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.PasswordResetServiceTest.xml",
+      "sha256": "0218ae0107b581600c627294c8e6051dc6d28e3b29d087a4786fbfa44a7a3211"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.RoundResultServiceTest.xml",
+      "sha256": "758c6047f35526cca8ef594eae16e70f1c41e80d5b9bb4a5a94838d067bf39f3"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.RoundTimerServiceTest.xml",
+      "sha256": "ca201ee9f12f9d33fdb4a1fd46e66d6bf1f08ba5b5e5c438afcde45d730b7e59"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.ScoringServiceTest.xml",
+      "sha256": "c8ba5b73ed380ba384ec87bf4aa9c099a0ea8bfa3f753471d7f1f207ccace4ad"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.SubmissionServiceTest.xml",
+      "sha256": "1d52f5d6c497f096946f8577aafa76bf437817b36448c651ce02d8098963d240"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.SystemLogServiceTest.xml",
+      "sha256": "64e08048838bb9481eb4b6bcad1184149e0cde480020d972bd112facb465aad0"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TeamInviteServiceTest.xml",
+      "sha256": "26fec0862d6adb2e1a87d6edddb70ab3a254cf7af65103a5aae7461f5eedead7"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TeamMembershipServiceTest.xml",
+      "sha256": "e7a7806b8fa2cae36dc8311dbb5042603b11e8eac7f682b507491409d4c37b3e"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TeamModerationServiceTest.xml",
+      "sha256": "af302801001e6412ce2370d0a07d701f7f7e4114dc44dc9b5cb3f8327b88b453"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TeamQueryServiceTest.xml",
+      "sha256": "b0a03e74b07293afae5cfb180359d844b6d18aeb89a549b7d5b70b4b0be30c60"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TeamRejoinRequestServiceTest.xml",
+      "sha256": "f35f65424f066662f1bc54b6f36e1884e4621c95721f9feb9ac248943e32a77a"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TeamTrackAssignmentServiceTest.xml",
+      "sha256": "ee70238617547e055d1a627953bb6bccf28238c1a8299f70c3c2aa8e10ed01c1"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TrackProblemServiceTest.xml",
+      "sha256": "833fb91e80a49b6b3dcdc430f877071a9de39074168e2824f7c187a89e694f2c"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.TrackServiceTest.xml",
+      "sha256": "eec496be92b295d5b8674be2e2008ec1b61f1d7bd5e691cefccbfc91e9436899"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.service.grouping.LeftoverGroupingPlannerTest.xml",
+      "sha256": "eee2fe4391a6f17b01fb18e22c5777c815e639295ee1f3a8cbe0b8d3e1a6f5e6"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.storage.FileReferenceConcurrencyTest.xml",
+      "sha256": "525dbfc43bb3bf7849d19445980d63d79fffcd755d6d981bc0ca7fc697e8eb33"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.storage.ObjectStorageTest.xml",
+      "sha256": "b63859f70c5ab29f7b79c3a7c5bfb44c488e89113cec7203ca5d061d6388cbe2"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.testsupport.CookieSessionClientTest.xml",
+      "sha256": "ce6e9bddf69133d6359046b1f156a282b0b6fca0a7dcd8684513232be7371077"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/full-package-sandbox-reports/TEST-com.seal.hackathon.validation.FptStudentIdValidatorTest.xml",
+      "sha256": "fbe13b32d35627aa66747e496c6955b04b874c01474451454b15f0eee3da3cae"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/helper-red.xml",
+      "sha256": "5b83026ba53b318360cf8c285e83f05ae66459d5ed9cfcfff8a04316e33b5078"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/helper-green.xml",
+      "sha256": "403d63d4e3661452e2ac055fd0085ad7a542547afee8cd2de982d2fe1aebad07"
+    },
+    {
+      "path": "back-end/src/seal-api/target/jwt-session-fix-20261103/CookieSessionClient.cookie-only.java.before",
+      "sha256": "bec127c5e2dc298e9cca82d08c456d257e0c085559ddd5a8b4ced5cddae04d65"
+    }
+  ],
+  "jar": {
+    "path": "back-end/src/seal-api/target/hackathon-0.0.1-SNAPSHOT.jar",
+    "sha256": "0c9c5225bf87d5b4711cb15726f34cda5c75a32ee599d92dad0a8b734c819658",
+    "scope": "Local package only; not release/image identity"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "baselineRevision": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "scope": "working-tree bytes, not a release or proof of test execution",
+  "originalModuleFilesPresent": 418,
+  "originalJavaFilesCompared": 366,
+  "frozenMigrationAndContractFiles": 30,
+  "semanticChangesToOriginalJava": [
+    "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/JwtAuthenticationFilter.java"
+  ],
+  "newRehearsal": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/ApiSmokeRehearsalTest.java"
+}
