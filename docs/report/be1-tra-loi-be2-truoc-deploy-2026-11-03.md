@@ -2,18 +2,28 @@
 
 Ngày **03/11/2026**, Asia/Saigon. Đối chiếu file `be2-hoi-be1-truoc-deploy-2026-11-01.md` do BE2 gửi với source, evidence local và Git remote hiện tại. File được cung cấp có SHA256 khớp [bản nguồn đã lưu trong repo](../checks/be1-be2-handoff-review-2026-11-03/be2-question-source-2026-11-01.md).
 
-**Kết luận:** phần code/test/runbook BE1 cho luồng **Java worker MOCK** đã hoàn thiện local, gồm finding P2 session/logout vừa đóng. **Cần commit và push candidate lên branch bàn giao để BE2 checkout được bản mới.** Hiện chưa có release SHA mới; chưa thể coi cả sáu mục đã đóng hoặc backend đã nghiệm thu AWS. Lượt này chỉ kiểm và soạn phản hồi, chưa commit/push/merge/deploy/gửi team.
+**Kết luận:** phần code/test/runbook BE1 cho luồng **Java worker MOCK** đã hoàn thiện local, gồm finding P2 session/logout vừa đóng. **Đã commit và push candidate lên nhánh riêng `feature/seal-be1-handoff-2026-11-03`. Source SHA để BE2 build: `3eda1fb189a972b9a5b5c85ce482900a1c66ac42`.** Commit tài liệu tiếp theo chỉ cập nhật báo cáo/checkpoint; dùng source SHA này khi chạy gate. Chưa merge `main`, deploy AWS hoặc gửi tin cho team; các xác nhận target/worker/SEAL–FCAJ vẫn còn mở.
 
 ## 1. Bản code BE2 cần lấy
 
-Branch bàn giao: [feature/backend1-be2-handoff](https://github.com/nhatnhm1405/fcaj-hackathon-system/tree/feature/backend1-be2-handoff).
+Branch bàn giao mới: [feature/seal-be1-handoff-2026-11-03](https://github.com/nhatnhm1405/fcaj-hackathon-system/tree/feature/seal-be1-handoff-2026-11-03). Source commit: [3eda1fb189a972b9a5b5c85ce482900a1c66ac42](https://github.com/nhatnhm1405/fcaj-hackathon-system/commit/3eda1fb189a972b9a5b5c85ce482900a1c66ac42).
 
 | Mốc | Trạng thái đã kiểm |
 |---|---|
-| Local HEAD và remote branch bàn giao | `bab44e5fdeb710e6c71982b2e8f5547829fa8e40` |
-| Candidate SEAL đã kiểm | Đang ở working tree chưa commit; **không nằm trong SHA phía trên** |
-| Release SHA mới để BE2 build | **Chưa có**; bổ sung sau khi commit/push bản đã review |
+| Baseline cũ, không dùng build candidate SEAL | `bab44e5fdeb710e6c71982b2e8f5547829fa8e40`; branch cũ `feature/backend1-be2-handoff` giữ nguyên |
+| Candidate SEAL đã kiểm và phát hành source | Đã commit/push ở `3eda1fb189a972b9a5b5c85ce482900a1c66ac42` trên branch mới |
+| Full source SHA BE2 cần checkout/build | **`3eda1fb189a972b9a5b5c85ce482900a1c66ac42`**; commit03/11 lúc14:52:36 giờ Việt Nam |
 | Remote `main` | `a52bf7a1f80df9e3cd162ced8b541f74c543bba4`, đã fetch chỉ để đối chiếu, không merge vào checkout |
+
+BE2 lấy code trong một checkout sạch riêng (không checkout đè máy đang có sửa local):
+
+```bash
+git fetch origin feature/seal-be1-handoff-2026-11-03
+git checkout --detach 3eda1fb189a972b9a5b5c85ce482900a1c66ac42
+test "$(git rev-parse HEAD)" = "3eda1fb189a972b9a5b5c85ce482900a1c66ac42"
+```
+
+Branch có thêm commit tài liệu chứa báo cáo cập nhật; **source SHA phía trên là mốc build cố định**. Không dùng baseline cũ hoặc tip main thay thế. Muốn build cả upstream mới phải tích hợp/review/kiểm lại và giao SHA khác. Release verifier nằm ở tip branch tài liệu, đọc Git objects của source SHA nên không phụ thuộc CRLF/LF của checkout.
 
 Candidate có migrations V1/V2/V3, cấu hình AWS/storage/jobs, deploy gate/templates, test runners và worker MOCK. Tên hiện hành phía BE1 theo quyết định03/11:
 
@@ -27,11 +37,11 @@ Candidate có migrations V1/V2/V3, cấu hình AWS/storage/jobs, deploy gate/tem
 
 Nhờ BE2 xác nhận mapping này và gửi phần infra/rename đang giữ local để ghép đúng file. Không đổi catalog `fcaj_poc`, tên bucket/queue, logical keys hoặc namespace `fcaj.ai.*` chỉ vì Java/source mang tên SEAL.
 
-**Phát hiện khi kiểm remote:** `main` đã có rename FCAJ và `ai-worker/` sau các PR tích hợp mới. So với branch bàn giao, hai phía có1/13 commit riêng; các kết quả local không chứng minh bản đã merge với `main` mới. Workflow trên `main` vẫn gọi root `docker compose up -d --build --remove-orphans`, chưa có init/verify gate của BE1; root stack có MySQL8.0/FE/proxy. Vì vậy cần review workflow/Compose/names khi tích hợp, không dùng nguyên stack dev đó thay RDS8.4 + FE S3 + private EC2.
+**Phát hiện khi kiểm remote:** `main` đã có rename FCAJ và `ai-worker/` sau các PR tích hợp mới. Tại checkpoint trước phát hành, baseline BE1 và `main` có1/13 commit riêng; các kết quả local không chứng minh bản đã merge với `main` mới. Workflow trên `main` vẫn gọi root `docker compose up -d --build --remove-orphans`, chưa có init/verify gate của BE1; root stack có MySQL8.0/FE/proxy. Vì vậy cần review workflow/Compose/names khi tích hợp, không dùng nguyên stack dev đó thay RDS8.4 + FE S3 + private EC2.
 
-**Cách giao đề xuất:** review và commit/push lên branch bàn giao; gửi full SHA40 cho BE2 build đúng branch đó. Commit local đơn lẻ chưa giúp BE2 lấy code từ GitHub. Không cần merge/push `main` để bắt đầu phối hợp; merge `main` là mốc tích hợp riêng. Nếu nhóm muốn bản deploy phải gồm upstream mới, ghép/review và chạy kiểm phù hợp trước khi chốt SHA. Không rebase/reset đè working tree hiện có.
+**Cách giao đã thực hiện:** source được commit/push lên branch riêng, cả418 file module cũ đều có file SEAL thay thế. Đã kiểm staged payload, không có private/generated paths hoặc credential pattern đã rà. Không cần merge/push `main` để bắt đầu phối hợp; merge `main` là mốc tích hợp riêng. Nếu nhóm muốn bản deploy phải gồm upstream mới, ghép/review và chạy kiểm phù hợp trước khi chốt SHA. Không rebase/reset đè working tree hiện có.
 
-Workflow hiện tại chỉ trigger khi push `main` hoặc PR vào `main`, deploy job chỉ chạy trên push. Push branch bàn giao riêng không khớp trigger deploy đó; mở PR vào `main` sẽ chạy checks theo workflow, không tự chứng minh đã deploy. Chưa có CI mới gắn với candidate chưa commit.
+Workflow hiện tại chỉ trigger khi push `main` hoặc PR vào `main`, deploy job chỉ chạy trên push. Push branch bàn giao riêng không khớp trigger deploy đó; mở PR vào `main` sẽ chạy checks theo workflow, không tự chứng minh đã deploy. Kết quả nêu trong báo cáo là kiểm local gắn với source đã phát hành, không gán thành CI pass.
 
 ## 2. Kết quả test và hai lỗi dispatch BE2 hỏi
 
@@ -42,7 +52,7 @@ Hai test sau **đã đạt trong full package mới**, kiểm trực tiếp test
 
 | Kiểm tra | Kết quả | Mức chứng minh |
 |---|---|---|
-| Full backend/package cuối | **633 thống kê:624 thực thi đạt,0 failure/error,9 MySQL-only skipped**; kết thúc14:33:53 ngày03/11, giờ Việt Nam | Java21/H2/mocks; JAR local, chưa có release SHA |
+| Full backend/package cuối | **633 thống kê:624 thực thi đạt,0 failure/error,9 MySQL-only skipped**; kết thúc14:33:53 ngày03/11, giờ Việt Nam | Java21/H2/mocks; source đã đối chiếu với commit `3eda1fb…`; image target cần BE2 build và ghi identity |
 | Component smoke cuối | **36/36**,0 failure/error/skipped |21 job +4 worker +1 API +7 auth +3 helper |
 | API/security targeted | **15/15** | Cookie/CSRF/API + SecurityConfig/JwtService |
 | MySQL8.4 lab đã lưu | **36/36** trên8.4.13 |21 job +9 fresh deployment +6 file concurrency; checkpoint local trước fix test-only |
@@ -55,7 +65,7 @@ Full suite trong sandbox từng lỗi tạo loopback ở `BoundedHttpTest`; cùn
 
 Finding P2 test logout/session đã đóng: có đối chứng helper cũ đỏ→helper mới xanh, kiểm thiếu/sai/hết hạn JWT với cùng session, context cũ trong session, logout và CSRF. Production không cần sửa. Xem [báo cáo fix](seal-be1-jwt-session-regression-fix-2026-11-03.md), [evidence mới](../checks/jwt-session-regression-2026-11-03/README.md) và [evidence MySQL](../checks/seal-be1-local-2026-11-03/mysql-tests.json).
 
-**Còn thiếu để đóng mục2:** phát hành SHA mới và gắn đúng source/evidence/image; BE2 kiểm trên revision đó. Nếu lỗi dispatch tái hiện, gửi SHA/lệnh/JDK/OS/profile/H2–MySQL/log đã lọc; không chạy hai Maven build/test chung `target`.
+**Source/evidence mục2 đã có:** full SHA mới và [release manifest theo Git bytes](../checks/seal-be1-release-2026-11-03/README.md). BE2 còn build/ghi image identity và kiểm trên revision đó. Nếu lỗi dispatch tái hiện, gửi SHA/lệnh/JDK/OS/profile/H2–MySQL/log đã lọc; không chạy hai Maven build/test chung `target`.
 
 ## 3. RDS rỗng: migration và dữ liệu ban đầu
 
@@ -95,7 +105,7 @@ DB nonempty/không rõ nguồn/V1/V2 không đi theo auto initialize-empty. DDL 
 
 ## 4. Cấu hình và quyền AWS
 
-Templates đã có trong [module SEAL](../../back-end/src/seal-api/.env.aws.example) và [deploy/](../../back-end/src/seal-api/deploy/), khớp working tree đã kiểm. Chưa gắn với release SHA mới.
+Templates đã có trong [module SEAL](../../back-end/src/seal-api/.env.aws.example) và [deploy/](../../back-end/src/seal-api/deploy/), khớp working tree đã kiểm. Đã có trong source commit `3eda1fb189a972b9a5b5c85ce482900a1c66ac42`.
 
 | Nhóm | Cấu hình BE2 cần cấp |
 |---|---|
@@ -170,13 +180,23 @@ Tiêu chí buổi smoke: backend lưu RDS→outbox/SQS→Java MOCK/S3→completi
 
 | Việc | Người phụ trách / đầu vào |
 |---|---|
-| Review diff, commit/push candidate và gửi full SHA40 | BE1/người dùng; giữ cả xóa path FCAJ cũ và thêm module SEAL, source/tests/templates/contracts/evidence cần thiết; loại target/private env/dump/user files |
+| Commit/push candidate và gửi full SHA40 — **đã xong** | BE1 đã phát hành source `3eda1fb189a972b9a5b5c85ce482900a1c66ac42` trên branch mới; đủ source/tests/templates/contracts/evidence, không kèm target/private env/dump/user files |
 | Đồng ý SEAL/FCAJ và ghép infra/upstream | BE1+BE2; xác nhận mapping và cách dùng `main` mới, không tự bỏ deploy gate hoặc overwrite AI module |
 | Cách build/giao image | BE2+BE1; ECR pipeline đã hoãn theo quyết định03/11. Gate hiện tự build-on-host; nếu giao prebuilt image cần quy trình/gate được sửa/review/test tương ứng |
 | Topology, DB identities/CA, runtime private config, network/provider/policy/prefix/queues | BE2; FE phối hợp HTTPS/domain/CORS/cookies. Session Manager là đường operator đã có; không mặc định SSH từ Actions tới private EC2 |
 | Provision dataset, worker operator/window/consumer và cleanup | BE1+BE2/người được chỉ định; dùng Java MOCK cho scope hiện tại |
 | Run init/gate/start và hai job live, ghi nhận bàn giao | Operator thực hiện cùng candidate; BE1 hỗ trợ API/guards; nghiệm thu dựa evidence target |
 
-**Có thể làm ngay:** BE2 tiếp tục chuẩn bị private config/network/policy và phản hồi mapping/build/window; BE1 chuẩn bị commit/push branch riêng. **Chưa nên làm:** build từ `bab44e5…` rồi coi là candidate SEAL đã kiểm, merge/push `main` để thử deploy, hoặc dùng Python worker làm drop-in khi contract chưa nối.
+**Có thể làm ngay:** BE2 tiếp tục chuẩn bị private config/network/policy và phản hồi mapping/build/window; BE2 có thể fetch/checkout source SHA đã giao trên branch riêng. **Chưa nên làm:** build từ `bab44e5…` rồi coi là candidate SEAL đã kiểm, merge/push `main` để thử deploy, hoặc dùng Python worker làm drop-in khi contract chưa nối.
 
-Các kiểm tra trong lượt soạn phản hồi: đọc nguồn BE2 gốc, xác nhận hash, kiểm checkpoint, kiểm testcase XML của hai ca BE2 nêu, đọc MySQL evidence/templates/gate/contract, validate current examples, `git ls-remote` và fetch `main` chỉ để review. Không chạy lại full suite/MySQL/AWS trong lượt này; các kết quả test có timestamp/scope riêng. [Checkpoint phản hồi](../checks/be2-response-review-2026-11-03/response-review.json) ghi nguồn/hash/remote snapshot; verifier của checkpoint này mở rộng snapshot JWT trước đó chỉ bằng các file phản hồi mới, không viết lại evidence lịch sử.
+Các kiểm tra trong lượt soạn phản hồi: đọc nguồn BE2 gốc, xác nhận hash, kiểm checkpoint, kiểm testcase XML của hai ca BE2 nêu, đọc MySQL evidence/templates/gate/contract, validate current examples, `git ls-remote` và fetch `main` chỉ để review. Sau khi người dùng giao phát hành, đã commit/push source lên branch riêng và cập nhật báo cáo bằng commit tài liệu. Không chạy lại full suite/MySQL/AWS vì source test/runtime không đổi sau các lượt kiểm; các kết quả có timestamp/scope riêng. [Checkpoint phản hồi](../checks/be2-response-review-2026-11-03/response-review.json) ghi nguồn/hash/remote snapshot; đó là checkpoint trước phát hành, được giữ nguyên. Sau commit/tài liệu mới dùng verifier release ở dưới, không sửa hash hoặc HEAD baseline của verifier lịch sử.
+
+## Xác minh source đã phát hành
+
+Từ repository có tip branch tài liệu và source commit trong Git:
+
+```text
+node docs/checks/seal-be1-release-2026-11-03/verify-release.mjs
+```
+
+Verifier kiểm Git blob bytes theo source SHA, đối chiếu code/runtime/test hiện hành với source commit và kiểm links báo cáo. Các verifier local/review trước đó mô tả working tree trên baseline cũ, có thể báo HEAD/inventory/EOL drift sau commit hoặc trên clone Linux; không sửa manifest lịch sử để né sai khác. Bộ source chứa evidence test đã lọc; raw logs/XML/JAR/image dưới target không được push. BE2 tự build image từ source SHA và ghi image identity trước smoke.
