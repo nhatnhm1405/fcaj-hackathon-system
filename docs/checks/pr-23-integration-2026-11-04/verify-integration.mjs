@@ -70,6 +70,18 @@ for (let i = 0; i < frontend.length; i++) {
   else assert.equal(canonical(actual), expected, `Upstream frontend change lost: ${target}`);
 }
 const paths = git(['ls-files', '-z']).toString().split('\0').filter(Boolean);
+const launchers = paths.filter(p => p.startsWith('E2E testing/') && p.endsWith('.bat'));
+assert.equal(launchers.length, 5, 'Unexpected E2E launcher inventory');
+for (const file of launchers) {
+  const text = canonical(readFileSync(path.join(root, file)));
+  assert.equal(text, canonical(git(['show', `${feature}:${file}`])), `Feature launcher paths changed: ${file}`);
+  const bindings = [...text.matchAll(/^set "(BACKEND|FRONTEND)=%ROOT%\\([^"\n]+)"$/gm)];
+  assert.equal(bindings.length, 2, `Missing module bindings: ${file}`);
+  for (const [, role, relative] of bindings) {
+    const moduleFile = role === 'BACKEND' ? 'pom.xml' : 'package.json';
+    assert.ok(existsSync(path.resolve(root, relative.replaceAll('\\', '/'), moduleFile)), `Launcher points to missing module: ${file} (${role})`);
+  }
+}
 assert.ok(!paths.some(p => p.startsWith('back-end/src/fcaj-api/') || p.startsWith('front-end/src/fcaj-web/')), 'Duplicate FCAJ modules');
 const active = paths.filter(p => /\.(java|xml|properties|ps1|sh|bat|mjs|ts|tsx|css|yml|yaml)$/.test(p) &&
   (p.startsWith('back-end/') || p.startsWith('front-end/') || p.startsWith('.github/') || p.startsWith('E2E testing/')));
@@ -77,8 +89,8 @@ for (const file of [...active, 'Caddyfile', 'docker-compose.yml']) {
   if (!existsSync(path.join(root, file))) continue;
   const text = readFileSync(path.join(root, file), 'utf8');
   assert.ok(!/^(<<<<<<< |=======\r?$|>>>>>>> )/m.test(text), `Conflict marker: ${file}`);
-  assert.ok(!/com\.fcaj\.hackathon|com\/fcaj\/hackathon|back-end\/src\/fcaj-api|front-end\/src\/fcaj-web|fcaj-(?:backend|frontend)(?=[:\s"'])/.test(text), `Obsolete technical identifier: ${file}`);
+  assert.ok(!/com\.fcaj\.hackathon|com\/fcaj\/hackathon|(?:back-end|front-end)[\\/]+src[\\/]+fcaj-(?:api|web)|fcaj-(?:backend|frontend)(?=[:\s"'])/.test(text), `Obsolete technical identifier: ${file}`);
 }
 console.log(JSON.stringify({status: 'PASS', feature, develop, backendFilesPreserved: backend.length,
   contractFilesPreserved: contracts.length, frozenFiles: frozen.length, workerCoreFilesPreserved: coreWorker.length,
-  frontendFilesVerified: frontend.length, executableWrapper: true}, null, 2));
+  frontendFilesVerified: frontend.length, e2eLaunchersVerified: launchers.length, executableWrapper: true}, null, 2));

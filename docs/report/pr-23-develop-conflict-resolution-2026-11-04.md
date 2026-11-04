@@ -51,3 +51,7 @@ node docs/checks/pr-23-integration-2026-11-04/verify-integration.mjs
 [Verifier](../checks/pr-23-integration-2026-11-04/verify-integration.mjs) đọc Git bytes của hai revision đầu vào, kiểm backend/contracts, worker core, frontend/E2E, executable wrapper và runtime naming. Nó không thay các manifests lịch sử ngày03/11. Các verifier release cũ vẫn mô tả source cũ; không sửa checksum để gọi source tích hợp là source đã phát hành trước đó.
 
 File `docs/report/be1-tra-loi-be2-truoc-deploy-2026-11-03.md` có sửa local từ trước được giữ nguyên, không đưa phần sửa đó vào resolution commit. Không merge develop/main, deploy AWS, gọi model thật hoặc gửi tin cho team. Cập nhật PR head sau khi hoàn tất kiểm source/index là thao tác phát hành resolution; nghiệm thu AWS/browser/model và MySQL lab mới vẫn là các phạm vi riêng.
+
+## Review bổ sung sau merge commit 4d38cb1
+
+Khi người dùng yêu cầu xem các thay đổi, review diff với feature cũ phát hiện 5 E2E BAT launchers vẫn dùng đường dẫn Windows `fcaj-api/fcaj-web`. Mô phỏng conflict và Playwright discovery đã không bắt lỗi này; verifier ban đầu chỉ nhận path phân cách bằng `/`. Đã sửa 10 bindings về SEAL, bổ sung nhận cả `/` và `\\`, đối chiếu từng launcher với feature gốc và kiểm hai module đích tồn tại. Chỉ sửa đường dẫn launcher và kiểm chứng; không chạy các BAT vì chúng có thể reset demo data. Backend/frontend application source và các kết quả test trước đó không đổi; MySQL lab vẫn chưa chạy lại do Docker.
