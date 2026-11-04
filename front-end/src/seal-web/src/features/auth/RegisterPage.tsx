@@ -3,10 +3,10 @@ import { useNavigate } from "react-router";
 import {
   C, GradientText, PixelButton, PixelInput, PixelCard, FloatingParticles,
 } from "@/shared/components/PixelComponents";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { SocialAuthButtons } from "@/features/auth/SocialAuthButtons";
 import { UniversitySelect } from "@/shared/components/UniversitySelect";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 import { apiFetch, ApiError, apiErrorMessage } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
 import {
@@ -127,7 +127,7 @@ export function RegisterPage() {
       <div style={{ position: "relative", zIndex: 2, maxWidth: 560, margin: "0 auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, justifyContent: "center" }}>
           <div style={{ height: 100, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-            <img src={sealLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain" }} />
+            <img src={brandLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain" }} />
           </div>
         </div>
 
@@ -253,7 +253,7 @@ export function RegisterPage() {
         </div>
       </div>
     </div>
-    <SealFooter />
+    <AppFooter />
     </div>
   );
 }

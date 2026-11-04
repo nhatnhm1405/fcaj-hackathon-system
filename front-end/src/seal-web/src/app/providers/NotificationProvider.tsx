@@ -263,7 +263,7 @@ function BannerItem({
           background: s.accent,
           transformOrigin: "left",
           boxShadow: `0 0 6px ${s.glow}`,
-          animation: `sealBannerShrink ${BANNER_DURATION}ms linear forwards`,
+          animation: `notificationBannerShrink ${BANNER_DURATION}ms linear forwards`,
           animationPlayState: paused ? "paused" : "running",
         }} />
       </div>

@@ -6,9 +6,9 @@ import {
   SectionHeader,
   FloatingParticles,
 } from "@/shared/components/PixelComponents";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { useAuth } from "@/app/providers/AuthProvider";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 
 const mono = "'JetBrains Mono', monospace";
 
@@ -55,7 +55,7 @@ function PageHeader() {
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}>
         <button onClick={() => navigate(homePath)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-          <img src={sealLogo} alt="SEAL" style={{ height: 80, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35))" }} />
+          <img src={brandLogo} alt="SEAL" style={{ height: 80, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35))" }} />
           <span style={{ background: C.gradientPrimary, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontFamily: mono, fontWeight: 700, fontSize: 14, letterSpacing: "0.06em" }}>
             SEAL Hackathon
           </span>
@@ -156,7 +156,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <SealFooter />
+      <AppFooter />
     </div>
   );
 }

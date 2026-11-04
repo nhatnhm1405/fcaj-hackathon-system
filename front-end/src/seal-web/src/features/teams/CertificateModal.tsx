@@ -64,7 +64,7 @@ export function CertificateModal({ entry, recipientName, onClose }: Props) {
             overflow: visible !important;
             display: block !important;
           }
-          .seal-cert {
+          .event-certificate {
             width: 100% !important;
             box-shadow: none !important;
             margin: 0 !important;
@@ -79,7 +79,7 @@ export function CertificateModal({ entry, recipientName, onClose }: Props) {
       </div>
 
       <div
-        className="seal-cert"
+        className="event-certificate"
         onClick={(event) => event.stopPropagation()}
         style={{
           width: "min(1000px, 96vw)",

@@ -3,10 +3,10 @@ import { useNavigate } from "react-router";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { C, GradientText, PixelButton, PixelInput, FloatingParticles } from "@/shared/components/PixelComponents";
 import { UniversitySelect } from "@/shared/components/UniversitySelect";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { authApi, ApiError, apiErrorMessage, CompleteProfilePayload } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 import {
   FPT_STUDENT_ID_ERROR,
   isValidFptStudentId,
@@ -80,7 +80,7 @@ export function CompleteProfilePage() {
         <div style={{ position: "relative", zIndex: 2, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 32 }}>
             <div style={{ height: 72, display: "flex", alignItems: "center" }}>
-              <img src={sealLogo} alt="SEAL" style={{ height: 132, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
+              <img src={brandLogo} alt="SEAL" style={{ height: 132, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
             </div>
           </div>
 
@@ -166,7 +166,7 @@ export function CompleteProfilePage() {
           </div>
         </div>
       </div>
-      <SealFooter />
+      <AppFooter />
     </div>
   );
 }

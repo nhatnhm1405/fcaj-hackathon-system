@@ -6,8 +6,8 @@ import {
 } from "@/shared/components/PixelComponents";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { eventsApi, roundsApi, resultsApi, HackathonEvent, Round, RoundResult } from "@/shared/apiClient";
-import { SealFooter } from "@/shared/components/SealFooter";
-import sealLogo from "@/imports/image.png";
+import { AppFooter } from "@/shared/components/AppFooter";
+import brandLogo from "@/imports/image.png";
 import Hero from "@/imports/Hero.jpg"
 import fptLogo from "@/imports/fpt-logo.png";
 import G1 from "@/imports/Hackathon.jpg";
@@ -116,7 +116,7 @@ function fmtDate(iso?: string): string {
 
 // ── Scroll / reveal primitives (landing polish) ───────────────────
 // All motion below is opt-out: honours the OS "reduce motion" setting, either
-// via the `.seal-reveal` / `.seal-marquee` CSS overrides or the runtime check.
+// via the `.landing-reveal` / `.landing-marquee` CSS overrides or the runtime check.
 function prefersReducedMotion(): boolean {
   return typeof window !== "undefined"
     && typeof window.matchMedia === "function"
@@ -179,7 +179,7 @@ function Reveal({ children, delay = 0, direction = "up", sweep = false }: { chil
   return (
     <div
       ref={ref}
-      className="seal-reveal"
+      className="landing-reveal"
       style={{
         position: "relative",
         opacity: inView ? 1 : 0,
@@ -192,7 +192,7 @@ function Reveal({ children, delay = 0, direction = "up", sweep = false }: { chil
       {children}
       {sweep && inView && !prefersReducedMotion() && (
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 6 }}>
-          <div className="seal-sweep" style={{
+          <div className="landing-sweep" style={{
             position: "absolute", left: 0, right: 0, top: 0, height: 2,
             background: "linear-gradient(90deg, transparent, #22c55e, #3b82f6, transparent)",
             boxShadow: "0 0 12px rgba(34,197,94,0.7), 0 0 24px rgba(59,130,246,0.4)",
@@ -477,7 +477,7 @@ function NavBar({ navigate }: { navigate: (p: Page) => void }) {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ height: 80, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
             <img
-              src={sealLogo}
+              src={brandLogo}
               alt="SEAL"
               style={{ height: 160, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35)) drop-shadow(0 0 16px rgba(59,130,246,0.2))" }}
             />
@@ -716,7 +716,7 @@ function FeatureCard({ feat, delay }: { feat: { title: string; desc: string; acc
   return (
     <div
       ref={ref}
-      className="seal-reveal"
+      className="landing-reveal"
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       style={{
@@ -1184,7 +1184,7 @@ function GalleryPhoto({ src, idx, gridColumn, gridRow, borderColor = C.green, ho
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
-      className={"seal-reveal" + (revealed ? " seal-glitch-in" : "")}
+      className={"landing-reveal" + (revealed ? " landing-glitch-in" : "")}
       style={{
         gridColumn, gridRow, position: "relative", overflow: "hidden", cursor: "zoom-in",
         opacity: revealed ? undefined : 0,
@@ -1196,7 +1196,7 @@ function GalleryPhoto({ src, idx, gridColumn, gridRow, borderColor = C.green, ho
         transition: "border-color 0.3s, box-shadow 0.3s",
       }}
     >
-      <img src={src} alt={`Gallery ${idx}`} className={glitchOnHover && hovered ? "seal-img-glitch" : ""} style={{
+      <img src={src} alt={`Gallery ${idx}`} className={glitchOnHover && hovered ? "landing-img-glitch" : ""} style={{
         width: "100%", height: "100%", objectFit: "cover", display: "block",
         transition: "transform 0.5s ease, filter 0.3s ease",
         transform: hovered ? "scale(1.06)" : "scale(1)",
@@ -1551,7 +1551,7 @@ function InnovationStrip() {
       <div style={{ height: 2, background: "linear-gradient(90deg, transparent, #22c55e, #3b82f6, #06b6d4, transparent)" }} />
       <div style={{ padding: "20px 0", display: "flex", gap: 0 }}>
         <div
-          className="seal-marquee"
+          className="landing-marquee"
           style={{ display: "flex", gap: 0, whiteSpace: "nowrap", willChange: "transform" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.animationPlayState = "paused"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.animationPlayState = "running"; }}
@@ -1636,7 +1636,7 @@ export function LandingPage({ navigate, hideChrome = false }: { navigate: (p: Pa
       <Reveal direction="right" sweep><SponsorsSection /></Reveal>
       <Reveal direction="up" sweep><FAQSection /></Reveal>
       <Reveal direction="scale" sweep><CTASection navigate={navigate} /></Reveal>
-      {!hideChrome && <SealFooter />}
+      {!hideChrome && <AppFooter />}
     </div>
   );
 }

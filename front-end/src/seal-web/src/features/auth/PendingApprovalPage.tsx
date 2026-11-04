@@ -2,9 +2,9 @@ import { useNavigate } from "react-router";
 import {
   C, GradientText, PixelButton, PixelCard, FloatingParticles,
 } from "@/shared/components/PixelComponents";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { useAuth } from "@/app/providers/AuthProvider";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 
 export function PendingApprovalPage() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export function PendingApprovalPage() {
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 540, width: "100%", textAlign: "center" }}>
         <div style={{ height: 120, overflow: "visible", margin: "0 auto 24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <img src={sealLogo} alt="HMS" style={{ height: 240, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 12px rgba(34,197,94,0.4))" }} />
+          <img src={brandLogo} alt="HMS" style={{ height: 240, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 12px rgba(34,197,94,0.4))" }} />
         </div>
 
         <PixelCard glow glowColor="blue" gradient style={{ padding: 36 }}>
@@ -67,7 +67,7 @@ export function PendingApprovalPage() {
         </PixelCard>
       </div>
     </div>
-    <SealFooter />
+    <AppFooter />
     </div>
   );
 }

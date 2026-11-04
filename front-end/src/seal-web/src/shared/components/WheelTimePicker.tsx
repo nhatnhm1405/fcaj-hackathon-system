@@ -57,7 +57,7 @@ function WheelColumn({
       <div
         ref={ref}
         onScroll={disabled ? undefined : onScroll}
-        className="seal-wheel-col"
+        className="time-wheel-col"
         style={{
           height: "100%",
           overflowY: disabled ? "hidden" : "scroll",
@@ -166,7 +166,7 @@ export function WheelTimePicker({
       }}
     >
       {/* Hide the scrollbars on WebKit (inline styles can't target ::-webkit-scrollbar). */}
-      <style>{`.seal-wheel-col::-webkit-scrollbar{display:none}`}</style>
+      <style>{`.time-wheel-col::-webkit-scrollbar{display:none}`}</style>
 
       {/* Scroll wheels */}
       <div style={{ display: "flex", gap: 4 }}>

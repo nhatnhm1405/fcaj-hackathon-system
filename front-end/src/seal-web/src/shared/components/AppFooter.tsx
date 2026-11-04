@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { Github } from "lucide-react";
 import { C } from "@/shared/components/PixelComponents";
 import { useRules } from "@/app/providers/RulesProvider";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 
 const GITHUB_URL = "https://github.com/nhatnhm1405/seal-hackathon-system.git";
 const CONTACT_EMAIL = "sealhackathon.system@gmail.com";
@@ -17,7 +17,7 @@ type FooterLink = {
   action?: () => void;
 };
 
-export function SealFooter() {
+export function AppFooter() {
   const navigate = useNavigate();
   const { openRules, rulesLinkLabel } = useRules();
 
@@ -111,7 +111,7 @@ export function SealFooter() {
             }}
           >
             <img
-              src={sealLogo}
+              src={brandLogo}
               alt="SEAL"
               style={{
                 height: 180,

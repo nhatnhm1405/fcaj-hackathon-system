@@ -6,10 +6,10 @@ import { useNotifications, UINotification } from "@/app/providers/NotificationPr
 import { usePendingAccounts } from "@/app/providers/PendingAccountsProvider";
 import { usePendingTeams } from "@/app/providers/PendingTeamsProvider";
 import { API_BASE_URL } from "@/shared/apiClient";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { NotificationDetailModal } from "@/shared/components/NotificationDetailModal";
 import { NavbarRoleTimer } from "@/shared/components/NavbarRoleTimer";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 
 const NAVBAR_H = 60;
 
@@ -427,7 +427,7 @@ function TopNavbar({ pageTitle, collapsed, onToggleCollapse, currentUser, onLogo
           style={{ display: "flex", alignItems: "center", gap: 10, height: 44, overflow: "hidden", background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
         >
           <div style={{ width: 96, height: 44, overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <img src={sealLogo} alt="SEAL" style={{ height: 96, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 6px rgba(34,197,94,0.4))", pointerEvents: "none" }} />
+            <img src={brandLogo} alt="SEAL" style={{ height: 96, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 6px rgba(34,197,94,0.4))", pointerEvents: "none" }} />
           </div>
           <span style={{ color: C.text, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", background: "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", whiteSpace: "nowrap" }}>
             SEAL Hackathon
@@ -573,7 +573,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const pageTitle = getPageTitle(location.pathname);
 
   // Team-less participant dashboard owns its own full-screen cyber backdrop.
-  const sealNoTeam =
+  const isParticipantDashboardWithoutTeam =
     currentUser.role === "PARTICIPANT" &&
     currentUser.team_id === null &&
     isDashboardPath(location.pathname);
@@ -769,16 +769,16 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           // grid that is brightest in the middle and dissolves toward the edges (a same-colour
           // radial vignette erases the grid at the rim). Cards paint opaquely on top; the
           // backdrop stays fixed as the content scrolls.
-          backgroundColor: sealNoTeam ? undefined : C.bg,
-          backgroundImage: (sealNoTeam || isAdminRoute) ? undefined : dashboardMainGrid,
-          backgroundSize: (sealNoTeam || isAdminRoute) ? undefined : "100% 100%, 100% 100%, 28px 28px, 28px 28px",
+          backgroundColor: isParticipantDashboardWithoutTeam ? undefined : C.bg,
+          backgroundImage: (isParticipantDashboardWithoutTeam || isAdminRoute) ? undefined : dashboardMainGrid,
+          backgroundSize: (isParticipantDashboardWithoutTeam || isAdminRoute) ? undefined : "100% 100%, 100% 100%, 28px 28px, 28px 28px",
         }}>
           {children}
         </main>
       </div>
 
       {/* Full-width footer — outside the sidebar+content row */}
-      <SealFooter />
+      <AppFooter />
 
       <LogoutConfirmModal
         open={showLogoutConfirm}

@@ -161,7 +161,7 @@ body {
 }
 
 /* Auto-dismiss countdown bar for the unified notification banner */
-@keyframes sealBannerShrink {
+@keyframes notificationBannerShrink {
   from { transform: scaleX(1); }
   to { transform: scaleX(0); }
 }
@@ -297,16 +297,16 @@ body {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-.seal-marquee { animation: marqueeScroll 60s linear infinite; }
+.landing-marquee { animation: marqueeScroll 60s linear infinite; }
 
 /* Section "boot" — a neon line sweeps top→bottom once when a section reveals. */
-@keyframes sealSweep {
+@keyframes landingSweep {
   0%   { top: 0;                opacity: 0; }
   15%  { opacity: 1; }
   85%  { opacity: 1; }
   100% { top: calc(100% - 2px); opacity: 0; }
 }
-.seal-sweep { animation: sealSweep 0.9s ease-out forwards; }
+.landing-sweep { animation: landingSweep 0.9s ease-out forwards; }
 
 /* Gallery photos glitch into view (RGB/hue jitter + clip-path wipe). */
 @keyframes glitchIn {
@@ -317,7 +317,7 @@ body {
   78%  { transform: translateX(2px);  filter: none; }
   100% { opacity: 1; transform: translateX(0); filter: none; }
 }
-.seal-glitch-in { animation: glitchIn 0.65s ease-out both; }
+.landing-glitch-in { animation: glitchIn 0.65s ease-out both; }
 
 /* Gallery hero-tile RGB-ish glitch while hovered (keeps the hover zoom). */
 @keyframes imgGlitch {
@@ -327,14 +327,14 @@ body {
   60%      { filter: saturate(1.2);                   transform: translate(-1px,0) scale(1.06); }
   80%      { filter: none;                            transform: translate(1px,1px) scale(1.06); }
 }
-.seal-img-glitch { animation: imgGlitch 0.5s steps(2, end) infinite; }
+.landing-img-glitch { animation: imgGlitch 0.5s steps(2, end) infinite; }
 
 /* Honour OS-level reduced-motion: stop every landing animation and reveal
    content immediately, so nothing animates for motion-sensitive visitors. */
 @media (prefers-reduced-motion: reduce) {
-  .seal-marquee { animation: none; }
-  .seal-reveal  { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .seal-sweep, .seal-glitch-in, .seal-img-glitch { animation: none !important; }
+  .landing-marquee { animation: none; }
+  .landing-reveal  { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .landing-sweep, .landing-glitch-in, .landing-img-glitch { animation: none !important; }
 }
 
 /* Glitch — animated RGB-split + jitter for event cards */

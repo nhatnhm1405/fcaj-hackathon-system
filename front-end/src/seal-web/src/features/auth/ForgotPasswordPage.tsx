@@ -1,10 +1,10 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import { C, GradientText, PixelButton, PixelInput, FloatingParticles } from "@/shared/components/PixelComponents";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { apiErrorMessage, authApi } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 
 type ResetStep = "email" | "otp" | "password";
 const OTP_EXPIRATION_MINUTES = 10;
@@ -134,7 +134,7 @@ export function ForgotPasswordPage() {
         <div style={{ position: "relative", zIndex: 2, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
             <div style={{ height: 72, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-              <img src={sealLogo} alt="SEAL" style={{ height: 144, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
+              <img src={brandLogo} alt="SEAL" style={{ height: 144, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
             </div>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: "0.08em" }}>
               <GradientText>HACKATHON Management System</GradientText>
@@ -300,7 +300,7 @@ export function ForgotPasswordPage() {
           </div>
         </div>
       </div>
-      <SealFooter />
+      <AppFooter />
     </div>
   );
 }

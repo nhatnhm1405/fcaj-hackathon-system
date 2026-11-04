@@ -1,13 +1,13 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import {
   C, GradientText, PixelButton, PixelInput, FloatingParticles, TerminalWindow,
 } from "@/shared/components/PixelComponents";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { useNotifications } from "@/app/providers/NotificationProvider";
-import { SealFooter } from "@/shared/components/SealFooter";
+import { AppFooter } from "@/shared/components/AppFooter";
 import { SocialAuthButtons } from "@/features/auth/SocialAuthButtons";
-import sealLogo from "@/imports/image.png";
+import brandLogo from "@/imports/image.png";
 
 const PENDING_APPROVAL_MESSAGE =
   "Your account is awaiting coordinator approval. Please wait until it is approved before signing in.";
@@ -86,7 +86,7 @@ export function LoginPage() {
         <div className="hidden lg:flex" style={{ flex: 1, padding: 48, flexDirection: "column", justifyContent: "center", borderRight: `1px solid ${C.border}` }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
             <div style={{ height: 100, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-              <img src={sealLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
+              <img src={brandLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
             </div>
             <span style={{ color: C.text, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 14, letterSpacing: "0.08em" }}>
               <GradientText>HACKATHON Management System</GradientText>
@@ -117,7 +117,7 @@ export function LoginPage() {
           <div style={{ width: "100%", maxWidth: 420 }}>
             <div className="lg:hidden" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24, justifyContent: "center" }}>
               <div style={{ height: 100, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-                <img src={sealLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain" }} />
+                <img src={brandLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain" }} />
               </div>
             </div>
 
@@ -241,7 +241,7 @@ export function LoginPage() {
         </div>
       </div>
     </div>
-    <SealFooter />
+    <AppFooter />
     </div>
   );
 }
