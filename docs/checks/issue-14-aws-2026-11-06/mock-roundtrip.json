@@ -1,0 +1,62 @@
+{
+  "jobId": "81eda892-a513-47d7-a9f6-cf0aea36c012",
+  "prefix": "poc/deployment-probes/81eda892-a513-47d7-a9f6-cf0aea36c012/",
+  "executionIdentity": "arn:aws:sts::582129522297:assumed-role/fcaj-poc-backend-ec2-role/i-08f9589f2c373a395",
+  "image": "582129522297.dkr.ecr.ap-southeast-1.amazonaws.com/fcaj-poc-backend@sha256:ef13022014d3dc29454825074078e72948860c72114019400024c8a1fb1734eb",
+  "revision": "b12c2afc03bb4f3bbd9c03328041566c75d0c320",
+  "queueAttributes": {
+    "jobs": {
+      "QueueArn": "arn:aws:sqs:ap-southeast-1:582129522297:fcaj-poc-ai-jobs",
+      "VisibilityTimeout": "120",
+      "ReceiveMessageWaitTimeSeconds": "20",
+      "SqsManagedSseEnabled": "true"
+    },
+    "results": {
+      "QueueArn": "arn:aws:sqs:ap-southeast-1:582129522297:fcaj-poc-ai-results",
+      "VisibilityTimeout": "120",
+      "ReceiveMessageWaitTimeSeconds": "20",
+      "SqsManagedSseEnabled": "true"
+    }
+  },
+  "scope": "Synthetic SQS/S3 transport only; business DB and app AI flags untouched",
+  "requestMessageId": "dee699f0-4f26-4f19-aade-ee36425b7355",
+  "status": "PASS",
+  "workerConfirmedJobAcknowledged": true,
+  "resultMessageId": "9411351e-5600-4ee9-91b5-ab5b21a12dd7",
+  "completionMessageId": "84ed358e-0d0f-3c56-842e-a1a764767601",
+  "resultAcknowledged": true,
+  "inputReferences": {
+    "source": {
+      "key": "inputs/81eda892-a513-47d7-a9f6-cf0aea36c012/source.json",
+      "sha256": "897b3cbdf5b119ce0392de933d9c616a08984fce595ea58b9c1bd82710f6468c",
+      "sizeBytes": 189,
+      "contentType": "application/json",
+      "versionId": "hfEBLSrd4.Hp8.73tlqw9NuD3TdL2.np"
+    },
+    "rubric": {
+      "key": "rubrics/81eda892-a513-47d7-a9f6-cf0aea36c012/rubric.json",
+      "sha256": "788efb4f7f94d17fc6d02cbf4b2a2f3cd788f67a721049999a0ece4c8e1037e8",
+      "sizeBytes": 226,
+      "contentType": "application/json",
+      "versionId": "E.qEx7swJ71JpuBJrJcReVkEGrXdj7kO"
+    },
+    "manifest": {
+      "key": "inputs/81eda892-a513-47d7-a9f6-cf0aea36c012/input-manifest.json",
+      "sha256": "894abbf31f60a4acacefa5a6b168a89ae47a157cda6f0980561779da808246f9",
+      "sizeBytes": 998,
+      "contentType": "application/json",
+      "versionId": "5CXlJcbKSo3o_u4cdCIW6nHJnOWz6Ay."
+    }
+  },
+  "outputReference": {
+    "key": "results/81eda892-a513-47d7-a9f6-cf0aea36c012/mock-output.json",
+    "sha256": "c636eac9f5f3884440f0ad1104dab51ceafbf9a75e089da855bf42082ebfbc2a",
+    "sizeBytes": 1255,
+    "contentType": "application/json",
+    "versionId": null
+  },
+  "artifactsRetained": true,
+  "verifiedAtUtc": "2026-11-06T00:15:25.681075+07:00",
+  "ssmCommandId": "ca362461-ac47-4365-a54e-e86b5a79f980",
+  "temporaryQueuePolicyRemoved": true
+}

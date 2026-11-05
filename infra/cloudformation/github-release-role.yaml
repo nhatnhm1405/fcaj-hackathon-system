@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  Scoped GitHub OIDC role for the FCAJ PoC backend release.
+  Create only after aws-poc environment branch restrictions allow develop exclusively.
+Metadata:
+  AWSToolsMetrics:
+    AWSAgentToolkit: aws-cloudformation@3
+  com.aws.cloudformation.Context:
+    must:
+      - The environment subject does not constrain the Git branch; protect the GitHub environment first.
+      - SSM RunShellScript grants host command execution. Treat deploy workflow changes as privileged code.
+    ref:
+      - at: README.md
+        has: Environment prerequisite and release checklist.
+Parameters:
+  ExistingOidcProviderArn:
+    Type: String
+    AllowedPattern: 'arn:aws:iam::582129522297:oidc-provider/token\.actions\.githubusercontent\.com'
+    Description: Existing GitHub OIDC provider with sts.amazonaws.com audience; provision separately after checking account inventory.
+Resources:
+  ReleaseRole:
+    Type: AWS::IAM::Role
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Use short-lived GitHub credentials for image publication and deployment to one EC2.
+        must: [Exact repository environment subject and STS audience, No static access keys or broad EC2 target]
+    Properties:
+      RoleName: fcaj-poc-github-release
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Federated: !Ref ExistingOidcProviderArn}
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: repo:nhatnhm1405/fcaj-hackathon-system:environment:aws-poc
+      Policies:
+        - PolicyName: fcaj-poc-release
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:InitiateLayerUpload
+                  - ecr:UploadLayerPart
+                  - ecr:CompleteLayerUpload
+                  - ecr:PutImage
+                  - ecr:DescribeImages
+                Resource: !Sub arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/fcaj-poc-backend
+              - Effect: Allow
+                Action: ssm:SendCommand
+                Resource:
+                  - !Sub arn:${AWS::Partition}:ssm:${AWS::Region}::document/AWS-RunShellScript
+                  - !Sub arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:instance/i-08f9589f2c373a395
+              - Effect: Allow
+                Action: ssm:GetCommandInvocation
+                Resource: '*'
+Outputs:
+  RoleArn:
+    Description: Configure AWS_POC_DEPLOY_ROLE_ARN only after environment protection is verified.
+    Value: !GetAtt ReleaseRole.Arn

@@ -1,0 +1,402 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  FCAJ PoC foundation for private files, asynchronous AI job/result messaging,
+  backend container images and application logs. Runtime infrastructure is added separately.
+
+Metadata:
+  AWSToolsMetrics:
+    AWSAgentToolkit: aws-cloudformation@3
+  com.aws.cloudformation.Context:
+    arch: API publishes jobs; worker publishes results; source and output stay in private S3.
+    must:
+      - Defaults must match the resource names shared with Backend 1 and AI.
+      - IAM grants and application/runtime deployment are outside this foundation template.
+      - Retained resources need separate ownership and cleanup after stack deletion.
+      - Standard queues must omit FifoQueue; explicitly sending false caused an SQS Unknown Attribute error during creation.
+    ref:
+      - at: README.md
+        has: Parameters, validation, Outputs and retention behavior.
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: fcaj
+    MinLength: 1
+    MaxLength: 12
+    AllowedPattern: '^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$'
+    ConstraintDescription: Start with a lowercase letter; separate alphanumeric parts with single hyphens.
+    Description: Project prefix used in resource names and tags.
+  EnvironmentName:
+    Type: String
+    Default: poc
+    AllowedValues:
+      - poc
+      - dev
+      - test
+    Description: Environment suffix; keep poc for the agreed integration environment.
+
+Resources:
+  DataBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Private source snapshots, rubrics and AI output; separate from frontend assets.
+        must:
+          - Keep encryption, versioning and all public-access blocks enabled.
+          - Preserve objects and versions when the stack is deleted or the bucket is replaced.
+    Properties:
+      BucketName: !Sub '${ProjectName}-${EnvironmentName}-data-${AWS::AccountId}-${AWS::Region}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+  DataBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Enforce HTTPS; retain the transport restriction with the retained bucket.
+        must:
+          - This policy must deny insecure transport without granting public access.
+    Properties:
+      Bucket: !Ref DataBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !GetAtt DataBucket.Arn
+              - !Sub '${DataBucket.Arn}/*'
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+
+  JobDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Preserve failed jobs for investigation; derive source ARN from the shared naming parameters to avoid a circular dependency.
+        must:
+          - Retention must exceed the source queue retention.
+          - Only the matching job queue may use this DLQ.
+    Properties:
+      QueueName: !Sub '${ProjectName}-${EnvironmentName}-ai-jobs-dlq'
+      SqsManagedSseEnabled: true
+      MessageRetentionPeriod: 1209600
+      ReceiveMessageWaitTimeSeconds: 20
+      VisibilityTimeout: 60
+      RedriveAllowPolicy:
+        redrivePermission: byQueue
+        sourceQueueArns:
+          - !Sub 'arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:${ProjectName}-${EnvironmentName}-ai-jobs'
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+  ResultDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Isolate failed result delivery from failed jobs; derive source ARN to avoid a circular dependency.
+        must:
+          - Retention must exceed the source queue retention.
+          - Only the matching result queue may use this DLQ.
+    Properties:
+      QueueName: !Sub '${ProjectName}-${EnvironmentName}-ai-results-dlq'
+      SqsManagedSseEnabled: true
+      MessageRetentionPeriod: 1209600
+      ReceiveMessageWaitTimeSeconds: 20
+      VisibilityTimeout: 60
+      RedriveAllowPolicy:
+        redrivePermission: byQueue
+        sourceQueueArns:
+          - !Sub 'arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:${ProjectName}-${EnvironmentName}-ai-results'
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+  JobQueue:
+    Type: AWS::SQS::Queue
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Buffer backend-to-worker jobs; Standard delivery fits the agreed idempotent contract.
+        must:
+          - Use the job DLQ after five receives, not five retries plus the initial receive.
+          - Visibility is for the mock; measure and extend it for real AI processing.
+    Properties:
+      QueueName: !Sub '${ProjectName}-${EnvironmentName}-ai-jobs'
+      SqsManagedSseEnabled: true
+      MessageRetentionPeriod: 345600
+      ReceiveMessageWaitTimeSeconds: 20
+      VisibilityTimeout: 120
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt JobDeadLetterQueue.Arn
+        maxReceiveCount: 5
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+  ResultQueue:
+    Type: AWS::SQS::Queue
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Buffer worker-to-backend results independently from job execution.
+        must:
+          - Keep the result DLQ separate from the job DLQ.
+          - Backend must commit the result before deleting the message.
+    Properties:
+      QueueName: !Sub '${ProjectName}-${EnvironmentName}-ai-results'
+      SqsManagedSseEnabled: true
+      MessageRetentionPeriod: 345600
+      ReceiveMessageWaitTimeSeconds: 20
+      VisibilityTimeout: 120
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt ResultDeadLetterQueue.Arn
+        maxReceiveCount: 5
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+  JobQueueTransportPolicy:
+    Type: AWS::SQS::QueuePolicy
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Enforce HTTPS on the job queue; SQS requires exactly one resource per statement.
+        must:
+          - The resource policy must not grant public send or receive permissions.
+          - Attach only to the matching queue and use its single ARN as Resource.
+    Properties:
+      Queues:
+        - !Ref JobQueue
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: 'sqs:*'
+            Resource: !GetAtt JobQueue.Arn
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+
+  ResultQueueTransportPolicy:
+    Type: AWS::SQS::QueuePolicy
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Enforce HTTPS on the result queue without sharing a multi-resource statement.
+        must:
+          - Deny insecure transport without granting public access.
+          - Attach only to the matching queue and use its single ARN as Resource.
+    Properties:
+      Queues:
+        - !Ref ResultQueue
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: 'sqs:*'
+            Resource: !GetAtt ResultQueue.Arn
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+
+  JobDeadLetterQueueTransportPolicy:
+    Type: AWS::SQS::QueuePolicy
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Preserve HTTPS enforcement with the retained failed-job queue.
+        must:
+          - Deny insecure transport without granting public access.
+          - Attach only to the matching queue and use its single ARN as Resource.
+    Properties:
+      Queues:
+        - !Ref JobDeadLetterQueue
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: 'sqs:*'
+            Resource: !GetAtt JobDeadLetterQueue.Arn
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+
+  ResultDeadLetterQueueTransportPolicy:
+    Type: AWS::SQS::QueuePolicy
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Preserve HTTPS enforcement with the retained failed-result queue.
+        must:
+          - Deny insecure transport without granting public access.
+          - Attach only to the matching queue and use its single ARN as Resource.
+    Properties:
+      Queues:
+        - !Ref ResultDeadLetterQueue
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: 'sqs:*'
+            Resource: !GetAtt ResultDeadLetterQueue.Arn
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+
+  BackendRepository:
+    Type: AWS::ECR::Repository
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Keep release images for EC2 deployment and rollback; avoid automatic expiry before release ownership is established.
+        must:
+          - Image tags are immutable; CI must use unique tags or reuse an existing verified image.
+          - Preserve the currently deployed digest and rollback digest.
+    Properties:
+      RepositoryName: !Sub '${ProjectName}-${EnvironmentName}-backend'
+      ImageTagMutability: IMMUTABLE
+      EncryptionConfiguration:
+        EncryptionType: AES256
+      EmptyOnDelete: false
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+  BackendLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Provide a shared application log destination with bounded event retention for the PoC.
+        must:
+          - Runtime must explicitly send logs here; creating a log group does not collect logs.
+          - Do not log credentials, tokens or private source contents.
+    Properties:
+      LogGroupName: !Sub '/${ProjectName}/${EnvironmentName}/backend'
+      RetentionInDays: 7
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: Owner
+          Value: backend2
+
+Outputs:
+  DeploymentRegion:
+    Description: Region used to configure backend and worker clients.
+    Value: !Ref AWS::Region
+  DataBucketName:
+    Description: Private bucket for inputs, rubrics and results.
+    Value: !Ref DataBucket
+  DataBucketArn:
+    Description: Bucket ARN for scoped IAM permissions.
+    Value: !GetAtt DataBucket.Arn
+  JobQueueUrl:
+    Description: Queue URL used by the backend producer and AI worker.
+    Value: !Ref JobQueue
+  JobQueueArn:
+    Description: Job queue ARN for scoped IAM permissions.
+    Value: !GetAtt JobQueue.Arn
+  ResultQueueUrl:
+    Description: Queue URL used by the AI worker producer and backend consumer.
+    Value: !Ref ResultQueue
+  ResultQueueArn:
+    Description: Result queue ARN for scoped IAM permissions.
+    Value: !GetAtt ResultQueue.Arn
+  JobDeadLetterQueueUrl:
+    Description: Failed-job queue URL for operator investigation.
+    Value: !Ref JobDeadLetterQueue
+  JobDeadLetterQueueArn:
+    Description: Failed-job queue ARN for operator permissions.
+    Value: !GetAtt JobDeadLetterQueue.Arn
+  ResultDeadLetterQueueUrl:
+    Description: Failed-result queue URL for operator investigation.
+    Value: !Ref ResultDeadLetterQueue
+  ResultDeadLetterQueueArn:
+    Description: Failed-result queue ARN for operator permissions.
+    Value: !GetAtt ResultDeadLetterQueue.Arn
+  BackendRepositoryName:
+    Description: ECR repository name used by the image build workflow.
+    Value: !Ref BackendRepository
+  BackendRepositoryUri:
+    Description: ECR URI used to push and pull backend release images.
+    Value: !GetAtt BackendRepository.RepositoryUri
+  BackendRepositoryArn:
+    Description: ECR repository ARN for scoped push and pull permissions.
+    Value: !GetAtt BackendRepository.Arn
+  BackendLogGroupName:
+    Description: Log group name to configure in the backend log driver or agent.
+    Value: !Ref BackendLogGroup
+  BackendLogGroupArn:
+    Description: Log group ARN for scoped log permissions.
+    Value: !GetAtt BackendLogGroup.Arn
+
