@@ -1,0 +1,30 @@
+{
+  "hostJava": "Oracle21.0.10",
+  "hostMaven": "3.9.16",
+  "dockerBuildMaven": "3.9.6",
+  "node": "24.15.0",
+  "dockerEngine": "29.5.3",
+  "compose": "5.1.4",
+  "mysqlLab": "8.4.13",
+  "timezone": "Asia/Saigon",
+  "date": "2026-11-03",
+  "baselineRevision": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "branch": "feature/backend1-be2-handoff",
+  "releaseRevision": null,
+  "checks": {
+    "deployGate": "8/8 host",
+    "legacyFixtureChecks": "7/7",
+    "powershellSyntax": "9 scripts",
+    "currentContract": "pass",
+    "composeParse": "both variants passed; missing-bind rejected",
+    "localLinks": "passed current-document scan; see verifier output",
+    "containerEnv": "both variants passed, network disabled",
+    "dumpParser": "7/7",
+    "bashSyntax": "4 scripts/templates passed individually",
+    "packagedWorker": "argument validation reached before AWS",
+    "demoPreflight": "19/19",
+    "whitespace": "git diff --check passed",
+    "sourcePreservation": "418 original files present;366 original Java compared;30 frozen files unchanged",
+    "apiRehearsal": "100 HTTP requests; two teams of three; two independent MOCK jobs"
+  }
+}

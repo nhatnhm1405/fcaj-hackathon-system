@@ -69,7 +69,7 @@ class TestContractsAndSamples(unittest.TestCase):
         self.assertEqual(mock_result.criteria_results, sample_output.criteria_results)
         self.assertEqual(mock_result.evidence, sample_output.evidence)
 
-    def test_sample_output_evidence_files_and_lines_exist(self):
+    def test_sample_output_evidence_matches_source_lines(self):
         sample_output = GradingJobOutput.from_json_file(self.sample_output_path)
         for ev in sample_output.evidence:
             full_path = os.path.join(REPO_ROOT_DIR, ev.file_path)
@@ -83,6 +83,11 @@ class TestContractsAndSamples(unittest.TestCase):
                 ev.line_end,
                 len(lines),
                 f"line_end ({ev.line_end}) vượt quá tổng số dòng ({len(lines)}) của {ev.file_path}",
+            )
+            self.assertEqual(
+                ev.snippet,
+                "\n".join(lines[ev.line_start - 1:ev.line_end]),
+                f"Evidence snippet không khớp nội dung tại {ev.file_path}:{ev.line_start}",
             )
 
 

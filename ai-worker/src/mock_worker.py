@@ -46,7 +46,7 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
         ),
         2: (
             7.0,
-            "Cần lưu ý chuyển các secret như database password và JWT key sang biến môi trường (environment variables) hoặc file .env thay vì đặt giá trị fallback mặc định trong repo.",
+            "Cấu hình AWS đọc thông tin database từ biến môi trường. Điểm mock cố định phục vụ kiểm thử, không phải kết luận đánh giá bảo mật thực tế.",
         ),
         3: (
             8.0,
@@ -76,12 +76,12 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
 
     overall_score = compute_weighted_overall_score(criteria_results, job_input.rubrics)
 
-    # Danh sách evidence mẫu chuẩn (khớp đúng file thật fcaj-api và số dòng trên develop/main)
+    # Synthetic evidence for the SEAL integration fixture; no repository is evaluated.
     all_mock_evidence = [
         CodeEvidence(
             criteria_id=1,
             type="POSITIVE",
-            file_path="back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Score.java",
+            file_path="back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Score.java",
             line_start=10,
             line_end=12,
             snippet='@Table(name = "Score", uniqueConstraints = {\n    @UniqueConstraint(name = "uq_score", columnNames = {"submission_id", "judge_user_id", "criteria_id"})\n})',
@@ -89,17 +89,17 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
         ),
         CodeEvidence(
             criteria_id=2,
-            type="PENALTY",
-            file_path="back-end/src/fcaj-api/src/main/resources/application.properties",
-            line_start=13,
-            line_end=14,
-            snippet="spring.datasource.username=${DB_USERNAME:root}\nspring.datasource.password=${DB_PASSWORD:***REDACTED***}",
-            comment="Trừ 3.0 điểm: Mật khẩu database mặc định được khai báo fallback trực tiếp trong file cấu hình (đã che secret), có nguy cơ lộ lọt khi push mã nguồn.",
+            type="NEUTRAL",
+            file_path="back-end/src/seal-api/src/main/resources/application-aws.properties",
+            line_start=3,
+            line_end=5,
+            snippet="spring.datasource.url=${SPRING_DATASOURCE_URL:}\nspring.datasource.username=${DB_USERNAME:}\nspring.datasource.password=${DB_PASSWORD:}",
+            comment="Dẫn chứng cấu hình AWS nhận datasource từ môi trường, không dùng mật khẩu fallback. Đây là fixture mock, không phải kết quả kiểm toán bảo mật.",
         ),
         CodeEvidence(
             criteria_id=3,
             type="POSITIVE",
-            file_path="back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AdminScoreDistributionServiceTest.java",
+            file_path="back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AdminScoreDistributionServiceTest.java",
             line_start=21,
             line_end=28,
             snippet="@ExtendWith(MockitoExtension.class)\nclass AdminScoreDistributionServiceTest {\n\n    @Mock private HackathonEventRepository eventRepository;\n    @Mock private RoundRepository roundRepository;\n    @Mock private TrackRepository trackRepository;\n    @Mock private ScoringCriteriaRepository criteriaRepository;\n    @Mock private ScoreRepository scoreRepository;",
@@ -108,10 +108,10 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
         CodeEvidence(
             criteria_id=4,
             type="POSITIVE",
-            file_path="back-end/src/fcaj-api/Test/ScoringServiceTest.md",
+            file_path="back-end/src/seal-api/Test/ScoringServiceTest.md",
             line_start=1,
             line_end=5,
-            snippet="# ScoringService Validation & Test Report\n\nFile service: `src/main/java/com/fcaj/hackathon/service/ScoringService.java`\n\nFile test: `src/test/java/com/fcaj/hackathon/service/ScoringServiceTest.java`",
+            snippet="# ScoringService Validation & Test Report\n\nFile service: `src/main/java/com/seal/hackathon/service/ScoringService.java`\n\nFile test: `src/test/java/com/seal/hackathon/service/ScoringServiceTest.java`",
             comment="Cộng điểm: Tài liệu hóa rõ ràng các kịch bản kiểm thử và quy ước nghiệp vụ đi kèm từng service trong mã nguồn.",
         ),
     ]
@@ -130,14 +130,14 @@ def run_mock_evaluation(job_input: GradingJobInput, sleep_seconds: float = 1.0) 
                     file_path="README.md",
                     line_start=1,
                     line_end=1,
-                    snippet="SEAL Hackathon system is outdated, time for FCAJ Hackathon!",
+                    snippet="# SEAL Hackathon System",
                     comment=f"Ghi chú tham khảo cho tiêu chí {crit.name}.",
                 )
             )
 
     summary = (
         "Repository thể hiện kỹ năng tổ chức backend Spring Boot rất tốt, tuân thủ đúng kiến trúc chuẩn "
-        "và có unit test kèm theo. Điểm cần tối ưu hóa quan trọng nhất là bảo mật secret trong môi trường triển khai."
+        "và có unit test kèm theo. Đây là kết quả mock cố định để kiểm thử tích hợp, không phải đánh giá repository thực tế."
     )
 
     elapsed_time = round(time.time() - start_time, 2)

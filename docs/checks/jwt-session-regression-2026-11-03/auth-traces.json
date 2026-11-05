@@ -1,0 +1,355 @@
+{
+  "scope": "Final full-package run; seven auth tests; no credential/cookie/token/session ID values",
+  "cases": [
+    {
+      "case": "authenticatedContextAlreadyInSessionCannotReplaceJwt",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.714696900Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 401,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    },
+    {
+      "case": "correctlySignedButExpiredJwtCannotFallBackToSameSession",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.852757900Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 401,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    },
+    {
+      "case": "csrfRemainsRequiredAndReloginWorksWithSameTransientSession",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.993850600Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "PUT",
+          "sessionPresent": true,
+          "http": 403,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "PUT",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/logout",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "PUT",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    },
+    {
+      "case": "logoutDeletesCookiesAndOldSessionDoesNotAuthenticate",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.785209200Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/logout",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 401,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    },
+    {
+      "case": "malformedJwtCannotFallBackToSameSession",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.559066900Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 401,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    },
+    {
+      "case": "removingOnlyJwtRejectsSameStillValidSession",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.628404400Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 401,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    },
+    {
+      "case": "validJwtKeepsTransientSessionWithoutPersistingAuthentication",
+      "scope": "MockMvc/H2; real security; no browser/provider/AWS",
+      "executedAt": "2026-11-03T07:33:46.706695200Z",
+      "steps": [
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "POST",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/login",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 204,
+          "path": "/api/csrf",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        },
+        {
+          "method": "GET",
+          "sessionPresent": true,
+          "http": 200,
+          "path": "/api/auth/me",
+          "authorizationHeaderPresent": false
+        }
+      ]
+    }
+  ]
+}

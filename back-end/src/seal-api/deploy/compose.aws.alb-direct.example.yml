@@ -1,0 +1,25 @@
+# REVIEW TEMPLATE, not an applied AWS topology. Assumes ALB -> private EC2 HTTP:8080.
+# BE2 must confirm listener TLS/target protocol and restrict target SG to ALB SG.
+# Choose this OR compose.aws.example.yml (local reverse proxy), not both.
+# FE is hosted separately on S3; no FE, Caddy or database service is deployed here.
+services:
+  seal-backend:
+    image: ${CANDIDATE_BACKEND_IMAGE:?Candidate image is required}
+    restart: unless-stopped
+    env_file:
+      - path: ${DEPLOY_RUNTIME_ENV_FILE:?Private runtime environment file is required}
+        format: raw
+    environment:
+      SPRING_PROFILES_ACTIVE: ${DEPLOY_SPRING_PROFILES_ACTIVE:-aws}
+      SPRING_DATASOURCE_URL: ${DEPLOY_RUNTIME_JDBC_URL:?Exact runtime JDBC URL is required}
+      APP_BUILD_REVISION: ${CANDIDATE_REVISION:?Exact source SHA is required}
+    ports:
+      # Explicit private interface: loopback-only cannot accept an ALB target connection.
+      - "${DEPLOY_TARGET_BIND_IP:?Private EC2 interface reachable by ALB is required}:8080:8080"
+    volumes:
+      - type: bind
+        source: ${DEPLOY_DB_TRUSTSTORE_FILE:?Provision the RDS truststore first}
+        target: /run/secrets/rds-truststore.p12
+        read_only: true
+# Target health: /health/ready (DB only). Also verify /health/live and /health/version.
+# ALB-origin auth/cookie/redirect, RDS JVM TLS and external IO need live acceptance.

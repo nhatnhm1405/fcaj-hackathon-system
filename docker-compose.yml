@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mysql-db:
     image: mysql:8.0
-    container_name: fcaj_mysql
+    container_name: seal_mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 12345 # Phù hợp với file .env mặc định của bạn
@@ -20,16 +20,16 @@ services:
       timeout: 5s
       retries: 10
     networks:
-      - fcaj_network
+      - seal_network
 
-  fcaj-backend:
+  seal-backend:
     build:
-      context: ./back-end/src/fcaj-api
+      context: ./back-end/src/seal-api
       dockerfile: Dockerfile
-    container_name: fcaj_backend
+    container_name: seal_backend
     restart: unless-stopped
     env_file:
-      - ./back-end/src/fcaj-api/.env
+      - ./back-end/src/seal-api/.env
     environment:
       # Biến môi trường đè lên cấu hình mặc định trong application.properties
       # Trỏ DB_URL về service `mysql-db` thay vì localhost
@@ -51,26 +51,26 @@ services:
       mysql-db:
         condition: service_healthy
     networks:
-      - fcaj_network
+      - seal_network
 
-  fcaj-frontend:
+  seal-frontend:
     build:
-      context: ./front-end/src/fcaj-web
+      context: ./front-end/src/seal-web
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL:-https://api.sealhackathon.io.vn}
-    container_name: fcaj_frontend
+    container_name: seal_frontend
     restart: unless-stopped
     expose:
       - "80"
     depends_on:
-      - fcaj-backend
+      - seal-backend
     networks:
-      - fcaj_network
+      - seal_network
 
   caddy:
     image: caddy:2-alpine
-    container_name: fcaj_caddy
+    container_name: seal_caddy
     restart: unless-stopped
     ports:
       - "80:80"
@@ -80,13 +80,13 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
-      - fcaj-frontend
-      - fcaj-backend
+      - seal-frontend
+      - seal-backend
     networks:
-      - fcaj_network
+      - seal_network
 
 networks:
-  fcaj_network:
+  seal_network:
     driver: bridge
 
 volumes:

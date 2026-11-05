@@ -1,0 +1,16 @@
+{
+  "sourceFile": "be2-hoi-be1-truoc-deploy-2026-11-01.md",
+  "sourceDate": "2026-11-01",
+  "reviewDate": "2026-11-03",
+  "timezone": "Asia/Saigon",
+  "sourceSha256": "699c259212b6f28e69eea5fc6084663d4ea16f43f6e3d4c5e9fd18659d79dfca",
+  "sourceSnapshot": "be2-question-source-2026-11-01.md",
+  "localBaselineRevision": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "releaseRevision": null,
+  "priorWorkingTreeManifestSha256": "314ccfdc218cfb4a8443d0a0abb1a253bc3a6d874ef541fb96366579b92e7ce8",
+  "decisions": {
+    "scope": "Checklist reconciliation and handoff plan; no production-code changes",
+    "initialData": "User confirmed synthetic sample data first; .bak restore separate",
+    "cloudAccess": "No live AWS checks performed during review"
+  }
+}

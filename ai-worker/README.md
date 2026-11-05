@@ -1,6 +1,10 @@
-# AI Evaluation Worker (FCAJ Hackathon System)
+# AI Evaluation Worker (SEAL Hackathon System)
 
 Module AI độc lập thực hiện tự động đánh giá và chấm điểm mã nguồn repository GitHub (tại commit SHA chỉ định) theo bộ tiêu chí (Rubric) kỹ thuật của ban giám khảo.
+
+`mock_worker.py` dùng fixture tổng hợp với điểm cố định; không đánh giá repository thực tế. Các evidence mẫu hiện tham chiếu source SEAL của bản tích hợp local, không phải nội dung tại commit lịch sử trong `sample_input.json`.
+
+CLI Python này đọc/ghi JSON file. Contract `job_id`/`criteria_results` chưa nối trực tiếp với transport S3/SQS và envelope `fcaj.ai.message.v1` của Java backend. Smoke AWS hiện dùng Java MOCK worker cùng candidate; tích hợp Python/model cần adapter và kiểm chứng riêng.
 
 ---
 

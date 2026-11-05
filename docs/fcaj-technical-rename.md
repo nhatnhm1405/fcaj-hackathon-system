@@ -1,5 +1,7 @@
 # FCAJ technical rename — phase 1
 
+> Historical checkpoint. The PR #23 integration restores SEAL module, package and service names by user decision; see [the integration plan](plans/pr-23-develop-conflict-resolution-plan-2026-11-04.md). Neutral frontend identifiers remain. The validation below belongs to the original rename revision.
+
 Implemented on 2026-10-14. This phase changes technical names and source paths;
 business behavior, persisted data, and visible branding remain as before.
 

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "fcaj.ai.message.v1",
+  "eventType": "AI_JOB_REQUESTED",
+  "messageId": "b58bd72c-f02c-4b69-b3bd-885b6d5f35ba",
+  "occurredAt": "2026-10-27T03:00:00Z",
+  "jobId": "b61f34f3-f73a-4a26-915a-401dd9d3dce1",
+  "submissionId": 101,
+  "inputRevision": "147f667f5d2074dd28a84508624e0cf3622003f29cbcf8acb659f9a55f355507",
+  "commitSha": "0123456789abcdef0123456789abcdef01234567",
+  "processingVersion": "mock-pipeline-v1",
+  "modelConfigVersion": "mock-model-config-v1",
+  "promptVersion": "mock-prompt-v1",
+  "rubricVersion": "mock-rubric-v1",
+  "mode": "MOCK",
+  "deadlineAt": null,
+  "input": {
+    "manifest": {
+      "key": "inputs/b61f34f3-f73a-4a26-915a-401dd9d3dce1/input-manifest.json",
+      "sha256": "147f667f5d2074dd28a84508624e0cf3622003f29cbcf8acb659f9a55f355507",
+      "sizeBytes": 1069,
+      "contentType": "application/json",
+      "versionId": null
+    },
+    "source": {
+      "key": "inputs/b61f34f3-f73a-4a26-915a-401dd9d3dce1/mock-source.json",
+      "sha256": "cf910c9267b193217f10889b869e8d1ff06777985e56bec6d989eb4a8cab9bf7",
+      "sizeBytes": 279,
+      "contentType": "application/json",
+      "versionId": null
+    },
+    "rubric": {
+      "key": "rubrics/b61f34f3-f73a-4a26-915a-401dd9d3dce1/rubric.json",
+      "sha256": "238c009abf477a3b45f21334c70213d961930c0e5b7daf8fa09117531daab4f3",
+      "sizeBytes": 308,
+      "contentType": "application/json",
+      "versionId": null
+    }
+  }
+}

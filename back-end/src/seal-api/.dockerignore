@@ -1,0 +1,13 @@
+target/
+.idea/
+.vscode/
+.mvn/
+.env
+deploy/*.env
+deploy/deploy-settings.sh
+deploy/*.p12
+deploy/*.jks
+uploads/
+protected/
+*.log
+hs_err_pid*.log

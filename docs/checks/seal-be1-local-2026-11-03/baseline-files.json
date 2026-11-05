@@ -1,0 +1,1786 @@
+[
+  {
+    "path": "back-end/src/fcaj-api/.dockerignore",
+    "sha256": "bb7e387b2332131b9fb321f355532a59396f5067fec6e5e829260a997a0af4fb"
+  },
+  {
+    "path": "back-end/src/fcaj-api/.env.aws.example",
+    "sha256": "9a9d48bc403962ce45c801f2508f40d85bda4e5841334b0bb3ba9eee39f60b54"
+  },
+  {
+    "path": "back-end/src/fcaj-api/.env.example",
+    "sha256": "e76021acca3b046a99d4a07133ab6ce40782d02f456f14f5ebab0acadd7d467c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/.gitattributes",
+    "sha256": "18be76f9008af08719be1d98d291e1286907ad6df86e7bd4e2dbed4ce0903fe8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/.gitignore",
+    "sha256": "ad73f05b0f9cb2df5a938b00f72d6eaba4b38f5826302569b8a78c11134ac38c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/.mvn/wrapper/maven-wrapper.properties",
+    "sha256": "1f3cf0a7111d2b54736d1f89d7e93f1f143f8b3d5a58a5bb46e3b60b3eebd931"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Dockerfile",
+    "sha256": "4b4f88c3276c19acbf39ccbaf41b70ac8c08c2987672641d2a885bdd205e18a3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/HackathonEventServiceTest.md",
+    "sha256": "ec0765f970b9e2f0759c430d95ade1360cfc6a104c7fed13026ec5807d0edd1c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/ScoringServiceTest.md",
+    "sha256": "9ff6da60fac9d33b297c8997af4e9331c7729961c9e2332a4437f5bc82cbdb41"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/SubmissionServiceTest.md",
+    "sha256": "44089d27ec80bd0edbd4fa4baa30eeec945d6cd58ec4ecf4099cde3e6a3f7646"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/SystemLogServiceTest.md",
+    "sha256": "92e9c0bd5ccaf5b2af23c2731f557083da532e5d8d311c82454bf3dec3565cbe"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/TeamInviteServiceTest.md",
+    "sha256": "79d3a30808b6d8675ffa49e0b785926ea26e36641cc207983bcb55330c796011"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/TeamServiceTest.md",
+    "sha256": "86f33bdc35d2d9ac226807c980d0f84f6b200d5f736c4cf475350f3df870e52d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/deploy-verified.sh",
+    "sha256": "48385c7c08d85f3d28904c01ec9afa808a9ab5005c26c3832101142a61787b52"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/deploy-verified.test.mjs",
+    "sha256": "2e81baaae22428c1b1af690503b8a28e486f27e736b399f3a9c7bdc6ddfb81b4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/run-ai-mysql-tests.ps1",
+    "sha256": "13239a1b2b0646a09ee25b03795030d4a7b9c2c2e57757a80c0d6fc5334e64ef"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/run-ai-mysql-tests.sh",
+    "sha256": "b07e67aa19da74258215a84bc4c12c0da1bdded372e360a5dfe2c556827527de"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/run-aws-mock-worker.ps1",
+    "sha256": "f6672c10922b053d1ebdf704934b3954e89c59d400b38df50aca63ad6f367c4b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/run-db-migration.ps1",
+    "sha256": "a5c1ab09dcabc0524e137366a5cd91cf686a97e0e305797344bd90244142b8a3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/run-demo-preflight-tests.ps1",
+    "sha256": "424008a03e4885fcb693df54ddfb97c95d6ab007f1ea6790499ea6b964017ce2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/run-integration-smoke.ps1",
+    "sha256": "c2255bd409d28980141d6c2944d16084b9c0500a8519c7e149c0fd8c5e74d45a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/DumpMigrationLab.java",
+    "sha256": "c8e795644d43bf8c1795a7f45bb0a312ebb410d87e901d3c11ee0252098578db"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/README.md",
+    "sha256": "68a8778820e29bea52158833250a3343b27c13287b696c86494e95f070eb060b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/SchemaInventoryTool.java",
+    "sha256": "7f742841dc47deddda1b7a551e35d7def4f26f21c9903684ccdde72ed7020d5d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/export-schema.ps1",
+    "sha256": "fbbbf964c85d609bd904d44a80cb60846b56cd3a33e87de3afd7419ac50cc93c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/inspect-dump.mjs",
+    "sha256": "64ede2d9b1a1b72a5c7147f39e9beb5ee1090c287c52af6cbea3a64511b85cc3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/inspect-dump.test.mjs",
+    "sha256": "bbb1d68d96a242fb8dd5afa8f6e21a6e1413a6e98894cdf7bb9d0291ff22977a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/lab-logback.xml",
+    "sha256": "4e7ad57df3c80a5a7bb00d0ecca0b14194349e5c502cfbb88c5c82d1104ff753"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/prepare-dump-lab.mjs",
+    "sha256": "190f8eaa0d01bd44feec3867acb01dfd609a9a682f0d5a7201988e490c32dfcc"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/schema/run-dump-lab.ps1",
+    "sha256": "50567b50b87b1b40308adc4e79b67f3d457305e0e099594b4c30b8bf66f35167"
+  },
+  {
+    "path": "back-end/src/fcaj-api/Test/trackServiceTest.md",
+    "sha256": "7c8a1ae9c906cf82f0c0727553c0ef6d44d4bec54e1c698a914369e995404e49"
+  },
+  {
+    "path": "back-end/src/fcaj-api/deploy/compose.aws.example.yml",
+    "sha256": "329bb3b0a4bf02ac4578633ad37c1cc7189b12acde01312934ef9fa10489b1d1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/deploy/deploy-settings.sh.example",
+    "sha256": "54a6eed1c49edb0aa38701af37e6395d36cdbfd4837c0ff2fe132daf9eb67f33"
+  },
+  {
+    "path": "back-end/src/fcaj-api/deploy/migration.env.example",
+    "sha256": "dd534c94797f5345815ee2a578453fb750698ddf7c3791cd4a5ae3ffa0547eb2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/deploy/worker.env.example",
+    "sha256": "00e04a93c2ce7df186cbc9bd7407de369503e18fa2dbe863baea0c6b72dfd0f6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/mvnw",
+    "sha256": "cae96cef89ebea3531221f4ae17c23cf8edf67d00eae8306d4186ae1bbed4d02"
+  },
+  {
+    "path": "back-end/src/fcaj-api/mvnw.cmd",
+    "sha256": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/pom.xml",
+    "sha256": "1168cdbf95364a81d66fea8cf32a588ff32b284d1592624016335848fbb32c98"
+  },
+  {
+    "path": "back-end/src/fcaj-api/run-demo.ps1",
+    "sha256": "7434dd9f15854050c49e0ba068859d3f013d715c7360e1b4748be87ba911f3e9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/HackathonApplication.java",
+    "sha256": "774c497bc92c37ffc865e8ee90d6369a3c7dff1aaafb846d0612880d2182fe3a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/AiJobController.java",
+    "sha256": "3cc4e4405ddcaa2b4516a08eaf8634f6228edfd32f790d6cf3f07fb336087a2a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/AiJobService.java",
+    "sha256": "d9af5d9b0390b70cc971679f30f10c609e83a00e40dafdb0b75b0d0de3d43690"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/AiJobStore.java",
+    "sha256": "72937950e107df54c906f829a8a83cfb2bf3401e162d2455c142464334ca6b9f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/AwsMockWorkerMain.java",
+    "sha256": "b032537cb4c24de3a2e746cdca21f74988cba0b1a569bf813cd541599ed50461"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/BoundedHttp.java",
+    "sha256": "217d6848d6ca471711cbfbeaae74df496114d536fb96e19f8976feccb6b42e17"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/GitHubSourceReader.java",
+    "sha256": "f6b275a7631275e1e5e798765612ce92801c48f521abad319c3eb62fd5e40aba"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobAccess.java",
+    "sha256": "fd2d730978de97e123e7a04c78ab07b770b622585b4495320b6882f379b19ff1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobDelivery.java",
+    "sha256": "6285e6555a8e5153ab0f197a75c54bcf0da791d5295efb5e03bca6708fdf6ebc"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobEnvironmentConfiguration.java",
+    "sha256": "3e50b28f9a68c13b851c9d6e557c6df487431d306ff66fdf25a5372fb9fc0c64"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobErrors.java",
+    "sha256": "cc1f1d4f795eb9147f9e886db09fe3830977c0a216a336401783f49be20634cc"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobException.java",
+    "sha256": "57b9029d23403004c18c7fe9c5f0415683d5468a807acf94927158a0b2591eb4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobJson.java",
+    "sha256": "485a07b962fe9e3075fb3733a79b7717c921899f4ec54262b784fb61d693de60"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobLimits.java",
+    "sha256": "44d93d969d9e988d4ab46941858c7bf5bf953b073aaec7a536e3c0541404e955"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobQueuePolicy.java",
+    "sha256": "539bb385da2c5da002a9055fd89d4889fa33c589b90226f69609326f8ee5f12f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobResultValidator.java",
+    "sha256": "777445a725aafc32de4813b481e474dee1e04c025de71b8916eabb19da608525"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobSnapshotReader.java",
+    "sha256": "7314ee4343fa533d58cd6c708ab0f7594c28df323e55008aff84c54dda67d8d6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/JobSnapshotWriter.java",
+    "sha256": "6b9c21c2df18ac8458d3ca1449cad139e7682d6aade50b8e5d15732aeec2cf89"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/MockWorkerOutput.java",
+    "sha256": "d39ad37858b939bb4e5d3207b18665543eac5608f385548b54178f26ebe73ee4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/aijob/ResultPoller.java",
+    "sha256": "dece6247a63d70f0794247643224377d34e6df0c505464b482ad2f36393a4bac"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/AppConfig.java",
+    "sha256": "fee2ddec71bc60a0e97311d5656ee8eb9e181e3b92f20a56a0a0971c065e865d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/AsyncConfig.java",
+    "sha256": "4f6752bcb5b4764b869b68b21723ee47dfb79877f73ab6c7329b6abddb0e46c6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/AwsClientsConfiguration.java",
+    "sha256": "b041d359071d5ec08b6debf7d5a5fda94f2abd06d9e05d433825847066c03aa2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/AwsEnvironmentConfiguration.java",
+    "sha256": "ec8988419afc519d69d7bd5d9835ff55e9c0fb0258d3b49dddc044dc7a90b32e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/BootstrapAdminSeeder.java",
+    "sha256": "fa4d7e5a3f17bfd9bc1861c089d78058c8a04210d139650fef03d32d40f84225"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/DataSeeder.java",
+    "sha256": "bb77f40d24fbea5365111fb5724950f1b8d8613defa4193bc40ffe81e9dd0a69"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/MigrationEnvironmentConfiguration.java",
+    "sha256": "95abee706a3a9ad1c5c9a6dc4e0454f5fa7f938a51c3f3a7394617c168e01662"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/OpenApiConfig.java",
+    "sha256": "dd0c62d511cece109b743b7789ff5beb9b9414c05853a663920642d49aa1a065"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/RequestIdFilter.java",
+    "sha256": "66544fabcf9075ebf325bf084128c7a2d77fbe54f59a9861ba1d0fd00ce9a528"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/SecurityConfig.java",
+    "sha256": "518dd6b94688bc9278decd2809fcc9a6f84b6f8d80d5e962714933292ca5d879"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/StorageEnvironmentConfiguration.java",
+    "sha256": "589fac52cc6cf55159b7fb85a50e7ef7732a1913ddac5c2497df0709d7ffc88b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/WebMvcConfig.java",
+    "sha256": "e33b25d389552c31386198ea892db15f81510908e34304f959a493464cdb611d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/seed/DemoFixtures.java",
+    "sha256": "050602b059f45bfc85dbd1760e1de361be9d6297833be6050f1dd1921b5ce639"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/seed/DemoScenario.java",
+    "sha256": "1bfafa135810763485bfe41752ed6bb2811c38123ba38010effbbca500d7aaab"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/config/seed/DemoSeeder.java",
+    "sha256": "6a7a0c0fa9568da5aaa4a3d3bfa7b75298f5c58a46e45b7a12a0bc2b510a6e5a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AccountApprovalController.java",
+    "sha256": "9b6e8fac71178dada1882b84570ec0462722b944e0697d558c9913bdc114e89b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AdminController.java",
+    "sha256": "9a5224a5a63ee094065076dd86fb29d11636b285f887f062d6a0dc478e56dde4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AiController.java",
+    "sha256": "2378646353a1dacf70557a098a13cde9e20aa6e4854a3edbfdef72b549c79c5d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AnnouncementController.java",
+    "sha256": "d3d3983594308ecdbc1cb7e8c6c427bec3e5a6a323e9057c0df397907577fdf4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AssignmentController.java",
+    "sha256": "50b5a3922eccf4e749c50fe27cd39e2587aba17b773a7ade531f86e4bf8550cf"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AuditLogController.java",
+    "sha256": "bc25d9383ff185b190d0983492ed97a8b17cddf11ef1c5c76a786ed92aa749ce"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AuthController.java",
+    "sha256": "d277ac03286d01de0d472f3b8de26fbdae87d90370c70bb4bf6e441d38878bb6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/AvatarController.java",
+    "sha256": "98d1f0c94af9fc6a7433adcd4c2c7500526d42fb291f43d3174873f47b624996"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/CoordinatorAssignmentController.java",
+    "sha256": "9aceff2d4899272dfd1a35bdebc0506d31e091453831bf3e52e7719d8ff7a6bf"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/CoordinatorController.java",
+    "sha256": "9d39b09355f596351749ab2fe514be4034477f79cb87184761d14359b5f8fe61"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/CsrfController.java",
+    "sha256": "d56e3d7c1932de43fa2412656edc96925c1d7950fead0e9858b67a9824e8ede9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/HackathonEventController.java",
+    "sha256": "46c0ccbe20da2fec6b4bc7fb59a6ba5d468e5130c3a5984915ac5c73bfe51ecd"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/JoinRequestController.java",
+    "sha256": "d4372a70bfb2f627d56d507c1b7b781ab40b78a54b849e280d889fd4f36816b1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/MentorSupportRequestController.java",
+    "sha256": "ddf47bc0505a28286c5baeb6237437bf29328d6fd76bc78f9cfa551b9c6502e9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/NotificationController.java",
+    "sha256": "eb2c0defe8d6641aa78cbd8bae981ea74ab4452d828ecea3cb9e6e13c6a6b725"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/OperationalController.java",
+    "sha256": "d58466af311d1e3bbda80abee55c94311222b996030f124575b2f4359bf0e718"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/ParticipantHistoryController.java",
+    "sha256": "1a32d9238b5f4bf3fe7999cce4d416a3fb162381e918e1159eb842c74b7a297c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/ParticipationAccessRequestController.java",
+    "sha256": "67eee068a72a0bdfe0b205a0cae0e8ecb11e4bca95e1bcb1a6751667cf158c84"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/PrizeController.java",
+    "sha256": "df3d051648965757d32b3c5ffa98f4b7ffbeccb025a8026516a29a14f7bf6541"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/ReopenRequestController.java",
+    "sha256": "43a873c231e56eb17f8b83cf2fbb92ae3e42fc38ba49fffaf84a4b68f9adde78"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/RoundController.java",
+    "sha256": "fa0e7f896d7d5c007ff665ee5e516c873c21b011f9c2f1144c615f2b9c4cd150"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/RoundResultController.java",
+    "sha256": "37a8c2a4a48a96535438ed3a4510f65d527bccacc5eb7cac603cb8080af96776"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/RoundTimerController.java",
+    "sha256": "1895901cf1d708c3b63cffb4badcab992852d05ddb943d348c418eaabfba013b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/ScoringController.java",
+    "sha256": "cf58b5831009307abbc9a2a615470f4e2b2fb85f0063814fa1398fb76eff3813"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/SubmissionController.java",
+    "sha256": "5415e8bd99c08d55b2d87d87081bc71980499b651f77bbddfdf829013ba61820"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/SupportRequestController.java",
+    "sha256": "5294e29830c8078a571bc9d7cfd1754ebd022ecaa225b568ac7cfc7b116b3def"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/TeamController.java",
+    "sha256": "1514faa439636bb997d3c9b0afe39d15550da030943820cf0b0f9882128616de"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/TeamInviteController.java",
+    "sha256": "edbbd176783a08083ba7481ae993dac56c305e05ab2d172b6d2b226c262d47da"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/TeamRejoinRequestController.java",
+    "sha256": "75b86dd05fca2bf3db548b21022f2e4075faa7c741e5df60090133342927574a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/TrackController.java",
+    "sha256": "5b7b1e45c06b18c5603df5e0cd3d65ac802baa4a058136d5a73fe88dde85950c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/controller/TrackProblemController.java",
+    "sha256": "66807ed07032a79296f57111ed36a17b4716fdf550c930e77ce23a5f15f46c5b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/db/DatabaseMigrationMain.java",
+    "sha256": "97a1da26c51701f987b72914dcab4654c28c01b4e9017489a0b7c09d889afebb"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/db/SchemaFingerprint.java",
+    "sha256": "136ca9c1049262db56163f5ef8c2c1cfe15b4c9cd6f71a12a7cae599b8fcb44d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/RepoDigest.java",
+    "sha256": "5ef16209b82534d7ff7db4dcf44ed21d683bbb0feb5460fb8b9a1f4665c5a703"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ApplyLeftoverGroupingRequest.java",
+    "sha256": "4827a7b6ba01145a3e59a879a509c3049d9e8cd2d038600c92098857caa74f5d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/AssignJudgeRequest.java",
+    "sha256": "47bed7674537f6546a60e181f6a7c15968a912e22c5de19674d26f949cac402b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/AssignMentorRequest.java",
+    "sha256": "69fe7433c1a3a467f664212ac5484cf1cbfad5a8d795f9f06faeabbfdd227743"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/AssignTeamTrackRequest.java",
+    "sha256": "06ac0b0997c960ce6b15b115177f77f66e4ae29ca649ef303a900f23f4029b32"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/AutoGeneratePrizesRequest.java",
+    "sha256": "43b9bb6136b1835be4fe0e2af59734416a42232e81cc6a93a6f447fccd4a93e1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ChangePasswordRequest.java",
+    "sha256": "5ca0cc5672d6d86190c71b2d17d23b5f83e6ca2a4756aabe2d564a5405f730a4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CompleteProfileRequest.java",
+    "sha256": "92853d9eb5013c5e721dee6cc5dc0cf785c56259cb712db59a6be4b6439233b4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CoordinatorAnnouncementRequest.java",
+    "sha256": "6d252bc05053b13284f0571f91775e7fe1eedb6c6caa377625318c096d8c10a0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CoordinatorRemoveMemberRequest.java",
+    "sha256": "1b169ae3d58f2e1da97e7832bd3ba4c285f653c957859437d464c5bce8edb638"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateCriteriaRequest.java",
+    "sha256": "c743ef2680dacfe168769cf7d8206ebfd48058f7b9671fad4f1db10fbdebb845"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateEventRequest.java",
+    "sha256": "9508a3c949bd79b8668eadd2350fbde3a6fd8cccaab63887656bb4760b46b605"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateGuestJudgeRequest.java",
+    "sha256": "a02e3688c312cac03d2664cd0cfa0e0af9ff3299791f4a88046ada851a513007"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateInviteRequest.java",
+    "sha256": "ffe6869c5862b82609b6b16582b2b742b8eaba815f3b49d43a55778316125f4d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateJoinRequestRequest.java",
+    "sha256": "734627774919b35d46ff0c74ca45839f558af10ef2893116a9deae007b4d3e6a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateReopenRequestRequest.java",
+    "sha256": "46768eca32412f04e8a8681d4e41479d1b39c04810b8ffa38d61c24c5b0d3bc4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateRoundRequest.java",
+    "sha256": "f808dc9df0a94ffc4034097ceb79b27d7c715a650298b6d6cb6ca5bc5f2be43c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateSupportRequestRequest.java",
+    "sha256": "e4a55c4d614b903cf4b3312080be6615d9f50bc7775dab5c0d547ae0e18a90f2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateTeamRejoinRequestRequest.java",
+    "sha256": "63e08562e57934e349fe1972de913da420c0b934a2347dffbccda916be99d655"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateTeamRequest.java",
+    "sha256": "29ffba13f6c21449c7acfb16723f3da378348a5cabb6ff4a27102d9e5b279032"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateTemplateRequest.java",
+    "sha256": "41c58008a4a8f0f643e696b40d55bb68e844c995d27b9bbcb802d8b189919769"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateTrackRequest.java",
+    "sha256": "f1ad545d8888448f835783e3dfd45ee7f7558590a5552c176745b6376add526e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/CreateUserRequest.java",
+    "sha256": "6ff1dc10bb97c6f1233b6d62a7e03d1a54dcf74e2fd2a2ed4a470fdc18032980"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ExtendTimerRequest.java",
+    "sha256": "dba1a3729a9b98d3dc5f5425d74cc7a1f4fd2c5161583206d1dd06839ce3b95a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ForgotPasswordRequest.java",
+    "sha256": "aa196423e5b8c42e0bdb330bb45db7f7e736e1a94056ed7f3f235932f26932f0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/GrantRoleRequest.java",
+    "sha256": "a691f36a1482221fdff97cbe162cd5f366f25825369eff72edc0f23714b0b6e5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/LoginRequest.java",
+    "sha256": "4d0b194b33b77c440e89bc57ca13bfb0f1d3012d6951a8db5c46f7e0fc11f836"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ManualAssignLeftoverRequest.java",
+    "sha256": "41cb8e653870208330d884bcd1c3d402e04a51170b83b719311aee5d8b26309b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/MentorAnnouncementRequest.java",
+    "sha256": "e28293000831b72c04bd11b487b80a2490555c9c88089b8e798dcfdb05631083"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/RegisterRequest.java",
+    "sha256": "9db39943c7d3ab11c76898ab7fe12469b6c78d9c94e65a2ac0549b224856196a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/RejectTeamRequest.java",
+    "sha256": "8b9f449d4788f91ea2954b371df2706f4b6536e9497043e70707ac191b752dd6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ReplaceJudgeRequest.java",
+    "sha256": "aba9edcabcb0e68a0522817245245d2a94755bdf8b37e1e9aedde80a0500d8a7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/ResetPasswordRequest.java",
+    "sha256": "5038a93e0c9416e29d171c302cfa8de68dd652626436b21bdd31fbd0779ccc28"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/SelectTrackRequest.java",
+    "sha256": "82c9192958780dbe3f03cc19cf92b3971e2905c7001999e553d1566cae241138"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/StartTimerRequest.java",
+    "sha256": "0be78c45d59fcce5b7e15855f12b1bbbd3d3e3c07bdc3d0f336d48d320e06ae8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/SubmitRequest.java",
+    "sha256": "adc0fbe6d2f1f40cc799893a47ea3ab541fbe585802ec5df0034c028cb389e97"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/SubmitScoresRequest.java",
+    "sha256": "59c9d3aea66d11a1a9ee91a0ea14b5f0a9f2c645875f9be36fd8abd892cb2bf7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/UpdateEventRequest.java",
+    "sha256": "e04ae42dd1bfbc14818b33a99d95c90987bfde81fb951c0f57ea5be9b54e0870"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/UpdatePrizeRequest.java",
+    "sha256": "a84ea05c6fb26c307b7cfdad22d0b9702d0ddcf3000500881571638970b0d02f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/UpdateProfileRequest.java",
+    "sha256": "6e7fc043b4e07b75d86e57f33456e68d8fccc983d478ab14f0c62e4752c696d6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/UpdateRoundRequest.java",
+    "sha256": "81157042a2b70ee65e96f1163ed94ce8efb73b78fc0bebe0939442f611c67eb0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/UpdateTeamRequest.java",
+    "sha256": "37fd95d3dd99083c7c367df62dac985eecde53a49b7de0fda53a84fed83b1ad8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/UpdateUserRequest.java",
+    "sha256": "98875ff7fb77b9b608ee75e43dd027a2a84d42009c0efc1932f3f63217dc4213"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/request/VerifyResetOtpRequest.java",
+    "sha256": "ff1f90e7d036f4c8d4d27014cbbef232dc1570599e639e6432296cac80551f18"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ActiveEventResponse.java",
+    "sha256": "b54cd22374230933ccd636f759d7fdeb24e362fae9ee9465a3ef95aeac480afa"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/AdminScoreDistributionResponse.java",
+    "sha256": "d3046f2f2608b1542847fd30ff6bc151809af706cc9dbbed49ac548228728969"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/AiInsightResponse.java",
+    "sha256": "5a6ae6bc2fa27a18ecbec74bd00995fbf5d8876716d05c5839670359e772ab63"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/AnnouncementResponse.java",
+    "sha256": "205e72493ab99ba857cefeb63df7a85f9b2be27e955cfeb4f4f86f1bed1ba487"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ApiResponse.java",
+    "sha256": "e0a7225024e2a64a9b67aaa2c347833893aa4e0658d66f3f34fdf77a047e9f68"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/AuditLogResponse.java",
+    "sha256": "e02954207727d5d53203cab65e0fa25cb76f362ed211b6f019a555d9d86239ee"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/AuthResponse.java",
+    "sha256": "218b1bfb50c70edcdecb0f28983ae0e15015b5ac79334e0a8aee696889d674be"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/CoordinatorEventHistoryResponse.java",
+    "sha256": "165a3498a1f2e7d1861b60abc12b63a1dacec69b5b7f2b01397d69a957744e26"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/GroupingCommitResponse.java",
+    "sha256": "2f018eb5900a219dedd48a31a2ecc57e957900537e647b0aabbfd1592222acef"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/GroupingPreviewResponse.java",
+    "sha256": "3ce30febaf08a0b74811c98dfb1feb74833e28cdc6dfb9cd8b449ebb1759b234"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/HackathonEventResponse.java",
+    "sha256": "2919b97656c65d49e636a5e2fe1edcb01a3ceb52e28df4d2e99a60503f63017a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/JoinRequestResponse.java",
+    "sha256": "f786c2818c3b5b4c431c1364bfdd4886d3f35dd8230d8b4c4826929d7e744bdd"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/JoinableTeamListResponse.java",
+    "sha256": "3c70ac81234d53a6c56cd4d2f2dd27a51b374e4141c379a3d5b2f42c8efd747f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/JoinableTeamResponse.java",
+    "sha256": "effc742705a462132d2a1e439e85159dfc4e82986a422163323f97bc0725d91e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/JudgeAssignmentResponse.java",
+    "sha256": "f8347b8af18851e537b612e8619c75aa91d584f7fe3f24d970fb9e722116e817"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/JudgeRosterItemResponse.java",
+    "sha256": "e08616dc1eee61363e72e9d867d8edf87c02658ec770a768ff486cac6b7cda24"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/MentorAssignmentResponse.java",
+    "sha256": "e7ab697b78eeae7d6e35b1a07f3d274378d51a4c2ac1fc24bd62ee5d18cc29cd"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/MentorContactResponse.java",
+    "sha256": "e99c05463537a85bba83a3cd422e66e2105f9f0aced967bd3bebf22aceb88311"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/MentorHistoryResponse.java",
+    "sha256": "e825a7187a97edb525c924a382e2b8b7616bad00f9b4818be34fdeaa26340ee9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/MentorRosterItemResponse.java",
+    "sha256": "5e7754c15acd388df18686a8e242b7a5a44ff1d5fda47362fcd615e00a803a0d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/MyTeamResponse.java",
+    "sha256": "4071350f2b7f40a673949d77e6aea705806a9cb9375cc63790086e18817af6eb"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/NotificationResponse.java",
+    "sha256": "1b71cf578aaf8ba1301f93bd76d1ac8c2285fc8fee6d7a52305c23c2f8ffcdb0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ParticipationAccessRequestResponse.java",
+    "sha256": "801dfada4cd111746fc72dd94dae362658f577823c00f41207a1c15bb2ae4f18"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/PrizeResponse.java",
+    "sha256": "188ffa3d8b7cbaa72bebde014543cdb9630435f1bf566d911714c3ca2543151f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ReopenRequestResponse.java",
+    "sha256": "9c54904f4556f0e43e69415445a49f47fb0902335fcb3e44b5ed2ef8cb67ceb6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ResetOtpResponse.java",
+    "sha256": "6b2db51836933104a7fde90a83c81a9f99b37afd02301cfb8c34a645e9451f75"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/RoundDetailResponse.java",
+    "sha256": "edc2d9e8426dc12215d86389e32a12a932eec98b0998ba55171083f4a7406bb9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/RoundResponse.java",
+    "sha256": "10ba9f8c66d3996387950ddd129a1d96b51e0b0b930c381611da9cf87b146cfe"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/RoundResultResponse.java",
+    "sha256": "93aae3d3ef23ef10a1fbc73ce406501078936ef09d81d41ba41a0f7e7c7865ee"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/RoundTimerResponse.java",
+    "sha256": "7aef8378a16925f1bc4f58e724876f3153d366d11ba8a5832e4fc234becb36d0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ScoreResponse.java",
+    "sha256": "3d0c10a641be3c97a59d5d0e3218582c4397f55be913c9ee343d99732eaee030"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ScoringCriteriaResponse.java",
+    "sha256": "14443d845c59ad88d24b587ffb5d00dc8fc31d1913805088e66c5a86988bc94d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/ScoringCriteriaTemplateResponse.java",
+    "sha256": "9b5efa871f4021c79f32f435309542bf3f3dc1f9984bd83345106c17cc3c4132"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/SubmissionEligibilityResponse.java",
+    "sha256": "2e079e320f0f081e7d2452d9e8234d3d3ca6f07ffcec08109dc4deb2778e95ce"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/SubmissionResponse.java",
+    "sha256": "a11c22c029fc3cf00c6e15c6199cbe6016991dfa26e9cc6a1d4886479261ee11"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/SubmissionScoringProgressResponse.java",
+    "sha256": "a8a3a86e9f2feac051943a3856dd500d10cd6c845279db2f0f0ac3492de55499"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/SupportRequestResponse.java",
+    "sha256": "5d09fb5c1a445b46732686647b7a5a92cd684bef37a9df1650ae310a92c60187"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/SystemLogResponse.java",
+    "sha256": "cacbe81648415236ac3e346dcf677b6fc3df5acb0e78f7c1a0d47c80e7afcaed"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TeamDetailResponse.java",
+    "sha256": "59dba3b08cfcc57df95417d9c1dc10c95581395e1f7ee979ab60546088066e31"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TeamHistoryResponse.java",
+    "sha256": "1c35af165a6c5199ee8e0aed2a55b3a51dd8089138ea23d24f3553374a89d83a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TeamInviteResponse.java",
+    "sha256": "4097d3f9a8e51c7eea5239532599c33e9e20a7d148bd854e22c7a85383e5c7b1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TeamRejoinRequestResponse.java",
+    "sha256": "19bb0322c3d35de4c246f5924c782bf12ce6f55079c7c5f7e719c1d5d89c7a41"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TeamResponse.java",
+    "sha256": "a03f21774f532e88ed0bbeed99285dc97bcfe81e212837da28bc9d9c7950ec38"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TrackProblemResponse.java",
+    "sha256": "455fec54126d9e65247025e2447d03d5c2bcbe3ce31e0c40e69457bec3b3b70b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/TrackResponse.java",
+    "sha256": "a097718cf61b096b25041060841ecca7b384855f191d9e07806bd34f349bdec7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/UserEventRoleResponse.java",
+    "sha256": "f8072558f1c4ca4b30d35ed50c0825c4389ae4a89752b6f61081600d0735373c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/dto/response/UserResponse.java",
+    "sha256": "3982dc1904baf736e35901d6d3889fd2049a0c5b2fe5512bfb14fb83d145f74e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Announcement.java",
+    "sha256": "7b38b97981ee09ae12a8b38eb6110288b5e88e382956c045f1a6c1866b213a45"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/AuditLog.java",
+    "sha256": "0e001a834cb72d3609f2b0f549269608014cd5728db061d1db3ca062f1a21296"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/HackathonEvent.java",
+    "sha256": "7314750a61c5986248013a0cd78d6966acc0fd8c436b4b117f8da3caa9f8fcc8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/JoinRequest.java",
+    "sha256": "95979985f73dceefef054e581326a51fe5ad96c9885c4eb8ea976b8e85ee87bd"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/JudgeAssignment.java",
+    "sha256": "2d1cbd2add0469a5fe22c7de64a6d55bc12e5b05632178dfe7ecfff26ab59b2c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/MentorAssignment.java",
+    "sha256": "1cac35d0b71c1c521fc72d078b1677ad5b17eeb7f5a714686ff3815927b50dc2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/MentorSupportRequest.java",
+    "sha256": "2d5dfb3ca81b1e53b549b48b073b72b8f28a85f5949b27148c88501904a8024f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Notification.java",
+    "sha256": "b8470a248d83b107c4932a985c6d4d0a531c5c81e4f5c3ea7aaeabdca1a4409d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/ParticipantEventHistory.java",
+    "sha256": "1dd82265f5d259521164de1a03a25a1903cdbd0b390cff39d7a9a48ef4eed899"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/ParticipationAccessRequest.java",
+    "sha256": "f8443f96007571b4a2f834188fcde7c234556ad1a7609eab628a9ab8b23c6808"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/PasswordResetOtp.java",
+    "sha256": "b1e7ad1f4c5116fe9b793db7c367eea6c3c794a92ccacedce5a591b1d80583b3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Prize.java",
+    "sha256": "7ef91d72c2c81cf6a6042b4d4cc65d64779c13ad65f6ad36e408dd829a4b8f3f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/ReopenRequest.java",
+    "sha256": "f0096322ea14f74b0e65c8302d1c059c24971af15eac1cf078ba4aa843e6033f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Role.java",
+    "sha256": "a5409eb329c03143c64cf6379c00c4b8f4a622bf5809d0db91f59cba97abd9c4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Round.java",
+    "sha256": "1c60fc2efd212355b913ea402ab8a1f4e7328a57f56d58e272d13c9c9a2162ef"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/RoundResult.java",
+    "sha256": "3081a77481813f2b64d1a206f5c49e6570ceb10beb703471ef8752ab90f355b1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/RoundTimer.java",
+    "sha256": "46ac91ca498df2d0db94cc0bd26d2cc42b6e8049d38db72cdef354ae41577525"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/RoundTimerNotice.java",
+    "sha256": "72389b4342e5717f4c8424f15b33a93f693d6e6b5cb6d54e42a1f490589df665"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Score.java",
+    "sha256": "712b3f73ff1284f7b95550ecd9de125c89c8d098905096c8acd7b83a2994444c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/ScoringCriteria.java",
+    "sha256": "ab955c7d6577e9d88de1fcaf1abb18dec18d6a5dd4ca98b4bfc17328dda92dd8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/ScoringCriteriaTemplate.java",
+    "sha256": "823b7bfe2056a7109fea63c2d381fbd4d3b33357de4a5390d459aa4cb7b5559f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Submission.java",
+    "sha256": "a44e92a0045a3c55611fccaadb868dc3a28f0ef72b95e5ec32c51a0b2fd8fc2b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/SystemLog.java",
+    "sha256": "4165db07b3694a6ae4d020a36f7606c748e7a50579485630381ee2ec4aa7283a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Team.java",
+    "sha256": "f5dfb59a4a37a649df8609cede20edca2c564304395b8f0f0c7fc67ba09b8675"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/TeamEventEntry.java",
+    "sha256": "04c7e2b12227081eda5668736e45783018ebdd68e30926ea6ae8e1e5cadecf22"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/TeamInvite.java",
+    "sha256": "0309851caa896dfce2685ba01630c35f5f73314ea14b058d3c09dae0f4fa81ef"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/TeamMember.java",
+    "sha256": "6f1230b1d22b6e1fc2b6e731bb56c180e983c8d22508b0567af70d5fe358ebd6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/TeamRejoinRequest.java",
+    "sha256": "6c36ebfbfd703a8a97e1df7419b8e3504d771a91a28da8bdf96bcc33c879d246"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/Track.java",
+    "sha256": "2a5c52844247d8fd7b8181b56f603453dc3de890a3379931b10a85e4ae881680"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/User.java",
+    "sha256": "0222356215ba4c28f97c2811f48562f19985558b691f80c8fe2fbfc603f65570"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/entity/UserEventRole.java",
+    "sha256": "8a8a4af6647b51fe1727dd76afd4de281c5f86d819d13e571b842bfa9cfb1d25"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/event/AccountApprovalEmailEvent.java",
+    "sha256": "98faf97e4c79971c5715d9c049525d04a5b0042082a786b2fca941869b0430c1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/event/AccountApprovalEmailListener.java",
+    "sha256": "5ec23be30503bbe58d7bf0016512ac2c3899e863b2661b8b47b58ddfa4ea30e6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/exception/BadRequestException.java",
+    "sha256": "b7cc06dd7ff5a53fe53cbc3e3b0eac6d92b320dc40635461e09b586b585b595d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/exception/ForbiddenException.java",
+    "sha256": "52bd3c4b9c36b79bf346188f69bc1da1f3d39a1cb60d33d70da04e74c53301bc"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/exception/GlobalExceptionHandler.java",
+    "sha256": "03782a9f79111f5b7571b2446f970d2d1e79ebd2e9db7d9ae44616264d41f92d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/exception/ResourceNotFoundException.java",
+    "sha256": "944c2d4f0f61b3794502622dbc11a199d85cbf780e5ba952c591f4c9ebf162c3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/exception/UnauthorizedException.java",
+    "sha256": "6b51a466ea4304fa9839b14ea66ef4d69a954926906b539098a1d01a9df08fab"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/LocalMockJobAccess.java",
+    "sha256": "8de4024d7d8d8b15cdcfcfce5560781f9acd2f6ceaa15781afa8ecd358a8c325"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/LocalMockJobController.java",
+    "sha256": "7752cce83563b37a595e12422a16899745b1b80dbce9edf3b41943af62b3b261"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/LocalMockJobErrors.java",
+    "sha256": "7b3b5f47ca7198d57ad0e0e4e7a4e1de54a83d15fcc3a83f5601f6785f977bd8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/LocalMockJobService.java",
+    "sha256": "7c44e4565aadd74e3a0470f9a30857deb3dc29d849c7661af7a7120ecea72bed"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/LocalMockJobStore.java",
+    "sha256": "64deee3682d1d825e4215e4c359eabd1bb0632afee9c927603937406e21f605e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/LocalMockJobWorker.java",
+    "sha256": "06b1e0da9149d08b531c7cd60d6963241a78313764c925998d308cfc924c1914"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/MockDemoConfiguration.java",
+    "sha256": "a5eca90b7107785d4b4c90b91058e642677e9f57a52126a121a549e7ea1186b4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/MockJobException.java",
+    "sha256": "971c77d2600b1a535b1e2f58a2f8f5a49c1c6a8b507876a999ea71bfacb0a12d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/mockdemo/README.md",
+    "sha256": "0ad33527f780542a513e65853b88e7ca9100095674d27ee3ec21727c7d612e90"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/AnnouncementRepository.java",
+    "sha256": "bb2deddc3e9454fc158f45b889aa3e156d29b258ad6c1273a6aa2cc808184df7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/AuditLogRepository.java",
+    "sha256": "c0962920dd834f40d8246f240a70c446bb7bfe77e3676c5520cda883baa043f1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/HackathonEventRepository.java",
+    "sha256": "70e274f1fa6e4070581f7835738804c8736ab7307fde2960e5c99422af157623"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/JoinRequestRepository.java",
+    "sha256": "60b5fbaa35db15b413ea2d5f2955576c54a309c23a7a06834d0bf0d9eff3ee98"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/JudgeAssignmentRepository.java",
+    "sha256": "6a6d4c315412836b8db5f4c2e54c9a07e9eca6b6bf1318ebbed47c1e9aac5af6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/MentorAssignmentRepository.java",
+    "sha256": "0053fd02d8bf9ba092cf74d4b53f6f54bea10a8e4b91d502fc246398386e6484"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/MentorSupportRequestRepository.java",
+    "sha256": "8ea3a62cb9871cdbf863157b6368de0a07d5c2616edc24455e742ec64feafa26"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/NotificationRepository.java",
+    "sha256": "8de08abcbde55a32c065b1c06063b3ffb9e80da84f18882681d80de79458b272"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/ParticipantEventHistoryRepository.java",
+    "sha256": "481dc744cdad4e4556eac3e4e565b9b852a56df1d41e8ed9fb4d33efbdfc577c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/ParticipationAccessRequestRepository.java",
+    "sha256": "03098a1d53fcbbf7da365ba478183c4753e0300f7d21532b3523c44f715bc9e5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/PasswordResetOtpRepository.java",
+    "sha256": "3822ef0e952ceaa9c253742e0295a58240a9100869f193bde4071bb09904ccb8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/PrizeRepository.java",
+    "sha256": "46da1e7c581740c11b9a43b5f696307b95cbb1ea977a5e980606a4c75105cfc7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/ReopenRequestRepository.java",
+    "sha256": "93c954fce3ffc9c651a78ae3eed04a15c96cabb2e99f003619b9a3836325078b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/RoleRepository.java",
+    "sha256": "9a755f9d8f6ddf8fffdc8e490cedd38e27a4c8e0d5125926b849b7d4bb2c86ca"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/RoundRepository.java",
+    "sha256": "f550e70bf3a1b36475a5763610153a97f246bad9156b00afa519caa47407c3df"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/RoundResultRepository.java",
+    "sha256": "c735b4737c582de210d24c78b78303212a1f4c1c3db5d4853b0bac6e591067af"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/RoundTimerNoticeRepository.java",
+    "sha256": "04972069f1bb96ddae69fce80abc207ded03eb2426584a736b7c6a38cac83a75"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/RoundTimerRepository.java",
+    "sha256": "4b48a2340051cde433fe62461dcb7a1b4a74ebcb079c2296412775f64d552d28"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/ScoreRepository.java",
+    "sha256": "b411b21acbd180c06998a71fb62f880fed31cd251265e74a9dfec6882cb2bae1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/ScoringCriteriaRepository.java",
+    "sha256": "cb1ba393c1635cff2757e2d9e04ba5f4e72a2420eee47d6264e6d2b3e27dd65d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/ScoringCriteriaTemplateRepository.java",
+    "sha256": "8a63c3baa7e39169d021e349b949308deecc1f8df867460ac97cba06aa20fa35"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/SubmissionRepository.java",
+    "sha256": "76da01d73d7b4b9cd489888c4259923ce93b7edccca4ea980222193ccd9396d9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/SystemLogRepository.java",
+    "sha256": "62cbc7ff2d6a860c2b220de2d1189e4d4e2f8885bca57fb0c0fb653b77f3e190"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/TeamEventEntryRepository.java",
+    "sha256": "4ee50c837d7bff76260995e87eac2176932060b8093cc94f291c2f378151cfbe"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/TeamInviteRepository.java",
+    "sha256": "e323f1b632de207dda2efc6eb22dd1cdc35f26390c7eea4c7260d0efd14103f7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/TeamMemberRepository.java",
+    "sha256": "8e7df327083874de266343a384cadc896a361d2012c2de241017ee581e464b7a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/TeamRejoinRequestRepository.java",
+    "sha256": "178da85d86e2c4dda76299f8c9a94cfbafc16eaaf591de49309d595f52ea05fb"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/TeamRepository.java",
+    "sha256": "217d100714df324c8bfc94df0bfee247e6bd755c49ac4765bcf507e2aba5d91f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/TrackRepository.java",
+    "sha256": "5e769fe68e91c75fa1689f1202ae3bd5a69d55abb247b41bdb1028d92be4088b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/UserEventRoleRepository.java",
+    "sha256": "fbe433df237d359dd928a001048884f888be783f28a97252cfaaa6566bdf4d75"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/repository/UserRepository.java",
+    "sha256": "59a76a56f81eb4f6584d8b5a6b04c548af329aee2e0f80f452fadf49bda536e4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/CsrfCookieFilter.java",
+    "sha256": "69c9f636d308450cb04342015f5731ad4d9d9291c0cf3d158c53916d3d429838"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/CustomUserDetailsService.java",
+    "sha256": "41309070e69d53fe874ed458307d3930452124d6adc7969984914fc2e3441f3f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/InactiveParticipantWriteFilter.java",
+    "sha256": "e917bce045eb77a67805c1ab65868cde8adc144ee69670fcb5d8e2f8f5ea6684"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/JwtAuthenticationEntryPoint.java",
+    "sha256": "c9a70825900826b08a434e4a53ad49974a35619c1642db8730572993acbca715"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/JwtAuthenticationFilter.java",
+    "sha256": "acb332891b821417b5b8fa2a7c723049265075236eaa1a4dc3854c668ccc196d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/JwtCookieFactory.java",
+    "sha256": "a007e0368d31c6d32890b3bdabb2a4169bc1fa53d2f02bd2502156637fa998df"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/JwtService.java",
+    "sha256": "84e8c087572ad9ba7000baceb425903b068b30a53badb62361417a37c0b634e3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/SpaCsrfTokenRequestHandler.java",
+    "sha256": "aeb9d83f78ecd0d87fb8ef44ad27de105ad2e51dfa5681def8a67a807ecad0f8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/UserPrincipal.java",
+    "sha256": "40aa14fdb4421072818c70bbe0460b2fa623ad9e8b6ca5c6516306d6274f159b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/CustomOAuth2UserService.java",
+    "sha256": "d2fa4c8feef1977466633f6de9c5ed240b8c29d39e56e4b39e10e7bb986b5652"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/GithubOAuth2UserInfo.java",
+    "sha256": "ec651168e975bf30efb786b12a523f5d30af0dcdcdda76a5ebc9dbedb70e8dcb"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/GoogleOAuth2UserInfo.java",
+    "sha256": "9438e29b56902f4fe5ae40b8fb6c5dafdcc3718b06ff380a3b523b181501aa7b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/OAuth2LoginFailureHandler.java",
+    "sha256": "66086f1f378914ec4a156ba3b325593e8275c79faa07c44c6a647662b2fc5415"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/OAuth2LoginSuccessHandler.java",
+    "sha256": "9198afe6ae50ae822810cfeb99b36b5226a33793d63b529c401554fb052098c0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/security/oauth2/OAuth2UserInfo.java",
+    "sha256": "d44fe4666e5850c36d39573bce533f6ad292d0f8af3e0f1f69f99c05a0df7b27"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AccountService.java",
+    "sha256": "b3bc81c4f7268f19fd2d883bf33cbb04c52d657ab39d98e62beddef37c9f7366"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AdminEventCsvExportService.java",
+    "sha256": "4f52e543c9cb020b003236eab9e54a31718422f36556f4f71ed64a8f52cf2604"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AdminScoreDistributionService.java",
+    "sha256": "abcad476ff949a1e109971ab5818309e6263cd2c1eb5505fb23120cb4316e3af"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AdminService.java",
+    "sha256": "d3c04a5d108ffe69353db4ef0495d2adf9c4b718eb9684659e03de9fc19c79e4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AiJudgeAssistantService.java",
+    "sha256": "04445239ba1642c93fb2d023e0ff07491dc54559047dcfce8af47aad107a5c53"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AnnouncementService.java",
+    "sha256": "a5646ebf745e1ea32af70939f361ddfdabea4493e1a59b0e2dcfcae64da80146"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AssignableStaffService.java",
+    "sha256": "89c1e8b19bec43863ea115852f8ffd255894cb202dbd77fd314807d258c05b0b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AuditLogService.java",
+    "sha256": "223569837558cc0e2690a8c4e7ac14249b7fb293d691e00435fb08ff7ef573e7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/AuthService.java",
+    "sha256": "ef9b0a25ba2c30543f260e8d5caa5d4a245756902f2f28eb16e88b272bc5a753"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/CoordinatorEventHistoryService.java",
+    "sha256": "03d85cb4070435a9d9c4b6c07e9c52bb101f4a908314236fa69121f898a34cf6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/EmailService.java",
+    "sha256": "a35bf962405552cc8492dce2b32977e32f4b680081c9928625ebc90d62c604ad"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/EventRoleGranter.java",
+    "sha256": "cebba355e0a18c0431d9883182321363103acb6b76f856f9915798724583d3f5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/GitHubRepoService.java",
+    "sha256": "3afdbb1cba7b457491f0473b0d81d8da29a11a379dc971088d4cec99dddf98f4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/HackathonEventService.java",
+    "sha256": "895edbb39b2a5672e8775a12b0c1a92ae813e00d4b49d0e557442af3a97438e7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/JoinRequestService.java",
+    "sha256": "e45d6dfd1512c40c0a93069767ecaa469e2a5f84147097b3f2cec8e5a11d7840"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/JudgeAssignmentService.java",
+    "sha256": "e68ece67fef776c1428c25309920730402079212956edcdae3dd522327a42519"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/JudgeScoringCompletenessService.java",
+    "sha256": "34b9be879097755e2b47ca714c73e2b2118a5d16cacc61a4419c3ac112458002"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/LeftoverGroupingService.java",
+    "sha256": "d6e8316249e366b6e11988e1305e9a13b08e306de602438eac392a2ed2300835"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/MentorAssignmentService.java",
+    "sha256": "f2db2ea8fe8d276c866274fd4215c7da70e186597b869af22ac09145c88152d9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/MentorSupportRequestService.java",
+    "sha256": "7b94ba8adb5a0cbaa5f2123d6c10a29c3a2d962cd8dda97ade35eca04c4d1b88"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/NotificationService.java",
+    "sha256": "5f80290554f7a95a2e0404b5cfdd39401daab30245c3a3cb8a11a9b60958ec04"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/ParticipantHistorySnapshotService.java",
+    "sha256": "8e1bbe3d7dcee2d9f6f0e97fdc0f06fa10b9aa92692475e5cdeff0e591af110e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/ParticipationAccessRequestService.java",
+    "sha256": "9844a726c9e586386ba699e9c002213c1a5593cf57ab46a3ceacf0f8e7eab36f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/PasswordResetService.java",
+    "sha256": "be8be0de5b26f62e3cc3657904f10917593759ba0f8a789800c3eb456a00ab2a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/PrizeService.java",
+    "sha256": "0bff8ceb8e2f1c23df20eb1e95b9744d1dc80e95b55787ec331f78f97d50703a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/ReopenRequestService.java",
+    "sha256": "03a2259402b2c2d3fd53a238a777254befd5460df26fa497061c6370e1a41a8e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/RoundResultService.java",
+    "sha256": "06deabe4d14693d0ac891c9a8111301cfa996842500598018ae0149930e6b079"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/RoundService.java",
+    "sha256": "787f5e4218ac9bd4e0fc50e341ff9938a2c4725b3fd79090133525c0f78d7b40"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/RoundTimerService.java",
+    "sha256": "585cb0ad3c25ac454022762e9058c90fa333116bc1e895d244960d584f03c7b6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/ScoreNormalization.java",
+    "sha256": "16a4c5c2b0c042c506f8f80b9f0e81f2cc5ec673841e4dd07a8d438793ea7a33"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/ScoringService.java",
+    "sha256": "063ace955e3e5bae76e0b907eb6498827d60b19144d2e9672f2da3df34c375d0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/SubmissionService.java",
+    "sha256": "0fdd325d116b2a07400ac458787b7e757fbbbc72a1ca151d6c2fb12f82b5df72"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/SystemLogService.java",
+    "sha256": "cc09f51060bf822962a28f3cd254d6ebe33514eaee94a2fc27e64d629f80461a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamAccessGuard.java",
+    "sha256": "1d45c93b140397ee5810f82dce97b0209a992ee9dbd8ffe519bce695e7fba801"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamInviteService.java",
+    "sha256": "17d2795229ef34139a20047c6a97f4aa0683adcbfce53604a613245bd917284f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamMembershipService.java",
+    "sha256": "9a1ec5a2cd1055d81dfa2ccebb194354ce2250e09f3afe39a4f7e0bbeb20c259"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamModerationService.java",
+    "sha256": "6101b7b08666ecf9eed2b607f4055e6346b0190bb03eadaab72e5af47d3f1455"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamQueryService.java",
+    "sha256": "63324133293dcd07ed489b5659860a37682469a2de86b89ae2a89e78bff702b2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamRejoinRequestService.java",
+    "sha256": "e0b04772e9ace9fb0e24c10183203cdfae5ce51b1c4682c395a00864f7f4e8b1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamResponseMapper.java",
+    "sha256": "c52fcb7cdbffefd305d21160a4380237eab49086340ea22102600509c74e8c5f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TeamTrackAssignmentService.java",
+    "sha256": "ea453ff7ade88f6e6e0c1b04f73eac83dce46ea4b6d6101e440393a3c602d3e5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TimerNoticeClaimer.java",
+    "sha256": "c024107c4101c04b53fb1c42b01b1add6a9f0a8226373438389eca628cf40c17"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TrackProblemService.java",
+    "sha256": "f4eb7ce0768eb57a0f2cdd125aef1dd357b87f212306810f1e8278d58ffed207"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/TrackService.java",
+    "sha256": "5f1858141118f75182c41774eb42f45e355cb754a01cf49c2201b1da3420efd7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/grouping/Atom.java",
+    "sha256": "b8b0aca8c1aceb8cc388e3237edf836859d816753218883f0e278f3106e4e050"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/grouping/GroupingPlan.java",
+    "sha256": "271465d36f1c9fdd1ac01e1ebe51632ad01f89f93eb3173cedb3e3de47cdb096"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/grouping/GroupingWarning.java",
+    "sha256": "d9dd2fe61a805f74c42ba5d7bcc8c4f3b4b4573de976fa32b9115af1318f4b39"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/grouping/LeftoverGroupingPlanner.java",
+    "sha256": "3dba9085cc0dbf643301d723a35301a571b5b5140dd114edd539298854ce17e9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/grouping/ProposedTeam.java",
+    "sha256": "8b65ff25cef441f965aa751c6cb7f4a0abfa8d098790617b151f18cff90cb6fa"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/service/grouping/SettledTeam.java",
+    "sha256": "4d912784f04823cf3bfc2938c6757e5c3399c4c9979745fe9f494bd77f50207b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/AvatarStorage.java",
+    "sha256": "90696ee4e4f4b8314fc854730d0e441bbd604e2a69117ab349251b8cf33b91b2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/LocalObjectStorage.java",
+    "sha256": "e0229873fc244fd1d48b17d3f751b90d66767e9169296a55a622f0ded760ad40"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/ObjectKeys.java",
+    "sha256": "da079a781cfd191cd8a1c21a4fad331fdde22f165100184ba3aaf5d0f2659ef9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/ObjectStorage.java",
+    "sha256": "0a9e4d06a5bc8cc6688da40c03a450927e4b96b3a84b7a3a1e12c034a6b6f910"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/storage/S3ObjectStorage.java",
+    "sha256": "0be162c5526fcdc0a2d0f112794635800de5126db31515872af33f75c23a96a4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/java/com/fcaj/hackathon/validation/FptStudentIdValidator.java",
+    "sha256": "257abf1fab2796d5ed82fcd658d4abe8c8bfe36dd2519a5d81c6581253a6cb1e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application-aws.properties",
+    "sha256": "af29e3020029076f3b1df2a8e5053ae56ee9ec5f066b36c1526e1cc709ef822b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application-local.properties",
+    "sha256": "55bb6dc890bba33a00c8de63fe866a7bf80cebc0d08e6632c0f062e2ac59da56"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application-migrated.properties",
+    "sha256": "4b19b3d69e594937d585231144fb17e8415544afec8849f08057e2e9fb6a6b09"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application-mock-demo.properties",
+    "sha256": "19a9c66700c5f63a00268c3ecc20efd348bf412778093e6e906bb6defe4cd591"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application-oauth-github.properties",
+    "sha256": "4bdac99c6229871459b8851ebc8c804d1d5ef3bb494bec67da915437a985ef01"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application-oauth-google.properties",
+    "sha256": "c3665dbb65964e14014c800b4c078451604bd0029741f1e6a645e089b0867e4c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/application.properties",
+    "sha256": "91d1a8a0ac92b2189920e63809c496ea37d89fee011a97e784accf980b19bf60"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/db/migration/V1__create_core_schema.sql",
+    "sha256": "91a3b9b0cb4d41ce5027fa850200848126bdfe57ba0ceef97defa1ff7928ea9d"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/db/migration/V2__create_ai_job_delivery.sql",
+    "sha256": "4e40d1f4370c2324e90cd5d1c7e7396c2ce068e2331682421fb5f1e0a3aa4ea7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/db/migration/V3__add_user_track_row_versions.sql",
+    "sha256": "8e67ee1a45bdbd23724cc96bfd26df81f10e0a8cb84be955d37a998ee820ce49"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/db/mock-demo/V1__create_mock_job_store.sql",
+    "sha256": "e47e834db7aaeccff01c9e62f18179ab038ed9cae3a8a996ff71dabef8c8f268"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/db/v1-schema-sha256.txt",
+    "sha256": "c5ddb31f5196468d249c65746cfea4f80fc298c086ab3c38d2c2b5200cf5f996"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/main/resources/db/v3-schema-sha256.txt",
+    "sha256": "133880c5b609853fee3b521126699c8c43fd0c386b57d377f173dc50308dd028"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/HackathonApplicationTests.java",
+    "sha256": "5f58b3564e9e1b527affcfdd9df35c663c36f883d9c0ad4a7d367f96504d96d6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/aijob/AiJobIntegrationTest.java",
+    "sha256": "bc5b4c92550c0c905dc18ccbe6829293c9d94b8e1419b358e40ab7d12a6bc1a5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/aijob/AwsMockWorkerTest.java",
+    "sha256": "497ae2c42aed15713edff3c3d05910144bb31fce062fb64b71f9e09dc05ab344"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/aijob/BoundedHttpTest.java",
+    "sha256": "6f0352ba238531119f050766d1602f9072cc55966d42e8a7f1e2f5742a68f846"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/aijob/GitHubSourceReaderTest.java",
+    "sha256": "480017ec0482e2fd9851160869fe8d3422c00873ea007083f7a7abef6f36827b"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/aijob/JobEnvironmentConfigurationTest.java",
+    "sha256": "34cea55fd812b0626ce478f78ebe29ae6d8e16749a2540a99db5b64a4b952cf5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/aijob/JobSnapshotLimitsTest.java",
+    "sha256": "df880f034da19cee12933cb075006a054270112b4c0c212f148cca5561b6a7d2"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/AwsEnvironmentConfigurationTest.java",
+    "sha256": "82b993a2f1942f8251eb84ed51adbeadda8dbd4f1fd35626bcce3d22c89eafa7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/BootstrapAdminSeederTest.java",
+    "sha256": "5204ceb80cee3b9962852a488304ff9923fff801e7984f8505e1da49376d62b1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/DataSeederTest.java",
+    "sha256": "62a1e0b72cf895f40dfbc3cef3af3d034909ed62a825851d9939e76d4d733103"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/EnvironmentProfilesTest.java",
+    "sha256": "ad8672d7a6ae6a28ef94409d3719e4793007e50b3d45e6a6e1a78e407e0fe363"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/MigrationAndStoragePolicyTest.java",
+    "sha256": "d2bab9f3b380eb7c4bf060b5e5091fa25ef2c3f34bc62cef23752c118b4d3d3c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/OperationalTest.java",
+    "sha256": "21afb00550deb1cfa57107dca3cc76230138c645cef143ac1252287f49abb421"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/SecurityConfigTest.java",
+    "sha256": "adebf33f544758a69ee82337fd9e5ff4d14fb18d78c7aef89b9bc172e021f38f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/seed/DemoEventGrantTest.java",
+    "sha256": "055dbea2263914adcd0b0e2f48037c0d29f31779349bc3f9ea8d92de4ccab3ab"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/config/seed/DemoFixturesAdminTest.java",
+    "sha256": "2678c0774f6122f08b5c34c39058780215fe99c138059aca8fe4d3eb2b757e60"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/db/DatabaseMigrationTargetTest.java",
+    "sha256": "0652f132739a689509d105cf0b7e5fa7dd157b64e983d4a5b58ee792cb27f058"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/db/FreshDatabaseDeploymentTest.java",
+    "sha256": "73c536a0d9ed0b5a8008f3a4029ac84af3c4399e034a975b5336413c7b078188"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/exception/ConcurrentUpdateResponseTest.java",
+    "sha256": "686e3579d470f8b10cbbf94cf15890a1f3cc7687ef751fedc9bcc1289b31daef"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/mockdemo/LocalMockJobAccessTest.java",
+    "sha256": "f01480bdddd283e9a0f57b8dd99289111e9e8b474522a0e37bf0defd53d0edc9"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/mockdemo/LocalMockJobApiTest.java",
+    "sha256": "aeb2bbef40f422bf96b93cb60da3fadf22037437856a1a42b4a9884b945661c3"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/mockdemo/LocalMockJobStoreTest.java",
+    "sha256": "e98483b802684de41d41660e21c10fc5ea5036a6f1b5d7de9d814a417c08818f"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/mockdemo/MockDemoConfigurationTest.java",
+    "sha256": "de7c52ad0dd9df2aa00a458ce38ccf2a74758f83f3c04c73f2335b2ec418ebce"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/security/InactiveParticipantWriteFilterTest.java",
+    "sha256": "250d58e68ba624b82dd27cfe0c305567b02d93800ec172cf222047d0ee1c0695"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/security/JwtServiceTest.java",
+    "sha256": "b99c25552985f5b9a8f7f37a69816f0e3836842f506ac8fcbb0b115b4f3d010c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/security/oauth2/GoogleOAuthIdentityTest.java",
+    "sha256": "2e5c5a9a684d848dbefa0924c44c61f2110e641c466e2ca9ca454dc87b7b676e"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AccountServiceTest.java",
+    "sha256": "b4ac1897ae4cf3f47f2a88c100c401d68e6edd08d2d95817ff75691fd96ab191"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AdminScoreDistributionServiceTest.java",
+    "sha256": "b971602348e5cbbbf899a6e2b6b2b57fb89242880009813bd509ee9b17f52438"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AiJudgeAssistantAccessTest.java",
+    "sha256": "e94c38d9d9a171ddf7b8091c65c4543509ad5b0d0f0915e42c0dde9d2bd4c808"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AiJudgeAssistantRepoAnalysisTest.java",
+    "sha256": "f5d15235f224ccb2a56a3c713450f3c7d2767734e381696b4019701bd16c71dc"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/AuthServiceTest.java",
+    "sha256": "1e2c3987b338414c41e8e1918cdd33457a7fdfc0cb130250616edc0d7751dd65"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/GitHubRepoServiceTest.java",
+    "sha256": "9fc50000a26b91dd2c1f1b1ede5a73cf63f9806bad7ac38df4a4c5e94ec0b5f5"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/HackathonEventServiceTest.java",
+    "sha256": "0212e8d263b4d3f3b32a3b50f5ba788d87cda546631296a51bd883abd8a860a0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/JoinRequestServiceTest.java",
+    "sha256": "f3ee141b4b7a59e4655e188b77fdc3bea9d1ce62f56b9b99bc30bdfddaf80ea8"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/JudgeAssignmentServiceTest.java",
+    "sha256": "05f6bf6fa2b0fde8c13d4f3d4d64c0291cdbf88f611b6bcef24497b4d22c25a1"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/JudgeScoringCompletenessServiceTest.java",
+    "sha256": "cb8cb48299e5ca2248b75ddb1aa47a058ea1ee4bcbcdf2c9825bacfff1540f48"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/LeftoverGroupingFreeAgentTest.java",
+    "sha256": "b4ee49a2e26fce7dea414c5a2f647dd7671daa7cf08c51b17f1560d4f9e1341c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/MentorAssignmentServiceTest.java",
+    "sha256": "074010569cb6725fe3ece56d58e22f63e92c5005f9ee0a8651fe985933ac52a7"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/ParticipantHistorySnapshotServiceTest.java",
+    "sha256": "2aa619cef6901cffa0a5e59a1da943ee21803fb4eeff9b299b59a373f8ed3312"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/PasswordResetServiceTest.java",
+    "sha256": "742da2b7dc298ba90ee4acaebde55d28f6f7112194d573ac81eaca8825ddc30a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/RoundResultServiceTest.java",
+    "sha256": "7cc8c89adff24ea0638ba4adcd22d34df074b4f6287ad05af37bd7b3a03f1bbd"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/RoundTimerServiceTest.java",
+    "sha256": "809fd14b2f6719f3c335cb9ed6404479ee028e219bfafaa68a6d5b700e239060"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/ScoringServiceTest.java",
+    "sha256": "524c79669aa0d79711e2adee61f96021be2cbd87f231d1916579344436f1e8a6"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/SubmissionServiceTest.java",
+    "sha256": "0a8429ab328e09ee5ac5e90c2895749e69c000d7e017e36c5b83f070c215a315"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/SystemLogServiceTest.java",
+    "sha256": "d7872e8ebbc990638b7de4a7dd47cd470635efee0dcdb14dabb619e217ff42df"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TeamInviteServiceTest.java",
+    "sha256": "0c691cd63d27b6053e462f5475fcaee3b324616a38395d334527101b44061d71"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TeamMembershipServiceTest.java",
+    "sha256": "110a6b095cc1087c2ad4546a06d306537c20bdc80709d8d7019987bd7d95e389"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TeamModerationServiceTest.java",
+    "sha256": "4f0d0777b2f7c7492618dc83b9767bafd6ddf427895f45ee46bf47684ea305a0"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TeamQueryServiceTest.java",
+    "sha256": "4bd86ef43a4a0ba121920a0c5ed75bfcd38bfbdee9802b1472c309793ecefc91"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TeamRejoinRequestServiceTest.java",
+    "sha256": "150fbf5c0bce03c23098d67027deffb993322a32c0968c7e8955cd76cb882a74"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TeamTrackAssignmentServiceTest.java",
+    "sha256": "682400e3c410c405ed67ba94b6998f473f900d5f33cd09693540b8dc5962f679"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TrackProblemServiceTest.java",
+    "sha256": "1aeff04fbb1345672829a0cbd20c157a2fd71e735494215b5088c901da8f31cb"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/TrackServiceTest.java",
+    "sha256": "c0ac5ba2dad276049c589c69458096807db1527b7a347fdfffb24428f3a2546a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/service/grouping/LeftoverGroupingPlannerTest.java",
+    "sha256": "577a2603ada45667c37d20f56292f3441fc132ddbe824742f6e67e16a8e4148a"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/storage/FileReferenceConcurrencyTest.java",
+    "sha256": "617b61cc831f439d1d18ba68b574cb55c6de0af7124c13ecd97dcb0d3765c8c4"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/storage/ObjectStorageTest.java",
+    "sha256": "4e2d3740c0e627ae552a5d8322ac9152caaeb6b1b8a9bb8a9eb386c44a440f1c"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/java/com/fcaj/hackathon/validation/FptStudentIdValidatorTest.java",
+    "sha256": "66f410faa2c0c43115936d9f42272096d96523301f9a764579af6aa55eb28ffc"
+  },
+  {
+    "path": "back-end/src/fcaj-api/src/test/resources/application-test.properties",
+    "sha256": "169ce7fec0e9a4c94768f58d2ccc5cbce705f9cb4d7ab2d95f117211b1fb391f"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/CURRENT.md",
+    "sha256": "73d62a4503c295915299e3da86be51fc7fcc8e8091af351634b78e663232c83c"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/README.md",
+    "sha256": "d99a93d2b222b38bf7c42097b7e261ce6c67ae692613f5c89a5c47763382f97b"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/artifacts/input-manifest.json",
+    "sha256": "147f667f5d2074dd28a84508624e0cf3622003f29cbcf8acb659f9a55f355507"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/artifacts/mock-source.json",
+    "sha256": "cf910c9267b193217f10889b869e8d1ff06777985e56bec6d989eb4a8cab9bf7"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/artifacts/rubric.json",
+    "sha256": "238c009abf477a3b45f21334c70213d961930c0e5b7daf8fa09117531daab4f3"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/artifacts/success-output.json",
+    "sha256": "7b5e8cda43203fbc723c78f01e6ffe870a1c6def28e0b897f588fff2d0f03f47"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/completion.json",
+    "sha256": "170143b6f59cbf5b27fae328e715af89040ca8f4d13b4b1d455ebe0ddc388971"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/http-create.json",
+    "sha256": "f1b33c6f7b9087bc7048e18d9abdf382846cff546b4812a4798bfa1b15593037"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/http-result.json",
+    "sha256": "47250e6cc72747898c542921d98d9e740dbb194754df2e2326424b574973d947"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/http-status.json",
+    "sha256": "653796626fd66f8d2d8d047cd2108a3fb440c6b5582f1f05295051122d61d4c2"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/job.json",
+    "sha256": "c7758f53a173d1a65e8defde08c464ba36a9ce798c4965921eb731467e2c183b"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/manifest.json",
+    "sha256": "a804cc149adda0c8d9e26559765d6c4ce65045e484df26a31d7dce6907fb2af3"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/rubric.json",
+    "sha256": "6dce72d972d09b93c769d7f7059576fbe64126ea288504bd8b85ffa67b9da6e0"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/failure/source.json",
+    "sha256": "32f5e372392b01c9ef977af69aca02169935eed7f179bcd653c01a9273adcda9"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/completion.json",
+    "sha256": "2c9a7a158534266e7d57babb62a9e166531479c12a863ce52735ff2593ff3d8a"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/http-create.json",
+    "sha256": "edd83af2834335f2509c649cf3a59a13e859076f3fb48db8161f807b9a029dbb"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/http-result.json",
+    "sha256": "245b7006d181b206753be2050452fd9b3b40f1bd65e635bdb391ff00fc7cf7b0"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/http-status.json",
+    "sha256": "0d8b5cb782bff4ef24193110df9329841c99f7703e765cb6dcfcf5cf9dd361db"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/job.json",
+    "sha256": "91266a024f5359fa04d1ca8f15e53b9866c05a125b1ebe9f5e2f35ecef75420c"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/manifest.json",
+    "sha256": "d40a6ec343fd1ecd3a0c18b7c85f474d4e2e899e2edd91b428090ece933cdb05"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/output.json",
+    "sha256": "5585ea035b1577ec5c8c15f5229089797e4a9a33a529e608c45335d24c8fdb6c"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/rubric.json",
+    "sha256": "6dce72d972d09b93c769d7f7059576fbe64126ea288504bd8b85ffa67b9da6e0"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/current-examples/success/source.json",
+    "sha256": "32f5e372392b01c9ef977af69aca02169935eed7f179bcd653c01a9273adcda9"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/failure.json",
+    "sha256": "8d55d7391022e3026c365bff7788311f90ba18dc29d030ce37cd60a1ec896dd1"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/job.json",
+    "sha256": "ddec5298e39e88f695a1633b3a04a4f8405b3cf7c721e93579bb2549ba6286f2"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/success.json",
+    "sha256": "aba0c74a5d1c8b2562d7bda28b316edfd06dc8ab5367507c31a5ac2889bd81e2"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/validate-current-examples.mjs",
+    "sha256": "c7d740233793287712098306c797ddad5e078d0038222b108b3a5e39aa5561eb"
+  },
+  {
+    "path": "docs/contracts/ai-job-v1/validate-fixtures.mjs",
+    "sha256": "ff62003ecf259b779adcea570223b0bdf32e3c1368a5620a5e34a50454725378"
+  }
+]

@@ -1,0 +1,3646 @@
+{
+  "capturedAt": "2026-11-03T07:26:38.760Z",
+  "baselineRevision": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "0bb9f668e1b7f8dcae561e4eff176a06629a81b72b7e784e1a78df735bdb9f1f"
+    },
+    {
+      "path": ".github/workflows/deploy.yml",
+      "sha256": "0cafd6986a62ac81b65c63e99431d92ec83b53eb0108cb4518810d190fdc2cbb"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "75a06401687b9ebb51b07f59c4aa907d2062d1b05e11f0c91f20b74101dd7cbf"
+    },
+    {
+      "path": "Caddyfile",
+      "sha256": "37b126fc7072762266a239bf8e01fa3bf8f65ae2733c96a2de43d8259bb4ac9c"
+    },
+    {
+      "path": "E2E testing/scenario-1/00_open_phase.bat",
+      "sha256": "05e953d4a47afc1000d610f245fbf979f46ef435f943a5a2dd5b4fdbd41cde9a"
+    },
+    {
+      "path": "E2E testing/scenario-1/01_setup_phase.bat",
+      "sha256": "775cb4374e09a664b0ad00b222c0d88a5753a3b22b90a0a78c34af35547dea4a"
+    },
+    {
+      "path": "E2E testing/scenario-1/02_in_progress_phase.bat",
+      "sha256": "04ea2ea2132d3d1193f2ded83690582a111d7a3f7416b063dd9f0bce99338ee5"
+    },
+    {
+      "path": "E2E testing/scenario-1/open-review-edge.ps1",
+      "sha256": "5db54ab804f450c78208d63264ca27042c877046f3f47c489f1fbced9b794c3f"
+    },
+    {
+      "path": "E2E testing/scenario-2/00_s25_results_publish_awards.bat",
+      "sha256": "01c94a2a10357993c57abce79de9ab6882dfec7f74f4edb12bb2454306a2431e"
+    },
+    {
+      "path": "E2E testing/scenario-3/00_s3_completed_results_exports.bat",
+      "sha256": "0445f0a34abe504db611a20ba6a6bf29169ade9dd5db1be9084645f63b8dfa55"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7106c4e7ce46df8d4b2a05768b42563595e39548b2ea5f8aa256e848b034d329"
+    },
+    {
+      "path": "back-end/.gitignore",
+      "sha256": "04d1fcd845246332e574ca469b819f0ba32bc43c7fe4e8350ae1432837a7e300"
+    },
+    {
+      "path": "back-end/AI logs/2026-06-24-track-problem-import-backend.md",
+      "sha256": "13fc47f12ea38cd4f7594ef778036331c4340b91e4f9e6676141bf286fc0cbcc"
+    },
+    {
+      "path": "back-end/AI logs/2026-06-25-criteria-templates-scoring-normalization-and-judge-i18n.md",
+      "sha256": "4310f4ce53422d6afecacb54698b82141e0caf0c74358a9882347cd5270886ba"
+    },
+    {
+      "path": "back-end/AI logs/2026-06-26-IMPORTANT-revert-hoangnhat-draft-pr256.md",
+      "sha256": "008d8f1d0eb6abfec882f8815155e18d867f8d220eb2ca6139decccecdd8c884"
+    },
+    {
+      "path": "back-end/AI logs/2026-06-26-database-scripts-refactor-to-3-files.md",
+      "sha256": "8b6dc7eede33dae1eca5d0da094bc6431e896d93b8521d63c50a88264101fea0"
+    },
+    {
+      "path": "back-end/AI logs/2026-07-05_coordinator-ux-refactor-and-async-email-fix.md",
+      "sha256": "ffa1e7fbe33158804f537e07654ad73f3b3504bb3d4aa209cab47a64a29e0401"
+    },
+    {
+      "path": "back-end/AI logs/2026-07-17-rejoin-ux-fixes-and-participant-history-snapshot.md",
+      "sha256": "5099420a8c128809a3a5cb3b9118d74be9645bba3abb87794a3d495985d73da3"
+    },
+    {
+      "path": "back-end/AI logs/2026-07-23-ci-test-gates-vitest-junit-before-ec2-deploy.md",
+      "sha256": "7c3b39bd7da4a506bf2d8bc3d8b6a13583a48a3326277d9e5718ee9841f15f9d"
+    },
+    {
+      "path": "back-end/AI logs/AI-log-01.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "back-end/AI logs/AI-log-02.md",
+      "sha256": "6284aa79489953fecdddd4d931fefc92c672c7d717d681a8b91eeb7d03050475"
+    },
+    {
+      "path": "back-end/AI logs/AI-log-03.md",
+      "sha256": "13c5eeffb62ce3894f84661364bb7258a81760975d5d7976dd4b3c07426c2066"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG/AI_LOG_SEAL_S25_S3_PLAYWRIGHT_E2E_DEMO_2026-07-28.md",
+      "sha256": "5642068c04c48d61e5f6ba42df13388bfc6d758e9d751ad12646f9ce0a308b2e"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_040626.md",
+      "sha256": "2af333ec7b2f4bd1a790efe4ba3e87558dae0c87845c0d162303a06dc0028cf2"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_ISACTIVE_PARTICIPATION_ACCESS_REMEMBER_ME_PASSWORD_RESET_2026-06-29.md",
+      "sha256": "b8bd50a000a561c0b082d06111a6bb0e4bbe31b437a3a1790907316b94eece07"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_JOIN_REQUEST_BACKEND_REVIEW.md",
+      "sha256": "0ff1575dafd35d4c71f735fc431b53ca0ac22f749e6d58ccdda0ec34163b466a"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_Refactoring01.md",
+      "sha256": "443a51b8c7d6ca054e51b682b84e4e8de4f25ab2c57f713f07059ed2bcb7462c"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_Admin_Split.md",
+      "sha256": "5996736b74245635a6cd3b500d5323581a95018b573dae58253c3bf842fb8c04"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_Admin_Split_BE_Impl.md",
+      "sha256": "718b0316f97d5bed96942cf18dac5311f9eda87ea122e39d81dd650b94a9b3b6"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_Auth_Approval_Gate_Event_Lifecycle.md",
+      "sha256": "9d9ac8d55fedc17fc4e3ac2f0ac37db7c6d41a22f518a9f2ded75c07b65f25bd"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_DEMO_SCENARIO_REVAMP_BE_2026-07-12.md",
+      "sha256": "fe63daf196ee6a676a870f8944a92cb0ba07cf3c1a983a9c5654f81f57c0ffcd"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_LEAVE_EVENT_AND_COORDINATOR_REMOVAL_FULLSTACK_2026-07-15.md",
+      "sha256": "e7132b00b68601fc60b01d2df628abd70896dbdd2e2cb3bd05f0291c0c0913d1"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_LEFTOVER_GROUPING_MANUAL_OVERRIDE_FULLSTACK_2026-07-15.md",
+      "sha256": "aca47f72413df73e0c1114a7b5855535422fa25e9dd9ecc0ea10c2a92f5e03c8"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_LEFTOVER_GROUPING_TEAMLESS_REGISTRANTS_BE_2026-07-11.md",
+      "sha256": "021b768e62db42886f30b141e71d3f1e63e918cb8b396d03121184caae51bc8d"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_OAuth2_Complete_Profile.md",
+      "sha256": "4e41dc4703ddb2223e1547887b9c9055de9b50fb5519860f404d6782bf93eeb8"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_REFACTOR_CLEANUP_BE_2026-06-19.md",
+      "sha256": "0c7887b1efec113b4494bec6fc31f1890089bcf813a39a8fcc012100241c69c4"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_REFACTOR_CLEANUP_DB_2026-06-19.md",
+      "sha256": "a62b8bd99f1edf624808fcade4a3e09b2cefc6682c6269c359c1092940e8e096"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_REFACTOR_CLEANUP_FE_2026-06-19.md",
+      "sha256": "d74710dbc6c9ee71ab92cce78c1498c429a05ce06663b65c4866e866dda45b3f"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_REFACTOR_CLEANUP_POSTMERGE_2026-06-19.md",
+      "sha256": "1b49c109fc69c36048f4f6bf43670963788ded64e532b67bb22ac30ccd70eb82"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_ROUND_TIMER_FULLSTACK_2026-06-26.md",
+      "sha256": "a6a15913e0656be3c0cd106993bcdd80a252a83fa47c2088f2c8bc8c3693dd32"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_RUN_DEMO_SCRIPT_BE_2026-07-11.md",
+      "sha256": "1f8def105ebbbbf2599af047cecaf4e25f81ce44a1c4bdcb37bc530e9c08cfb2"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_S2_5_AWARD_DEMO_SEED_BE_2026-07-14.md",
+      "sha256": "d6f975960d0d543338d3c1cf90706fd688050c5b68a06b61bfe60f2ff190b432"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_S3_S25_ADMIN_SCORE_DISTRIBUTION_FULLSTACK_2026-07-23.md",
+      "sha256": "5e3ac92534e4fdfcd561c72d4bd79287ea8b2ab03c87e761505117294bd87720"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_SPRINT3_MERGE_REPORT_AND_HIGH_RISK_FIXES_2026-07-18.md",
+      "sha256": "fc7fcf37843c12c5c08f195b3f23a66c19953825798a1c5bbac616845fe4af84"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_TEAM_EVENTENTRY_MIGRATION_BE_2026-07-15.md",
+      "sha256": "4c9da6c4efed17807ebf33f597b4018fb3086a87eec15ced81ccf539e64cdd6e"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_TEAM_LIFECYCLE_RULES_BE_2026-07-12.md",
+      "sha256": "07be99bcdb229d58e5efcda1ef6ed5226137c141fd13a8b17b99fe27f7ff74cd"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_★_CODE_FIRST_HIBERNATE_MIGRATION_BE_2026-07-10.md",
+      "sha256": "8494f043b90dd70bc5cfee52446e8e3a6a9a34a2b34cebd1f13b2a5147429bcc"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_★_EVENT_DEFAULT_SELECTION_FE_2026-06-17.md",
+      "sha256": "3232a7f7f6ea83ae7758ade93d53a19af18d94c9cb6536807ff79cfa455e32a4"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_★_EVENT_REOPEN_PERMISSIONS_FULLSTACK_2026-06-17.md",
+      "sha256": "1ec51070d5248aa0e5dadf0bf9825882ef6b26d45688f765bed1b5f727bae3c6"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_★_REFACTOR_GODCLASS_SPLIT_AND_DEDUP_FULLSTACK_2026-07-18.md",
+      "sha256": "c4f56e6ef72a5ed12ff60aa0b416ffda6889ea2c613e3638dc0ff4cf673b7286"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_★_SETUP_LEFTOVER_TEAM_GROUPING_FULLSTACK_2026-07-10.md",
+      "sha256": "88c1b0675ea2686e3de8562464419aff708471d37e0062dabbf2f232e87e57c5"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SEAL_★_SETUP_TRACK_ASSIGNMENT_BE_2026-06-16.md",
+      "sha256": "2400cd9465fed83f06c5b67237099b16badebd6118bb920faa8152b2898bbfc8"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_SUBMISSION_SCORING_SYSTEMLOG_VALIDATION_TESTS_2026-06-25.md",
+      "sha256": "ad186f4ed842f55280e6ffc2af1537a2e670046ff7a338a5d4065ae674a0bcd3"
+    },
+    {
+      "path": "back-end/AI logs/AI_LOG_judge_assignment_redesign.md",
+      "sha256": "aedd19513c6ba07cab34c3b71774664da500330f95e160f1d21c4bdd79747348"
+    },
+    {
+      "path": "back-end/AI logs/EVENT_VALIDATION_REVIEW.md",
+      "sha256": "20734487873897e089b919947bbb37803c06c454e65f8640745dc54b4ff1191a"
+    },
+    {
+      "path": "back-end/AI logs/JOIN_REQUEST_API_TEST_REPORT.md",
+      "sha256": "1ec01c95d82de0afcaa4cef4738f2da6153dc4f255e18fe96c28caa298f70011"
+    },
+    {
+      "path": "back-end/AI logs/SEAL_Auth_Module_AI_Session_Log.md",
+      "sha256": "e53ab07676b2fd1bb5c38fc7ef5eb0784942300a4c2a96309d8b8ec07bc01c8f"
+    },
+    {
+      "path": "back-end/Postman/Postman_Full_Collection.json",
+      "sha256": "0e6568d516e30f9eb97e21259a0e91e3c2ddb475e13e030331a728ff8d9f091e"
+    },
+    {
+      "path": "back-end/database scripts/seal_schema.sql",
+      "sha256": "2c1be6f141634dfc0c95b7c70f23937c7838c063c7b0b7c5fbd56e94c6ca289d"
+    },
+    {
+      "path": "back-end/database scripts/seal_scripts.sql",
+      "sha256": "9d180c37ba361c3fd5181f32189b29292ccf43485ce664841415e22d28267ca3"
+    },
+    {
+      "path": "back-end/database scripts/seal_seed.sql",
+      "sha256": "25b3c491e9ce75a6c4286597e77655986a7ea55bdac9b88a788b15bf69e50c60"
+    },
+    {
+      "path": "back-end/src/seal-api/.dockerignore",
+      "sha256": "bb7e387b2332131b9fb321f355532a59396f5067fec6e5e829260a997a0af4fb"
+    },
+    {
+      "path": "back-end/src/seal-api/.env.aws.example",
+      "sha256": "8f886bfdec4c115e98f5d30c48533073a25f2a0777a6123f2c44d3e075c9f799"
+    },
+    {
+      "path": "back-end/src/seal-api/.env.example",
+      "sha256": "e76021acca3b046a99d4a07133ab6ce40782d02f456f14f5ebab0acadd7d467c"
+    },
+    {
+      "path": "back-end/src/seal-api/.gitattributes",
+      "sha256": "18be76f9008af08719be1d98d291e1286907ad6df86e7bd4e2dbed4ce0903fe8"
+    },
+    {
+      "path": "back-end/src/seal-api/.gitignore",
+      "sha256": "ad73f05b0f9cb2df5a938b00f72d6eaba4b38f5826302569b8a78c11134ac38c"
+    },
+    {
+      "path": "back-end/src/seal-api/.mvn/wrapper/maven-wrapper.properties",
+      "sha256": "1f3cf0a7111d2b54736d1f89d7e93f1f143f8b3d5a58a5bb46e3b60b3eebd931"
+    },
+    {
+      "path": "back-end/src/seal-api/Dockerfile",
+      "sha256": "4b4f88c3276c19acbf39ccbaf41b70ac8c08c2987672641d2a885bdd205e18a3"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/HackathonEventServiceTest.md",
+      "sha256": "6eff585acd1e37a679c1841ded0b7918d19c048e2a2ae6b42e8c07cadec91ad2"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/ScoringServiceTest.md",
+      "sha256": "8d8171d0eb6bd7164ac61f1c909cfa1b3978e1c916fb9fa859395d9cdd2c4d04"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/SubmissionServiceTest.md",
+      "sha256": "6b222413fe94de9565278ebeb576aff83760b3b3eaad3a7683df2f34b6a0eb22"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/SystemLogServiceTest.md",
+      "sha256": "4dac331b8534229a769743818d55b73c30bd7fd4258e9260c9cbfc36637bdd49"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/TeamInviteServiceTest.md",
+      "sha256": "6c9c7b4bd2ceec0ba08d4c863a375bc51723e540a1e67703000d0ef1e4790c7c"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/TeamServiceTest.md",
+      "sha256": "c85b52dde43391991a81c09e1e66ca82c2ecbe4b8fc6d266307f70a6928b9006"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/deploy-verified.sh",
+      "sha256": "3b44c22baeddbfd051821376b39fe5e3222894a0bdd52a818bd2e117b0b9af43"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/deploy-verified.test.mjs",
+      "sha256": "8f9ebee5899af810639aef3b1af40f7429bf4e22888cb4861fe14d5a50523127"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/run-ai-mysql-tests.ps1",
+      "sha256": "13239a1b2b0646a09ee25b03795030d4a7b9c2c2e57757a80c0d6fc5334e64ef"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/run-ai-mysql-tests.sh",
+      "sha256": "b07e67aa19da74258215a84bc4c12c0da1bdded372e360a5dfe2c556827527de"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/run-aws-mock-worker.ps1",
+      "sha256": "3e8ad1414647587281b73e0271116db9928748dd3793f9a3835009e8d1938e31"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/run-db-migration.ps1",
+      "sha256": "abe708db352183fe61232cd55d80f71a314a06c7688aedf861a3de63a59b38a8"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/run-demo-preflight-tests.ps1",
+      "sha256": "424008a03e4885fcb693df54ddfb97c95d6ab007f1ea6790499ea6b964017ce2"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/run-integration-smoke.ps1",
+      "sha256": "181d93bcae80d800d232cf5ac177912652b4ed773851d0aa7599b7b1571a316b"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/DumpMigrationLab.java",
+      "sha256": "03c871c0ba74879feff52217a4f177aea5f0bb493da3bc5744c99b8bc17a6db3"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/README.md",
+      "sha256": "357f7dc765c8b0c432003b6c9b14e286073ff25005e876fdaf998ca55fc78ea1"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/SchemaInventoryTool.java",
+      "sha256": "3a91abb3f5fed77a3e610f69ef20d4ff4ed526bac8c335042c04eb620531d029"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/export-schema.ps1",
+      "sha256": "d69a7aefa5e4923fb80319d7dcba46847f212afb60c5d1ed3a87bd77bed8a6bb"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/inspect-dump.mjs",
+      "sha256": "64ede2d9b1a1b72a5c7147f39e9beb5ee1090c287c52af6cbea3a64511b85cc3"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/inspect-dump.test.mjs",
+      "sha256": "bbb1d68d96a242fb8dd5afa8f6e21a6e1413a6e98894cdf7bb9d0291ff22977a"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/lab-logback.xml",
+      "sha256": "4e7ad57df3c80a5a7bb00d0ecca0b14194349e5c502cfbb88c5c82d1104ff753"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/prepare-dump-lab.mjs",
+      "sha256": "190f8eaa0d01bd44feec3867acb01dfd609a9a682f0d5a7201988e490c32dfcc"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/schema/run-dump-lab.ps1",
+      "sha256": "a6925d9a000a00c0d616a8fb66ac1c66467cebf6cfc9ff2bd00ea02872d14742"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/trackServiceTest.md",
+      "sha256": "55115ea8619acea2b60d74a2ecc5074d150e7a117049a70e5dce0ca077193361"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/verify-container-env.ps1",
+      "sha256": "1a851fe7b4d385e66e4287c35e22f7fd2865338cc4b888d9cfce3cc9e8438c27"
+    },
+    {
+      "path": "back-end/src/seal-api/Test/verify-deploy-templates.mjs",
+      "sha256": "399419a78db6d60e390729711f274f0ae762b68d8004d5abbdbc07b70c894e26"
+    },
+    {
+      "path": "back-end/src/seal-api/deploy/compose.aws.alb-direct.example.yml",
+      "sha256": "98f8f235f4dd3ef00f508e85f6b95d2271b1830e57033978e67e0d7799baca69"
+    },
+    {
+      "path": "back-end/src/seal-api/deploy/compose.aws.example.yml",
+      "sha256": "0fa89c3ba331742945c3ac7d392b76f2ddf59870cf6dcce2e0d30398b8922c69"
+    },
+    {
+      "path": "back-end/src/seal-api/deploy/deploy-settings.sh.example",
+      "sha256": "40d5d60e9242ed18c11355f3441048f2a90b3c87b91eb5e674eb8b3208780faa"
+    },
+    {
+      "path": "back-end/src/seal-api/deploy/migration.env.example",
+      "sha256": "dd534c94797f5345815ee2a578453fb750698ddf7c3791cd4a5ae3ffa0547eb2"
+    },
+    {
+      "path": "back-end/src/seal-api/deploy/worker.env.example",
+      "sha256": "00e04a93c2ce7df186cbc9bd7407de369503e18fa2dbe863baea0c6b72dfd0f6"
+    },
+    {
+      "path": "back-end/src/seal-api/mvnw",
+      "sha256": "cae96cef89ebea3531221f4ae17c23cf8edf67d00eae8306d4186ae1bbed4d02"
+    },
+    {
+      "path": "back-end/src/seal-api/mvnw.cmd",
+      "sha256": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c"
+    },
+    {
+      "path": "back-end/src/seal-api/pom.xml",
+      "sha256": "d8be1a3fb709fea60f3bcf323027e6e55470111ec5fb4b25caa2efabf4d86036"
+    },
+    {
+      "path": "back-end/src/seal-api/run-demo.ps1",
+      "sha256": "7434dd9f15854050c49e0ba068859d3f013d715c7360e1b4748be87ba911f3e9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/HackathonApplication.java",
+      "sha256": "bf33405c7a6fc7c395a49c4858480ed0bdde15e76b7aaa7caf66f167a0c51e36"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/AiJobController.java",
+      "sha256": "75399021f5a71eb5da1b57c17a91dae248c3fe5172e5de61e2495cd01828120b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/AiJobService.java",
+      "sha256": "dfa3597c79d3b3f1272fd023b43e7b4286f58e7149f2edd135b1b5d691d358b2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/AiJobStore.java",
+      "sha256": "2c831010d86806c5caf8bb1b659c53ac0afae6b0264f3c9e1788ac34eff534cb"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/AwsMockWorkerMain.java",
+      "sha256": "b1cbd3d18d8d6883268b489cfd9e361fa0237953a0c83dae314f2f9deca119b0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/BoundedHttp.java",
+      "sha256": "1c28f26e68569b40a2ddb16d19b8a7c6099ed4447036ff5a60f012bb95e2353c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/GitHubSourceReader.java",
+      "sha256": "3e1f21aed029927a0f5d97caff83ac8dc966531ed323a78053a13710b4cb512f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobAccess.java",
+      "sha256": "e9e1f0e561f2074499267adccce8b79ce02a03ba48c478c9299727722a64d738"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobDelivery.java",
+      "sha256": "5e63537a42268e7ec5c77f0396718edb45855949104984f705b4a705befc2746"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobEnvironmentConfiguration.java",
+      "sha256": "fbfbabac7278a959a13532c6175afd3a19bb513a2adbc8c3ef9d0d12113d2e52"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobErrors.java",
+      "sha256": "db46253e785d9e2429d26df114c8c0f4f255131678f26ed695f173f180768a78"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobException.java",
+      "sha256": "7596c48f39133e0338a59725e540097736b63f85bcf557e170d40a93e2a7e5b2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobJson.java",
+      "sha256": "ce743e638f65a7abc243daf53172cc085121ddfaabf78dee539181a53593de80"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobLimits.java",
+      "sha256": "98a9be18b9d70061b97f72e8b56a41e26830ece2c2794b0835427ac0d191ef15"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobQueuePolicy.java",
+      "sha256": "a223cffa1c1089a1b5f099393e57fccba1c0fac0757b9a37f51529a532228a80"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobResultValidator.java",
+      "sha256": "819abaa22900f551df5dc1b795b7d7311d2b2976ce100ac5d56fe13c6916ac74"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobSnapshotReader.java",
+      "sha256": "4d5da0a0cdf143ab44f5ff4f5d88715b51a7b7434be1d359669647985cc05a2b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/JobSnapshotWriter.java",
+      "sha256": "2c04db8f42ccf8ef0bebda480a3d61ea5a16ffd06ed5d9156b168f0dcf73e71a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/MockWorkerOutput.java",
+      "sha256": "4ae1eb3d0e7ad68dfc35bdc4e3fcc3940a7e1770bd6723547fc06d901ed005c1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/aijob/ResultPoller.java",
+      "sha256": "b7f737279d67120a9b9e996b2a66e7d51a562a5658d49c8e3a462e92e2fa21b2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/AppConfig.java",
+      "sha256": "f6b450d2ee239351f4220c28f909934f3e39d147d351ae39caf6aabdc2229ffb"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/AsyncConfig.java",
+      "sha256": "d4f22014535859a0dc048fb9360eefde2938d0033d157c7410252f4d5f91fd33"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/AwsClientsConfiguration.java",
+      "sha256": "274ba2efc0dacdb86b27ffc7b8ea0f6581ee1c80f98708a9de5baab487454de2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/AwsEnvironmentConfiguration.java",
+      "sha256": "f55fe5272bad53f9d05bc99e891592a80d808ddbe31fcb36e0081a91a87b52fa"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/BootstrapAdminSeeder.java",
+      "sha256": "aeba6e8e5ee07a1436f747431f470a30ffd099d34eaeea0a8a10678ba76b6e7b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/DataSeeder.java",
+      "sha256": "9de73d0d5a2600ce5d44623544033beadc67a0f42b1bcf014b42ee4ffae9ab77"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/MigrationEnvironmentConfiguration.java",
+      "sha256": "6e6316cdc95dea5d8c8d96ab0df4fe272bb4ba62e7483b10b4f9c734b3046daa"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/OpenApiConfig.java",
+      "sha256": "4be88053568a44fba8dffd43d557986a314beb03d9a02e973d6d8575cd239cfa"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/RequestIdFilter.java",
+      "sha256": "5d44c8ef593fe0f5f1741180fb9a90da246b0a9c49c62f732440dbf3c424ea9a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/SecurityConfig.java",
+      "sha256": "fc2f3dbf4b7c59f2c65511e93ccda119bebd8db3ba5b2d62cfb3a639b26491be"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/StorageEnvironmentConfiguration.java",
+      "sha256": "f84d53a6affd93ed7fa21c227d7ac1990b919341a1d5e7042544442efda2695e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/WebMvcConfig.java",
+      "sha256": "2fb5bcc37c5c443b9b75bf63e89c5d586625b0601a665443d44fb4313134aeea"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/seed/DemoFixtures.java",
+      "sha256": "06ccf125e9908914b0a87851739aa2f6ae3ce67b2ab88d55c0a12a74e52bbba5"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/seed/DemoScenario.java",
+      "sha256": "95d1e5b150ad3e1536b621bf5dac721f8ff9efb50352b5b09ea87cbc06eeac45"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/config/seed/DemoSeeder.java",
+      "sha256": "6b607cc7e367080fdd684b0fd7e9945dfea1251b2360d5550458a6f2777edebc"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AccountApprovalController.java",
+      "sha256": "5223fdff884022ebb4488f0e08ba92b0c43d76007e702d785830eb1a87ec9ef4"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AdminController.java",
+      "sha256": "24cce62c53b0dd52ea28eab0e0a5239fe8a2f5b2b25016132fcea25cfc616c8a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AiController.java",
+      "sha256": "1da83efd891c7eab07a61a22aa927b12392c84a4e7573ccb8ba3e742e06b3d74"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AnnouncementController.java",
+      "sha256": "d438de43a666705fc21c01660bbeabcdfb2f7132965420d7c2022686dcdf3d6d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AssignmentController.java",
+      "sha256": "b4ce6c2feaddc1f51b4a6012e5ac4e7e4023a38ff28356d8578432130b6fda2f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AuditLogController.java",
+      "sha256": "6dd9a2ab0c3d8db63470e34acd11315d69f64023daf596d1bfaee032f3012f7c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AuthController.java",
+      "sha256": "d45ccab9d1bd44c7c8b9d5894cf625390477848f3887fe1e867598dd45d6f0bd"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/AvatarController.java",
+      "sha256": "f256ccf337d70f7b4a210265a7f89602ec1840ef42c44fbb53ddb51c6659e44d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/CoordinatorAssignmentController.java",
+      "sha256": "f7ab9c5e4effc58193998a3fad6d22a31db4831d9a185fc01adf2c5924b8a369"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/CoordinatorController.java",
+      "sha256": "5cea17468bb8523b5dab0ee81a6ce782c7df371138516eb30c0e0bac0688d2c1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/CsrfController.java",
+      "sha256": "783addb96e13e98ad9e8681b91e15e95b9b19fb042a6d6f1d43ca289542a5dea"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/HackathonEventController.java",
+      "sha256": "1e678073a6e87d1e43851bd680b3bec7002592549fe9df959abe5c289e1ca1f4"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/JoinRequestController.java",
+      "sha256": "49d2ce15fc91f1b038172005cedd9f91181d73dc462b7fc2295103de04a3562d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/MentorSupportRequestController.java",
+      "sha256": "84470100d917321bd2b14fe29431d342d5a26457f1fd1b4f385a323e3e9efa03"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/NotificationController.java",
+      "sha256": "db549c6e96d957dd4ea59e4f44283ae85fce0fa12539f26b69de1225afa9ac85"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/OperationalController.java",
+      "sha256": "04a8992c28f04ea55d7dae218a5c3277a3dabff32977bfe777b9c5b114d71ee0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/ParticipantHistoryController.java",
+      "sha256": "873966d191d6f25dcd54e1b18629c52345c6c8a14617f1d0a1ef9eea9e8d9dcc"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/ParticipationAccessRequestController.java",
+      "sha256": "3bedee50ad286274cd359f29942d9432a055e7edb2909f7d315e9fe652bf3b03"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/PrizeController.java",
+      "sha256": "6ba506b71803a4f91121a5f15de6613879eaaf56484b5bd5c7209f0d14b98861"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/ReopenRequestController.java",
+      "sha256": "204322d8dd613a68b08e9bf0b152835e6a5ec7c43340ffbf1b27468888c64fb9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/RoundController.java",
+      "sha256": "1248ecf607b5acedcfb0327ba14a4c1dea7daafdab22c0bd66224310abf8468a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/RoundResultController.java",
+      "sha256": "4dfe6b7bf5352a3028074ea723a30f8f92ba65b972f008a1d2f60b3b440aa7fe"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/RoundTimerController.java",
+      "sha256": "ba1d72597929c2f09b0c8d18ce3105d576d2b29a4ad9ecfbf563f7bfaa8276ed"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/ScoringController.java",
+      "sha256": "892065077263c50fa400cfdf3d628648f04ce6a3734a49f1abf333c68e5508ea"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/SubmissionController.java",
+      "sha256": "fa48688e2eef732c1b2b51d950347e86c2a737c446b9ba776b32f75d51282f93"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/SupportRequestController.java",
+      "sha256": "4dee46232fabe9d12c35fb8d86f9a636e0d45063456939f4f08149bd6395a76c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/TeamController.java",
+      "sha256": "51afe98ba412f13a215ab81d3249afdebe89de360d6bfe291b1cbc8b346d9c8f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/TeamInviteController.java",
+      "sha256": "2d6a13640d8d642388fd87b42b40964af1021e9e019178db7cd9c6e62e34f128"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/TeamRejoinRequestController.java",
+      "sha256": "2198bc113dda144296ed00401dcc4e708e3b0c7771867e90981a0b763151ee3d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/TrackController.java",
+      "sha256": "6513a38de397ea98b8382449e83a564b0957bc91ff2e8074c2a23f7e6d8fbd09"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/controller/TrackProblemController.java",
+      "sha256": "a0ebc97d122581d073296268e6bee6e2a0ed3f930bd5fd9c685140f0cdba284a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/db/DatabaseMigrationMain.java",
+      "sha256": "db9ab5875c9caba3b21d9396e94ac8a623756ccb4097ccbf3e65fef89613f58e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/db/SchemaFingerprint.java",
+      "sha256": "e21da7d0be139f69dddac8aad5afac7781491dc3052a6fcbd76ac93d5bfc8adc"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/RepoDigest.java",
+      "sha256": "3ee5819090ce5ac7ad7fa03ec426dd3a74fd65968606bf2f14893f788d3db3f0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ApplyLeftoverGroupingRequest.java",
+      "sha256": "521b1ae71831669c8d339a56448096b2e004573008bf1628b3185e4e0dec5835"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/AssignJudgeRequest.java",
+      "sha256": "fd9adb672693bea2051f9a51cbd1b095119f4ea15fce63f7f2c4c7e1c045776a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/AssignMentorRequest.java",
+      "sha256": "943a572663988ad5629607416b00b3ec50835f20464178dfd1a39d79d03a6058"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/AssignTeamTrackRequest.java",
+      "sha256": "08634ac8284e0f3d4d6b60a7fa54478da2f8f5cf72d3022bbc4b9420f9b07f21"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/AutoGeneratePrizesRequest.java",
+      "sha256": "6604fc9b2c0e8bdaffa1688ed3c6aa4d278c3806df6bea465cafb3f1b4900c5e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ChangePasswordRequest.java",
+      "sha256": "248bff1e56afb13435ac3f5851ae4169a9ead8c2a0513f62e157bcd314150329"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CompleteProfileRequest.java",
+      "sha256": "42067d9cf023ff76616ad2259be6958f11340c326381295dc9c79ed82180e352"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CoordinatorAnnouncementRequest.java",
+      "sha256": "c8237b83766d54b7ef51383683fd0fdebe2dbbda3ba0a7884cc93b06a70e3b47"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CoordinatorRemoveMemberRequest.java",
+      "sha256": "33b9d11afa2fd83f1c95b9d15106db236dd532208f3875539f31b0cf8c748cfd"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateCriteriaRequest.java",
+      "sha256": "8f277f9122397b915a92fc065c6dde44b7fc4b01199a0de554aa0492e137666a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateEventRequest.java",
+      "sha256": "e9ee8ab97b509403ddff596f338a8ccbbd3f7e25df2b95c6c099c568b55bcef3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateGuestJudgeRequest.java",
+      "sha256": "1cc30a35abb3b2c85a1681af97a2f722b11fbae9102d1ee2667bf13e5219f190"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateInviteRequest.java",
+      "sha256": "e3f05fbfddea801d8332d04717601095f15fc59ca58bd41e37b6cab14f42b646"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateJoinRequestRequest.java",
+      "sha256": "969e6ab0429dee18faa32be511672d67381c7ffef6e84def8d0fe30739db6dd6"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateReopenRequestRequest.java",
+      "sha256": "5982515295e0fe3647c8ca4fb97911a97ac5c371db53818ad184ed348089ef97"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateRoundRequest.java",
+      "sha256": "76ac8dc55fcacde445411b84738cf43c76d03c6397c41c4d953acf8ab1dabe50"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateSupportRequestRequest.java",
+      "sha256": "aefc436e5bb8fd209208c3adca729614e3253a917e10da85520cdc47d684ea93"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateTeamRejoinRequestRequest.java",
+      "sha256": "2300fb6cc2905010101cd8766137841fcf40cedff5cddddea05c97fb92fe91e7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateTeamRequest.java",
+      "sha256": "bc777239c5417ccf97b97860243769fa44a207c455389a6bc1c1c7bba7f7aa71"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateTemplateRequest.java",
+      "sha256": "eedb63bd0703f2ed15a19fbb92f50e599cf63b5b8da70e3ae4aa093c8db2cf9a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateTrackRequest.java",
+      "sha256": "ccad97f00be30c9458632715667f330cdfc47c7c5a185fdece733624a2bde73b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/CreateUserRequest.java",
+      "sha256": "327b04a53210cb1b88c2f94311f2e6a5971e05b80db8782419b79d9b6b2d169f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ExtendTimerRequest.java",
+      "sha256": "0540f03877ba887563f216991ebcca710c1c0747244a06a87a20e74ff013d7ad"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ForgotPasswordRequest.java",
+      "sha256": "5f82c51bf4fa71a8a37e309819d3c845e82492ba3eba90eac1eff36e92214a3a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/GrantRoleRequest.java",
+      "sha256": "f1a10e97a6b141c1605528767870e21068928987167528f6a22f54f8ce153510"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/LoginRequest.java",
+      "sha256": "c5cdf5c811b28a065319e8024b22e2c672d7c8fe7ff1239fd5b01634a9f31f8d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ManualAssignLeftoverRequest.java",
+      "sha256": "09bee48452d55b62584318d2b1683b7735733005ffbe0522a5e36468cb907f15"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/MentorAnnouncementRequest.java",
+      "sha256": "c6fb5d90bf80747a11a585cf865aa756f619a8d00a59056e3a44710e8cb9b431"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/RegisterRequest.java",
+      "sha256": "5759ca1604746e0520eb9f95eb4304a332c841c99b1bb87925bb28bc9f70e257"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/RejectTeamRequest.java",
+      "sha256": "8b3d53b91d8848ed625e72aab6993e184516f040dc9373a8fdac60822ac9bab7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ReplaceJudgeRequest.java",
+      "sha256": "df36ab9c8cd7b87c2bb4822ff7e442557a26785cc4a540d27c81487422a006d7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/ResetPasswordRequest.java",
+      "sha256": "1d8faeaea33669cc490eef6e9913fce74ff9707a4c438605fc4ccc0ee6d1119d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/SelectTrackRequest.java",
+      "sha256": "38b6e740a9f7d7e162952cc2d3c52a0c1e956870ee1ac9d288b49981efee05a9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/StartTimerRequest.java",
+      "sha256": "2dd0898afc7a328ae9eded9bd18ff77a1cc231c6f58993128d974faa9bd3cd96"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/SubmitRequest.java",
+      "sha256": "ba97addd28c31dd500149d3b3cd0774d3f5a450d4616413cf52fdc88d5c36712"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/SubmitScoresRequest.java",
+      "sha256": "10b5e6d293f7ba409a9aebc27383e291794b42e0eaf59920bef850280155b2f9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/UpdateEventRequest.java",
+      "sha256": "a769fe28bbfd93776ee198ab795ce46254d90708a91f6f75bd0326a66fa6a4e8"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/UpdatePrizeRequest.java",
+      "sha256": "5cb78253b32b6c136d4017db81c4b2d1bb56522d7a77860cc0322526906b384d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/UpdateProfileRequest.java",
+      "sha256": "fc5403679998222f9a64f387ef0a3c233c5302a90faa81afc6baa2608c43a2b4"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/UpdateRoundRequest.java",
+      "sha256": "c00cdb6f2b13b77faef2e2419682b8cc84dc3f1fb4ed2d18930a1ccba7cbf8ba"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/UpdateTeamRequest.java",
+      "sha256": "5f8e1281b23d25f13a4111cf929bea2817dc859a89842b6b2dd6990edc014beb"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/UpdateUserRequest.java",
+      "sha256": "6142795db1ec58d3202447763820463236e96f94e8335dbb8e88ce43592c770b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/request/VerifyResetOtpRequest.java",
+      "sha256": "5906c42a34b66085b44df6c6856f0c6e83622bf6807b1744bf100fdc69222ec3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ActiveEventResponse.java",
+      "sha256": "8a7f9635ca9c04529d2f5ea8dedc94c9cbea5104d85b9a32914aa40146d3f9b5"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/AdminScoreDistributionResponse.java",
+      "sha256": "d4655e437a33526c78d377bb367e98f00f42eca35981fcbf1b0ffb233c881c62"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/AiInsightResponse.java",
+      "sha256": "eae5d834d6b6b3492290aeb5a73eec6d21722e482410d9e8c8c101b5418e285e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/AnnouncementResponse.java",
+      "sha256": "9fbb0c39f47ce4ce484a91f1762ab2655d61180f76ee1dd8422b908afb063cfc"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ApiResponse.java",
+      "sha256": "b45f9ec82fafd24d1039454f6d61008bb344cb4704118c978243cd91fcfe093f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/AuditLogResponse.java",
+      "sha256": "c9f16bba396f1da591cfba41a73f6657197a2e94b2c8377d87de6cd6e212e37a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/AuthResponse.java",
+      "sha256": "ff314b3057ce7e658d4a2da9f785026d89ec4e9f73c79011cfa4c34a14f3a805"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/CoordinatorEventHistoryResponse.java",
+      "sha256": "c03e3a10a8b41140869243ce0a0e2a0a47d63bb6f519443bd1a70bdb6786fb44"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/GroupingCommitResponse.java",
+      "sha256": "6b3b021dfd74f1f29245272e0bbb9df04ab610b0cb7244aa74540506745ab81c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/GroupingPreviewResponse.java",
+      "sha256": "37962731080c2aab05f8b0c1b516c5dcaa6622c9c3ab54ff95769a7ca04c9d6b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/HackathonEventResponse.java",
+      "sha256": "eb279e31e5ea4f9175a4bb244ecb5d840449f9f9c3b46b77dca964ace2d97d27"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/JoinRequestResponse.java",
+      "sha256": "1eb4b0d7834551e62886fc58ff0956c8e98806b698c537b3db1e4aed44d15e8a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/JoinableTeamListResponse.java",
+      "sha256": "cdc0c6f6faea2ba64270b364abd47bbebec852c225375a5fd5bd76f906e36b5f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/JoinableTeamResponse.java",
+      "sha256": "f0bf988b4581f93cb2649bba6246880f4f93d07b68a31ac359632d66b431fcaf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/JudgeAssignmentResponse.java",
+      "sha256": "e579ca62ef8c8e7bc43f7912932a12956743f11391d3c24a2f9e1132668f7fd0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/JudgeRosterItemResponse.java",
+      "sha256": "5e9945f76ab7052b3ddde5e9c51d0e2e621e837453ae1de82dc32730578f10fe"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/MentorAssignmentResponse.java",
+      "sha256": "2b357ef664efb5abaec294b6a1617286f0bfc456895c5ef5cd93d98805e7e7c4"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/MentorContactResponse.java",
+      "sha256": "c3b201eea194bc543f6c2c7031f3daee39bde31d3e7245510fffdcc4653a7a05"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/MentorHistoryResponse.java",
+      "sha256": "6127ff581b38338f49b5ff61347b5f3e94b8cd069fa787c2bf1166fb1bc38345"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/MentorRosterItemResponse.java",
+      "sha256": "94807e18a7304373c1eebc8fcf76e0a993e8e10e644956a4eff1742e4b4961d0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/MyTeamResponse.java",
+      "sha256": "7cd102e9582fceadf56213adc4150dd4551a1205896e4044a3d61e3b1e5b477d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/NotificationResponse.java",
+      "sha256": "27823bc5b0d195bd06317971e4458c753240f8dbef66e6aa0695e90c714ee904"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ParticipationAccessRequestResponse.java",
+      "sha256": "4ef686dd9111e0e43ffcd8477ab00912165d8b33aa0e36be3d14ed595d05d7f0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/PrizeResponse.java",
+      "sha256": "a9cafcbec9c7bbfe5a1414d0951f002d447acd1574647b19ddc1755c7e822067"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ReopenRequestResponse.java",
+      "sha256": "a770d0190f67d1e018df0ef3f76dba04a7a4bb3e813cf55636a75ab8ae8f9758"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ResetOtpResponse.java",
+      "sha256": "f0650051b55f5124052f491095fedc46702087e5576d1afc929ba662a409fdeb"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/RoundDetailResponse.java",
+      "sha256": "a2a99b01dcbf23a76f23650e4f1fe2e5f8fe6d7f89ca0038e3fbfa6cf955bf2b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/RoundResponse.java",
+      "sha256": "3a2c62c088033313abf24be70b18d9ad4de1ca83b0f01b913391958983339c1b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/RoundResultResponse.java",
+      "sha256": "403c5630a86bac3102745067b607940dc1676d151c266845ea91ea79922fdeb9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/RoundTimerResponse.java",
+      "sha256": "1ab6d86cf122c6e32b34f6d295f5c68f33b94b829833733026e812fa4f6f3ea5"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ScoreResponse.java",
+      "sha256": "61de226d0163dc47a439dd670a4e9afe85b32e016c40df46b2796cd9bd570f1c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ScoringCriteriaResponse.java",
+      "sha256": "273d1653dbdb99981e1d641726b679eabe35b2ed21b724f827c3fc66a99861e8"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/ScoringCriteriaTemplateResponse.java",
+      "sha256": "5f802c5c3133c2017af0bd4f86f72d7fdd92a53880a456da59b1a47902af87b6"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/SubmissionEligibilityResponse.java",
+      "sha256": "c4a38284079f0add7e503001a43a12d381bde28d26ef5e0e1f60ec11e2295ce7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/SubmissionResponse.java",
+      "sha256": "3c84fcd20e539ea3eabe13db810020b4002f3b59457b8ba83fa7e9fa0b5b9be0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/SubmissionScoringProgressResponse.java",
+      "sha256": "aefe2530c5917b31c178a8534bc3c9feb6e837ebf41bd3eab9eac1836de18173"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/SupportRequestResponse.java",
+      "sha256": "0992204a1928d1638295024576b791f845107dc592b5eb0aa58e7b57d3a86682"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/SystemLogResponse.java",
+      "sha256": "88581a825d94e5a0cecee57d8debe6650d5799531c895ab01e1839dacdc67264"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TeamDetailResponse.java",
+      "sha256": "155c18464e113a7d29f3704ead757cf6fb1265b810590867f953258064b46f8a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TeamHistoryResponse.java",
+      "sha256": "c80538b8f51f08f1a283149b268963cc6bacdbf132fa448025afaecbb336532e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TeamInviteResponse.java",
+      "sha256": "476cbb6fa7a04da5b3411d4efd8722e335e680d8a0594a8faf2624cf30d6c241"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TeamRejoinRequestResponse.java",
+      "sha256": "6562d34815d0143b52d4c1a65b90c43b017022495354e14ae239f7c12f442c9d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TeamResponse.java",
+      "sha256": "bc868223f28c4d91a9b3d69af24a76dc9eba6353f6f9ab71be5e248b3e49e8f1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TrackProblemResponse.java",
+      "sha256": "d6138f7680a1d68c36b531875feb933da923d3b7e0d37c24e13e4db53ccd533c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/TrackResponse.java",
+      "sha256": "e6317e384ce88d65e35be690febc05b63cbbce965319341376c2349c9bb8bc18"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/UserEventRoleResponse.java",
+      "sha256": "d3ddb53a541f9b9125010cf7bd0f41ed441c2d0b572950908aa1f151d9206dd8"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/dto/response/UserResponse.java",
+      "sha256": "9cec2a613cbafaec0cfc62b79a56cb5e88e81ec0558b047bd4ed4bbaed95d345"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Announcement.java",
+      "sha256": "0ccf20e631f3a7cab3c0f34671651b8734edb7ee515ddc4e6f1af82631b723ef"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/AuditLog.java",
+      "sha256": "b7b32c1aaa8641e18ddc0cdc9c602718867d805aa67839d8d3d324e1f0c382c9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/HackathonEvent.java",
+      "sha256": "a5cc3db2c09f301aa1041dc1e4b7b1a738e1960a2c7a9d45a8783c08c87d1231"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/JoinRequest.java",
+      "sha256": "62426455df4a4f5027193a21b29f4b1754ecb15370373a31e3514443f8799d56"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/JudgeAssignment.java",
+      "sha256": "6984bcc7cf1f8c751537a1638d9c6b1bf161810a07778fa07e2903ebf21833ef"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/MentorAssignment.java",
+      "sha256": "283c34b4e7a9976c5d28db33a7b83ee21e6f6c413a361ecddb26b43f3b402c49"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/MentorSupportRequest.java",
+      "sha256": "c46bfdaa0424a606bfad3bbb6b6d5fdb06b92340a3bd9634aad861d9abfe4fab"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Notification.java",
+      "sha256": "3cf1d044b8af8f7826816b44424333792cc5be9ef01a7a0c6a1bbf856f03b037"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/ParticipantEventHistory.java",
+      "sha256": "13cc6377e840a58c50df938ff2dd0ac90d0a7a71b50f1979b8a3c3eae36c6b56"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/ParticipationAccessRequest.java",
+      "sha256": "b9c59a087e8d7d847315f445a21d0ca8fcb76bc3e149bb5596488f1f68cb0e6b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/PasswordResetOtp.java",
+      "sha256": "c57125022bc69b6d47133cf18642a919bf2ecd25b9b793acaaa5ae1f746de7fc"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Prize.java",
+      "sha256": "fc75b63fd89d7a60838fe09d55bfd8dc1a6b5ef9f88ad78c13073fa74d6e1c86"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/ReopenRequest.java",
+      "sha256": "1ba43af3013036afcc941af2ce1aa748d2a1c110714364f841c6afde3d971374"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Role.java",
+      "sha256": "49d24c6a7afc59a3e123e186fee342b47eba3beb57f2923dc8994bbc8b5304da"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Round.java",
+      "sha256": "5db7b3266ae1970019f9e1c57b2da83009919bfc3ce9160183d3337ecb06faf0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/RoundResult.java",
+      "sha256": "60164bf77a9bf982bf56960a71ceee5331c10522b7636b81405c940dc2810b63"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/RoundTimer.java",
+      "sha256": "feaf84d1b3f1a476da4354eb821fdb3b537802bee282b108d51415a94603fd49"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/RoundTimerNotice.java",
+      "sha256": "97881949d11ffcf44204cd8e361d17b71cb2f288309160a7b6a4adbec5058196"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Score.java",
+      "sha256": "ca573ab87a4cdab29d4e66a1cfb27cc7fcb1d0ccc38eabccdd5c91fe97035553"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/ScoringCriteria.java",
+      "sha256": "c5b88e6f8e2291d8da1226a4876385c64ac9d749670ea4107e1191718721f3d3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/ScoringCriteriaTemplate.java",
+      "sha256": "c126c63b63a5e0e7bb8f19628451b33cdc66f4b68f7404b9f75e66fd13f3380f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Submission.java",
+      "sha256": "75272eb0c9cc6c818faa0ce8aad6badcdc7e60d40c00506f350c85cb158020db"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/SystemLog.java",
+      "sha256": "d936c661c01939ec269c7bb7fcaca87f28e2ad6d60e303c34fe2a809c570be0f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Team.java",
+      "sha256": "4a4a89f5494e9847012ea277e5dff4b53a319d9386eaa257f70d703056fb1f82"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/TeamEventEntry.java",
+      "sha256": "38de329e6ff4670f80d3f8225a6305094925862e32d5586220f7ec36c0ad4485"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/TeamInvite.java",
+      "sha256": "e33ba68ec547bb9eebf118a746e7f49dd9144c4afd357b4b0ab964275c281237"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/TeamMember.java",
+      "sha256": "fdff5864ccf256ae264ff4946d859ed6fdc6081e290717a84cb832f0f57025fa"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/TeamRejoinRequest.java",
+      "sha256": "0279da7815c46e8f43a4773fb965a183f45f4ac18f0f6a3a3199a8b9913820ca"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/Track.java",
+      "sha256": "af744f8994c67db9d8222665361fe0866d9c0e58e08decbae08a9de2cd2b51e0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/User.java",
+      "sha256": "e55c817bc822deffc9d32c55513d838b50e77a1519297a2de80aa4fcb6b5c7be"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/entity/UserEventRole.java",
+      "sha256": "3cc9bea775438c9c0de89710ffc45278dc2fb83ffdd7a2a1678686813187279f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/event/AccountApprovalEmailEvent.java",
+      "sha256": "1b0572b9cb08d9a489f46d61bb1e899dcbd983dce37225bb3a6b7c4c486722cf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/event/AccountApprovalEmailListener.java",
+      "sha256": "3c57e45b7366f4fca607139117d3a4a343b8c855f297e9e21fcca2888c0d4006"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/exception/BadRequestException.java",
+      "sha256": "ac065ad9f5f11e9b85eded1e0eea1a4f27c6c0554cdb937df5824ca5c6a2f414"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/exception/ForbiddenException.java",
+      "sha256": "5ab591225a1ed81e0d7024fd3e2fd432a87e5596357f2573a2290d20ca12492a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/exception/GlobalExceptionHandler.java",
+      "sha256": "72948bca47e2a2815a19cd4ff4ccab5542c0525b75f766f2e1771323510054ad"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/exception/ResourceNotFoundException.java",
+      "sha256": "cad46e86bb9756760f1689fe34592274ecfa211295d8c8f8ce9c6d8aa8b24abd"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/exception/UnauthorizedException.java",
+      "sha256": "a9a515ec1450c8f942292e35cff6e0bf00c14036d3e6a3cba6f60fbd257d4ff3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/LocalMockJobAccess.java",
+      "sha256": "a33916b88e42264a2de4b414cec7dbc2e5ae8c742ebc66f6f82c08327dd6762d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/LocalMockJobController.java",
+      "sha256": "1db4490528e3e13fc92c78b015f3ea8b1afac5a422b7a5ab3232e7018e273787"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/LocalMockJobErrors.java",
+      "sha256": "624b326a80ebcc60bf49839d07c2f3489293009747d8fdd3559a1850b1bf33e7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/LocalMockJobService.java",
+      "sha256": "ab1a57a91f4e9ddc862c69ebf6454dd4bd3f649be299a76bc3ebdb197aaadac7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/LocalMockJobStore.java",
+      "sha256": "112f39c5c0c73b7635c0c2e4d1fb3071a8b9af7ea3a68c5c6a5dbfcfd840dcbf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/LocalMockJobWorker.java",
+      "sha256": "df0590185ac3df34faa03981008a78bb7b0415b9040818ae6b69b8464ea95891"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/MockDemoConfiguration.java",
+      "sha256": "afafd10a7875df50d7f2dd6ab1d68bd8b1acfaff43f8a53d1e21bb17b149bcaf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/MockJobException.java",
+      "sha256": "310423c4096962ee2587d1b6a237731eb6ff405bf3f0fcd851dcc9b714801514"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/mockdemo/README.md",
+      "sha256": "4a6cce1ea85825fd91c25b1248853c9fa87e77a0ec22077c7e21c30ed4896ede"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/AnnouncementRepository.java",
+      "sha256": "21cacdf0d74117d1aa9b3387c74f3a91980a5218cdad55f9fc78fd8d9cc2bbaf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/AuditLogRepository.java",
+      "sha256": "62c41b3fbf96246a70149c67fe6af2a17b6dde7b9c4aa84da5535c6785ce2b72"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/HackathonEventRepository.java",
+      "sha256": "c97da2e64fb49597307d841e60752c0499508efa687114624cdf0ec3cb6036b4"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/JoinRequestRepository.java",
+      "sha256": "a651ad099e1c7fd27b92374bdb277c0bc325ca468836cff6fa889751597a7789"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/JudgeAssignmentRepository.java",
+      "sha256": "76813e9d73d2ad63b101e22f82135e459760088b23b08ae27e17acdd33d3db8f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/MentorAssignmentRepository.java",
+      "sha256": "9fba16b895032ebb5e83fa41ea1b100efe19fa84aae55ebb0253f286a025cbb9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/MentorSupportRequestRepository.java",
+      "sha256": "59cf186a6b4710d5db1a7ad22d6a6d894c12f2e10f71919cec76a2e5c0cc7943"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/NotificationRepository.java",
+      "sha256": "cb40de991b6ad17d229b17e0c08f1237964e9a6111938fc6690a2ae3972cad25"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/ParticipantEventHistoryRepository.java",
+      "sha256": "aa8f2048b6bb5c2a091936b3d1902366db342cb1940414bc29c0cb80815c7db8"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/ParticipationAccessRequestRepository.java",
+      "sha256": "e37a87f1befbbc804fae3bc279101f1260fe73d9842b70ffce61519df69de7fa"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/PasswordResetOtpRepository.java",
+      "sha256": "b899ef63da74e0cd26226e16a565b1af317fe96d3d31a8093c4b1e5be7990e93"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/PrizeRepository.java",
+      "sha256": "2dcf1e84a6baafa2dc5d23b9d3c3789270f8156e7ee1b82dbae4bd3cf62f5aab"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/ReopenRequestRepository.java",
+      "sha256": "8a9a84541e6b986d2fda155641ab3a9c55f9b54ca8a769ac25fe1447eb44b93c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/RoleRepository.java",
+      "sha256": "e644575cb3895b8fb6aa51f2f646f7f9c409f00f836060c9196a6ddcd8611210"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/RoundRepository.java",
+      "sha256": "79183345f4ba20e339cab362a63b5068b2417f4e04d5db2a422bf0ec943a6007"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/RoundResultRepository.java",
+      "sha256": "37f65fd3d1332013a294b53342818307b9a40aaa7bda51360c25bcc6f5180e19"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/RoundTimerNoticeRepository.java",
+      "sha256": "7fbe65e4e37cc82736e61f90edc0207cada987ea594950a01e95f33659466c33"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/RoundTimerRepository.java",
+      "sha256": "71cb81b27075aec65867106b676b720528a81d411f96fb8be14b7322af070649"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/ScoreRepository.java",
+      "sha256": "e94a8c16f191a8e511151da1837a94ea31191d65806f4ba39a7baa722fbe259b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/ScoringCriteriaRepository.java",
+      "sha256": "ee82ab40e7657479cfbec43f20369a67ba7c6acd5d8f00b4f78e790a2f940e82"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/ScoringCriteriaTemplateRepository.java",
+      "sha256": "5cda0ef73782f2f5000489ab1decda566869ef0d05faec7802a3b1abe2403522"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/SubmissionRepository.java",
+      "sha256": "3694fe4a2b9451315687b4b8a7085c5e93a454be7bf8bd8b6081f7a6cdbea319"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/SystemLogRepository.java",
+      "sha256": "c34cb825dff24c5d58a885d9782cb954c813dd1f50cf401789436326b5b46980"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/TeamEventEntryRepository.java",
+      "sha256": "71151d976ab5655609d513d6e125f918423734d9b899503549f8d607b0cee766"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/TeamInviteRepository.java",
+      "sha256": "4b00c43c7fc29b3881bb70c07dc03367291cccff67e8e718d5e17177b85ccf5f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/TeamMemberRepository.java",
+      "sha256": "9caee6c38ba9fb91bacd6b678134d88e540d7cd10931aefd90771f18c490bb72"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/TeamRejoinRequestRepository.java",
+      "sha256": "50ce4d704fd2d0788ee13ea7c90bad7a9b24cc391c3059f50638b4de47220327"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/TeamRepository.java",
+      "sha256": "642c7bc7fdc4c5d7188a619db403d64445817ade65b69e160b25eca0b6633c29"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/TrackRepository.java",
+      "sha256": "0b4b710c4d24af9e1c55f4a5914e91b0e67d493726a779857846881c2540801d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/UserEventRoleRepository.java",
+      "sha256": "c32d225f3b4ba09164adf70a412eb84836cf4d61c40f746afec6c4cea02eba5c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/repository/UserRepository.java",
+      "sha256": "a5a69b574450c51605357a7da56bb3e5751ae9a36647627c1d40d5742f616535"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/CsrfCookieFilter.java",
+      "sha256": "0828381a0f7808874f562534f867e2e0602400f53910d4796e571bb045bfbbb2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/CustomUserDetailsService.java",
+      "sha256": "ec1c2b8e5ca3f36610f9b787da5ac4f29823d45f07be8567676f24d1c9440c7a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/InactiveParticipantWriteFilter.java",
+      "sha256": "61bc6ae2fd277da913a979cc60837b772a79f13a973d25766fd171cc10bcd967"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/JwtAuthenticationEntryPoint.java",
+      "sha256": "eadc0bf9cac683d3c2c918648c88f70231c77d21536525fdf33f80c3651ee363"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/JwtAuthenticationFilter.java",
+      "sha256": "0711154ba46bd14398ff52980895d3cba789d4da0119c55d06b79d60880d2c8f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/JwtCookieFactory.java",
+      "sha256": "35bcb45aa53abc8a926acf9e9eee270cb5f66fff5f155f1dc3ed19adf405ab7e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/JwtService.java",
+      "sha256": "c521ca70d4a1f7b6e1a1bae97e4de4a57c00cb52de8dbeaae284804733ba66c1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/SpaCsrfTokenRequestHandler.java",
+      "sha256": "8b0c9335d0ae8539c81c5749cbad87de4aed46d3c0a12fef0fa9e47b4670b85a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/UserPrincipal.java",
+      "sha256": "36d571bbf0aab6c636094fb18acf6e41d64e0692492ae2b98c3faec03e9808de"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/CustomOAuth2UserService.java",
+      "sha256": "3dac15ec87b1bf31a4e02041291c2bf46afd07c69ba584fea53120d8f2f001da"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/GithubOAuth2UserInfo.java",
+      "sha256": "0a97b9892ceaeb64c57dac939c4b79ea013fd86f4431c5f95643e6e79b4f78c9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/GoogleOAuth2UserInfo.java",
+      "sha256": "b9c18b6d6b1f0f355d11ac716b5c98d3cc8799c03412ad6f679118fa558cfff2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/OAuth2LoginFailureHandler.java",
+      "sha256": "15e32cb1c2780e25acc90cefabcb6aac8b70e2062f0cbea4a0f8837892cc2eab"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/OAuth2LoginSuccessHandler.java",
+      "sha256": "144785b0ef444570cd4a20ca8fcc8b91641ce6833a1c2d0f2995b365d7c385bf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/security/oauth2/OAuth2UserInfo.java",
+      "sha256": "6761f1563f19f1e310077b24941551a35838804723d90071f62179ef456fa08e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AccountService.java",
+      "sha256": "a67ef1c654fb0a39e1e5d17a9131480b0e1d01e6265ae2e3591fd3d4838fc605"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AdminEventCsvExportService.java",
+      "sha256": "29068007769d855dc87fcddac6c7356e5c624549dc3ea8ae2338392294992a4b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AdminScoreDistributionService.java",
+      "sha256": "36834822245f51baf97a7176521e2954715f790836f97e62a60dc2989ddf4a20"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AdminService.java",
+      "sha256": "edbd4f441389adfbde66fd88db1304662e2d6008cf267431832f292e05ed7911"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AiJudgeAssistantService.java",
+      "sha256": "91555b10aec0f0f140350a6f8b7f8f4bd06249ec4cca0b8dfeda025135943dc0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AnnouncementService.java",
+      "sha256": "de85d3c4184189f0aaf1cf125bfd32c05a3019af2387ee35cf16fa8ce171eb75"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AssignableStaffService.java",
+      "sha256": "b370a15ad9effdee0a43d262e8fb29504dd5f82881deac93b6db5356dd7bfcbf"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AuditLogService.java",
+      "sha256": "3916dd7be25d0e63bfda7264a79819d208ba987ee8540e9a3cd3877cebf515e2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/AuthService.java",
+      "sha256": "5936d034c3a3197f9240a60762e99ce95e2756aaf7c5d7883dc2276eef90e512"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/CoordinatorEventHistoryService.java",
+      "sha256": "9faa9b336adc90afff6d07f40c09b2878c4dc134b497f86c23a9f7bb44a56061"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/EmailService.java",
+      "sha256": "d5cd1d034c313e84c2a3d4ab646b9efe438edda9990bfce9f8c96239ceaa9c21"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/EventRoleGranter.java",
+      "sha256": "bf17dd76743a91e01669486bc81052e17d090261a3388c4f33661feae67ec629"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/GitHubRepoService.java",
+      "sha256": "a3f40a0282dba88035d42ecc43b287a4b2a59e6f8811f4f9edc06dd9825827fd"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/HackathonEventService.java",
+      "sha256": "97fefeaa423aecdcd1aad02325abd16053366b673b8b8c5147a7bba8d9e8113c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/JoinRequestService.java",
+      "sha256": "4f282fef3f5b51b819f09903836362574e19579c30421c66fe402da22c2fef39"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/JudgeAssignmentService.java",
+      "sha256": "c14829bb77b1e8559d5902301d9d6f59829135b4157497f67fce7d8c69484e2c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/JudgeScoringCompletenessService.java",
+      "sha256": "994267f0654eabba9a1f1a6f3097d8debeb52c3070ca307c62088e11defab20b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/LeftoverGroupingService.java",
+      "sha256": "fde1bbf95094694dc0ea2fc3f9678bb80653df15d601bc1a3ac6f6740717758a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/MentorAssignmentService.java",
+      "sha256": "db5496b37f634ce3fb3051ced92d9f77668750e5911637fe62b24f703a2d6514"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/MentorSupportRequestService.java",
+      "sha256": "dc73d0e2f4f11a16406d1d1b760bcc7c9d1953dfc07b6bfc88c40588129aa1b7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/NotificationService.java",
+      "sha256": "87ce102b4fd3d78636e03f812c14f7bf542c51f2740e997051e9feadfb9caa17"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/ParticipantHistorySnapshotService.java",
+      "sha256": "a393ae46b94306e276e895adf4aebbeb79f5e21a49c0872bc958bb1332044c61"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/ParticipationAccessRequestService.java",
+      "sha256": "275dd95dae237728a557d8410746c49ef9d8f0ee1a5ef568e80584fbb9d91c86"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/PasswordResetService.java",
+      "sha256": "d4d1c6f873dc4f1cf4b361cb30dc2fe9c9c461c86dbd981c47cd27a169690b08"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/PrizeService.java",
+      "sha256": "c0ea9100f6808fd8fa5c967ee0955933b7418096aff7b74cef87c1ad9e1717e8"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/ReopenRequestService.java",
+      "sha256": "d015d559f7fdabacab491438663f823676f5adf00d1a9c2e41ea0d074a9b6c7c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/RoundResultService.java",
+      "sha256": "de9cd3a908b6b57639cad5bb5e80cfc6b3b05d808c783e9682884b13bdaa36c2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/RoundService.java",
+      "sha256": "5821e2751d430a91d622463633c118bb2e4ce4d516f161b7c09dfe2e4d1ed7be"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/RoundTimerService.java",
+      "sha256": "1e66da177af7ad18d34afebf6b94a906685115f8fd446028db084192863f2c95"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/ScoreNormalization.java",
+      "sha256": "0343eb5368c7735ab7c3fc6e8a322ff908b655f5d6a3a0281e4cabffed4619c9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/ScoringService.java",
+      "sha256": "1550bba02fa3fd48010d56bdedabd4c823befc8c0aaa6b1eae38c75ab3a207f7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/SubmissionService.java",
+      "sha256": "25543bd0aed8d5a30b5910c72a3d77e8b63bb57a04abdefdd65cb9ffb6efebd8"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/SystemLogService.java",
+      "sha256": "070ede56a095314095b4e04573123876be41cc107102a5eb56824b95bb58488c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamAccessGuard.java",
+      "sha256": "d5f9b8982655bab705fd7792dd326b94309b6c3e43f2f79f5895d948ca2647b2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamInviteService.java",
+      "sha256": "ea90fa7c39df7adb9495a4b1c28359c11c9dbcf9145e224c2525e917f60fd295"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamMembershipService.java",
+      "sha256": "7c8a69a3ca4dba9aaf594686dae7325bb78bc6a7521e2367b4399800a9b4fb57"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamModerationService.java",
+      "sha256": "60691da26cd48075507577bdb461c497b9bbb2437166b2c43fc568f9f3d0ff78"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamQueryService.java",
+      "sha256": "ed9fa5e39634294420ebeae764fa90366acf4e55e779fbfd7ce97966e18e4df3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamRejoinRequestService.java",
+      "sha256": "9610d142ed071acd7404a6c887bd55a83ac3656e70c0a601fa5e7793bdf52aef"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamResponseMapper.java",
+      "sha256": "fc8dd2a4f18b00ad1521f60606181cb97a98910ea148cdf53cff7acbf3094bf1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TeamTrackAssignmentService.java",
+      "sha256": "4c04502730e217dd7125ec376a6635651827757dc935ccdd159ff2af434669b5"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TimerNoticeClaimer.java",
+      "sha256": "c8c77d4b5b073934fb642dc9e9d93b7edd3968bbe58362e5cbe4554200272dc9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TrackProblemService.java",
+      "sha256": "9199c2b2c63679dec9da5671a6bd013ed3947a883fbd892816e305ac8474601c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/TrackService.java",
+      "sha256": "2c11dc29f919bdc6fc50056be2f56a768f8b822c78ae64687dbdae09eab1c7a1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/grouping/Atom.java",
+      "sha256": "a1b5edd75224ccd4efc84639a29c85454839cb7354ee052f9279e71a3fffdf42"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/grouping/GroupingPlan.java",
+      "sha256": "f7cbe9c130313266972c9a19088fa075b59facd5fd5990d02b0f8ac17a8227f0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/grouping/GroupingWarning.java",
+      "sha256": "0bc10e906b2cd523b796bf116a226555c35634d11db31d7632b4dc64e488c6ef"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/grouping/LeftoverGroupingPlanner.java",
+      "sha256": "f3ffd0d521f3f9876f5e5b9c3e5244ea453cf52917930dd9f468eec720e5c772"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/grouping/ProposedTeam.java",
+      "sha256": "5bf91cdfa25de43631c6a3a27650815940c91bb1ccbc43012eb9865d4aaef3ae"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/service/grouping/SettledTeam.java",
+      "sha256": "47c29a5cce26ff2e8f2cc038fc030775d2656514fde288149cfd6e668de61dc9"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/AvatarStorage.java",
+      "sha256": "452fc9e4ae19edc1caae982483fa6bc948e6f2faf4dbb81cfe4cd3a2a82ba4d0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/LocalObjectStorage.java",
+      "sha256": "318b152f01bf02a6fa95fad52031458214a85048299ee353949f57ca2bc89df0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/ObjectKeys.java",
+      "sha256": "edd1eb3d2d9b6bab55b2e7e8f373ffa0571f6384f4c5002ec963c66145045b88"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/ObjectStorage.java",
+      "sha256": "dee55c84d286971075c3ca205ebb16e20d064655e6b292b3f4b2577a6d0e6290"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/storage/S3ObjectStorage.java",
+      "sha256": "f3d17f8bf07417e386151392806338ce536d0c6f4199de327a43a0bd76c887d2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/java/com/seal/hackathon/validation/FptStudentIdValidator.java",
+      "sha256": "56aa13beba4a747cff375137d48831bf6e1f6c8b56f0fadb83afbd0eb1d47d33"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application-aws.properties",
+      "sha256": "af29e3020029076f3b1df2a8e5053ae56ee9ec5f066b36c1526e1cc709ef822b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application-local.properties",
+      "sha256": "55bb6dc890bba33a00c8de63fe866a7bf80cebc0d08e6632c0f062e2ac59da56"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application-migrated.properties",
+      "sha256": "4b19b3d69e594937d585231144fb17e8415544afec8849f08057e2e9fb6a6b09"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application-mock-demo.properties",
+      "sha256": "19a9c66700c5f63a00268c3ecc20efd348bf412778093e6e906bb6defe4cd591"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application-oauth-github.properties",
+      "sha256": "4bdac99c6229871459b8851ebc8c804d1d5ef3bb494bec67da915437a985ef01"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application-oauth-google.properties",
+      "sha256": "c3665dbb65964e14014c800b4c078451604bd0029741f1e6a645e089b0867e4c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/application.properties",
+      "sha256": "91d1a8a0ac92b2189920e63809c496ea37d89fee011a97e784accf980b19bf60"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/db/migration/V1__create_core_schema.sql",
+      "sha256": "91a3b9b0cb4d41ce5027fa850200848126bdfe57ba0ceef97defa1ff7928ea9d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/db/migration/V2__create_ai_job_delivery.sql",
+      "sha256": "4e40d1f4370c2324e90cd5d1c7e7396c2ce068e2331682421fb5f1e0a3aa4ea7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/db/migration/V3__add_user_track_row_versions.sql",
+      "sha256": "8e67ee1a45bdbd23724cc96bfd26df81f10e0a8cb84be955d37a998ee820ce49"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/db/mock-demo/V1__create_mock_job_store.sql",
+      "sha256": "e47e834db7aaeccff01c9e62f18179ab038ed9cae3a8a996ff71dabef8c8f268"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/db/v1-schema-sha256.txt",
+      "sha256": "c5ddb31f5196468d249c65746cfea4f80fc298c086ab3c38d2c2b5200cf5f996"
+    },
+    {
+      "path": "back-end/src/seal-api/src/main/resources/db/v3-schema-sha256.txt",
+      "sha256": "133880c5b609853fee3b521126699c8c43fd0c386b57d377f173dc50308dd028"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/HackathonApplicationTests.java",
+      "sha256": "680b1e5e9aff79e0dff3664e290542fa848b2138861cde5007f597ea854c1776"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/AiJobIntegrationTest.java",
+      "sha256": "5c18f0f8128386fa7d5e18bd408098f80a858e83971473380331c05a579b2812"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/ApiSmokeRehearsalTest.java",
+      "sha256": "0ba053c3926141eb5bea50b0b5efad5921c77e72702bb11cc5cdccd4d37c880b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/AwsMockWorkerTest.java",
+      "sha256": "3199ef60c02dcf99b18f3ab302fe0a9edaa07a4d79243fe5b63e5545b7d4044a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/BoundedHttpTest.java",
+      "sha256": "c628022fe5476df2a4a57eb7fa6e9885052a42a1e108e0338de8596d5cfbdac3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/GitHubSourceReaderTest.java",
+      "sha256": "644b04d2369cba80a4bc9062caac61e916fb97a5dd2a12b6a34d3c53b1456d39"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/JobEnvironmentConfigurationTest.java",
+      "sha256": "b6f9579c63b055677cff1eff9dbc39e3f8d418784f5bf2a2ae0ef6e569cc3700"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/JobSnapshotLimitsTest.java",
+      "sha256": "cb89e9df0f911f3703263ca6e87a73c93f699e796e14e9f07823c42dc78ac71a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/AwsEnvironmentConfigurationTest.java",
+      "sha256": "513b95e5a019feb4cfb72f1ed20d01673a7da17505349f179242006d94ffb859"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/BootstrapAdminSeederTest.java",
+      "sha256": "94b770a4a64c6f5dfbd175e4a84f44058b0565de0159a2a6ed8527acdf97d58e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/DataSeederTest.java",
+      "sha256": "07926f46599ac6c03000e8f4633c618147f8eb2f8443d87279a8f740e3227b04"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/EnvironmentProfilesTest.java",
+      "sha256": "3d1447fdff6642218680a9cad3d6dda7e0284aa9cfa01ab3e41a5c52e18e0a6b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/MigrationAndStoragePolicyTest.java",
+      "sha256": "dbeae8b4d79f9e118ada72d424061e57a79a33a01b900b9a9819298bfb91b7ae"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/OperationalTest.java",
+      "sha256": "72cdcd40c7df7b8339f0d0ff20932212de0e228ecbdb62953f982f51a2e2d238"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/SecurityConfigTest.java",
+      "sha256": "ab65e126e1bf338b2c274b3fec573e93dc1f4d00442d6887351ebf3565323164"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/seed/DemoEventGrantTest.java",
+      "sha256": "7d4b3fa9fa0ab080f11311cfc2cf93558949c12d626a6b03190e06518a4ef1e6"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/config/seed/DemoFixturesAdminTest.java",
+      "sha256": "e76440b8798a2e10e6d497495da542f32f5bcb340ecddbedfe8fba1712f2f25b"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/db/DatabaseMigrationTargetTest.java",
+      "sha256": "6a36280aaef796cbc78537c2b273df8cf14890a41bdd4c5483e9a0b00301a110"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/db/FreshDatabaseDeploymentTest.java",
+      "sha256": "1781710955200abb625d9f077acce16790b6d739b2fa3f527ca84c33d517c086"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/exception/ConcurrentUpdateResponseTest.java",
+      "sha256": "b3eb287c733c4acf3d90629d6a2e95cd60c711b09713bbeff8ccbb1604111a69"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/mockdemo/LocalMockJobAccessTest.java",
+      "sha256": "04d24d893817e24c78fb3fc768c46859b4117c0ccdb3a2504ecf46f5b80ba8c5"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/mockdemo/LocalMockJobApiTest.java",
+      "sha256": "64c6b6cfa3e486b8f1a0c71d0a58e8271fb3d1085fc94135f5c7aae10af00a14"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/mockdemo/LocalMockJobStoreTest.java",
+      "sha256": "0caec39da1dddf04f205a0c4b47268f1ad47856927bb2bbf117e95e656b95663"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/mockdemo/MockDemoConfigurationTest.java",
+      "sha256": "642421b131025e89263ae169bd76020b88ea4283d83a6be05f3a24507c63df39"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/security/InactiveParticipantWriteFilterTest.java",
+      "sha256": "71b45184295bbde116a6fa3591f28202eff00983dacbe0f9e8ea16cd73ae7c39"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/security/JwtServiceTest.java",
+      "sha256": "2a8a3d3f5f9b0a2763c152fbb42c423a7fac314d0f164d86e179f340e0521bfa"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/security/oauth2/GoogleOAuthIdentityTest.java",
+      "sha256": "e581175e3d7d2a1c4c6a65354ee261b439ce1575301ea02dbc22599e411b0e93"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AccountServiceTest.java",
+      "sha256": "ba358fe5beb767421d151cd28e48bb112c1847acf4a0d37d6f47339183e62843"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AdminScoreDistributionServiceTest.java",
+      "sha256": "d6a5879444e25023bb31e7d546cc501825511d72a7b31c1fb3c38dced0b7a33f"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AiJudgeAssistantAccessTest.java",
+      "sha256": "0c56b35b83f864f7820cfc02990faf9d4f2ca5cc65f114d5606a80fcd5bdc0bc"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AiJudgeAssistantRepoAnalysisTest.java",
+      "sha256": "1da4628690c0e4586bf8861468a853d60838657b59e6cca414d3149212642e02"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/AuthServiceTest.java",
+      "sha256": "4f689e29e19020b420f5f1fef7233993d6ae88ac3750d4e9885d1f50a1fc7d0a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/GitHubRepoServiceTest.java",
+      "sha256": "27361382ba8d3a593e62d05d443b8a6d8eceafdf93872e9997942af0a674dfa0"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/HackathonEventServiceTest.java",
+      "sha256": "9d5a28b364d169994ddcb3216865ed2d9bfedeb4979cbbbb38fa4a069c0cd737"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/JoinRequestServiceTest.java",
+      "sha256": "07ce18f81564402571c34a6d2e579429cc068a537c084c6183caefd3af980054"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/JudgeAssignmentServiceTest.java",
+      "sha256": "f6b2b11ac9c9138f713bbf987a9dd157196b4facb73868770c8aaf9d8692e3ea"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/JudgeScoringCompletenessServiceTest.java",
+      "sha256": "2a9766a3ec0450b434deb3739eed213d75d32dd758b1ed76aa95abfbc4a7b27c"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/LeftoverGroupingFreeAgentTest.java",
+      "sha256": "3b537417f3f33031c4ccc65a8321ee1b1494bc214fa307fbd7c07d6dd53984de"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/MentorAssignmentServiceTest.java",
+      "sha256": "547c73fc80abd7dc10fed0d6f1e5e95c2f930b873873fa15c471e162acbe5059"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/ParticipantHistorySnapshotServiceTest.java",
+      "sha256": "35b4b22b47ee1fd3d4e33af326f6a82584fef13bbb1037000c73272675018bfd"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/PasswordResetServiceTest.java",
+      "sha256": "a074a23f9249b719f2ea0d88120da2e16dfcc1c43f3e53d9cfb2ab4f7bb35cfe"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/RoundResultServiceTest.java",
+      "sha256": "b8124e0e71bb9913077eca840289a97ddffc964622689bc895ed44d14c944290"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/RoundTimerServiceTest.java",
+      "sha256": "28c3a48aba81ba5017375672b91903038793fad80bdac8534d6416810c303529"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/ScoringServiceTest.java",
+      "sha256": "767fa403f71c85a5ec73fad7f3f58537ac96d106445617025f560c2fdf9bf3b1"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/SubmissionServiceTest.java",
+      "sha256": "568b804784e6ebc1cfcf2e5ad7cd067958cf0349ea4b681c0e3c562e554b908d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/SystemLogServiceTest.java",
+      "sha256": "90aa00a3bfdca33c60477cc2600f7e6e1791969eeedff5c3069c5501a43a3395"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TeamInviteServiceTest.java",
+      "sha256": "9045b975057dc6fe506f2b6180ce0d7a3e23dce9a8ef253f745c891a4dc1e098"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TeamMembershipServiceTest.java",
+      "sha256": "f69507840e2525a2c6c8d0b30f6f855edaf5a0a874ffea2fba2c14fec7fb8c81"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TeamModerationServiceTest.java",
+      "sha256": "351f1c33b5dc8904bc1e1437a75430b2180c5bc4fcc9c0dd1790a2eb4effb2d7"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TeamQueryServiceTest.java",
+      "sha256": "d8d2dd5807c0c9acb356f408eda7ce660e078773449a1d60031b618ada64699a"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TeamRejoinRequestServiceTest.java",
+      "sha256": "364475b310c8a0752be72071a107834d5779cd5a65a55cca2942d21a19cdfa84"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TeamTrackAssignmentServiceTest.java",
+      "sha256": "0f7ccad5d613b7834f0e29d69b434b09b55da6136f7a606c14e18a97ec12ceb2"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TrackProblemServiceTest.java",
+      "sha256": "884c6da2f7e48a9bb529dc332f87baa76ab5496c8ad21cd82b46df112c0e6457"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/TrackServiceTest.java",
+      "sha256": "7929624945e77fcf21a7c4109aab9f88492d65e8059672b3a1acc5cecbf19b3d"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/service/grouping/LeftoverGroupingPlannerTest.java",
+      "sha256": "9d37dcf2209dcf1671031827f87bb5cca1aa71386bec609180eb218aaea61b2e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/storage/FileReferenceConcurrencyTest.java",
+      "sha256": "0927b89c5e7946e66be889116b96e48e9caa98fe39cb2de9e71f62e7298f1c70"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/storage/ObjectStorageTest.java",
+      "sha256": "ddea1822757298d8e3c1c2e565abf03cc0c0882eb13c0fe5a9a2394e309d1936"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/validation/FptStudentIdValidatorTest.java",
+      "sha256": "914e4c694cfcd1dec63ef33194f6cc8836170a9b01256a69a4ab6c6f23dea8b3"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/resources/application-test.properties",
+      "sha256": "169ce7fec0e9a4c94768f58d2ccc5cbce705f9cb4d7ab2d95f117211b1fb391f"
+    },
+    {
+      "path": "docker-compose.yml",
+      "sha256": "b2a1de9313da5b8acbc73e6532c739f193982c95f1ae6ff03558249d9e99f925"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "172a80d3380f62596fce1d498e3c65c299c1fd2d1d79eb7b0a08d0890be1409c"
+    },
+    {
+      "path": "docs/aws-workshop-architecture-plan.md",
+      "sha256": "42d6f9c7dbbb275e6e0aa030eb07af431a02f6b2d054366b2ebd7c7b3f4c4999"
+    },
+    {
+      "path": "docs/backend-learning/01-spring-boot-project-chay-nhu-the-nao.md",
+      "sha256": "ff131574a346fb28eb2940947509c699fa4c402c4fdd9b539a61bcecab1e61ba"
+    },
+    {
+      "path": "docs/backend-learning/02-pom-xml-application-properties.md",
+      "sha256": "61497c4564e9022f3ecdbf2d48fbd6a23c47c67200732cb3e9042ba60fdac915"
+    },
+    {
+      "path": "docs/backend-learning/03-package-entity-cach-doc.md",
+      "sha256": "a16b5bc18d30701e37230328b413c88b45ae8f3072540dc4c43ffd88ae512db2"
+    },
+    {
+      "path": "docs/backend-learning/04-entity-user.md",
+      "sha256": "b33e69e9e0a7ab996ea8681fd305a24fce4cea5802f48e5617c02bf9c8b3281d"
+    },
+    {
+      "path": "docs/backend-learning/05-entity-hackathon-event.md",
+      "sha256": "0be20b40fb5643c95bc11d6580f87522871e9f099be15dc496b0faa0061050de"
+    },
+    {
+      "path": "docs/backend-learning/README.md",
+      "sha256": "e12a5625c995ae4d5e8b9db343e73ba9797ec0bd402992b146e6058317db2967"
+    },
+    {
+      "path": "docs/checks/be1-be2-handoff-review-2026-11-03/README.md",
+      "sha256": "009a3cba0118cec5cb3e72be99828d390b12948a66df9ab87a0e4296035d38c3"
+    },
+    {
+      "path": "docs/checks/be1-be2-handoff-review-2026-11-03/be2-question-source-2026-11-01.md",
+      "sha256": "699c259212b6f28e69eea5fc6084663d4ea16f43f6e3d4c5e9fd18659d79dfca"
+    },
+    {
+      "path": "docs/checks/be1-be2-handoff-review-2026-11-03/review-inputs.json",
+      "sha256": "158793eee9686454d2e6b34689cdb1813d4cac0f8a7da085530c67f5080778b7"
+    },
+    {
+      "path": "docs/checks/be1-be2-handoff-review-2026-11-03/review-manifest.json",
+      "sha256": "b92d6e131ed4521c1842b1f823a8563126a8cf6fd38156451af1be770a1eac50"
+    },
+    {
+      "path": "docs/checks/be1-be2-handoff-review-2026-11-03/verify-review.mjs",
+      "sha256": "3f33c5b106fbd0dbc79bda8c8dc2168649b671c576acf27dcb764505d345ea98"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/SHA256SUMS",
+      "sha256": "23d3ca77361804033df840d534a60510227ffae7f93f7393d229375552c2f442"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/be2-handoff-source.md",
+      "sha256": "652ac484d01224935a97b7b7920cf5e9ee07fdf8d4b2b73520845a2434531757"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/fresh-db-verification.md",
+      "sha256": "e1d351e67fe0260109886c1cf8dc0c42758d517966e4b1fb72f0744f63754e02"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/migrations.sha256",
+      "sha256": "56e5dc6648ea933f16007d7b31297a8dc523ba417adcbff53ce9fbef11eb1f8f"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/mysql84-v3-lab-evidence.md",
+      "sha256": "fc34b0f5a9b07a4480dee3aca040cd2a433f4110c687a1320f9ecf49a6b6482e"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/source-files.sha256",
+      "sha256": "0ebe973eb1eb7bf801c851993020fd8e91d70640457e706446c4a0adb8bcf14b"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/verification.md",
+      "sha256": "0d1dc751a5dc0acf716bce1174e2d1b0096b6fda15993cc6335ae1d624d1c073"
+    },
+    {
+      "path": "docs/checks/be1-be2-integration-2026-10-28/verify-bundle.mjs",
+      "sha256": "9461eb2c756441fd6cd06caae24417dfb13c2c32616585eca8ddf0cbb4b528f6"
+    },
+    {
+      "path": "docs/checks/data-storage-runtime-audit.sql",
+      "sha256": "74dc477a72b628973955c3abaaad66be5f5d90620056a828af5a06008cb5ec4a"
+    },
+    {
+      "path": "docs/checks/schema-inventory-2026-10-27/dump-static-comparison.json",
+      "sha256": "78e96070dec35d0facb40dde1dc992169056ca3f532b1a644d17aa0735b8e7f4"
+    },
+    {
+      "path": "docs/checks/schema-inventory-2026-10-27/entity-schema-inventory.md",
+      "sha256": "8cf022da213d6d1d3cc29acf41db078d05a40a6251befdc89ebcf021f6c3cc05"
+    },
+    {
+      "path": "docs/checks/schema-inventory-2026-10-27/hibernate-mysql84-reference.sql",
+      "sha256": "ee9955b5ca9f13f780995598e3669fb8b8309b87ddc1a11077d7b27d4c97e210"
+    },
+    {
+      "path": "docs/checks/schema-inventory-2026-10-27/mysql84-lab-evidence.md",
+      "sha256": "695d83fce41536d7406078f7503b7bc30d442ac183d710b5e8a2d5827f091943"
+    },
+    {
+      "path": "docs/checks/schema-inventory-2026-10-27/mysql84-v2-lab-evidence.md",
+      "sha256": "48fb1d499c4be0240e9a9b5a4100acee87c22800fc076af68a2b88e2dbbc2eb3"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/README.md",
+      "sha256": "8fd122e068cacd8a7fde5c7f70873d1563d48df85804e36e63c678432631c7e7"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/api-rehearsal.json",
+      "sha256": "607c3ca55eddc98510b74389595e05609205ecc64a98cdadd9d9f921b249caab"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/baseline-files.json",
+      "sha256": "a3ab3329f7fee9cc1daa4816996454749d57dab828a8ba62d2641b621e8d6845"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/baseline-status.txt",
+      "sha256": "879e3bdf63a7d1ef23336388bc926a097a1a5534d133efc77895d3ed82ffe6cb"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/clean-package-tests.json",
+      "sha256": "50a3d4a82913b339bee116c92bb513a77306e0fd33302cd48e86930ac135456e"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/component-smoke-tests.json",
+      "sha256": "98eb9c013fdf16d460e0a3a0d355b2c0e20145d26996ec25d0466c35afefe500"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/filtered-test-logs.json",
+      "sha256": "63fdc2a684014b3448b1df13264f9b37030db53d9e9764a44d782cafb1ce4a5d"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/image-identity.json",
+      "sha256": "521aaa8a836f76273267d73e76f7b3b30e834493299927ce9c24b1d1a2879152"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/jar-identity.json",
+      "sha256": "9231e7da7f6dc025584acb1b761e571bacdb0063ab5221e3bc729de6337780e7"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/mysql-tests.json",
+      "sha256": "7a6f7a1cfa730bc25ab1e363ee7071db35a2e8c88b7b5adf8d6b0047d5497a0a"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/preexisting-documents.json",
+      "sha256": "f144aad164ff3088f076edb81c552d56486666168ded4f19f0dc1351b6cb3520"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/request-templates.json",
+      "sha256": "1dc6287334ed01b053aa74561ed2270c5e2a081e013dd8ab78fe14f3d26b5eaf"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/source-preservation.json",
+      "sha256": "9e03ef820ef3880a3fd19204627e300c6641da7a8e98a59782ac8944d7ff8987"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/verification-summary.json",
+      "sha256": "5e5f05e8dbb542f244fc15478c701d88dd0d95876e897a33ab8e240ee0f50857"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/verify-current-doc-links.mjs",
+      "sha256": "5d2345465294dac401401991f94c7ea4e18aab71ebfe6513c1cb297bc8140204"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/verify-source-preservation.mjs",
+      "sha256": "03e7bb35f7c7b94edd0bd1da169b2d735b3d49251c1f6143f57e6350b446c83a"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/verify-working-tree.mjs",
+      "sha256": "18dab642bf3b98bcf1b744be781cdf9c3c109eb6729a43162789d3c503fc4af0"
+    },
+    {
+      "path": "docs/checks/seal-be1-local-2026-11-03/working-tree-manifest.json",
+      "sha256": "314ccfdc218cfb4a8443d0a0abb1a253bc3a6d874ef541fb96366579b92e7ce8"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/CURRENT.md",
+      "sha256": "73d62a4503c295915299e3da86be51fc7fcc8e8091af351634b78e663232c83c"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/README.md",
+      "sha256": "f41187ae5f7c3764f406ca6da10262c7f444d4ed9a641487bc47a7cce0caf588"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/artifacts/input-manifest.json",
+      "sha256": "147f667f5d2074dd28a84508624e0cf3622003f29cbcf8acb659f9a55f355507"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/artifacts/mock-source.json",
+      "sha256": "cf910c9267b193217f10889b869e8d1ff06777985e56bec6d989eb4a8cab9bf7"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/artifacts/rubric.json",
+      "sha256": "238c009abf477a3b45f21334c70213d961930c0e5b7daf8fa09117531daab4f3"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/artifacts/success-output.json",
+      "sha256": "7b5e8cda43203fbc723c78f01e6ffe870a1c6def28e0b897f588fff2d0f03f47"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/completion.json",
+      "sha256": "170143b6f59cbf5b27fae328e715af89040ca8f4d13b4b1d455ebe0ddc388971"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/http-create.json",
+      "sha256": "f1b33c6f7b9087bc7048e18d9abdf382846cff546b4812a4798bfa1b15593037"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/http-result.json",
+      "sha256": "47250e6cc72747898c542921d98d9e740dbb194754df2e2326424b574973d947"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/http-status.json",
+      "sha256": "653796626fd66f8d2d8d047cd2108a3fb440c6b5582f1f05295051122d61d4c2"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/job.json",
+      "sha256": "c7758f53a173d1a65e8defde08c464ba36a9ce798c4965921eb731467e2c183b"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/manifest.json",
+      "sha256": "a804cc149adda0c8d9e26559765d6c4ce65045e484df26a31d7dce6907fb2af3"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/rubric.json",
+      "sha256": "6dce72d972d09b93c769d7f7059576fbe64126ea288504bd8b85ffa67b9da6e0"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/failure/source.json",
+      "sha256": "32f5e372392b01c9ef977af69aca02169935eed7f179bcd653c01a9273adcda9"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/completion.json",
+      "sha256": "2c9a7a158534266e7d57babb62a9e166531479c12a863ce52735ff2593ff3d8a"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/http-create.json",
+      "sha256": "edd83af2834335f2509c649cf3a59a13e859076f3fb48db8161f807b9a029dbb"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/http-result.json",
+      "sha256": "245b7006d181b206753be2050452fd9b3b40f1bd65e635bdb391ff00fc7cf7b0"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/http-status.json",
+      "sha256": "0d8b5cb782bff4ef24193110df9329841c99f7703e765cb6dcfcf5cf9dd361db"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/job.json",
+      "sha256": "91266a024f5359fa04d1ca8f15e53b9866c05a125b1ebe9f5e2f35ecef75420c"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/manifest.json",
+      "sha256": "d40a6ec343fd1ecd3a0c18b7c85f474d4e2e899e2edd91b428090ece933cdb05"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/output.json",
+      "sha256": "5585ea035b1577ec5c8c15f5229089797e4a9a33a529e608c45335d24c8fdb6c"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/rubric.json",
+      "sha256": "6dce72d972d09b93c769d7f7059576fbe64126ea288504bd8b85ffa67b9da6e0"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/current-examples/success/source.json",
+      "sha256": "32f5e372392b01c9ef977af69aca02169935eed7f179bcd653c01a9273adcda9"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/failure.json",
+      "sha256": "8d55d7391022e3026c365bff7788311f90ba18dc29d030ce37cd60a1ec896dd1"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/job.json",
+      "sha256": "ddec5298e39e88f695a1633b3a04a4f8405b3cf7c721e93579bb2549ba6286f2"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/success.json",
+      "sha256": "aba0c74a5d1c8b2562d7bda28b316edfd06dc8ab5367507c31a5ac2889bd81e2"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/validate-current-examples.mjs",
+      "sha256": "c7d740233793287712098306c797ddad5e078d0038222b108b3a5e39aa5561eb"
+    },
+    {
+      "path": "docs/contracts/ai-job-v1/validate-fixtures.mjs",
+      "sha256": "ff62003ecf259b779adcea570223b0bdf32e3c1368a5620a5e34a50454725378"
+    },
+    {
+      "path": "docs/documents/Business_Rules.pdf",
+      "sha256": "5869665db17c8a160ac67a4b3cc352f71e1b2b175099a8212c68a39c21257231"
+    },
+    {
+      "path": "docs/documents/ERD.jpg",
+      "sha256": "8c21240d48a2dc3f35aad9c38a6acfeef8cd95289c4dc6f778ee1f6fbb0c6324"
+    },
+    {
+      "path": "docs/documents/EventSta.png",
+      "sha256": "99d3449d280d9f3c390e1c849e040fb33055725c8aebf4ae10ab2c018140dc2d"
+    },
+    {
+      "path": "docs/documents/ProjectRequirements.md",
+      "sha256": "da7180f3c4f78acbd2560e24a959e8a3b6cac9cefabfed366730712724fa8213"
+    },
+    {
+      "path": "docs/documents/SubmissionSta.png",
+      "sha256": "c7d370e32dd14a8b09783629f9cfce980f51d6559da1d26479cff8d806fde4ea"
+    },
+    {
+      "path": "docs/documents/TeamSta.png",
+      "sha256": "9d32ea1375fc9ef5b19e37f5506c0a6909ab44b231f4e7cbcbe3af2d2b1d43ce"
+    },
+    {
+      "path": "docs/documents/actors_and_use_cases.pdf",
+      "sha256": "55957883eeb1983a9e1a8f1b416facbdfe84c19dc44cb733014cdd1700699a2f"
+    },
+    {
+      "path": "docs/documents/loginState.png",
+      "sha256": "ecc5f5e3cac575d176bc5385e6dc3f09f83d84ecb636da0e474157bfc394770a"
+    },
+    {
+      "path": "docs/documents/main_uc.pdf",
+      "sha256": "5bd0f0ca9c968c2a54e3c23f9a119bd84f9bb4f276ac69d797e8a68ae5e490e6"
+    },
+    {
+      "path": "docs/documents/seal_traceability_matrix.md",
+      "sha256": "f3892af7d303e1b4848397009181312af8369f1624fcea6dfc5fc60492a37aed"
+    },
+    {
+      "path": "docs/documents/seal_uc_detail_scoring_ranking_rbl.svg",
+      "sha256": "cbef6b167834f5cc02fcbc0f7296bc51733458d4835d0a218ecc57d8d9b58418"
+    },
+    {
+      "path": "docs/documents/seal_uc_overview_actors_to_functional_areas.svg",
+      "sha256": "9b84b5f46fc1a6b96708daf9043bfb473133a476b0dc7c02a13958422428477d"
+    },
+    {
+      "path": "docs/github decline report/bao-cao-bo-sung-so-dong-xoa-phat-sinh.md",
+      "sha256": "6cfa0697c77e5982fd2cb217e34576c39758054b6cac8a4cb86d0019b4210f82"
+    },
+    {
+      "path": "docs/github decline report/bao-cao-tinh-xac-thuc-ma-nguon.md",
+      "sha256": "040363dc0826bd9a04a2cac843c1c664d0dfb662f2766af4f2dc6e0cb67275ff"
+    },
+    {
+      "path": "docs/github decline report/commit-stats-evidence.csv",
+      "sha256": "a2f2f031434c5e253a5113112ac231d7ff166f2c91e7bdbee4e9049aa92f3da1"
+    },
+    {
+      "path": "docs/github decline report/commit-stats-evidence.md",
+      "sha256": "49324060991295441adf31c611fe6f8e95434b19e4c291a0125a8e1ccc23e5ec"
+    },
+    {
+      "path": "docs/plans/aws-domain-backend-change-plan.md",
+      "sha256": "bdd7bf75fb13feadcc9919ad8bf030863fe8c43b893ccc5b9ec7c3a40db5bcdc"
+    },
+    {
+      "path": "docs/plans/backend-1-ai-persistence-scrum-guide.md",
+      "sha256": "af0ca35996c502be6857d694a1def1db7c604714eca31336f8c4e3cb22507a01"
+    },
+    {
+      "path": "docs/plans/backend-1-implementation-plan.md",
+      "sha256": "802bd7233513e9be1be7e4fe378f0d00a2892b11c50d787988940db224196ccc"
+    },
+    {
+      "path": "docs/plans/backend1-ai-engineering-discussion-handoff-plan-2026-10-28.md",
+      "sha256": "d3fe55bb84a4c1034178dbd80d0190a3ab4b995705bd755f3220fd85c7dee23e"
+    },
+    {
+      "path": "docs/plans/backend1-be2-aws-smoke-inputs-2026-10-28.md",
+      "sha256": "a26782d75ddbe973842d93aec73e422340b1fe6632ea1fc24c8068acb96cf7f7"
+    },
+    {
+      "path": "docs/plans/backend1-be2-current-handoff-2026-10-28.md",
+      "sha256": "7b671b6291627506a16b9f1c5ba62002ba92f42cff9350a995a415331595a9bf"
+    },
+    {
+      "path": "docs/plans/backend1-be2-integration-review-plan-2026-10-28.md",
+      "sha256": "2e4dee546d45a3fd40622978e54252e60e9f835f3f189ef7a981f4c53495024a"
+    },
+    {
+      "path": "docs/plans/backend1-be2-predeploy-execution-discussion-plan-2026-11-03.md",
+      "sha256": "d495421112dd97789f4216b25b24a00bdeefb876ac71a58a7cf4875495787b11"
+    },
+    {
+      "path": "docs/plans/backend1-execution-board.md",
+      "sha256": "2680e1693c55855b851e898c07172133d80a12af8e8d696276708e3b83f6ea88"
+    },
+    {
+      "path": "docs/plans/backend1-final-pre-push-review-checklist-2026-10-28.md",
+      "sha256": "2513f0217c35be62fff3b204b2ede77f5f3f0d26aa128fcd74a9861273b2b4f4"
+    },
+    {
+      "path": "docs/plans/backend1-integration-matrix.md",
+      "sha256": "ffeb60d3ef66eeb7e18063901b8252038afc9c74f876fcbf725eb2d30520a75e"
+    },
+    {
+      "path": "docs/plans/backend1-review-fixes-execution-plan-2026-10-28.md",
+      "sha256": "5a1baffdf63f3584e7aa4dee1765d8422d4ae51db3c312377d671fb76b3664b4"
+    },
+    {
+      "path": "docs/plans/backend1-review-fixes-operator-runbook-2026-10-28.md",
+      "sha256": "d8f71d2ad902537476fc3415c36277f7d9be176f8a63035325bd5de257b86fc7"
+    },
+    {
+      "path": "docs/plans/backend1-sql-migration-execution-plan.md",
+      "sha256": "909c45209dab0ba833a248cdd758b9a34d0502d0019f3d7eb529c334a8ebb30f"
+    },
+    {
+      "path": "docs/plans/data-storage-ai-job-checklist.md",
+      "sha256": "29c0d63a75123345c17f0a100140a0b0e286aca57706bfd68ba896a1044e9477"
+    },
+    {
+      "path": "docs/plans/seal-be1-ai-execution-plan-2026-11-03.md",
+      "sha256": "e898f2bdf196d58da5b24f2b961eab7c7f5f9e8813abee1486f09e0f96afe15b"
+    },
+    {
+      "path": "docs/plans/seal-be1-be2-clarifications-2026-11-03.md",
+      "sha256": "63b0c2686f98242277e89e14dfd99b309285494d7ad8e4c077c2e6935cdb8bb8"
+    },
+    {
+      "path": "docs/plans/seal-be1-be2-consolidated-handoff-plan-2026-11-03.md",
+      "sha256": "4d15653234727dadb1f5e8638f95959517bb9d71fae905aa66361e403546e432"
+    },
+    {
+      "path": "docs/plans/seal-be1-jwt-session-regression-fix-plan-2026-11-03.md",
+      "sha256": "a575f1d085ce75647171571064d1743a071c13e523347a697bd07e8b0bd40317"
+    },
+    {
+      "path": "docs/plans/seal-be1-runtime-config-runbook.md",
+      "sha256": "7922246886a79edfd3d05f8edb0ac7b37fa7e13db14c64171c510cdeb544f5c1"
+    },
+    {
+      "path": "docs/plans/seal-be1-smoke-data-runbook.md",
+      "sha256": "909c8916ef90e5437eb3d9df7ca2baa997e754f723ed5ff7aed547fb381291b7"
+    },
+    {
+      "path": "docs/plans/seal-be1-tra-loi-be2-truoc-deploy-2026-11-03.md",
+      "sha256": "a117d2f61de0ec0bce09313243dbf7228d14142bfd415ba16a6db15fcf41ad8e"
+    },
+    {
+      "path": "docs/proposals/ai-job-review-handoff.md",
+      "sha256": "03c48952b746b48e3c3264ae4bbe5cbc6fae236e2ed1eaf4455cdabc26a3bca3"
+    },
+    {
+      "path": "docs/proposals/backend1-proposal-contribution.md",
+      "sha256": "1e3b9fe7cbf4b58f3320eaf61e4cc42e5ee0f0f877b726085ffe04acae873263"
+    },
+    {
+      "path": "docs/proposals/backend1-team-proposal-report.md",
+      "sha256": "2819b0932c174faec3bb6c1ed49c0ae3bf9405c8faa3eb08100c6187a8bf9832"
+    },
+    {
+      "path": "docs/proposals/data-platform-proposal-detailed.md",
+      "sha256": "596f28c161520f79501bd26838ce1d5d91ed08812a65469eb45748a9a1021aee"
+    },
+    {
+      "path": "docs/proposals/data-storage-access-proposal.md",
+      "sha256": "253e27dbe7f1ebec1ad19eb133bd58b69506945bbd6a481da829d990b213b40f"
+    },
+    {
+      "path": "docs/report/admin-event-export-preview-s1.csv",
+      "sha256": "58281ad54f8cac587f740cbc0382b1ea6e9312d3a8ebc64617e0317a867756af"
+    },
+    {
+      "path": "docs/report/backend1-be2-integration-readiness-review-2026-10-28.md",
+      "sha256": "02c2e7523da0cc8ac8e46c9e607bae6e427001d490c78436c5c9257a0136aa50"
+    },
+    {
+      "path": "docs/report/backend1-fresh-db-handoff-completion-2026-10-28.md",
+      "sha256": "c29aa60d61413ca5a7103459fc09d1c667e6446a28e700314c52e54b78cdee89"
+    },
+    {
+      "path": "docs/report/backend1-local-completion-2026-10-27.md",
+      "sha256": "43dfb750ad135d68ea76d95e61267247467e0a2bac1251471bb6771021ca9edf"
+    },
+    {
+      "path": "docs/report/backend1-review-fixes-verification-2026-10-28.md",
+      "sha256": "b0b0d2ba4b0667fe6f5a3b807d71b3f0afd02d6bbb2f99d5cbc2fad5535e014c"
+    },
+    {
+      "path": "docs/report/backend1-uncommitted-review-2026-10-28.md",
+      "sha256": "2c5d53a074fdab146579e0c804dd113df2120681fe96877135cc5fa5f16d36ef"
+    },
+    {
+      "path": "docs/report/data-storage-backend-audit-2026-10-20.md",
+      "sha256": "9511ebfef1a7f2be77ba0ab733cf0da4013cd9418e1351bcde51d7cc752ad2a5"
+    },
+    {
+      "path": "docs/report/deploy-ssh-participant-access-fix-2026-07-04.md",
+      "sha256": "d58b9e15142a860a3d681caf5664017e85c24169bec031f7daaa9fd21f5dfd4a"
+    },
+    {
+      "path": "docs/report/develop-draft-integration-report-2026-06-26.md",
+      "sha256": "f4b0ac6f6fcac4ac83260d69f541ddfa890fca8f50723ce54b0354d49cf9dbfd"
+    },
+    {
+      "path": "docs/report/feature-hoangnhat-update-review-notes-2026-06-30.md",
+      "sha256": "2cf5976482c52d9982d50dd1929e6f81d1356b49e537988d7b266047da1fc6af"
+    },
+    {
+      "path": "docs/report/hackathon-event-validation-review.md",
+      "sha256": "11cbc97402436843cc16ed566da035e14f3012ba381fc7ffac29f8e1153a9b5b"
+    },
+    {
+      "path": "docs/report/local-mock-job-completion-2026-10-27.md",
+      "sha256": "b9f282dacc3ff494b57e8513ec620562c6421630916b2b5e5b73d4e24f1e7103"
+    },
+    {
+      "path": "docs/report/merge-develop-conflict-resolution-review-2026-06-25.md",
+      "sha256": "94567e15c223fb83ffd544dcaac32947069555b61c2b71de2e67ec3b03f517db"
+    },
+    {
+      "path": "docs/report/mysql-8.4-compatibility-review-2026-10-27.md",
+      "sha256": "83f08f62f2e6dffeadc86c26bb97e60f80f2523e2d24ba21365b3f9ff38f457a"
+    },
+    {
+      "path": "docs/report/password-reset-otp-flow-report-2026-06-26.md",
+      "sha256": "ea28f20281d2aab3a50df5a303284775fcf2fc1e6ff52aabb2bd4cef007bbb30"
+    },
+    {
+      "path": "docs/report/seal-be1-completed-work-review-2026-11-03.md",
+      "sha256": "93da7531a995eb49f15d7a412959a3c9f8e15b93e74f7dfca4fe239a3dd4ca55"
+    },
+    {
+      "path": "docs/report/seal-be1-local-completion-2026-11-03.md",
+      "sha256": "a2c6f6affc94f9c92dde8515b6d156d88c643bcd4ba26207248c4bb26755da2e"
+    },
+    {
+      "path": "docs/report/sprint-2-merge-report.md",
+      "sha256": "444e3e04d80f41c9fa43af440729ecc346962b12e2390d4557f0afc8d2bec3fc"
+    },
+    {
+      "path": "docs/report/sprint-3-merge-report.md",
+      "sha256": "08ed64760cb075ccf2a8d5fec804f2b212d7de9eb78a6bcc9086d9c6ccf130ad"
+    },
+    {
+      "path": "docs/report/sql-dump-review-2026-10-27.md",
+      "sha256": "7eb3f27791bada1493b3b1379245bbd7374ccdbd65b0dac1b638fd8bf11113f5"
+    },
+    {
+      "path": "docs/report/sql-migration-preflight-2026-10-27.md",
+      "sha256": "9c08f63fca7e1eae08120594c09e6cec120f9e3efc7d1a077ec63e292227374b"
+    },
+    {
+      "path": "docs/report/systemlog-submission-validation-review.md",
+      "sha256": "88483569cdb3a78654bc90fcb166e3bca534b532a31b90c5c7f2eebb1681c4ce"
+    },
+    {
+      "path": "docs/seal_erd_dbdiagram.dbml",
+      "sha256": "ff25c4a41e35738f601b2f141425fb61cda44db0d4a45e6f4de38b8c8027e10c"
+    },
+    {
+      "path": "docs/srs-materials/draw io files/SEAL_Conceptual_Model.drawio",
+      "sha256": "7b09169620489b64bd7f119f04b1e64fe8327fd4a1838e374134302aed1a3328"
+    },
+    {
+      "path": "docs/srs-materials/draw io files/SEAL_ERDWhite.drawio",
+      "sha256": "8804db087bfcbb8c8304fdfe55c578b33752f09923320877028f157fcd95f78d"
+    },
+    {
+      "path": "docs/srs-materials/draw io pdf/BussinessPr.drawio.pdf",
+      "sha256": "c114040ae657392bb0e3b0d1b17dff3fd679162177c129e459d55dde46177587"
+    },
+    {
+      "path": "docs/srs-materials/draw io pdf/SEAL_conceptual_model.drawio.pdf",
+      "sha256": "dbcd75eff411f0d76e39fc1260afbccad6ce9bf8afb775583b1ee3abff926a13"
+    },
+    {
+      "path": "docs/srs-materials/draw io pdf/ScreenFlow3.drawio.pdf",
+      "sha256": "3a4c51c74719c9d05d1e8b917668f8bf6edf327c753196cc2b3f354866a36ef6"
+    },
+    {
+      "path": "docs/srs-materials/draw io pdf/Sitemap.pdf",
+      "sha256": "7d2e8ff39d57a58f70581b9460da59986efe92b3aa2182809bda7951086c68f8"
+    },
+    {
+      "path": "docs/srs-materials/draw io pdf/login.drawio.pdf",
+      "sha256": "def4da14c86c82e8cf6e4f958d915624c90b2613bededa94ec6d56bd0b127b78"
+    },
+    {
+      "path": "docs/srs-materials/draw io pdf/setUpEvent.drawio.pdf",
+      "sha256": "85192e8255508508b8c46dea04bfa81ef6040c57f4d9c74938f38316ff009d80"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-16_participant-profile-ui-cleanup.md",
+      "sha256": "72f45933c008e4a21dc11b1cb34a1070d0581ecd63d8810f91ed5a865bdebd2a"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-18_events-console-redesign-and-auditlog-objectmapper-fix.md",
+      "sha256": "b5c56674ac34fd65ae5118676e9d151865bd3a68d43e5753c8a8ac842d1c8a82"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-18_mentor-judge-demo-leaderboard-and-judge-anonymization.md",
+      "sha256": "37506487abf56d4d35f751caadd001ba34dcb7bcc652c847bd6e0f7dc62b5986"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-18_participant-policy-onboarding-journey.md",
+      "sha256": "a4b74de341b686747f4602d43872b859315663dba94c3cb860d70c66480acd12"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-19-coordinator-event-setup-features.md",
+      "sha256": "a6252c17fb1cb37dcc5c6fd240ebe09ab140a8f6efcfdc05b83f422ebae20fec"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-19-coordinator-track-card-ui-redesign.md",
+      "sha256": "0a9a0af961294541dc0a384bf74c4e2e61a5e73d9e384f90ee25c0a621882f7a"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-19-join-team-fix-landing-redesign-home-in-dashboard.md",
+      "sha256": "b09309413bf66b5715b955f6cba8599e7014e9b8b49e04cafc6e8c59bf03b165"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-19-unified-notification-banner-and-crud-toasts.md",
+      "sha256": "530585dd2d770092f99db43e96405c2c62a746209dcca122c5b23e85c8841b37"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-21-light-mode-redesign-and-announcement-system.md",
+      "sha256": "8e89361ac930101b43fc406ebf09305d6321698fd1847295cf59f70b06b3c665"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-22-ai-judge-assistant-gemini-integration.md",
+      "sha256": "04b9093287435cbe49a939bc134dfc0d7ed4578b4c1d45f8513a40cdef9ad191"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-23-admin-role-grants-scope-dropdown-and-grouping.md",
+      "sha256": "879dd40e28e19583ce08e638a0efa0db7c67c3517a23eea5a6d783a8e85c8b8e"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-24-round-qualification-crud-audit-collapse-announcement.md",
+      "sha256": "7ba25f9f752a81a523c649de4c4b36046ba6ede2f665e9c91517afde39aee5c2"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-24-track-problem-import-frontend.md",
+      "sha256": "408674efbf823b8a0c147b1295f8c284f18a990b4d576b54a2cd5d2c4bfca561"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-25-criteria-templates-scoring-normalization-and-judge-i18n.md",
+      "sha256": "4310f4ce53422d6afecacb54698b82141e0caf0c74358a9882347cd5270886ba"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-25-fix-login-route-guard-and-token-leak.md",
+      "sha256": "94293801f7ee7f425c369bdb356de35ba702e71bb90cd2aaa204abf566b4b2cb"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-25-logo-click-returns-to-standalone-home.md",
+      "sha256": "6c524d6fd5200c4ae91f9ac86247ac4f9c79ea42d70baf73495370426a7e9fde"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-25_ai-judge-assistant-github-repo-analysis.md",
+      "sha256": "8970d5d1f3096790c78a4498d84759954a81f2e9dde5b74f63d9786ce2a0e292"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-26-prize-feature-leaderboard-redesign-topn-enforcement.md",
+      "sha256": "29ee93d7008c22afc4876d1e6ffc99d1810e619aeca42b0044565b9ce762a684"
+    },
+    {
+      "path": "front-end/AI logs/2026-06-26-prize-frontend-history-certificates-mentor-history.md",
+      "sha256": "0444c1daeb5f112cd43ec373919022d4836943741e2e5ec3088ab741c8a7b58c"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-05-coordinator-console-ui-cleanups.md",
+      "sha256": "531b9a741c0fe6fa928ab05959be07a3ad0f01a5f98b4fe122f02175259e90ba"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-05-landing-scroll-animations-and-interactivity.md",
+      "sha256": "cd81454cb4ace03c427cc150a5c2ed8b4161794980e42e0e5b44179280f44f88"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-05-participant-team-dashboard-history-and-invitation-ux.md",
+      "sha256": "618e5b5c1c3b05ceef97a369e6a3e882d236e83ac4a61215028f5ba9dfedb60b"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-05_coordinator-ux-refactor-and-async-email-fix.md",
+      "sha256": "ffa1e7fbe33158804f537e07654ad73f3b3504bb3d4aa209cab47a64a29e0401"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-05_mentor-tracks-event-scoping-round-status.md",
+      "sha256": "1d7826bf5f62cf9f186e27cf55e8e8973d661eb96f7a9bed1dfa577edf3e3110"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-10-landing-polish-registration-cta-dashboard-bg-and-pending-login-redirect.md",
+      "sha256": "9f31f250e32133fe685168d8c2e065f977a571362d727dd450f5280a2f6bc143"
+    },
+    {
+      "path": "front-end/AI logs/2026-07-13-★-jwt-httponly-cookie-migration.md",
+      "sha256": "353d6607393606a234145469adc0d170fca968ede1e182872dd3bbff60423e08"
+    },
+    {
+      "path": "front-end/AI logs/AI_CHANGELOG_coordinator-accounts-badge.md",
+      "sha256": "62313f4511c392427c5eb0153fe08f4836f990460085b4488b62936079c67cbd"
+    },
+    {
+      "path": "front-end/AI logs/AI_CHANGELOG_coordinator-accounts-participants-tab.md",
+      "sha256": "54b69c1a34b4fb170a74300afe5e6d3d060b207689f613a1b837e0ca2b90cf4e"
+    },
+    {
+      "path": "front-end/AI logs/AI_CHANGELOG_coordinator-events.md",
+      "sha256": "6e7245c491643ca45cd3a457101d9195156195ee8a2a939d7ae555b489d7dee0"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG/AI_LOG_SEAL_S1_PLAYWRIGHT_E2E_DEMO_2026-07-28.md",
+      "sha256": "fb024f1228ad200852714b28eb837d3140ccfd5064bc33f4ca8f46565d60d5b6"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG_SEAL_Admin_Split_FE_Impl.md",
+      "sha256": "03b1bd32b7e8d7f7845810aef8364696962c6723948b947543cbd8fbd00686f5"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG_SEAL_Coordinator_Assignments_Matrix.md",
+      "sha256": "8fa230c24ed6932fca69bb46e22d1ffb8fcd2dd5feea85351cf0d5d9474affee"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG_SEAL_FE_Demock_MentorJudge_Participant.md",
+      "sha256": "cf760b1362799c78639594818727800f8a2e775995685ef777f55ab42a4962bf"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG_SEAL_Participant_Rollback_JoinRequest_Notifications.md",
+      "sha256": "3bf637171f9d20253cf9098eaa5e821bb54f7173ae3212162bbf63f746e7ddb6"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG_SEAL_ROUND_TIMER_FULLSTACK_2026-06-26.md",
+      "sha256": "a6a15913e0656be3c0cd106993bcdd80a252a83fa47c2088f2c8bc8c3693dd32"
+    },
+    {
+      "path": "front-end/AI logs/AI_LOG_SEAL_★_SETUP_TRACK_ASSIGNMENT_FE_2026-06-16.md",
+      "sha256": "e11d7868e4fff16d61a3534f5abf96ec6e51203a1a44ac03c9f1cad0633b339d"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/01_project-info_and_session1.md",
+      "sha256": "e8be4757181a5318fc5d62b949eaab1b2336a7ab02c9c9637424bdb0a4dbd116"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/02_session2_css-fix_codebase-scan.md",
+      "sha256": "be2f781fa047d3342562373a2e00b89d842ee0ff461f2702b5d0889073e03c39"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/03_session3_pixel-tabs-fix_public-pages.md",
+      "sha256": "72f4aa0bee6c9bde77768496baff63ea1a35cf2b86f95186d26806276b4fbd37"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/04_session4-part01_init_pixel-components.md",
+      "sha256": "94f3c28091eec55d107cb06a9571369af82d8f5eb0c26eddf5dd82f72ed4c698"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/05_session4-part02_design-tokens_color-system.md",
+      "sha256": "1fc84b980f293cd276ed76f625dfa7c29c617640c72a15d8ce66350558687e5c"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/06_session4-part03_landing-page_screens.md",
+      "sha256": "99a1e11eebc864112c4712e41eb2dcfdd2bc18c7b7c5bbe0bc6822ebd53ea452"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/07_session4-part04_team-dashboard_screens.md",
+      "sha256": "d565253455300dfaad797e88c97e4bc71099e3faddb305710b1e344a10b73008"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/08_session4-part05_mentor-judge-screens.md",
+      "sha256": "71ed385c6547ec07f9c78b4e04b1dd5383c73ea32ec46163368bf95c47428a98"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/09_session4-part06_coordinator-screens-1.md",
+      "sha256": "df6402fa2d910431570163c8695885857b0900eb48817e4b935081e1a394879f"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/10_session4-part07_coordinator-screens-2.md",
+      "sha256": "339bde319998be3935f9c268e4a74d4fd35900995dcacef978c291db13b942a9"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/11_session4-part08_admin-screens_design-system-v10.md",
+      "sha256": "771715f1893eecf3c4c41be761f38571c3af68c22e9ccf8a35caa48d4bb47885"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/12_session5_codebase-exploration.md",
+      "sha256": "6fec9ea73a23fab4e85f0c70838c860c4cd0d3ba3ad08a9a43c21d5ca54d1233"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/13_session6_new-session-setup.md",
+      "sha256": "971ddb8bb7bec557b9c633afc11d2a4f5e1b5f0f0db1c9d812a15ea27f62d0a1"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/14_session7_partial-build.md",
+      "sha256": "30d5c1a0eff048fca09d95f9e8d5ac455c8111988263dd14262bca0228a02ecc"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/15_session8_and_copied-project-header.md",
+      "sha256": "a33fd8d938b5cdf661ec0f7b81397815ca446e9bb7fd2d78c358adceac4ab600"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/16_copied-session-0f22_init.md",
+      "sha256": "7016859c1f2010376b2085d9a8c2a2a628794e9b4438c35f970a623d8a0e80d1"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/17_copied-session-1a7c_second.md",
+      "sha256": "5f373a97f26f59c3c3d424677dbcedd936292b2e6270d2b2028c8c7749d67cc1"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/18_copied-session-4674-part01_turns001-102_app-exploration_report.md",
+      "sha256": "dbdca2b12ee5269a9e8dbd9870cc807cea4fa2b6a1ec2199ffce85138ced07d4"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/19_copied-session-4674-part02_turns103-176_screen-building-1.md",
+      "sha256": "a3a98e4db0186f650a942e9b8fb87214dec8f7ef7c898b0b81e804a513901efa"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/20_copied-session-4674-part03_turns177-263_screen-building-2.md",
+      "sha256": "39c18474d5b9f6c4eb0eb165a81657f9ac0070d9a2dd2b6b51f88d167f0ca359"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/21_copied-session-4674-part04_turns264-340_screen-building-3.md",
+      "sha256": "529c8cb352ec7e18168015b02d74564613793a4bf3836ac32c716416a0387b2b"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/22_copied-session-4674-part05_turns341-408_screen-building-4.md",
+      "sha256": "15a23722fcf2a322d2ab315463eb3e5a02508832e2e7e8730a0eca9bf56b5a78"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/23_copied-session-4674-part06_turns409-477_screen-building-5_final.md",
+      "sha256": "f4114e275100ff8057ed9f2a71a1a41277ce56546dc6e8075cefc40755b1f4fe"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/24_copied-session-62be_late-screens.md",
+      "sha256": "b5e2fde083c5327f88bbf6ebe7c02347ecf14607a335ad4ca107adc7bf410c68"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/25_copied-session-bdc0_final-session.md",
+      "sha256": "46c2ffa01b1e8d56aca041867717bdea37859ccfea7ec17e7d896083e318209d"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/26_extra-project-info-sessions.md",
+      "sha256": "fb51a9d50ed9aff276dade7bde8110dfd87a9e352070c73af4da43ae613f2794"
+    },
+    {
+      "path": "front-end/AI logs/Figma_AI_Log/27_final-summary-and-notes.md",
+      "sha256": "3cedca58413ea10596caa1e429dd4cf0e3116db189d15bf2644dfb3a4f751943"
+    },
+    {
+      "path": "front-end/AI logs/MultiRoleAuth-ProfileFix.md",
+      "sha256": "23e4b3c73ab731e199427b7a822c9440232eab1d2fcadb313c46cffe8f234d5a"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma01.png",
+      "sha256": "e10ad76e5c0abc4c1665b6e25002e0244c44609f872ee9e77c1b165feddae8d5"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma02.png",
+      "sha256": "31e68dda4885a7f90a0e65f3188cd83c61748543e9b6849f0c2b6bcbc3aae676"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma03.png",
+      "sha256": "4b8c238d7afbb34bb44385e1453df54e9413d50085244d506b367147006fff9d"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma04.png",
+      "sha256": "3c9ae1b409b93e00c506c210b0f9beb0a09415172f852744898864732a98e83e"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma05.png",
+      "sha256": "15d64102d83cac2b4e929a3f5f7ac7b7de00a094052e4df96c0358f9c9d10e6e"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma06.png",
+      "sha256": "03e3f1af3c1bfb96b44fa0ab95054fc8f05e3e247dc00d1d094f1ab07a2fe1cc"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma07.png",
+      "sha256": "54f786f45c55625acccf75488937c7a745dc2f3e843a0685255f1a1f0cc1288a"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma08.png",
+      "sha256": "b98601b08dac845d5fde5d185156f382114d2e15d66113b58c687063caef1497"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma09.png",
+      "sha256": "dda7b72b23139a7680b751b4475a05f5a660eda173c8ff2b8b39dba6a9f90340"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma10.png",
+      "sha256": "3b8f3c30d93875c524c55e27bba9a54dc74a3b2dc4e59d89157a3a4808b28b84"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma11.png",
+      "sha256": "fa7a2e8065cdb19a8fe13fca7bcafd2096dbdfc0977ccc694d92666ad053a666"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma12.png",
+      "sha256": "2ce98e0011cbc0e0096d09319dc7fa5d0479324f8502b54f7ab5cc083d9e4048"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma13.png",
+      "sha256": "f9f6e15606b8108abbf5378ca9d4f142b91dac3695d73ee95ea7abfee23a0f22"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma14.png",
+      "sha256": "4f2b04d2174631093d3500660db2b810b848e034f8ae942c5e07ed938523ea8e"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma15.png",
+      "sha256": "23e0b00f2a82057235b7c52c4d5cb3ab5474228a3a0282ea4363272fdb7ac8df"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma16.png",
+      "sha256": "e977dd11ebde201c5c01555f5c57052a8c38457c36ec82f7533816e5dec1ac06"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma17.png",
+      "sha256": "8ab7b13061170ec7736c9c43787aa0c7a34649dab38b887f7a1f738d24875d52"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma18.png",
+      "sha256": "526e6b2fd188459693b228fb34806811233fc81721bbf4d399064676e05b6e25"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma19.png",
+      "sha256": "30f35e84ab754c4672ccf9cd42134e47567482a6f0f4764a36d5ee566f745e6b"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma20.png",
+      "sha256": "aee29f4ecc17cf4a14bd289e81ce75cfe3b719e404d876b285788d7b1bd69e3c"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma21.png",
+      "sha256": "c50761baab73a4e83a06b97c722e6a32bea27e71ea25982ae5c724c351f7fca1"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma22.png",
+      "sha256": "9de269598f6646f77ce01a82439ed9fe8d91c1e8a9f3db50c72a6f92616b51f6"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma23.png",
+      "sha256": "73d61536e470b20561d18a4348397da2c05ef3975db2982d7475f4d0be592195"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma24.png",
+      "sha256": "62f001890e4fbcc257b5479c0a2b73202078c3834f58cf7638ac250ee466dd22"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma25.png",
+      "sha256": "8eb72356cb53571f3c30f2f5bfd541a56b142641851dd674f30bc48fab29cc73"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma26.png",
+      "sha256": "b465d1d6fbe54c2ed447456f1d757fc84883c5a41d06d52bf255eabf7bfd67f7"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma27.png",
+      "sha256": "21bc296ed257e47a1a5627f5ea5ef5c0f554caaf5c623c3c047dc23843671f7d"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma28.png",
+      "sha256": "5d34d2962d828214c72deadad1b906b91de0262f54fa3843093f2b1d7ca78dca"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma29.png",
+      "sha256": "35480d1753ccc69547d2418044c318cb8c92be4f5c59a3be18eb2da3e8e6dd43"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma30.png",
+      "sha256": "d3a00b2e18469f6299ad386778bc37a8d3491a7551eed8eed093e0c26f67d65a"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma31.png",
+      "sha256": "97ad705fe78eabf3204c799ffc3b8292d6515ac08cbb5b15bdf1ba30d3a99362"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma32.png",
+      "sha256": "382a744329367bcecd81ec7a7055c695d70b421dd86843bb54ac41b0d6fa6fea"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma33.png",
+      "sha256": "5fb1e9ca904cf44a4ba573e43d5ae9c3b957a19d17745533677a2f39ffbb154b"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma34.png",
+      "sha256": "e98068b22644edc82b83ae83034b3e081565a1cca8b750206699e5f546820f85"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma35.png",
+      "sha256": "c017233b0d9a19919469c9e03aa8a20b4f3f3c734edbbc8b61053164c7cad541"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma36.png",
+      "sha256": "1957e007c6091825b0b7fed7d2aba69876ca00bf2b224f6f508de9285b712ff0"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma37.png",
+      "sha256": "68f8d21d90b2c62180707fafbcbfd63969531f4d44ef60acf03bceeacbbe379f"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma38.png",
+      "sha256": "eae78823992108c550f8b4ca6259a47e69536458bd310c857e55d2fea8a18371"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma39.png",
+      "sha256": "ff927a2d7eb2fe416116c7d51bf4875954f14dbca40a32394b03900902b2be1b"
+    },
+    {
+      "path": "front-end/UI Prototype/Figma40.png",
+      "sha256": "a52612df19c8548fc3ff33e7ea4f2321bdeeebfcf235e2bc0562b997ccb342ec"
+    },
+    {
+      "path": "front-end/src/seal-web/.dockerignore",
+      "sha256": "1dae1c1af7c2b2ba66118b8cef2c94ceb3df5ef63962d0051166b8f36f2e80ff"
+    },
+    {
+      "path": "front-end/src/seal-web/.gitignore",
+      "sha256": "e74486c0ec09e9c3648589915cdd3517eed911b9a80d7e7c342810fb0380c989"
+    },
+    {
+      "path": "front-end/src/seal-web/ATTRIBUTIONS.md",
+      "sha256": "9846aa487c2b6ebeef9dfcae9c9371a5561739dab3269401eaaf6a8666d3577c"
+    },
+    {
+      "path": "front-end/src/seal-web/Caddyfile",
+      "sha256": "f6517ec9ae4674e19f0766a40d6902820a863cb471ae19af0e546d659783bce1"
+    },
+    {
+      "path": "front-end/src/seal-web/Dockerfile",
+      "sha256": "00e2fb3048aea6ad13934f4c307faed934c4894feaae38d536e74e9a22262d0b"
+    },
+    {
+      "path": "front-end/src/seal-web/README.md",
+      "sha256": "9e05a0e4abed065faeb3132c5deeb4b0ff6672397cf015fef5eab35d1af0c543"
+    },
+    {
+      "path": "front-end/src/seal-web/default_shadcn_theme.css",
+      "sha256": "c0e4f4d86a2dbfe76912e757ae360998911dc8548646feff90cbc202e0cbb08c"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-1/00_open_account_team_flow.spec.ts",
+      "sha256": "7bea9300543d18a724f027642e776a3b8086ff78cdcac2a81d8d41f912efba9f"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-1/01_setup_phase.spec.ts",
+      "sha256": "dd91e338d88ef07d79cf7dfcd1e51fba4bb73b525245c0ef2610fbd2d98a3ffa"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-1/02_in_progress_phase.spec.ts",
+      "sha256": "cb5bef032aefd447ab02a97bc9b8c1bf52fccc62ebac9c443303095ed44058dd"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-1/s1DemoAccounts.ts",
+      "sha256": "3a3a896c16bbf148cce160747d574572ebf2f722c2423b1d6fb55bb7b743de5d"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-1/s1TestUtils.ts",
+      "sha256": "5863a6fbc58cc33f0afad7e9924545dfa990758d86a9401b9b7dbfadae435ea1"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-2/00_s25_results_publish_awards.spec.ts",
+      "sha256": "cf8098b04cc112cf831604e886d1eb6751360a9c8f589b82c6e3c24321773227"
+    },
+    {
+      "path": "front-end/src/seal-web/e2e/scenario-3/00_s3_completed_results_exports.spec.ts",
+      "sha256": "a55f0dfbc068e1b84346899df01083b0828fbe530b0da73b375dc0fdc1c63da2"
+    },
+    {
+      "path": "front-end/src/seal-web/guidelines/Guidelines.md",
+      "sha256": "cc0006b4b9bba8f8df02d35a38ed0ce83061abac8c8a108125a1698a2f6d28ae"
+    },
+    {
+      "path": "front-end/src/seal-web/index.html",
+      "sha256": "b1a443fe3c85745a601c19d1ad2ab2b2be647ba20e45ed85febd9d3d321b8244"
+    },
+    {
+      "path": "front-end/src/seal-web/package-lock.json",
+      "sha256": "de58fd59d1401169ca7125f9e015e20e9314ee3558447a83b4401f8c2c792051"
+    },
+    {
+      "path": "front-end/src/seal-web/package.json",
+      "sha256": "c511a516dde94b570a65bfb693559e821459f83b2d555746eb87790bd0bcfa00"
+    },
+    {
+      "path": "front-end/src/seal-web/playwright.config.ts",
+      "sha256": "ab40158a0c002e008965d2cb433274d11cda6fef8dbfeada80f435faddd1a27c"
+    },
+    {
+      "path": "front-end/src/seal-web/pnpm-workspace.yaml",
+      "sha256": "cfe4c60c0b9e022b2bfc4b7b855896be1d85b9f13737c8cd2fce216c427ce0c2"
+    },
+    {
+      "path": "front-end/src/seal-web/postcss.config.mjs",
+      "sha256": "b2e3cb59567ec4fcd4c2adebde229d6f5294cc853e8ba22afc8ca892f46d691c"
+    },
+    {
+      "path": "front-end/src/seal-web/public/apple-touch-icon.png",
+      "sha256": "e97def9d310b01550b223223d5c1d5b6742ffc9966e869ea9b2be12a7df6fc0b"
+    },
+    {
+      "path": "front-end/src/seal-web/public/favicon.ico",
+      "sha256": "a614b95e74b1f6cdb5a5a52f2ae83a573524de0c85eaf0920e8071ab9a32a52b"
+    },
+    {
+      "path": "front-end/src/seal-web/public/favicon.png",
+      "sha256": "e6324973e1be3242a442ec34ba599dacdb21079a7f7017745a1a9897ce926ade"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/App.tsx",
+      "sha256": "e387cb50dae208710c90dc99f3a58cc304ffa36e3fc0df4fc85d11d8eb6b626a"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/Attributions.md",
+      "sha256": "78ecd2dcdb4bb22b32f9ffdc4eb6fa22fa4a6b42dab607db0d838a511e21978c"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/layouts/DashboardLayout.tsx",
+      "sha256": "07b46f97b320cc3a8170ac00d9b434ad6b1fd6c0d9f0d152172ec5064841dbbc"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/AuthProvider.test.tsx",
+      "sha256": "4bb2de35adc2e3000e2c079f0aaf5e04ecde1d6363070e2969b3fdc3ca439738"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/AuthProvider.tsx",
+      "sha256": "c9f879d206324a26ebbbf20f62933e68cee421668666ab0f760b3e3b210a8308"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/NotificationProvider.test.tsx",
+      "sha256": "d1a3c8e3af167d3523c60c5038d120ab9397c1f72a287cb190cc4185e8856e21"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/NotificationProvider.tsx",
+      "sha256": "bef4cb9fd552fbeb5704124686968875d26292632e6377039adb985ca8b5d110"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/PendingAccountsProvider.tsx",
+      "sha256": "1a633c97d60e46b2ed5644de5678d16341e3199697e4b2298bf8ccd8738ae263"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/PendingTeamsProvider.tsx",
+      "sha256": "7592777d8a443c32600bc5af2a18187bf1ef3d6ae5cb4172cff13031d747f461"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/RulesProvider.tsx",
+      "sha256": "7357947b74dda47ccc4eb78f0d19c8304422a66aa91b7535944d7a728942d275"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/ThemeProvider.tsx",
+      "sha256": "d5946e7ce3ac29833a22ac7f1a1564e86a4af40fda551c10ee96dd7823a849a4"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/providers/TourProvider.tsx",
+      "sha256": "e0075c7014313c30915751d16dcc86c769873a6e86d47e48530ba47e55b45b5b"
+    },
+    {
+      "path": "front-end/src/seal-web/src/app/routes/index.tsx",
+      "sha256": "b6ff6b773b1b85aa8f2ee152dca157fc7a803117f6df8cbfe2befc1fca604759"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/CompleteProfilePage.tsx",
+      "sha256": "65acec3fb0990b63094e68f0ed3f1904385599fa7c2e28bdb828a3152d2d08e9"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/ForgotPasswordPage.tsx",
+      "sha256": "b56416aedf7fee4aab5aec945ac7da9790ca68f835266243a22981beb3f70391"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/LoginPage.tsx",
+      "sha256": "8fd6716ebfca685b84b35c06e1b443d0c10b9588e747dbf2b45be6b262af3bc9"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/OAuth2RedirectPage.tsx",
+      "sha256": "4741bb48e384e4e244814da4528c437cf6f747f16e7d0dd480a66312ef57ac23"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/PendingApprovalPage.tsx",
+      "sha256": "d86079fcc807dfa67fbc46485304bb802cccc976b6cf6b513c1c8a99f31c6b00"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/RegisterPage.tsx",
+      "sha256": "ac5379ba62d5c451a2348f3e30128a2083d56d537771d76cf393082e758f2d95"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/RoleSelector.tsx",
+      "sha256": "87a533ce1a1beea0fa28569b1f7cd6b05758256821667fa428d98af0e88ca840"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/auth/SocialAuthButtons.tsx",
+      "sha256": "f90b9e5da67f786dbf31aa166dd4a4621ff0041298920a75dd96432b24b3bb25"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/RoleDashboardPage.tsx",
+      "sha256": "7f220d4b8d00e258d8cd4b324a4d311196341abd89d4b721a810fe5c228e7388"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/AdminDashboard.tsx",
+      "sha256": "3d6582543588ea173f8704914e2b887edeeb996e39cac7cc53c7cd1fa3bd0472"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/CoordinatorDashboard.tsx",
+      "sha256": "5d00eadad52157599bf0f2bc480b13fd7d88af9dec9ed3971bddb5ca1a9cf1be"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/JudgeDashboard.tsx",
+      "sha256": "1ccc0d13d5ec7ebcf6df8271b37470e3ef7a3080b32e90be9baf04c9af2bb32c"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/MentorDashboard.tsx",
+      "sha256": "9620c395f527a0d7ad56e2a2ae0af279d2acb33bdc67ff2bde492c63a02fa13a"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/ParticipantDashboard.tsx",
+      "sha256": "3a1debf3d0b99723e1c61bd47a43a2afb4b08992052e6381bf2caf8d6cd7f106"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/components/EventDetailDrawer.tsx",
+      "sha256": "ceda96bea704b270aa04d4b4a94cfdb604ede19206ee706419f17c890210a0e7"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/components/InvitationsDrawer.tsx",
+      "sha256": "512846a2c408adf6b81a0b180f67b98b24cfea02cbc1a0856952538bbfce5147"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/screens/CreateTeamScreen.tsx",
+      "sha256": "ea5bf8090d6c94a9afa996c778a689d11001adb59041c62a775668258befeba0"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/screens/ExistingTeamDashboard.tsx",
+      "sha256": "ec4d1548ab8074cdd83a6153c9b8e35d397378f03f2371ca7cd0c9ae3cd63326"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/screens/NoTeamDashboard.tsx",
+      "sha256": "ff32507e644bac2bc985c3043b5bf83507d44ac505284b1db549d422b7aab7a7"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/screens/ParticipantProblemCard.tsx",
+      "sha256": "a74cc31d226dcacfbe92b8e9cb5ab189fdcff64c2227e884c562ae527fc28a39"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/screens/SuccessScreen.tsx",
+      "sha256": "aed2dd673521265eea88b4f7d8de171900065e6852509189b3b905b21521f183"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/dashboard/dashboards/participant/utils/formatters.ts",
+      "sha256": "3eb44060c19b362755b5b318d7dc5eff4e1970b004131b3869f07c4275943197"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/AdminEventsPage.tsx",
+      "sha256": "190153cd7d37bef58ba021a8840a0c7a929f4bf9464b3ead0c696543834bd704"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/AuditTab.tsx",
+      "sha256": "4296e9c3b601fc4a57c43cf05ac95e553f338a38fbf41349fef923026e7e60fd"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/ContestTimerPanel.tsx",
+      "sha256": "f81c81997cebdae5c304ae7a064fbe609d9292bd2bc48c1dbab06030c1aae762"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/CoordEventsPage.tsx",
+      "sha256": "c732282ebf4b8dcbf8c95dc8909a274cc2d512fdaf27edbb606065d010f8dc3b"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/CriteriaTab.tsx",
+      "sha256": "b2fbcbda2568a75dc4f1242e669906930f0a9b4d0376689a870e20f05fb2c37d"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/EventScoreDistribution.tsx",
+      "sha256": "207ffa400a400793d1549265af61deae01a2bf443e4422f3a9cbda713b5f3d93"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/LeftoverGroupingModal.tsx",
+      "sha256": "b9d15c252051d2e35a7911ab934f336460318ce7a339453298451e8eb567b31d"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/RoundsTab.tsx",
+      "sha256": "5130eb15c31bed313659dcd10794fa727264c79461bdb73e911559e051b99327"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/TrackProblemPanel.tsx",
+      "sha256": "a402bb60077d779f28c67438306da836929d24aff8cfb0a8c4a6667b1e160ca8"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/TracksTab.tsx",
+      "sha256": "c0be7255ccd87c81384cce5b0add7aa21b28d8c509117340137b6469c5b40547"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/eventUtils.test.ts",
+      "sha256": "92aa6fed7c7a8569357327e1bb5cfcd39680feb199856924a583c47f4f2545a8"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/eventUtils.tsx",
+      "sha256": "3107ab7a061b630107c80fcefb686994747993c6d3a6744db18b3dbf394ddb1d"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/trackStats.test.ts",
+      "sha256": "f8d8c68ff91a37d58d86ace58f6a89efd3014665d00edc00d13302757d2e91db"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/events/trackStats.ts",
+      "sha256": "f0a4c6aea7ac91501ed1d3879d2bd7c08d1a03b42f3bca5a974193bcb46b2ae8"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/landing/AboutPage.tsx",
+      "sha256": "b12a5797a3c50cfb466ecd6f390d6368fde4228b9bacdadb65a1be173976bfa4"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/landing/ContactPage.tsx",
+      "sha256": "742f381d197c9740bb7b4353d05bcccd2a96f9737ef5a79adeb90e583724da20"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/landing/LandingPage.tsx",
+      "sha256": "bf1e93644e9665c5045afa1dc9c7a5c1c0cccbfe1add30afdc92f448b2357775"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/landing/TeamPage.tsx",
+      "sha256": "2da26f6147bdb05e3939e7750c1d99840590f7eeb2854c9a2c15c1f2bfc861ea"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/CoordAssignmentHistoryPage.tsx",
+      "sha256": "063dbbb96e741ed64d1332ffaedd5a8ccc198c88e16fe9c41a75c038b3eeaabb"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/CoordJudgesPage.tsx",
+      "sha256": "2fca9ffa2815641babeb2214e8aa1fa37e0ebbed702c5cf39cf78f2bd9e63307"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/CoordPrizesPage.tsx",
+      "sha256": "d7f7a1082fd804ad6c4e7720719e9aeaefa4794d8de25f9f67f880fcc542cfe2"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/CoordScoringPage.tsx",
+      "sha256": "ade044ef60a81a93b262622367ff043568a47d5ca9c64ed09c9d44177e20aed8"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/JudgeHistoryPage.tsx",
+      "sha256": "c3beb7c4cc69a08bd2e89058e626d510287c8cae5a7fa27f05ef22212a5b3109"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/JudgeScoringPage.tsx",
+      "sha256": "ad12805468ccb2fa81143fcb4753b57352f5f1c79cdd13e4bb1f9dcc66ff44ef"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/LeaderboardPage.tsx",
+      "sha256": "9366f722a083b456f299c9467c25b776896a9385049bc8de48f88e4e874958c2"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/scoring/assignmentBoardStyles.ts",
+      "sha256": "4c6025abd38d79f680301d4c3de8e9745a4e2f943a23a42b5377f3f9f56bbb31"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/submissions/TeamSubmitPage.tsx",
+      "sha256": "975b6ff983fb3e11d5bc61eecd5cb0cd1f16418fb3cbd116f12c388d4b6ac67b"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/teams/CertificateModal.tsx",
+      "sha256": "10f3d1b22843646d530d4fdc8adb3948eac67fec8ba6a891077b3a60f930a415"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/teams/CoordTeamsPage.tsx",
+      "sha256": "1a953f3e5dcb39ddbd5d2f892608c3baa07968191a2196cf8a87fe8fefc7b09f"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/teams/HistoryPage.tsx",
+      "sha256": "afbeb12c611db08d42558212984b313a57f3d1b1bc2c0ec3a84f1f63cd7aa7a6"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/teams/TeamCreatePage.tsx",
+      "sha256": "f2014f4c4dbffdb7fdacb2b1631b4f74e8ba6faad57a2766f82d9d544aebb255"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/teams/TeamViewPage.tsx",
+      "sha256": "549855aee5f8242cc3fa7784389f1a2641ec34258817fde578ff1a9ae9088a04"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/tracks/MentorHistoryPage.tsx",
+      "sha256": "ebe7201a18dd977414fad931bf99ba535be48c1116889068c80eb7bc1d7b068e"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/tracks/MentorTracksPage.tsx",
+      "sha256": "d3b52ca9910cc84b7df473179a0fa99dca6c8f8ddde44414574dea064df24721"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/AdminAccountsPage.tsx",
+      "sha256": "52e4851c4960bbc49f444d501ffb693de6ebe35f01955d3b796b9a2abcb83af1"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/AdminRolesPage.tsx",
+      "sha256": "fb423d279f6c45c49484e80b0b1e4a1da0b94e2e4ab38a7cd671205dc8f633b0"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/AdminSystemLogsPage.tsx",
+      "sha256": "46c5a279efdcced12b1f2fdc1f009870781726e925ce3030dcb82f089ac59c8f"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/CoordAccountsPage.tsx",
+      "sha256": "51eb9bd5dd49a80867e5de4170ff0e51a9aa3a46f8a4d5dce1733abffe207185"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/CoordParticipationRequestsPage.tsx",
+      "sha256": "749817ab303c8e90db30f718562866033b769107fc12c6f5ad1e55db2e9a69a0"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/ProfilePage.tsx",
+      "sha256": "894988d6d5e0ffd3173c304b09bd49ce61377d119b69786a14eeb8464482cf35"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/TeamRejoinRequestsPanel.tsx",
+      "sha256": "b6b10582ea50dd4b22efb1666126467248b2ed94bf81070f795db4fdf1cf888c"
+    },
+    {
+      "path": "front-end/src/seal-web/src/features/users/roleUtils.tsx",
+      "sha256": "1682f78b1823497bc93172b2ca1abee9da91842c913606bf3c74c063444f40d1"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/DaoHN.jpg",
+      "sha256": "2d590632bb2ac26eff72945165b0b0c262bbcbe661e9d6def7da57ce48aaa21b"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon.jpg",
+      "sha256": "c2f73173a61f70cd59078e86bd770178be1c04a2a871eea7a1ab7a771f424c52"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon2.jpg",
+      "sha256": "9f3396ff4a747628c61a0b7b2bcdb30e91400ccb9da0a270295d5bbfdbe7dd0e"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon3.jpg",
+      "sha256": "e098fe67b53df40490785d69ec9f318d5d506b8f2f9ef41995c509eade25f966"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon4.jpg",
+      "sha256": "6d23e764221567eeaa83384d9313c28c719a24df0ce1f3de4cdbb356833142eb"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon5.jpg",
+      "sha256": "7c666cefaa6565183728e50e4c509b1ccb3abfd41c5a81b0cbb86474ba7a2675"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon6.jpg",
+      "sha256": "ba734c3685fc8b5a88cbb5bc2f7272a56914af32909a5fa4f77492e3d565a61e"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hackathon7.jpg",
+      "sha256": "ab0990eed4d73de51960a8bf43139c791090d04354b490cae5a85045d2b0219e"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/Hero.jpg",
+      "sha256": "e3403ed919bc419242f47f106e79e2a282144e5cdb4612f7b4aa44a3de6e63c1"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/KhannhNLH.jpg",
+      "sha256": "d2522c5a825296d2964d3dd98652fd8bafcb21a3f101a3481259ebd36b2653a9"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/NhatNHM.jpg",
+      "sha256": "13cd75215f10c562b566c0b59bc4aeed823cbcdcdff00291e9fb3c1a7d94f882"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/TrangNHK.jpg",
+      "sha256": "6dea8aef4165bbca091b4bb36737d33cf1f4ff1d4159f2b092da91b5a2ae1b32"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/fpt-logo.png",
+      "sha256": "87023cba8ce0e93b6f9043be1603f5d7ad0025861df4726f2a8bfcb3fd205c24"
+    },
+    {
+      "path": "front-end/src/seal-web/src/imports/image.png",
+      "sha256": "4f747057ade7d9af2a3c79569b042e2d4e0501228b81dba41e0704a58bcb3a3a"
+    },
+    {
+      "path": "front-end/src/seal-web/src/main.tsx",
+      "sha256": "94199e69248c2b6d7746d6d3847bb138497036d04393cae32c916182734a2fa9"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/admin.ts",
+      "sha256": "224d00c6448fb2394927401e6e015dad69cd5939d736c6bbc376802c7d382ba5"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/ai.ts",
+      "sha256": "2ded8c7858a84b8834f5565a98bfff965721cce600d5b3c8d1b57efb8d597959"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/assignments.ts",
+      "sha256": "453963c01b0a5b68ade4bf43a029e718d816e1b21ea33c13a801bdba59ed4fb4"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/auth.ts",
+      "sha256": "f246b27dac7974fe2501effe29d3234d439dc0aadcb06d5addb8713845ffa916"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/coordinator.ts",
+      "sha256": "843acc810f38d45420071687be9a510d9cd0aca2e6015701c91dd1bbb4bc57d7"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/core.ts",
+      "sha256": "c145f1e6f9b92e1f4f8245cf3ad0cdb829e30951b4e82f51bd56b6d1b4d00a0f"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/events.ts",
+      "sha256": "5ae9306f31f248ffef25deb110adfd8185486b6b564d3b184f6685f9b3c469fb"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/notifications.ts",
+      "sha256": "c9a32013ad26739fbf44bf4adbeedc43c594a80abd9dc8b875696e05bae52294"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/participationRequests.ts",
+      "sha256": "b76ff27fb43b79d263e12f6a902980f951997447ea2556f392edda7976e64e07"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/prizes.ts",
+      "sha256": "922e5417584c5f7d89574095445b686c27227b35ad5cbfe97c7928a6dd5392da"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/results.ts",
+      "sha256": "e4897072f5eada21435617f3d2540a72d089548777623f1ab1fa0728a151d144"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/rounds.ts",
+      "sha256": "4f5ee361e58dcf49ca380cf6ee5e215faef1aaa6ca377fbd53ddf33bf8cfbb23"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/scoring.ts",
+      "sha256": "c92b1e5f9210872aa4c4c071bc9e166e6a99b20066e49aa9f796e308f1dd95eb"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/submissions.ts",
+      "sha256": "4094d4dcda19ff379dfcfae81a225bb612741eddb24790ff5c95a33ee4adbeb7"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/support.ts",
+      "sha256": "960f71f87ae7047e755d79c3f8ea6322729d771bd22409d8c2c1a63a69826088"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/teamRejoinRequests.ts",
+      "sha256": "c018ba1e25ff23cfac399f52670a0f5fc6d17e1f99a35919eb663a48cd1c6d6a"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/teams.ts",
+      "sha256": "26e654016515f494b29b1182549461461f7be4ee6dc61efd46a5bc025688e9a5"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/api/tracks.ts",
+      "sha256": "d8704d7b909cb81e7f76aab05a15f76e56bd216c4f611202d6f629f005e649b4"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/apiClient.ts",
+      "sha256": "3f755a8f3c4e4ae1e8aaab5360a30c02453ead90ae3525deb84827aff77dc135"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/AnnouncementComposerModal.tsx",
+      "sha256": "5edab3c3b7fa8d75cf0c712b6f6d223a63a9d7d614bac4d77df46b8837b6e5fa"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/AnnouncementSplash.tsx",
+      "sha256": "8787ef2bcc20f4e0cc9fc77fe0032ee4409f8a2a6ae7a46f824b81d0bcecd804"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/CompetitionRulesModal.tsx",
+      "sha256": "bd6b8def594fb6a197d009b9baa7bc3c39100fd27dce16908852e9d0b81f9f97"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/ConfirmDialog.test.tsx",
+      "sha256": "13d5d8aabefe80401ca814232c6eaafb43e3c25e4d521d744fe22e875d437f1d"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/ConfirmDialog.tsx",
+      "sha256": "2429e7047ff885e7f851a4c78b2299477b0467c701a36c1dd66cab668050dfb1"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/CountdownDisplay.tsx",
+      "sha256": "4f5721d7d5e656c8d5453cf05fed14320ff179f9f326c589a141794714d69f72"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/MemberTextList.tsx",
+      "sha256": "402f1867f45aaa58f9ac98f0506f21598d555326e8e64d319478c0c81bc78c77"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/NavbarRoleTimer.tsx",
+      "sha256": "4ace8b74ccd2d15a253781a7d813a1201aba07cfeb19d31d4288ca1af3950028"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/NotificationDetailModal.tsx",
+      "sha256": "b52e16d7234ca1eac520c9250b09dbe98a7d6748eec11a2b02a51d902073807a"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/OnboardingTour.tsx",
+      "sha256": "81af439d4c619602f7fd910b93045ab9ed2e6e006ffcf584d971b1ef1b4e89b0"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/ParticipantJourneyBar.tsx",
+      "sha256": "84112b5dc796e562a51a8847e0ff0cd6350fc3f3e09f25124e9c214ee7ddfe3c"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/PixelComponents.tsx",
+      "sha256": "ed8049f0e064f1047ba27231c7fdecb46f941c1f555475ea6fb1caf1efac8b29"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/PixelMenu.test.tsx",
+      "sha256": "cd5eca2fd5c1fdffb3b940c4af8557e734f960c30d6586a41cdff364aaf71270"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/PixelMenu.tsx",
+      "sha256": "ef4ff3c7da2e8df63ad10881e5b992e33f8f15d77e29197211992ee9835425b2"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/RoleGuideModal.tsx",
+      "sha256": "076fc4b19aa222b1120226957022dd459c4700e2884fbd8b2a42d0cf6e111c10"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/SealFooter.tsx",
+      "sha256": "478c465b581a9e7a882c4bde98d6a3049d2605cb213f00a830ce9a3f63ea13e2"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/TeamDetailModal.tsx",
+      "sha256": "076c5f67e806c68cc93a7f7f9899d322f404e87f036d73466a2aadb4a1cb037e"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/UniversitySelect.tsx",
+      "sha256": "5ba9bdea17c952fc4605f72daceb2be934c64d4aa3304954d7142d35f6eb78b8"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/components/WheelTimePicker.tsx",
+      "sha256": "50950c1e58ac9496308479005087a22e297d4bda359988ba2cd60e9b51f07ca1"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/constants/universities.ts",
+      "sha256": "9da460ca340a0da5a6366e80635b7dedb9aada72250582831a81fabe983d1d5c"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/hooks/useRoundTimer.test.ts",
+      "sha256": "4127b5729cca056425d96ded6f89466332dab3542998b73ead9b38fc00373d74"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/hooks/useRoundTimer.ts",
+      "sha256": "fdf0211bf405e1370e52267ed03cb04101bd98256bf65eb800468fa4874d0992"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/permissions.test.ts",
+      "sha256": "df5afeb513a8394a494e486d8629aba275efd63f5904e7672ed9a92a2970bdef"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/permissions.ts",
+      "sha256": "db6362bc2ebee20caf34b27aacb5da9bc0ae0ddb0fbb42f47f502c1229091734"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/teamPhase.ts",
+      "sha256": "332b9790a20db26b2a132da529be652ec774f62f030d35fb1e9f0c7c4e4a9001"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/userDisplay.ts",
+      "sha256": "a11288b2007ff845e544987883454e3313f99a19ed6e4f2bc129a9d9b26be824"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/validation/fptStudentId.test.ts",
+      "sha256": "0e27a78114a9f1bbd99fd283f3ba9e24b7aee5ceec8462b8b53a28e98971af02"
+    },
+    {
+      "path": "front-end/src/seal-web/src/shared/validation/fptStudentId.ts",
+      "sha256": "cb669c20567c8f4c335038c203be2bbb2a02f78a2edb22c7570142355b2352c5"
+    },
+    {
+      "path": "front-end/src/seal-web/src/styles/default_theme.css",
+      "sha256": "c0e4f4d86a2dbfe76912e757ae360998911dc8548646feff90cbc202e0cbb08c"
+    },
+    {
+      "path": "front-end/src/seal-web/src/styles/fonts.css",
+      "sha256": "c0f27f49e4dd6b0553f68b2fd113c7a451ca0d11798046a52be9ab949e5e40d8"
+    },
+    {
+      "path": "front-end/src/seal-web/src/styles/globals.css",
+      "sha256": "acba75d3fc6662d1bb8db32d6dbe420c53b87cdb0ae045897cbad045deb080b6"
+    },
+    {
+      "path": "front-end/src/seal-web/src/styles/index.css",
+      "sha256": "60794539f2ee4b3563711f0ae5b8f717c16bce2f1e637d3e668f8244c461e923"
+    },
+    {
+      "path": "front-end/src/seal-web/src/styles/tailwind.css",
+      "sha256": "bfd40759a431ec97c6bcf5ad3def9c9fa31e01531ef4c876b10afc6f80cab4de"
+    },
+    {
+      "path": "front-end/src/seal-web/src/styles/theme.css",
+      "sha256": "999193c3c3bd609038e9f4084615f7de350562b16e0099028be19c09b5683713"
+    },
+    {
+      "path": "front-end/src/seal-web/src/test/setup.ts",
+      "sha256": "80f5817738d0a137fab14cec6037aac4d3a2965aa57b47ab2a6e2951915c020b"
+    },
+    {
+      "path": "front-end/src/seal-web/src/vite-env.d.ts",
+      "sha256": "92106ca2ca792067657c39385768c23d2172cffb88066bb6ef0c9c65de456d14"
+    },
+    {
+      "path": "front-end/src/seal-web/tsconfig.app.json",
+      "sha256": "052d55419aae1977f3d1a6c05ad03ebdf5febae4aa4894220c2cd8fb8d953299"
+    },
+    {
+      "path": "front-end/src/seal-web/tsconfig.json",
+      "sha256": "5802cd266f1a691f126c3a60b529da25abe1f3d00ca7c6563046becce35df832"
+    },
+    {
+      "path": "front-end/src/seal-web/tsconfig.node.json",
+      "sha256": "356a8973fcb4cbf36744b8355ee5a6befa7f55d3480363dc621d664bfa82c2c9"
+    },
+    {
+      "path": "front-end/src/seal-web/vite.config.ts",
+      "sha256": "b57d97436103342b4346128fd14f80e13cc356c4d8d6b7ddbc4b058a6fe2ef9b"
+    }
+  ]
+}

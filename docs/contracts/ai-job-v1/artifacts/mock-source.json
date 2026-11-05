@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "fcaj.ai.source.mock.v1",
+  "fixtureOnly": true,
+  "commitSha": "0123456789abcdef0123456789abcdef01234567",
+  "files": [
+    {
+      "path": "src/example.txt",
+      "content": "Synthetic hackathon fixture.\nNo participant source is included.\n"
+    }
+  ]
+}

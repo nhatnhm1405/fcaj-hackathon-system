@@ -1,0 +1,30 @@
+{
+  "stage": "isolated MySQL8.4 lab",
+  "container": "fcaj-ai-lab-337a2d553fcd",
+  "suites": [
+    {
+      "name": "com.seal.hackathon.aijob.AiJobIntegrationTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 22.975
+    },
+    {
+      "name": "com.seal.hackathon.db.FreshDatabaseDeploymentTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 28.732
+    },
+    {
+      "name": "com.seal.hackathon.storage.FileReferenceConcurrencyTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.479
+    }
+  ]
+}

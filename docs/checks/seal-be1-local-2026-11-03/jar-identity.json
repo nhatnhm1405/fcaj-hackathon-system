@@ -1,0 +1,21 @@
+{
+  "path": "back-end/src/seal-api/target/hackathon-0.0.1-SNAPSHOT.jar",
+  "sha256": "0c9c5225bf87d5b4711cb15726f34cda5c75a32ee599d92dad0a8b734c819658",
+  "startClass": "com.seal.hackathon.HackathonApplication",
+  "oldPackageAbsent": true,
+  "h2RuntimeAbsent": true,
+  "migrations": [
+    {
+      "entry": "BOOT-INF/classes/db/migration/V1__create_core_schema.sql",
+      "sha256": "91a3b9b0cb4d41ce5027fa850200848126bdfe57ba0ceef97defa1ff7928ea9d"
+    },
+    {
+      "entry": "BOOT-INF/classes/db/migration/V2__create_ai_job_delivery.sql",
+      "sha256": "4e40d1f4370c2324e90cd5d1c7e7396c2ce068e2331682421fb5f1e0a3aa4ea7"
+    },
+    {
+      "entry": "BOOT-INF/classes/db/migration/V3__add_user_track_row_versions.sql",
+      "sha256": "8e67ee1a45bdbd23724cc96bfd26df81f10e0a8cb84be955d37a998ee820ce49"
+    }
+  ]
+}
