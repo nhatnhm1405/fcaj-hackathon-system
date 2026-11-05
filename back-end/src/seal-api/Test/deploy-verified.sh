@@ -15,12 +15,22 @@ if [ -n "${DEPLOY_DB_TRUSTSTORE_FILE:-}" ]; then
   test -f "$DEPLOY_DB_TRUSTSTORE_FILE"
   db_mount=(--mount "type=bind,src=$DEPLOY_DB_TRUSTSTORE_FILE,dst=/run/secrets/rds-truststore.p12,readonly")
 fi
-test "$(git rev-parse HEAD)" = "$CANDIDATE_REVISION"
-git diff --quiet
-git diff --cached --quiet
-test -z "$(git ls-files --others --exclude-standard back-end/src/seal-api)"
-export CANDIDATE_BACKEND_IMAGE="seal-backend-candidate:$CANDIDATE_REVISION"
-docker build -t "$CANDIDATE_BACKEND_IMAGE" back-end/src/seal-api
+if [ -n "${DEPLOY_IMAGE:-}" ]; then
+  # Published releases run without a source checkout. Reject mutable tags and
+  # verify the image's own provenance before using it for either DB or runtime.
+  [[ "$CANDIDATE_REVISION" =~ ^[0-9a-f]{40}$ ]]
+  [[ "$DEPLOY_IMAGE" =~ ^[0-9]{12}\.dkr\.ecr\.[a-z0-9-]+\.amazonaws\.com/[a-z0-9/_-]+@sha256:[0-9a-f]{64}$ ]]
+  export CANDIDATE_BACKEND_IMAGE="$DEPLOY_IMAGE"
+  docker pull "$CANDIDATE_BACKEND_IMAGE"
+  test "$(docker image inspect --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' "$CANDIDATE_BACKEND_IMAGE")" = "$CANDIDATE_REVISION"
+else
+  test "$(git rev-parse HEAD)" = "$CANDIDATE_REVISION"
+  git diff --quiet
+  git diff --cached --quiet
+  test -z "$(git ls-files --others --exclude-standard back-end/src/seal-api)"
+  export CANDIDATE_BACKEND_IMAGE="seal-backend-candidate:$CANDIDATE_REVISION"
+  docker build --label "org.opencontainers.image.revision=$CANDIDATE_REVISION" -t "$CANDIDATE_BACKEND_IMAGE" back-end/src/seal-api
+fi
 # Production compose must select this candidate and its intended runtime target explicitly.
 docker compose -f "$DEPLOY_COMPOSE_FILE" config --format json | python3 -c '
 import json,os,sys

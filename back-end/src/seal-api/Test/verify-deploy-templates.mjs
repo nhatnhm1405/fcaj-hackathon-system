@@ -22,7 +22,7 @@ const env = {...process.env,
   DEPLOY_DB_TRUSTSTORE_FILE: truststore,
   DEPLOY_SPRING_PROFILES_ACTIVE: 'aws',
   DEPLOY_TARGET_BIND_IP: '10.20.30.40'};
-const docker = process.platform === 'win32' ? 'C:/Program Files/Docker/Docker/resources/bin/docker.exe' : 'docker';
+const docker = process.env.DOCKER_BIN || (process.platform === 'win32' ? 'C:/Program Files/Docker/Docker/resources/bin/docker.exe' : 'docker');
 for (const [file, bind] of [
   ['compose.aws.example.yml', '127.0.0.1'],
   ['compose.aws.alb-direct.example.yml', env.DEPLOY_TARGET_BIND_IP],

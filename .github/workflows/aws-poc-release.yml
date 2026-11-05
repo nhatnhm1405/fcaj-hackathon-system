@@ -1,0 +1,113 @@
+name: Release AWS PoC from develop
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: aws-poc-release
+  cancel-in-progress: false
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Backend tests
+        working-directory: back-end/src/seal-api
+        run: sh ./mvnw -B -Dspring.profiles.active=test package
+      - name: MySQL 8.4 integration tests in disposable local DB
+        working-directory: back-end/src/seal-api
+        run: bash Test/run-ai-mysql-tests.sh
+      - name: Deployment gates and Compose templates
+        run: |
+          node --test back-end/src/seal-api/Test/deploy-verified.test.mjs
+          node --test .github/scripts/deploy-ecr-ssm.test.mjs
+          python3 -B -m unittest discover -s back-end/src/seal-api/Test -p test_provision_aws_db_users.py -v
+          node back-end/src/seal-api/Test/verify-deploy-templates.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backend-${{ github.sha }}
+          path: back-end/src/seal-api/target/*.jar
+          if-no-files-found: error
+          retention-days: 7
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: front-end/src/seal-web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: front-end/src/seal-web/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          VITE_API_URL: https://api.autowashpro.io.vn
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-${{ github.sha }}
+          path: front-end/src/seal-web/dist
+          retention-days: 7
+  release:
+    # Opt-in only after role, private config, schema and TLS have been verified.
+    if: github.ref == 'refs/heads/develop' && vars.AWS_POC_RELEASE_ENABLED == 'true'
+    needs: [backend, frontend]
+    environment: aws-poc
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AWS_REGION: ap-southeast-1
+      AWS_POC_INSTANCE_ID: i-08f9589f2c373a395
+      ECR_REPOSITORY: 582129522297.dkr.ecr.ap-southeast-1.amazonaws.com/fcaj-poc-backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_POC_DEPLOY_ROLE_ARN }}
+          aws-region: ap-southeast-1
+          allowed-account-ids: '582129522297'
+      - uses: aws-actions/amazon-ecr-login@v2
+      - uses: actions/download-artifact@v4
+        with:
+          name: backend-${{ github.sha }}
+          path: back-end/src/seal-api/target
+      - name: Publish immutable release image
+        env:
+          IMAGE_TAG: sha-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          docker build --platform linux/amd64 -f back-end/src/seal-api/Dockerfile.release --label "org.opencontainers.image.revision=$GITHUB_SHA" -t "$ECR_REPOSITORY:$IMAGE_TAG" back-end/src/seal-api
+          docker push "$ECR_REPOSITORY:$IMAGE_TAG"
+          digest="$(aws ecr describe-images --repository-name fcaj-poc-backend --image-ids "imageTag=$IMAGE_TAG" --query 'imageDetails[0].imageDigest' --output text)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          echo "DEPLOY_IMAGE=$ECR_REPOSITORY@$digest" >> "$GITHUB_ENV"
+      - name: Deploy same digest through SSM and verify runtime
+        run: node .github/scripts/deploy-ecr-ssm.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-${{ github.sha }}-${{ github.run_attempt }}
+          path: release-manifest.json
+          if-no-files-found: ignore
+          retention-days: 30
