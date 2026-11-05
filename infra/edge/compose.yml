@@ -1,0 +1,17 @@
+# Start after api.autowashpro.io.vn resolves directly to this EC2 instance.
+# Host networking lets Caddy reach the backend's loopback-only port.
+name: fcaj-edge
+services:
+  caddy:
+    image: caddy@sha256:f6228111e5fafa1a5238258d0858e103f10599b8d1659a146e7726681a002bb9
+    restart: unless-stopped
+    network_mode: host
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+  caddy_config:
