@@ -399,4 +399,3 @@ Outputs:
   BackendLogGroupArn:
     Description: Log group ARN for scoped log permissions.
     Value: !GetAtt BackendLogGroup.Arn
-
