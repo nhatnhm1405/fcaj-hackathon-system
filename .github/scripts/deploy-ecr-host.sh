@@ -8,6 +8,8 @@ set -a
 . /etc/seal/deploy-settings.sh
 set +a
 export DEPLOY_IMAGE="$1" CANDIDATE_REVISION="$2"
+# The gate runs in a child shell; keep this available to the host's later Compose calls.
+export CANDIDATE_BACKEND_IMAGE="$DEPLOY_IMAGE"
 # Initialization remains an explicit operator task, never a CI side effect.
 test "${DEPLOY_DB_MODE:-verify-only}" = verify-only
 aws ecr get-login-password --region ap-southeast-1 |

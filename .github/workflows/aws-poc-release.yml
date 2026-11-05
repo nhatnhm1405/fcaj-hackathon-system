@@ -32,6 +32,7 @@ jobs:
         run: |
           node --test back-end/src/seal-api/Test/deploy-verified.test.mjs
           node --test .github/scripts/deploy-ecr-ssm.test.mjs
+          node --test .github/scripts/deploy-ecr-host.test.mjs
           python3 -B -m unittest discover -s back-end/src/seal-api/Test -p test_provision_aws_db_users.py -v
           node back-end/src/seal-api/Test/verify-deploy-templates.mjs
       - uses: actions/upload-artifact@v4
