@@ -1,0 +1,7 @@
+{
+  "Name": "fcaj-poc-web",
+  "Description": "FCAJ PoC frontend private S3 origin",
+  "SigningProtocol": "sigv4",
+  "SigningBehavior": "always",
+  "OriginAccessControlOriginType": "s3"
+}

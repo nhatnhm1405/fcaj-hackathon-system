@@ -15,3 +15,5 @@ DEPLOY_SPRING_PROFILES_ACTIVE=aws
 # Accepts an empty database or an already valid V3 database. Does not upgrade old schemas.
 DEPLOY_DB_MODE=verify-only
 # CANDIDATE_REVISION is supplied by CI or the operator from the exact committed checkout.
+# CI supplies DEPLOY_IMAGE as a full ECR repository@sha256:digest. Never persist a
+# mutable tag here. Omit it only for the existing local-build operator workflow.
