@@ -7,8 +7,8 @@ BE1 đã đổi module sang `back-end/src/seal-api`, package `com.seal.hackathon
 ## Đã nhận, không cần cấp lại từ đầu
 
 - IAM role đã được BE2 giao theo xác nhận28/10; chưa kiểm từ tiến trình Java.
-- Region ap-southeast-1; bucket fcaj-poc-data-582129522297-ap-southeast-1.
-- Jobs fcaj-poc-ai-jobs, results fcaj-poc-ai-results; URL/ARN đủ trong [nguồn BE2](../checks/be1-be2-integration-2026-10-28/be2-handoff-source.md).
+- Region ap-southeast-1; bucket fcaj-poc-data-${AWS_ACCOUNT_ID}-ap-southeast-1.
+- Jobs fcaj-poc-ai-jobs, results fcaj-poc-ai-results; mẫu URL/ARN trong [nguồn BE2 đã ẩn account ID](../checks/be1-be2-integration-2026-10-28/be2-handoff-source.md). Operator cung cấp giá trị thật qua kênh riêng; `${AWS_ACCOUNT_ID}` chưa phải cấu hình có thể chạy ngay.
 - Quyết định queue visibility120s và target MySQL8.4; không đồng nghĩa đã áp lên AWS.
 
 ## Cần BE2 xác nhận trước Receive/DeleteMessage thật

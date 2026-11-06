@@ -1,9 +1,9 @@
 # Frontend AWS PoC
 
-Bucket hiện hữu: `fcaj-poc-web-582129522297-ap-southeast-1`, region `ap-southeast-1`. Chỉ sử dụng S3 REST origin; không bật public bucket/website endpoint.
+Bucket hiện hữu: `<FRONTEND_BUCKET>`, region `ap-southeast-1`. Chỉ sử dụng S3 REST origin; không bật public bucket/website endpoint.
 
-- `origin-access-control.json`: OAC ký mọi request bằng SigV4. Live OAC ID: `E26UZJ33KJTB8Y`.
-- `distribution.template.json`: cấu hình đầu vào cho AWS CLI, chưa phải stack CloudFormation. Thay đúng `REPLACE_OAC_ID` và caller reference duy nhất ở bản render evidence trước sử dụng. Certificate us-east-1 phải ISSUED trước tạo distribution với alias. Đã tạo distribution `E180WF8HS7AXN0`, domain `dhbebwa4imwrs.cloudfront.net`; không chạy create lần nữa để tạo trùng.
+- `origin-access-control.json`: OAC ký mọi request bằng SigV4. Lấy OAC ID đã xác minh từ hồ sơ operator riêng.
+- `distribution.template.json`: cấu hình đầu vào cho AWS CLI, chưa phải stack CloudFormation. Thay đúng `REPLACE_OAC_ID` và caller reference duy nhất ở bản render evidence trước sử dụng. Certificate us-east-1 phải ISSUED trước tạo distribution với alias. Môi trường operator đã có distribution; đọc ID/domain từ hồ sơ riêng và không chạy create lần nữa để tạo trùng.
 - Chỉ cấp `s3:GetObject` cho principal CloudFront, điều kiện `AWS:SourceArn` bằng ARN distribution thực. Giữ cả4 PublicAccessBlock=true và BucketOwnerEnforced. Không ghi đè policy có sẵn mà chưa review.
 - SPA fallback403/404 về index.html áp dụng riêng frontend; API dùng hostname riêng và không đi qua fallback. Phải kiểm nội dung JS/CSS thật, không coi index200 là đủ chứng minh OAC đúng.
 - Managed-CachingOptimized và Managed-SecurityHeadersPolicy đã đối chiếu bằng API và tài liệu AWS. CachingOptimized có MinTTL1 giây; index được upload no-cache, asset có tên hash dùng cache immutable. Sau phát hành, invalidate `/` và `/index.html` nếu cần cập nhật ngay.

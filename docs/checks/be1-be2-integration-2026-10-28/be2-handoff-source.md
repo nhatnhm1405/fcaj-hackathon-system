@@ -1,5 +1,9 @@
 # BE2 → BE1: bàn giao cấu hình và chuẩn bị tích hợp PoC
 
+Bản công khai đã thay AWS account ID bằng `${AWS_ACCOUNT_ID}`; không dùng các
+giá trị mẫu này làm cấu hình chạy thật. Operator giữ bản gốc riêng ngoài Git.
+Các kết quả bên dưới là checkpoint lịch sử, không phải trạng thái AWS hiện tại.
+
 Ngày: **28/10/2026**, giờ Việt Nam. Người gửi: **Backend 2**. Người nhận: **Backend 1**; phần contract và worker phối hợp với FE/AI.
 
 ## 1. Phản hồi báo cáo BE1 và đầu ra cần gửi thêm
@@ -64,22 +68,22 @@ Nguồn: `backend1-poc-outputs-test-guide.md` ngày 27/10/2026, đã ghi nhận 
 
 | Output key | Giá trị |
 |---|---|
-| `BackendLogGroupArn` | `arn:aws:logs:ap-southeast-1:582129522297:log-group:/fcaj/poc/backend:*` |
+| `BackendLogGroupArn` | `arn:aws:logs:ap-southeast-1:${AWS_ACCOUNT_ID}:log-group:/fcaj/poc/backend:*` |
 | `BackendLogGroupName` | `/fcaj/poc/backend` |
-| `BackendRepositoryArn` | `arn:aws:ecr:ap-southeast-1:582129522297:repository/fcaj-poc-backend` |
+| `BackendRepositoryArn` | `arn:aws:ecr:ap-southeast-1:${AWS_ACCOUNT_ID}:repository/fcaj-poc-backend` |
 | `BackendRepositoryName` | `fcaj-poc-backend` |
-| `BackendRepositoryUri` | `582129522297.dkr.ecr.ap-southeast-1.amazonaws.com/fcaj-poc-backend` |
-| `DataBucketArn` | `arn:aws:s3:::fcaj-poc-data-582129522297-ap-southeast-1` |
-| `DataBucketName` | `fcaj-poc-data-582129522297-ap-southeast-1` |
+| `BackendRepositoryUri` | `${AWS_ACCOUNT_ID}.dkr.ecr.ap-southeast-1.amazonaws.com/fcaj-poc-backend` |
+| `DataBucketArn` | `arn:aws:s3:::fcaj-poc-data-${AWS_ACCOUNT_ID}-ap-southeast-1` |
+| `DataBucketName` | `fcaj-poc-data-${AWS_ACCOUNT_ID}-ap-southeast-1` |
 | `DeploymentRegion` | `ap-southeast-1` |
-| `JobDeadLetterQueueArn` | `arn:aws:sqs:ap-southeast-1:582129522297:fcaj-poc-ai-jobs-dlq` |
-| `JobDeadLetterQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-jobs-dlq` |
-| `JobQueueArn` | `arn:aws:sqs:ap-southeast-1:582129522297:fcaj-poc-ai-jobs` |
-| `JobQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-jobs` |
-| `ResultDeadLetterQueueArn` | `arn:aws:sqs:ap-southeast-1:582129522297:fcaj-poc-ai-results-dlq` |
-| `ResultDeadLetterQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-results-dlq` |
-| `ResultQueueArn` | `arn:aws:sqs:ap-southeast-1:582129522297:fcaj-poc-ai-results` |
-| `ResultQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-results` |
+| `JobDeadLetterQueueArn` | `arn:aws:sqs:ap-southeast-1:${AWS_ACCOUNT_ID}:fcaj-poc-ai-jobs-dlq` |
+| `JobDeadLetterQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/${AWS_ACCOUNT_ID}/fcaj-poc-ai-jobs-dlq` |
+| `JobQueueArn` | `arn:aws:sqs:ap-southeast-1:${AWS_ACCOUNT_ID}:fcaj-poc-ai-jobs` |
+| `JobQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/${AWS_ACCOUNT_ID}/fcaj-poc-ai-jobs` |
+| `ResultDeadLetterQueueArn` | `arn:aws:sqs:ap-southeast-1:${AWS_ACCOUNT_ID}:fcaj-poc-ai-results-dlq` |
+| `ResultDeadLetterQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/${AWS_ACCOUNT_ID}/fcaj-poc-ai-results-dlq` |
+| `ResultQueueArn` | `arn:aws:sqs:ap-southeast-1:${AWS_ACCOUNT_ID}:fcaj-poc-ai-results` |
+| `ResultQueueUrl` | `https://sqs.ap-southeast-1.amazonaws.com/${AWS_ACCOUNT_ID}/fcaj-poc-ai-results` |
 
 URL dùng gọi SQS; ARN dùng giới hạn IAM. ECR URI chưa có tag/digest, không đại diện cho image đã build. Log group tồn tại chưa chứng minh backend đã gửi log vào đó.
 
@@ -89,9 +93,9 @@ Dùng tên biến theo báo cáo BE1 mới; các tên `S3_BUCKET_NAME`/`SQS_JOB_
 
 ```dotenv
 AWS_REGION=ap-southeast-1
-APP_STORAGE_BUCKET=fcaj-poc-data-582129522297-ap-southeast-1
-APP_AI_JOBS_JOBS_QUEUE_URL=https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-jobs
-APP_AI_JOBS_RESULTS_QUEUE_URL=https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-results
+APP_STORAGE_BUCKET=fcaj-poc-data-${AWS_ACCOUNT_ID}-ap-southeast-1
+APP_AI_JOBS_JOBS_QUEUE_URL=https://sqs.ap-southeast-1.amazonaws.com/${AWS_ACCOUNT_ID}/fcaj-poc-ai-jobs
+APP_AI_JOBS_RESULTS_QUEUE_URL=https://sqs.ap-southeast-1.amazonaws.com/${AWS_ACCOUNT_ID}/fcaj-poc-ai-results
 APP_AI_JOBS_ENABLED=false
 ```
 

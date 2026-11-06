@@ -1,6 +1,6 @@
 # CloudFormation cho Issue #14
 
-Đã đối chiếu tài nguyên tại account `582129522297`, Singapore, ngày06/11/2026. Các file dưới đây là source để review; chưa áp update/import hoặc tạo role release trong lượt bổ sung này.
+Đã đối chiếu tài nguyên tại account triển khai của operator, Singapore, ngày06/11/2026. Các file dưới đây là source để review; chưa áp update/import hoặc tạo role release trong lượt bổ sung này.
 
 | File | Phạm vi và cách dùng |
 | --- | --- |
@@ -21,7 +21,7 @@ Chưa tạo hoặc thực thi IMPORT change set. Trước khi làm, owner review
 | DatabaseSecurityGroup | Đọc GroupId của group RDS trong phiên AWS riêng |
 | BackendRole | `fcaj-poc-backend-ec2-role` |
 | BackendInstanceProfile | `fcaj-poc-backend-ec2-role` |
-| BackendInstance | `i-08f9589f2c373a395` |
+| BackendInstance | Đọc instance ID từ metadata operator riêng |
 | DatabaseSubnetGroup | `fcaj-poc-db-subnets` |
 | Database | `fcaj-poc-mysql` |
 
