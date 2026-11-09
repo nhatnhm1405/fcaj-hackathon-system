@@ -14,7 +14,7 @@ Người dùng yêu cầu review và thực hiện các task trong kế hoạch,
 | EC2/RDS deploy | Chưa đủ đầu vào: BE2 báo chưa tạo EC2/RDS, chưa có compose production, TLS/DB identity/runtime target/image digest |
 | Model thật/FE UI | Chưa nghiệm thu; ngoài đợt triển khai local này |
 
-Nguồn BE2 đã đọc đầy đủ và đưa bản sao portable vào [be2-handoff-source.md](../checks/be1-be2-integration-2026-10-28/be2-handoff-source.md). Bản sao giữ nguyên nội dung ngày28/10, không xem đây là kiểm AWS live. Đã đọc báo cáo BE1 ngày27/28, runbook R1–R5, contract/fixtures/validator, source job/storage/security, migrations, runner, Dockerfile, compose, workflow và test liên quan.
+Nguồn BE2 đã đọc đầy đủ và đưa bản sao portable vào [be2-handoff-source.md](../checks/be1-be2-integration-2026-10-28/be2-handoff-source.md). Bản công khai giữ nội dung nghiệp vụ ngày28/10 và đã thay AWS account ID bằng placeholder; operator giữ bản gốc ngoài Git. Không xem đây là kiểm AWS live. Đã đọc báo cáo BE1 ngày27/28, runbook R1–R5, contract/fixtures/validator, source job/storage/security, migrations, runner, Dockerfile, compose, workflow và test liên quan.
 
 Checkout: branch codex/backend1-foundation, HEAD nền f42a168d9cb0613a43801edca632a2de64837099; Git root E:/FA26/AWS/fcaj-hackathon-system. Lúc bắt đầu có25 tracked files thay đổi và nhiều thư mục mới chưa track. Không có AGENTS.md trong cây workspace qua rg -uu. Không thể quy mọi diff đã có cho phiên này hoặc xác định tác giả chỉ qua status. Sau rename Git hiển thị source cũ deleted và module mới untracked đến khi chuẩn bị revision; đó không phải mất source. HEAD nền không đại diện JAR mới.
 

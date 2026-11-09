@@ -1,0 +1,196 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  FCAJ PoC import candidate for the existing backend host, database and permissions.
+  Review an IMPORT change set against fresh metadata before execution. Do not create duplicate resources.
+Metadata:
+  AWSToolsMetrics:
+    AWSAgentToolkit: aws-cloudformation@3
+  com.aws.cloudformation.Context:
+    arch: Existing public EC2 with Caddy connects to private MySQL in the existing VPC.
+    must:
+      - Import only the listed existing resources. No create-stack or runtime replacement.
+      - VPC routes, NAT, endpoints and database parameter group remain externally managed.
+      - Keep existing private settings and TLS volumes on the host. This template does not bootstrap them.
+    ref:
+      - at: README.md
+        has: Ownership, import review, identifiers and release prerequisites.
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  BackendSubnetId:
+    Type: AWS::EC2::Subnet::Id
+  DatabaseSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+  BackendImageId:
+    Type: AWS::EC2::Image::Id
+    Default: ami-0080f2c6aa4e378b7
+  BackendKeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+  BackendPrivateIp:
+    Type: String
+    AllowedPattern: '^(\d{1,3}\.){3}\d{1,3}$'
+    Description: Read the existing instance private IPv4 locally; changing it can replace the host.
+  OperatorSshCidr:
+    Type: String
+    AllowedPattern: '^(\d{1,3}\.){3}\d{1,3}/32$'
+    Description: Read the existing operator /32 locally before import; never publish its value in this template.
+  DatabaseParameterGroup:
+    Type: String
+    Default: fcaj-poc-mysql84-case1
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9-]*'
+    Description: Existing mysql8.4 case1 group; do not replace or reset parameters during import.
+Resources:
+  BackendSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Preserve public Caddy access and the existing restricted operator SSH rule.
+        must: [No public 8080 or database port, Preserve group identity used by RDS ingress]
+    Properties:
+      GroupName: fcaj-poc-backend-sg
+      GroupDescription: FCAJ PoC backend access
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 80, ToPort: 80, CidrIp: 0.0.0.0/0}
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: 0.0.0.0/0}
+        - {IpProtocol: tcp, FromPort: 22, ToPort: 22, CidrIp: !Ref OperatorSshCidr}
+      SecurityGroupEgress:
+        - {IpProtocol: '-1', CidrIp: 0.0.0.0/0}
+  DatabaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Restrict MySQL to the existing backend security group.
+        must: [No public MySQL ingress, Import without replacing either security group]
+    Properties:
+      GroupName: fcaj-poc-rds-sg
+      GroupDescription: Allow MySQL from FCAJ backend
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !GetAtt BackendSecurityGroup.GroupId
+      SecurityGroupEgress:
+        - {IpProtocol: '-1', CidrIp: 0.0.0.0/0}
+  BackendRole:
+    Type: AWS::IAM::Role
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Preserve the instance identity and scoped backend transport permissions.
+        must: [No static AWS credentials, No worker receive-jobs or send-results permissions]
+    Properties:
+      RoleName: fcaj-poc-backend-ec2-role
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: ec2.amazonaws.com}
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Policies:
+        - PolicyName: fcaj-poc-backend-runtime
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: EcrAuthentication
+                Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: '*'
+              - Sid: PullBackendImage
+                Effect: Allow
+                Action: [ecr:BatchCheckLayerAvailability, ecr:GetDownloadUrlForLayer, ecr:BatchGetImage]
+                Resource: !Sub arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/fcaj-poc-backend
+              - Sid: AppArtifacts
+                Effect: Allow
+                Action: [s3:GetObject, s3:GetObjectVersion, s3:PutObject, s3:DeleteObject, s3:DeleteObjectVersion]
+                Resource: !Sub arn:${AWS::Partition}:s3:::fcaj-poc-data-${AWS::AccountId}-${AWS::Region}/poc/*
+              - Sid: SendJobs
+                Effect: Allow
+                Action: sqs:SendMessage
+                Resource: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-jobs
+              - Sid: ConsumeResults
+                Effect: Allow
+                Action: [sqs:ReceiveMessage, sqs:DeleteMessage]
+                Resource: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-results
+  BackendInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      InstanceProfileName: fcaj-poc-backend-ec2-role
+      Path: /
+      Roles: [!Ref BackendRole]
+  BackendInstance:
+    Type: AWS::EC2::Instance
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Adopt the running host without changing its storage, network identity or private files.
+        must:
+          - Never replace or stop/start this host as part of import. Public IP stability is not established.
+          - Database users are restricted to the existing private IP.
+          - Compare EBS mappings and all replacement-sensitive properties before import or update.
+    Properties:
+      ImageId: !Ref BackendImageId
+      InstanceType: t3.medium
+      KeyName: !Ref BackendKeyName
+      SubnetId: !Ref BackendSubnetId
+      PrivateIpAddress: !Ref BackendPrivateIp
+      SecurityGroupIds: [!GetAtt BackendSecurityGroup.GroupId]
+      IamInstanceProfile: !Ref BackendInstanceProfile
+      Tags: [{Key: Name, Value: fcaj-poc-backend}]
+  DatabaseSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      DBSubnetGroupName: fcaj-poc-db-subnets
+      DBSubnetGroupDescription: Private subnets for FCAJ RDS
+      SubnetIds: !Ref DatabaseSubnetIds
+  Database:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: Adopt the running database without recreating it or changing private administrator credentials.
+        must:
+          - Import only; omitted master credential properties are not a fresh-provisioning strategy.
+          - Keep deletion protection, encryption, Multi-AZ and the existing case1 parameter group.
+          - No engine upgrade, schema reset, username or password change during import.
+    Properties:
+      DBInstanceIdentifier: fcaj-poc-mysql
+      Engine: mysql
+      EngineVersion: 8.4.11
+      DBInstanceClass: db.t4g.small
+      AllocatedStorage: '20'
+      MaxAllocatedStorage: 50
+      StorageType: gp3
+      StorageEncrypted: true
+      MultiAZ: true
+      PubliclyAccessible: false
+      DeletionProtection: true
+      BackupRetentionPeriod: 1
+      AutoMinorVersionUpgrade: true
+      CopyTagsToSnapshot: true
+      CACertificateIdentifier: rds-ca-rsa2048-g1
+      DBParameterGroupName: !Ref DatabaseParameterGroup
+      DBSubnetGroupName: !Ref DatabaseSubnetGroup
+      VPCSecurityGroups: [!GetAtt DatabaseSecurityGroup.GroupId]
+Outputs:
+  BackendInstanceId:
+    Description: Existing instance after a reviewed import; no application bootstrap is performed.
+    Value: !Ref BackendInstance
+  DatabaseAddress:
+    Description: Private database endpoint; no secret values are exported.
+    Value: !GetAtt Database.Endpoint.Address

@@ -1,0 +1,10 @@
+**
+!deploy/
+deploy/**
+!deploy/BuildRdsTruststore.java
+!Test/
+Test/**
+!Test/deploy-verified.sh
+!target/
+target/**
+!target/*.jar
