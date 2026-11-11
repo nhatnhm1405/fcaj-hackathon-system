@@ -1,4 +1,4 @@
-name: Release AWS PoC from develop
+name: Build develop and release AWS PoC
 on:
   push:
     branches: [develop]
@@ -64,10 +64,38 @@ jobs:
           name: frontend-${{ github.sha }}
           path: front-end/src/seal-web/dist
           retention-days: 7
+  image:
+    # Build on GitHub even when AWS publishing/deployment is disabled.
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      image_id: ${{ steps.build.outputs.image_id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: backend-${{ github.sha }}
+          path: back-end/src/seal-api/target
+      - name: Build image from the tested JAR
+        id: build
+        run: |
+          set -euo pipefail
+          image="seal-backend-ci:$GITHUB_SHA"
+          docker build --platform linux/amd64 -f back-end/src/seal-api/Dockerfile.release --label "org.opencontainers.image.revision=$GITHUB_SHA" -t "$image" back-end/src/seal-api
+          echo "image_id=$(docker image inspect --format '{{.Id}}' "$image")" >> "$GITHUB_OUTPUT"
+          docker save "$image" | gzip > "$RUNNER_TEMP/backend-image.tar.gz"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backend-image-${{ github.sha }}
+          path: ${{ runner.temp }}/backend-image.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
   release:
     # Opt-in only after role, private config, schema and TLS have been verified.
     if: github.ref == 'refs/heads/develop' && vars.AWS_POC_RELEASE_ENABLED == 'true'
-    needs: [backend, frontend]
+    needs: [image]
     environment: aws-poc
     runs-on: ubuntu-latest
     timeout-minutes: 35
@@ -87,18 +115,25 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_POC_DEPLOY_ROLE_ARN }}
           aws-region: ap-southeast-1
-          allowed-account-ids: '582129522297'
+      - name: Verify release account before publishing
+        run: test "$(aws sts get-caller-identity --query Account --output text)" = '582129522297'
       - uses: aws-actions/amazon-ecr-login@v2
       - uses: actions/download-artifact@v4
         with:
-          name: backend-${{ github.sha }}
-          path: back-end/src/seal-api/target
+          name: backend-image-${{ github.sha }}
+          path: ${{ runner.temp }}/release-image
       - name: Publish immutable release image
         env:
           IMAGE_TAG: sha-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          BUILT_IMAGE_ID: ${{ needs.image.outputs.image_id }}
         run: |
           set -euo pipefail
-          docker build --platform linux/amd64 -f back-end/src/seal-api/Dockerfile.release --label "org.opencontainers.image.revision=$GITHUB_SHA" -t "$ECR_REPOSITORY:$IMAGE_TAG" back-end/src/seal-api
+          docker load --input "$RUNNER_TEMP/release-image/backend-image.tar.gz"
+          image="seal-backend-ci:$GITHUB_SHA"
+          [[ "$BUILT_IMAGE_ID" =~ ^sha256:[0-9a-f]{64}$ ]]
+          test "$(docker image inspect --format '{{.Id}}' "$image")" = "$BUILT_IMAGE_ID"
+          test "$(docker image inspect --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' "$image")" = "$GITHUB_SHA"
+          docker tag "$image" "$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REPOSITORY:$IMAGE_TAG"
           digest="$(aws ecr describe-images --repository-name fcaj-poc-backend --image-ids "imageTag=$IMAGE_TAG" --query 'imageDetails[0].imageDigest' --output text)"
           [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
