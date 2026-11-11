@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "fcaj.ai.message.v1",
+  "eventType": "AI_JOB_COMPLETED",
+  "messageId": "9cb5f5df-56b8-468d-aa84-dd2bf563d1cf",
+  "occurredAt": "2026-10-27T03:00:06Z",
+  "jobId": "b61f34f3-f73a-4a26-915a-401dd9d3dce1",
+  "submissionId": 101,
+  "inputRevision": "147f667f5d2074dd28a84508624e0cf3622003f29cbcf8acb659f9a55f355507",
+  "commitSha": "0123456789abcdef0123456789abcdef01234567",
+  "processingVersion": "mock-pipeline-v1",
+  "modelConfigVersion": "mock-model-config-v1",
+  "promptVersion": "mock-prompt-v1",
+  "rubricVersion": "mock-rubric-v1",
+  "status": "FAILED",
+  "error": {
+    "code": "MOCK_PROCESSING_FAILED",
+    "message": "The mock worker could not complete this test job."
+  }
+}

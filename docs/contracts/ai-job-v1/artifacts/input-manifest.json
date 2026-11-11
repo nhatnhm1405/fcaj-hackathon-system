@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "fcaj.ai.input-manifest.v1",
+  "fixtureOnly": true,
+  "submissionId": 101,
+  "competitionEventId": 201,
+  "roundId": 301,
+  "trackId": 401,
+  "commitSha": "0123456789abcdef0123456789abcdef01234567",
+  "submissionSnapshot": {
+    "description": "Synthetic fixture for transport and validation only.",
+    "repoUrl": null,
+    "demoUrl": null,
+    "slideUrl": null
+  },
+  "source": {
+    "key": "inputs/b61f34f3-f73a-4a26-915a-401dd9d3dce1/mock-source.json",
+    "sha256": "cf910c9267b193217f10889b869e8d1ff06777985e56bec6d989eb4a8cab9bf7",
+    "sizeBytes": 279,
+    "contentType": "application/json",
+    "versionId": null
+  },
+  "rubric": {
+    "key": "rubrics/b61f34f3-f73a-4a26-915a-401dd9d3dce1/rubric.json",
+    "sha256": "238c009abf477a3b45f21334c70213d961930c0e5b7daf8fa09117531daab4f3",
+    "sizeBytes": 308,
+    "contentType": "application/json",
+    "versionId": null
+  },
+  "processingVersion": "mock-pipeline-v1",
+  "modelConfigVersion": "mock-model-config-v1",
+  "promptVersion": "mock-prompt-v1",
+  "rubricVersion": "mock-rubric-v1"
+}

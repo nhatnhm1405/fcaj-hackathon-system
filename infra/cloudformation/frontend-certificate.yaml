@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Frontend TLS certificate for CloudFront using validation at the existing external DNS provider.
+Metadata:
+  AWSToolsMetrics:
+    AWSAgentToolkit: aws-cloudformation@3
+Parameters:
+  FrontendDomain:
+    Type: String
+    Default: app.autowashpro.io.vn
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]+\.[a-z]{2,}$'
+    Description: Frontend hostname. Deploy this stack in us-east-1 for CloudFront.
+Resources:
+  FrontendCertificate:
+    Type: AWS::CertificateManager::Certificate
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Metadata:
+      com.aws.cloudformation.Context:
+        why: CloudFront viewer TLS with DNS ownership validated at the existing provider.
+        must:
+          - Deploy in us-east-1.
+          - Add validation CNAME at external DNS; do not replace existing nameservers.
+          - Retain certificates when replacing or deleting this stack.
+    Properties:
+      DomainName: !Ref FrontendDomain
+      ValidationMethod: DNS
+      Tags:
+        - Key: Project
+          Value: fcaj-hackathon-system
+Outputs:
+  CertificateArn:
+    Description: Attach to the frontend CloudFront distribution after DNS validation.
+    Value: !Ref FrontendCertificate

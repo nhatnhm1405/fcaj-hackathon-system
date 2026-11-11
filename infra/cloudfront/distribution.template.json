@@ -1,0 +1,43 @@
+{
+  "CallerReference": "REPLACE_UNIQUE_CALLER_REFERENCE",
+  "Aliases": {"Quantity": 1, "Items": ["app.autowashpro.io.vn"]},
+  "DefaultRootObject": "index.html",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [{
+      "Id": "frontend-s3",
+      "DomainName": "fcaj-poc-web-582129522297-ap-southeast-1.s3.ap-southeast-1.amazonaws.com",
+      "OriginPath": "",
+      "S3OriginConfig": {"OriginAccessIdentity": ""},
+      "OriginAccessControlId": "REPLACE_OAC_ID"
+    }]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "frontend-s3",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "AllowedMethods": {"Quantity": 2, "Items": ["GET", "HEAD"], "CachedMethods": {"Quantity": 2, "Items": ["GET", "HEAD"]}},
+    "Compress": true,
+    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+    "ResponseHeadersPolicyId": "67f7725c-6f97-4210-82d7-5512b31e9d03",
+    "TrustedSigners": {"Enabled": false, "Quantity": 0},
+    "TrustedKeyGroups": {"Enabled": false, "Quantity": 0}
+  },
+  "CustomErrorResponses": {
+    "Quantity": 2,
+    "Items": [
+      {"ErrorCode": 403, "ResponsePagePath": "/index.html", "ResponseCode": "200", "ErrorCachingMinTTL": 0},
+      {"ErrorCode": 404, "ResponsePagePath": "/index.html", "ResponseCode": "200", "ErrorCachingMinTTL": 0}
+    ]
+  },
+  "Comment": "FCAJ PoC frontend - Issue 14",
+  "PriceClass": "PriceClass_200",
+  "Enabled": true,
+  "ViewerCertificate": {
+    "ACMCertificateArn": "arn:aws:acm:us-east-1:582129522297:certificate/2816724e-24d6-4d03-adbe-4da76c3a8b32",
+    "SSLSupportMethod": "sni-only",
+    "MinimumProtocolVersion": "TLSv1.2_2021"
+  },
+  "Restrictions": {"GeoRestriction": {"RestrictionType": "none", "Quantity": 0}},
+  "HttpVersion": "http2",
+  "IsIPV6Enabled": true
+}

@@ -1,0 +1,21 @@
+{
+  "placeholderOnly": true,
+  "note": "Fill private values and response IDs on the operator machine. No automatic POST retries.",
+  "login": {"email": "<private-account-email>", "password": "<private-account-password>"},
+  "createEvent": {
+    "name": "SEAL smoke <unique-run-id>", "season": "<SPRING|SUMMER|FALL>", "year": "<integer-current-year>",
+    "registrationStart": "<local-ISO-datetime>", "registrationEnd": "<local-ISO-datetime>",
+    "startDate": "<local-ISO-datetime>", "endDate": "<local-ISO-datetime>", "trackSelectionMode": "SELF_SELECT"
+  },
+  "createUser": {"email": "<unique-test-email>", "password": "<private-password-at-least-8-characters>", "fullName": "Smoke <run-id> <name>", "userType": "<STAFF|EXTERNAL_STUDENT>"},
+  "grantCoordinator": {"userId": "<integer-coordinator-userId>", "roleName": "EVENT_COORDINATOR", "eventId": "<integer-eventId>"},
+  "createRound": {"name": "Smoke round", "orderNumber": 1, "startTime": "<local-ISO-datetime>", "endTime": "<local-ISO-datetime>", "submissionDeadline": "<local-ISO-datetime>", "isFinal": false},
+  "createCriterion": {"name": "Implementation", "weight": 1, "maxScore": 10, "orderNumber": 1},
+  "assignJudge": {"judgeUserId": "<integer-judge-userId>", "roundId": "<integer-roundId>", "trackId": "<integer-trackId>"},
+  "createTeam": {"eventId": "<integer-eventId>", "name": "Smoke <run-id> team <A|B>"},
+  "inviteMember": {"invitedUserId": "<integer-member-userId>"},
+  "selectTrack": {"trackId": "<integer-trackId>"},
+  "startTimer": {"durationSeconds": 600},
+  "submit": {"roundId": "<integer-roundId>", "repoUrl": "<approved-small-public-GitHub-repository-URL>", "description": "Smoke <run-id>"},
+  "jobCreate": {"method": "POST", "path": "/api/ai/submissions/<submissionId>/jobs", "body": null}
+}

@@ -1,0 +1,344 @@
+{
+  "file": {
+    "bytes": 157581,
+    "sha256": "ab6279c0ad77be4405ca1505c1da8b7db2a1a7c6b9e052db5b672790e1f23802",
+    "serverVersion": "8.0.45",
+    "dumpCompleted": "2026-10-27 11:00:26"
+  },
+  "safety": {
+    "createDatabase": 1,
+    "use": 1,
+    "dropTable": 31,
+    "lockTables": 31
+  },
+  "totals": {
+    "tables": 31,
+    "rows": 627,
+    "columns": 253,
+    "foreignKeys": 55,
+    "unique": 18
+  },
+  "tables": [
+    {
+      "name": "announcement",
+      "rows": 0,
+      "columns": 12,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 3
+    },
+    {
+      "name": "auditlog",
+      "rows": 3,
+      "columns": 9,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "hackathonevent",
+      "rows": 2,
+      "columns": 13,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "joinrequest",
+      "rows": 0,
+      "columns": 8,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "judgeassignment",
+      "rows": 11,
+      "columns": 5,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "mentorassignment",
+      "rows": 4,
+      "columns": 4,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "mentorsupportrequest",
+      "rows": 0,
+      "columns": 10,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 4
+    },
+    {
+      "name": "notification",
+      "rows": 59,
+      "columns": 11,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 3
+    },
+    {
+      "name": "participanteventhistory",
+      "rows": 45,
+      "columns": 6,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "participationaccessrequest",
+      "rows": 1,
+      "columns": 7,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "passwordresetotp",
+      "rows": 0,
+      "columns": 9,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "prize",
+      "rows": 3,
+      "columns": 8,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 3
+    },
+    {
+      "name": "reopenrequest",
+      "rows": 0,
+      "columns": 8,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 3
+    },
+    {
+      "name": "role",
+      "rows": 4,
+      "columns": 3,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "round",
+      "rows": 2,
+      "columns": 10,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "roundresult",
+      "rows": 21,
+      "columns": 8,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "roundtimer",
+      "rows": 4,
+      "columns": 12,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "roundtimernotice",
+      "rows": 0,
+      "columns": 5,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "score",
+      "rows": 270,
+      "columns": 9,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "scoringcriteria",
+      "rows": 15,
+      "columns": 9,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 3
+    },
+    {
+      "name": "scoringcriteriatemplate",
+      "rows": 1,
+      "columns": 5,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "submission",
+      "rows": 23,
+      "columns": 10,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "systemlog",
+      "rows": 1,
+      "columns": 5,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "team",
+      "rows": 15,
+      "columns": 5,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "teamevententry",
+      "rows": 16,
+      "columns": 8,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "teaminvite",
+      "rows": 0,
+      "columns": 9,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "teammember",
+      "rows": 45,
+      "columns": 5,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    },
+    {
+      "name": "teamrejoinrequest",
+      "rows": 1,
+      "columns": 8,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 2
+    },
+    {
+      "name": "track",
+      "rows": 4,
+      "columns": 13,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "user",
+      "rows": 62,
+      "columns": 15,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 0
+    },
+    {
+      "name": "usereventrole",
+      "rows": 15,
+      "columns": 4,
+      "engine": "InnoDB",
+      "charset": "utf8mb4",
+      "collation": "utf8mb4_0900_ai_ci",
+      "secondaryIndexes": 1
+    }
+  ],
+  "comparison": {
+    "equivalentTables": [
+      "announcement",
+      "auditlog",
+      "hackathonevent",
+      "joinrequest",
+      "judgeassignment",
+      "mentorassignment",
+      "mentorsupportrequest",
+      "notification",
+      "participanteventhistory",
+      "participationaccessrequest",
+      "passwordresetotp",
+      "prize",
+      "reopenrequest",
+      "role",
+      "round",
+      "roundresult",
+      "roundtimer",
+      "roundtimernotice",
+      "score",
+      "scoringcriteria",
+      "scoringcriteriatemplate",
+      "submission",
+      "systemlog",
+      "team",
+      "teamevententry",
+      "teaminvite",
+      "teammember",
+      "teamrejoinrequest",
+      "track",
+      "user",
+      "usereventrole"
+    ],
+    "differences": []
+  },
+  "limitations": [
+    "Static normalized DDL comparison only; not runtime acceptance.",
+    "Table and identifier case folded for comparison; column order ignored.",
+    "Secondary indexes and inherited charset/collation require runtime review.",
+    "No data values, FK orphan checks or relationship validation in this report."
+  ]
+}

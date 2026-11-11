@@ -1,0 +1,8 @@
+{
+  "scope": "local Dockerfile build; not published or handed to BE2",
+  "tag": "seal-backend-local:be1-20261103-01",
+  "imageId": "sha256:625f94d99c41ecdcca9ee9f46e9f42c3f50a9da744ed373e05ee84851c21bb99",
+  "buildIidFile": "sha256:625f94d99c41ecdcca9ee9f46e9f42c3f50a9da744ed373e05ee84851c21bb99",
+  "repoDigests": "seal-backend-local@sha256:625f94d99c41ecdcca9ee9f46e9f42c3f50a9da744ed373e05ee84851c21bb99",
+  "syntheticEnvironmentProbe": "both compose variants passed; network disabled; backend not started"
+}

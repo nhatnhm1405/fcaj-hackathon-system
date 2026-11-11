@@ -1,0 +1,29 @@
+{
+  "stage": "production components plus API rehearsal H2 synthetic",
+  "suites": [
+    {
+      "name": "com.seal.hackathon.aijob.AiJobIntegrationTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 14.654
+    },
+    {
+      "name": "com.seal.hackathon.aijob.ApiSmokeRehearsalTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 4.083
+    },
+    {
+      "name": "com.seal.hackathon.aijob.AwsMockWorkerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.041
+    }
+  ]
+}

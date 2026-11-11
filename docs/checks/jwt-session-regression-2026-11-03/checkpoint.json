@@ -1,0 +1,94 @@
+{
+  "createdAt": "2026-11-03T07:36:57.143Z",
+  "baselineRevision": "bab44e5fdeb710e6c71982b2e8f5547829fa8e40",
+  "scope": "Test-only fix on existing uncommitted working tree; historical bytes preserved outside explicit edits",
+  "productionChanged": false,
+  "mainFilesPreserved": 321,
+  "modifiedExistingPaths": [
+    "back-end/src/seal-api/Test/run-integration-smoke.ps1",
+    "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/ApiSmokeRehearsalTest.java",
+    "docs/README.md",
+    "docs/plans/backend1-be2-current-handoff-2026-10-28.md",
+    "docs/plans/seal-be1-jwt-session-regression-fix-plan-2026-11-03.md",
+    "docs/report/seal-be1-completed-work-review-2026-11-03.md"
+  ],
+  "addedPaths": [
+    "back-end/src/seal-api/src/test/java/com/seal/hackathon/security/JwtCookieSessionIsolationTest.java",
+    "back-end/src/seal-api/src/test/java/com/seal/hackathon/testsupport/CookieSessionClient.java",
+    "back-end/src/seal-api/src/test/java/com/seal/hackathon/testsupport/CookieSessionClientTest.java",
+    "docs/checks/jwt-session-regression-2026-11-03/README.md",
+    "docs/checks/jwt-session-regression-2026-11-03/api-rehearsal.json",
+    "docs/checks/jwt-session-regression-2026-11-03/auth-traces.json",
+    "docs/checks/jwt-session-regression-2026-11-03/before-files.json",
+    "docs/checks/jwt-session-regression-2026-11-03/checkpoint.json",
+    "docs/checks/jwt-session-regression-2026-11-03/test-results.json",
+    "docs/checks/jwt-session-regression-2026-11-03/verify-checkpoint.mjs",
+    "docs/report/seal-be1-jwt-session-regression-fix-2026-11-03.md"
+  ],
+  "files": [
+    {
+      "path": "back-end/src/seal-api/Test/run-integration-smoke.ps1",
+      "sha256": "333eda253b5d8c05ae249d236b0ce237cd3e0193dfe9b8c8451b2d049a451f7e"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/aijob/ApiSmokeRehearsalTest.java",
+      "sha256": "e5825b0c2ee61bf22bf0b7cdd256b8c143a40732499952c6d5bed2d088efb918"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/security/JwtCookieSessionIsolationTest.java",
+      "sha256": "8118e1962edef6faf4a71a18c5a870a205c4f87204d6c7f50f1879d8d0e70241"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/testsupport/CookieSessionClient.java",
+      "sha256": "f94e8f6d97a040d5ae43519a1ae990a634130bfdc2bff0407555b18a7da1d695"
+    },
+    {
+      "path": "back-end/src/seal-api/src/test/java/com/seal/hackathon/testsupport/CookieSessionClientTest.java",
+      "sha256": "f72128aa287783597a521dd5adcf6f327418085c304955dfefe84d03c9a57bf4"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "7fab3eb5cf41479339c6949aa18b10e41f79e53ceb8ed38c888c42866a22edf0"
+    },
+    {
+      "path": "docs/checks/jwt-session-regression-2026-11-03/README.md",
+      "sha256": "9959a01f623f88c8be02c6d145dc268765ff1d4a4ee552be4f655eba188b15bc"
+    },
+    {
+      "path": "docs/checks/jwt-session-regression-2026-11-03/api-rehearsal.json",
+      "sha256": "129a5492fa12b718ca211acaabddcd2423e6dc2864f598ec5defeebd684ddee1"
+    },
+    {
+      "path": "docs/checks/jwt-session-regression-2026-11-03/auth-traces.json",
+      "sha256": "d26fb809a785baac42c3cd8d99bb968e9698e9ac7f2ab4b5a9ff3de297b9a496"
+    },
+    {
+      "path": "docs/checks/jwt-session-regression-2026-11-03/before-files.json",
+      "sha256": "38ed1af4f76ac9e2f2ac76984f84699ca5f0918823fbf71e3f01b4aeebeb9536"
+    },
+    {
+      "path": "docs/checks/jwt-session-regression-2026-11-03/test-results.json",
+      "sha256": "d9919b8a611af9435ca5ea7a8cb8de936e3ef0de058ac8b3e7e0badbe5dd48b7"
+    },
+    {
+      "path": "docs/checks/jwt-session-regression-2026-11-03/verify-checkpoint.mjs",
+      "sha256": "9d3ff03acad3223df8423548fd9d541bb4f96b49fbbe6412f90b61d3a185bf7c"
+    },
+    {
+      "path": "docs/plans/backend1-be2-current-handoff-2026-10-28.md",
+      "sha256": "72ca22d0df022443f9e71649a90964242d56ea30ffd83336eeb3a38b193e8b4f"
+    },
+    {
+      "path": "docs/plans/seal-be1-jwt-session-regression-fix-plan-2026-11-03.md",
+      "sha256": "def484c71009b4e70a24c02339bd32a7e03b5fd9b1aca78949f895ece4a6aaa8"
+    },
+    {
+      "path": "docs/report/seal-be1-completed-work-review-2026-11-03.md",
+      "sha256": "201a9150596a2204cacab72783e260c28e5b96cd1a0692571f3524929371e09e"
+    },
+    {
+      "path": "docs/report/seal-be1-jwt-session-regression-fix-2026-11-03.md",
+      "sha256": "f3708d912a86e7cac844d8316de70128598e3bf47b75e96af8671e302a3f7233"
+    }
+  ]
+}

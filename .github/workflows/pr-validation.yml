@@ -1,0 +1,130 @@
+name: Validate PR to develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-validation-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  integration:
+    name: Integration paths and contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout candidate and preservation history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify Windows and POSIX E2E launcher paths
+        run: |
+          node --test .github/scripts/verify-e2e-launchers.test.mjs
+          node .github/scripts/verify-e2e-launchers.mjs
+
+      # This frozen comparison belongs to the BE1 handoff, not to future PRs
+      # that legitimately change backend or frontend application code.
+      - name: Verify BE1 handoff preservation and Windows launcher paths
+        if: github.head_ref == 'feature/seal-be1-handoff-2026-11-03'
+        run: node docs/checks/pr-23-integration-2026-11-04/verify-integration.mjs
+
+      - name: Validate current and historical contract fixtures
+        run: |
+          node docs/contracts/ai-job-v1/validate-current-examples.mjs
+          node docs/contracts/ai-job-v1/validate-fixtures.mjs
+
+      - name: Test dump parsing and deployment gate ordering
+        run: |
+          node --test back-end/src/seal-api/Test/schema/inspect-dump.test.mjs
+          node --test back-end/src/seal-api/Test/deploy-verified.test.mjs
+          node --test .github/scripts/deploy-ecr-ssm.test.mjs
+          node --test .github/scripts/deploy-ecr-host.test.mjs
+          python3 -B -m unittest discover -s back-end/src/seal-api/Test -p test_provision_aws_db_users.py -v
+
+      - name: Validate AWS Compose templates without deployment
+        run: node back-end/src/seal-api/Test/verify-deploy-templates.mjs
+
+  frontend:
+    name: Frontend tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: front-end/src/seal-web
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: front-end/src/seal-web/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run frontend tests
+        run: npm test
+
+      - name: Build frontend
+        run: npm run build
+
+  backend:
+    name: Backend package and MySQL 8.4
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: back-end/src/seal-api
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Setup Node.js for integration utilities
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run backend tests and package candidate
+        run: sh ./mvnw -B -Dspring.profiles.active=test package
+
+      # Both Maven invocations are sequential in this job; the MySQL runner
+      # creates its own loopback container, never a shared application DB.
+      - name: Verify MySQL 8.4 migrations and AI job delivery
+        run: bash Test/run-ai-mysql-tests.sh
+
+  python:
+    name: Python worker unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Test worker contracts, source evidence and mocked model calls
+        run: python -m unittest discover -s ai-worker/tests -v

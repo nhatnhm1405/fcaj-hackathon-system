@@ -1,0 +1,7 @@
+back-end/src/seal-api/mvnw text eol=lf
+.github/scripts/*.sh text eol=lf
+back-end/src/seal-api/Test/*.sh text eol=lf
+back-end/src/seal-api/deploy/*.sh.example text eol=lf
+back-end/src/seal-api/src/main/resources/db/** text eol=lf
+docs/contracts/ai-job-v1/** text eol=lf
+docs/checks/** text eol=lf

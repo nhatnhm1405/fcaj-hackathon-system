@@ -1,0 +1,6 @@
+ M docs/README.md
+?? docs/checks/seal-be1-local-2026-11-03/
+?? docs/plans/backend1-ai-engineering-discussion-handoff-plan-2026-10-28.md
+?? docs/plans/backend1-be2-predeploy-execution-discussion-plan-2026-11-03.md
+?? docs/plans/seal-be1-ai-execution-plan-2026-11-03.md
+?? docs/plans/seal-be1-tra-loi-be2-truoc-deploy-2026-11-03.md
