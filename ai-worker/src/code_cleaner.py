@@ -64,6 +64,9 @@ LANGUAGE_EXTENSIONS: Dict[str, Set[str]] = {
 # Giới hạn kích thước tối đa cho 1 file mã nguồn (150 KB)
 MAX_FILE_SIZE_BYTES = 150 * 1024
 
+# Giới hạn tổng số ký tự mã nguồn để bảo vệ ngữ cảnh (KV cache) cho Local AI trên EC2
+DEFAULT_MAX_TOTAL_CHARS = int(os.getenv("CODE_CLEANER_MAX_TOTAL_CHARS", "35000"))
+
 
 def is_binary_string(bytes_content: bytes) -> bool:
     """Kiểm tra nhanh xem file có phải dạng nhị phân không (chứa null byte)."""
@@ -87,8 +90,8 @@ def _should_ignore_rel_path(rel_path: str, ignore_paths: Set[str]) -> bool:
 
 def _file_priority_key(rel_path: str, preferred_exts: Set[str]) -> Tuple[int, str]:
     """
-    Sắp xếp độ ưu tiên của file để nếu chạm ngưỡng max_total_files thì vẫn giữ được
-    code nghiệp vụ chính (src/, app/, back-end/, front-end/) trước các file tài liệu phụ.
+    Sắp xếp độ ưu tiên của file để nếu chạm ngưỡng max_total_files hoặc max_total_chars
+    thì vẫn giữ được code nghiệp vụ chính (src/, app/, back-end/, front-end/) trước các file tài liệu phụ.
     """
     _, ext = os.path.splitext(rel_path)
     ext_lower = ext.lower()
@@ -117,6 +120,7 @@ def scan_and_collect_sources(
     custom_ignore_dirs: Optional[List[str]] = None,
     target_languages: Optional[List[str]] = None,
     max_total_files: int = 100,
+    max_total_chars: Optional[int] = None,
 ) -> Tuple[Dict[str, str], Dict[str, Any]]:
     """
     Quét thư mục gốc và thu thập toàn bộ file source code hợp lệ.
@@ -172,12 +176,13 @@ def scan_and_collect_sources(
 
             candidate_paths.append((rel_path, full_path))
 
-    # Sắp xếp ưu tiên file code chính trước khi đọc và giới hạn max_total_files
+    # Sắp xếp ưu tiên file code chính trước khi đọc và giới hạn max_total_files / max_total_chars
     candidate_paths.sort(key=lambda item: _file_priority_key(item[0], preferred_exts))
 
     collected_files: Dict[str, str] = {}
     total_lines = 0
     total_bytes = 0
+    total_chars = 0
 
     for rel_path, full_path in candidate_paths:
         if len(collected_files) >= max_total_files:
@@ -197,11 +202,33 @@ def scan_and_collect_sources(
                     continue
 
             text_content = raw_bytes.decode("utf-8", errors="replace")
+            if max_total_chars is not None and max_total_chars > 0:
+                if total_chars >= max_total_chars:
+                    skipped_files_count += 1
+                    continue
+                remaining_chars = max_total_chars - total_chars
+                if len(text_content) > remaining_chars:
+                    # Chỉ giữ các dòng nguyên vẹn nằm trong giới hạn remaining_chars
+                    full_lines = text_content.splitlines()
+                    kept_lines: List[str] = []
+                    used_chars = 0
+                    for ln in full_lines:
+                        add_len = len(ln) + (1 if kept_lines else 0)
+                        if used_chars + add_len > remaining_chars:
+                            break
+                        kept_lines.append(ln)
+                        used_chars += add_len
+                    if not kept_lines:
+                        skipped_files_count += 1
+                        continue
+                    text_content = "\n".join(kept_lines)
+
             line_count = len(text_content.splitlines())
 
             collected_files[rel_path] = text_content
             total_lines += line_count
-            total_bytes += file_size
+            total_bytes += len(text_content.encode("utf-8"))
+            total_chars += len(text_content)
         except Exception:
             skipped_files_count += 1
             continue
@@ -210,6 +237,7 @@ def scan_and_collect_sources(
         "total_files": len(collected_files),
         "total_lines": total_lines,
         "total_bytes": total_bytes,
+        "total_chars": total_chars,
         "skipped_files": skipped_files_count,
         "approx_tokens": int(total_bytes / 3.5),
     }

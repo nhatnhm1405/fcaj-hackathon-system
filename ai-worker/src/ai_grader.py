@@ -1,5 +1,6 @@
 """
-Module AI Grader - Tích hợp Cloud AI API (DeepSeek API mặc định / Google Gemini API fallback).
+Module AI Grader - Tích hợp Local AI trên AWS EC2 (Ollama / Qwen3 mặc định)
+và hỗ trợ fallback sang Cloud AI API (DeepSeek API / Google Gemini API).
 Thực hiện đánh giá source code đã đánh số dòng theo bộ tiêu chí Rubric,
 hậu kiểm toán học điểm trọng số, lọc số dòng/secret và trả về kết quả kèm Dẫn chứng (Evidence).
 """
@@ -58,6 +59,9 @@ QUY TẮC BẮT BUỘC KHI CHẤM:
 
 # Regex nhận diện tiền tố số dòng do format_code_with_line_numbers sinh ra (vd: "   1: ", "120: ")
 _LINE_PREFIX_RE = re.compile(r"^\s*\d+\s*:\s?(.*)$")
+
+# Regex loại bỏ khối suy nghĩ <think>...</think> của các dòng model Qwen3 / DeepSeek-R1
+_THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", flags=re.DOTALL | re.IGNORECASE)
 
 # Các mẫu regex để che (redact) secret bị lộ trong snippet/feedback
 _SECRET_PATTERNS = [
@@ -131,12 +135,25 @@ def redact_secrets(text: str) -> str:
 
 
 def _extract_json_object(raw_text: str) -> Dict[str, Any]:
-    """Trích xuất JSON object an toàn kể cả khi LLM bọc trong markdown ```json ... ```."""
-    cleaned = raw_text.strip()
+    """
+    Trích xuất JSON object an toàn kể cả khi LLM sinh khối <think>...</think> (Qwen3)
+    hoặc bọc trong markdown ```json ... ```.
+    """
+    cleaned = _THINK_BLOCK_RE.sub("", raw_text or "").strip()
+    if "</think>" in cleaned:
+        cleaned = cleaned.split("</think>", 1)[1].strip()
     if cleaned.startswith("```"):
         cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned, flags=re.IGNORECASE)
         cleaned = re.sub(r"\s*```$", "", cleaned)
-    return json.loads(cleaned)
+
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        first_brace = cleaned.find("{")
+        last_brace = cleaned.rfind("}")
+        if first_brace != -1 and last_brace != -1 and last_brace > first_brace:
+            return json.loads(cleaned[first_brace : last_brace + 1])
+        raise
 
 
 def build_user_prompt(job_input: GradingJobInput, code_context: str, stats: Dict[str, Any]) -> str:
@@ -198,11 +215,12 @@ Trả về duy nhất 1 JSON Object có cấu trúc chính xác như sau (không
     return prompt
 
 
-class CloudAIGrader:
+class AIGrader:
     """
-    Client chấm điểm mã nguồn qua Cloud AI API.
-    - Mặc định sử dụng DeepSeek API (`provider="deepseek"`, model `deepseek-chat`, max_tokens=8192).
-    - Hỗ trợ fallback sang Google Gemini API (`provider="gemini"`, model `gemini-2.5-flash`).
+    Client chấm điểm mã nguồn hỗ trợ cả Local AI trên AWS EC2 (Ollama / Qwen3)
+    và Cloud AI API fallback (DeepSeek / Gemini).
+    - Mặc định sử dụng Local AI (`provider="local_ai"`, model `qwen3:4b` qua Ollama `/v1/chat/completions`).
+    - Hỗ trợ fallback sang DeepSeek API (`provider="deepseek"`) hoặc Google Gemini API (`provider="gemini"`).
     """
 
     def __init__(
@@ -210,28 +228,109 @@ class CloudAIGrader:
         api_key: Optional[str] = None,
         model_name: Optional[str] = None,
         provider: Optional[str] = None,
+        base_url: Optional[str] = None,
         max_tokens: int = 8192,
         temperature: float = 0.1,
+        timeout: Optional[int] = None,
+        think_mode: Optional[bool] = None,
+        num_ctx: Optional[int] = None,
     ):
-        resolved_provider = (provider or os.getenv("AI_PROVIDER") or "deepseek").strip().lower()
-        if resolved_provider not in {"deepseek", "gemini"}:
-            raise ValueError(f"AI provider không hợp lệ: {resolved_provider}. Chỉ hỗ trợ 'deepseek' hoặc 'gemini'.")
-        self.provider = resolved_provider
+        raw_provider = (provider or os.getenv("AI_PROVIDER") or "local_ai").strip().lower()
+        if raw_provider == "ollama":
+            raw_provider = "local_ai"
+        if raw_provider not in {"local_ai", "deepseek", "gemini"}:
+            raise ValueError(
+                f"AI provider không hợp lệ: {raw_provider}. Chỉ hỗ trợ 'local_ai', 'deepseek' hoặc 'gemini'."
+            )
+        self.provider = raw_provider
         self.max_tokens = max_tokens
         self.temperature = temperature
 
-        if self.provider == "deepseek":
+        if self.provider == "local_ai":
+            self.api_key = api_key or os.getenv("LOCAL_AI_API_KEY", "ollama")
+            self.model_name = model_name or os.getenv("LOCAL_AI_MODEL", "qwen3:4b")
+            self.base_url = base_url or os.getenv(
+                "LOCAL_AI_BASE_URL", "http://localhost:11434/v1/chat/completions"
+            )
+            self.timeout = timeout or int(os.getenv("LOCAL_AI_TIMEOUT", "300"))
+            self.num_ctx = num_ctx or int(os.getenv("LOCAL_AI_NUM_CTX", "8192"))
+            if think_mode is None:
+                self.think_mode = os.getenv("LOCAL_AI_THINK_MODE", "false").strip().lower() in {
+                    "1",
+                    "true",
+                    "yes",
+                }
+            else:
+                self.think_mode = bool(think_mode)
+        elif self.provider == "deepseek":
             self.api_key = api_key or os.getenv("DEEPSEEK_API_KEY")
             self.model_name = model_name or os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
-            self.base_url = os.getenv(
+            self.base_url = base_url or os.getenv(
                 "DEEPSEEK_API_URL", "https://api.deepseek.com/chat/completions"
             )
+            self.timeout = timeout or 120
+            self.num_ctx = 16384
+            self.think_mode = False
         else:
             self.api_key = api_key or os.getenv("GEMINI_API_KEY")
             self.model_name = model_name or os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-            self.base_url = (
+            self.base_url = base_url or (
                 f"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent"
             )
+            self.timeout = timeout or 120
+            self.num_ctx = 16384
+            self.think_mode = False
+
+    def _call_local_ai_api(self, user_prompt: str) -> Tuple[Dict[str, Any], str]:
+        system_content = SYSTEM_PROMPT if self.think_mode else f"{SYSTEM_PROMPT.rstrip()}\n\n/no_think"
+        user_content = user_prompt if self.think_mode else f"{user_prompt.rstrip()}\n\n/no_think"
+        payload: Dict[str, Any] = {
+            "model": self.model_name,
+            "messages": [
+                {"role": "system", "content": system_content},
+                {"role": "user", "content": user_content},
+            ],
+            "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
+            "response_format": {"type": "json_object"},
+            "options": {
+                "num_ctx": self.num_ctx,
+                "temperature": self.temperature,
+            },
+        }
+
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+
+        req = urllib.request.Request(
+            self.base_url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers=headers,
+        )
+
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as response:
+                res_data = json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            err_body = e.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"Lỗi gọi Local AI API (HTTP {e.code}): {err_body}")
+
+        choices = res_data.get("choices", [])
+        if not choices:
+            raise RuntimeError(f"Local AI API không trả về choice nào: {res_data}")
+
+        first_choice = choices[0]
+        finish_reason = first_choice.get("finish_reason")
+        if finish_reason == "length":
+            raise RuntimeError(
+                f"Local AI API kết thúc với finish_reason='length' (bị cắt cụt tại max_tokens={self.max_tokens}). "
+                "Từ chối ghi kết quả không hoàn chỉnh."
+            )
+
+        raw_json_str = first_choice.get("message", {}).get("content", "{}")
+        actual_model_name = res_data.get("model") or self.model_name
+        return _extract_json_object(raw_json_str), actual_model_name
 
     def _call_deepseek_api(self, user_prompt: str) -> Tuple[Dict[str, Any], str]:
         if not self.api_key:
@@ -261,7 +360,7 @@ class CloudAIGrader:
         )
 
         try:
-            with urllib.request.urlopen(req, timeout=120) as response:
+            with urllib.request.urlopen(req, timeout=self.timeout) as response:
                 res_data = json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as e:
             err_body = e.read().decode("utf-8", errors="replace")
@@ -308,7 +407,7 @@ class CloudAIGrader:
         )
 
         try:
-            with urllib.request.urlopen(req, timeout=120) as response:
+            with urllib.request.urlopen(req, timeout=self.timeout) as response:
                 res_data = json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as e:
             err_body = e.read().decode("utf-8", errors="replace")
@@ -337,12 +436,14 @@ class CloudAIGrader:
         code_context: str,
         stats: Dict[str, Any],
     ) -> GradingJobOutput:
-        """Thực hiện gọi Cloud AI API để chấm điểm và hậu kiểm toàn bộ kết quả."""
+        """Thực hiện gọi AI API (Local AI trên EC2 hoặc Cloud AI) để chấm điểm và hậu kiểm toàn bộ kết quả."""
         job_input.validate()
         start_time = time.time()
         user_prompt = build_user_prompt(job_input, code_context, stats)
 
-        if self.provider == "deepseek":
+        if self.provider == "local_ai":
+            parsed_result, actual_model_name = self._call_local_ai_api(user_prompt)
+        elif self.provider == "deepseek":
             parsed_result, actual_model_name = self._call_deepseek_api(user_prompt)
         else:
             parsed_result, actual_model_name = self._call_gemini_api(user_prompt)
@@ -354,18 +455,29 @@ class CloudAIGrader:
 
         # Ánh xạ & chuẩn hóa criteria_results
         raw_criteria_map: Dict[int, CriterionResult] = {}
-        for cr in parsed_result.get("criteria_results", []):
-            cid = int(cr["criteria_id"])
-            if cid not in max_score_by_id:
-                continue
-            max_sc = max_score_by_id[cid]
-            clamped_score = max(0.0, min(float(cr["score"]), max_sc))
-            cleaned_feedback = redact_secrets(str(cr.get("feedback", "")).strip())
-            raw_criteria_map[cid] = CriterionResult(
-                criteria_id=cid,
-                score=round(clamped_score, 2),
-                feedback=cleaned_feedback or "THIEU_DU_LIEU: Không có nhận xét chi tiết từ model.",
-            )
+        raw_criteria_list = parsed_result.get("criteria_results", [])
+        if isinstance(raw_criteria_list, list):
+            for cr in raw_criteria_list:
+                if not isinstance(cr, dict) or "criteria_id" not in cr:
+                    continue
+                try:
+                    cid = int(cr["criteria_id"])
+                except (ValueError, TypeError):
+                    continue
+                if cid not in max_score_by_id:
+                    continue
+                max_sc = max_score_by_id[cid]
+                try:
+                    raw_score = float(cr.get("score", 0.0))
+                except (ValueError, TypeError):
+                    raw_score = 0.0
+                clamped_score = max(0.0, min(raw_score, max_sc))
+                cleaned_feedback = redact_secrets(str(cr.get("feedback", "")).strip())
+                raw_criteria_map[cid] = CriterionResult(
+                    criteria_id=cid,
+                    score=round(clamped_score, 2),
+                    feedback=cleaned_feedback or "THIEU_DU_LIEU: Không có nhận xét chi tiết từ model.",
+                )
 
         # Đảm bảo khớp 1-1 toàn bộ tiêu chí trong Rubric theo đúng thứ tự
         criteria_results: List[CriterionResult] = []
@@ -388,45 +500,60 @@ class CloudAIGrader:
         evidence_list: List[CodeEvidence] = []
         evidence_count_by_cid: Dict[int, int] = {}
 
-        for ev in parsed_result.get("evidence", []):
-            cid = int(ev.get("criteria_id", 0))
-            if cid not in max_score_by_id:
-                continue
-            if evidence_count_by_cid.get(cid, 0) >= 20:
-                continue
+        raw_evidence_list = parsed_result.get("evidence", [])
+        if isinstance(raw_evidence_list, list):
+            for ev in raw_evidence_list:
+                if not isinstance(ev, dict):
+                    continue
+                try:
+                    cid = int(ev.get("criteria_id", 0))
+                except (ValueError, TypeError):
+                    continue
+                if cid not in max_score_by_id:
+                    continue
+                if evidence_count_by_cid.get(cid, 0) >= 20:
+                    continue
 
-            ev_type = str(ev.get("type", "NEUTRAL")).upper().strip()
-            if ev_type not in {"PENALTY", "POSITIVE", "NEUTRAL"}:
-                ev_type = "NEUTRAL"
+                ev_type = str(ev.get("type", "NEUTRAL")).upper().strip()
+                if ev_type not in {"PENALTY", "POSITIVE", "NEUTRAL"}:
+                    ev_type = "NEUTRAL"
 
-            file_path = str(ev.get("file_path", "")).strip().lstrip("/")
-            if not file_path:
-                continue
+                file_path = str(ev.get("file_path", "")).strip().lstrip("/")
+                if not file_path:
+                    continue
 
-            line_start = max(1, int(ev.get("line_start", 1)))
-            line_end = max(line_start, int(ev.get("line_end", line_start)))
+                try:
+                    line_start = max(1, int(ev.get("line_start", 1)))
+                except (ValueError, TypeError):
+                    line_start = 1
+                try:
+                    line_end = max(line_start, int(ev.get("line_end", line_start)))
+                except (ValueError, TypeError):
+                    line_end = line_start
 
-            raw_snippet = str(ev.get("snippet", ""))
-            cleaned_snippet = redact_secrets(strip_line_number_prefix(raw_snippet)).strip()
-            cleaned_comment = redact_secrets(str(ev.get("comment", "")).strip())
+                raw_snippet = str(ev.get("snippet", ""))
+                cleaned_snippet = redact_secrets(strip_line_number_prefix(raw_snippet)).strip()
+                cleaned_comment = redact_secrets(str(ev.get("comment", "")).strip())
 
-            if not cleaned_snippet or not cleaned_comment:
-                continue
+                if not cleaned_snippet or not cleaned_comment:
+                    continue
 
-            evidence_list.append(
-                CodeEvidence(
-                    criteria_id=cid,
-                    type=ev_type,
-                    file_path=file_path,
-                    line_start=line_start,
-                    line_end=line_end,
-                    snippet=cleaned_snippet,
-                    comment=cleaned_comment,
+                evidence_list.append(
+                    CodeEvidence(
+                        criteria_id=cid,
+                        type=ev_type,
+                        file_path=file_path,
+                        line_start=line_start,
+                        line_end=line_end,
+                        snippet=cleaned_snippet,
+                        comment=cleaned_comment,
+                    )
                 )
-            )
-            evidence_count_by_cid[cid] = evidence_count_by_cid.get(cid, 0) + 1
+                evidence_count_by_cid[cid] = evidence_count_by_cid.get(cid, 0) + 1
 
         summary = redact_secrets(str(parsed_result.get("summary", "")).strip())
+        if not summary:
+            summary = f"Hoàn tất đánh giá tự động bằng model {actual_model_name} với điểm tổng kết {overall_score}/10."
 
         output = GradingJobOutput(
             job_id=job_input.job_id,
@@ -443,3 +570,8 @@ class CloudAIGrader:
         )
         output.validate(job_input)
         return output
+
+
+# Giữ alias CloudAIGrader để tương thích ngược 100% với các module/test hiện có
+CloudAIGrader = AIGrader
+LocalAIGrader = AIGrader

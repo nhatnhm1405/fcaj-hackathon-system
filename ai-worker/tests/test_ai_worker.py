@@ -4,12 +4,11 @@ Kiểm tra:
 1. Đồng bộ hợp đồng dữ liệu (sample_input.json <-> sample_output.json <-> schema.py)
 2. Đối chiếu evidence trong sample_output.json với mã nguồn thực tế
 3. Luồng chạy Mock Worker (mock_worker.py)
-4. Luồng quét, lọc mã nguồn & đánh số dòng (code_cleaner.py)
-5. Prompt Engineering, hậu xử lý bảo mật (redact_secrets, strip_line_number_prefix)
-   và tích hợp DeepSeek / Gemini API trong ai_grader.py
+4. Luồng quét, lọc mã nguồn, giới hạn max_total_chars & đánh số dòng (code_cleaner.py)
+5. Prompt Engineering, hậu xử lý bảo mật (redact_secrets, strip_line_number_prefix, _extract_json_object)
+   và tích hợp Local AI trên EC2 (Ollama / Qwen3) + Cloud AI fallback (DeepSeek / Gemini) trong ai_grader.py
 """
 
-import io
 import json
 import os
 import sys
@@ -36,6 +35,8 @@ from src.ai_grader import (
     build_user_prompt,
     strip_line_number_prefix,
     redact_secrets,
+    _extract_json_object,
+    AIGrader,
     CloudAIGrader,
 )
 
@@ -86,7 +87,7 @@ class TestContractsAndSamples(unittest.TestCase):
             )
             self.assertEqual(
                 ev.snippet,
-                "\n".join(lines[ev.line_start - 1:ev.line_end]),
+                "\n".join(lines[ev.line_start - 1 : ev.line_end]),
                 f"Evidence snippet không khớp nội dung tại {ev.file_path}:{ev.line_start}",
             )
 
@@ -137,6 +138,22 @@ class TestCodeCleanerAndFetcher(unittest.TestCase):
             self.assertIn("==================== FILE: src/App.java ====================", formatted)
             self.assertIn("   1: public class App {", formatted)
 
+    def test_scan_and_collect_sources_respects_max_total_chars(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            os.makedirs(os.path.join(tmpdir, "src"))
+            with open(os.path.join(tmpdir, "src", "A.py"), "w", encoding="utf-8") as f:
+                f.write("\n".join([f"x_{i} = {i}" for i in range(50)]))
+            with open(os.path.join(tmpdir, "src", "B.py"), "w", encoding="utf-8") as f:
+                f.write("\n".join([f"y_{i} = {i}" for i in range(50)]))
+
+            files_dict, stats = scan_and_collect_sources(
+                tmpdir,
+                target_languages=["python"],
+                max_total_chars=120,
+            )
+            self.assertLessEqual(stats["total_chars"], 120)
+            self.assertGreaterEqual(stats["skipped_files"], 1)
+
 
 class TestPromptAndAIGrader(unittest.TestCase):
     def setUp(self):
@@ -157,7 +174,7 @@ class TestPromptAndAIGrader(unittest.TestCase):
         self.assertIn("***REDACTED***", SYSTEM_PROMPT)
 
     def test_strip_line_number_prefix(self):
-        raw_snippet = "  10: @Entity\n  11: @Table(name = \"Score\")\n  12: public class Score {"
+        raw_snippet = '  10: @Entity\n  11: @Table(name = "Score")\n  12: public class Score {'
         cleaned = strip_line_number_prefix(raw_snippet)
         self.assertEqual(cleaned, '@Entity\n@Table(name = "Score")\npublic class Score {')
 
@@ -176,6 +193,82 @@ class TestPromptAndAIGrader(unittest.TestCase):
         self.assertNotIn("TrangNhi2004", redacted)
         self.assertNotIn("sk-1234567890abcdef12345678", redacted)
         self.assertIn("***REDACTED***", redacted)
+
+    def test_extract_json_object_strips_qwen3_think_blocks_and_fences(self):
+        raw_qwen3_output = (
+            "<think>\nLet me analyze the code carefully...\n</think>\n"
+            "```json\n"
+            '{"overall_score": 8.5, "summary": "Good implementation."}\n'
+            "```"
+        )
+        parsed = _extract_json_object(raw_qwen3_output)
+        self.assertEqual(parsed["overall_score"], 8.5)
+        self.assertEqual(parsed["summary"], "Good implementation.")
+
+    @patch("urllib.request.urlopen")
+    def test_local_ai_qwen3_grader_default_and_no_think_injection(self, mock_urlopen):
+        fake_llm_json = {
+            "overall_score": 8.0,
+            "criteria_results": [
+                {"criteria_id": 1, "score": 8.5, "feedback": "Kiến trúc tốt."},
+                {"criteria_id": 2, "score": 7.0, "feedback": "Bảo mật ổn."},
+                {"criteria_id": 3, "score": 8.0, "feedback": "Có unit test."},
+                {"criteria_id": 4, "score": 9.5, "feedback": "Tài liệu đầy đủ."},
+            ],
+            "evidence": [
+                {
+                    "criteria_id": 1,
+                    "type": "POSITIVE",
+                    "file_path": "src/Main.java",
+                    "line_start": 1,
+                    "line_end": 1,
+                    "snippet": "class Main {}",
+                    "comment": "Cấu trúc class chuẩn.",
+                }
+            ],
+            "summary": "Đánh giá bằng Local AI Qwen3 trên EC2.",
+        }
+        fake_ollama_response = {
+            "id": "chatcmpl-ollama",
+            "model": "qwen3:4b",
+            "choices": [
+                {
+                    "index": 0,
+                    "finish_reason": "stop",
+                    "message": {
+                        "role": "assistant",
+                        "content": "<think>\nChecking rubric...\n</think>\n" + json.dumps(fake_llm_json),
+                    },
+                }
+            ],
+        }
+
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = json.dumps(fake_ollama_response).encode("utf-8")
+        mock_resp.__enter__.return_value = mock_resp
+        mock_urlopen.return_value = mock_resp
+
+        grader = AIGrader(
+            provider="local_ai",
+            model_name="qwen3:4b",
+            base_url="http://127.0.0.1:11434/v1/chat/completions",
+            think_mode=False,
+        )
+        output = grader.evaluate(
+            self.job_input,
+            "=== FILE: src/Main.java ===\n   1: class Main {}",
+            {"total_files": 1, "total_lines": 1},
+        )
+
+        # Kiểm tra request gửi lên Ollama có chứa /no_think trong system prompt
+        sent_req = mock_urlopen.call_args[0][0]
+        sent_payload = json.loads(sent_req.data.decode("utf-8"))
+        self.assertIn("/no_think", sent_payload["messages"][0]["content"])
+        self.assertEqual(sent_payload["model"], "qwen3:4b")
+
+        self.assertEqual(output.overall_score, 8.05)
+        self.assertEqual(output.model_name, "qwen3:4b")
+        self.assertEqual(output.summary, "Đánh giá bằng Local AI Qwen3 trên EC2.")
 
     @patch("urllib.request.urlopen")
     def test_deepseek_grader_recomputes_score_and_cleans_output(self, mock_urlopen):
