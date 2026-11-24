@@ -155,7 +155,7 @@ public class SecurityConfig {
                     .hasAnyRole("PARTICIPANT", "EVENT_COORDINATOR", "JUDGE")
                 // Judges access scoring endpoints
                 .requestMatchers("/api/scores/**", "/api/judge/**").hasAnyRole("JUDGE", "EVENT_COORDINATOR")
-                // AI Judge Assistant — advisory submission insights for scoring staff
+                // AI jobs (create/status/result); per-job access is enforced in JobAccess
                 .requestMatchers("/api/ai/**").hasAnyRole("JUDGE", "EVENT_COORDINATOR")
                 // Mentors access mentor endpoints
                 .requestMatchers("/api/mentor/**").hasAnyRole("MENTOR", "EVENT_COORDINATOR")
