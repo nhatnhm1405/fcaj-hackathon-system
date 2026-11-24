@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * AI Judge Assistant output for a single submission.
+ * Advisory AI insight for a single submission, returned by the AI job result API.
  *
- * Advisory only: this is a Gemini-generated reading of the submission's own
- * description + links, meant to help a judge orient quickly. It deliberately
- * carries NO team identity so it stays compatible with anonymous judging.
+ * It is mapped from the validated worker output and deliberately carries NO team
+ * identity, so it stays compatible with anonymous judging. It never sets scores.
  */
 @Data
 @Builder
