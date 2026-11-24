@@ -7,7 +7,7 @@ import { useAuth } from "@/app/providers/AuthProvider";
 import { useNotifications } from "@/app/providers/NotificationProvider";
 import { AppFooter } from "@/shared/components/AppFooter";
 import { SocialAuthButtons } from "@/features/auth/SocialAuthButtons";
-import brandLogo from "@/imports/image.png";
+import brandLogo from "@/imports/seal-logo.svg";
 
 const PENDING_APPROVAL_MESSAGE =
   "Your account is awaiting coordinator approval. Please wait until it is approved before signing in.";
@@ -86,10 +86,10 @@ export function LoginPage() {
         <div className="hidden lg:flex" style={{ flex: 1, padding: 48, flexDirection: "column", justifyContent: "center", borderRight: `1px solid ${C.border}` }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
             <div style={{ height: 100, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-              <img src={brandLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
+              <img src={brandLogo} alt="SEAL" style={{ height: 88, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
             </div>
             <span style={{ color: C.text, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 14, letterSpacing: "0.08em" }}>
-              <GradientText>HACKATHON Management System</GradientText>
+              <GradientText>SEAL HACKATHON Management System</GradientText>
             </span>
           </div>
           <div style={{ marginBottom: 24 }}>
@@ -115,9 +115,9 @@ export function LoginPage() {
         {/* Right panel */}
         <div style={{ flex: 1, padding: 32, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
           <div style={{ width: "100%", maxWidth: 420 }}>
-            <div className="lg:hidden" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24, justifyContent: "center" }}>
+            <div className="flex lg:hidden" style={{ alignItems: "center", gap: 10, marginBottom: 24, justifyContent: "center" }}>
               <div style={{ height: 100, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-                <img src={brandLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain" }} />
+                <img src={brandLogo} alt="SEAL" style={{ height: 88, width: "auto", objectFit: "contain" }} />
               </div>
             </div>
 

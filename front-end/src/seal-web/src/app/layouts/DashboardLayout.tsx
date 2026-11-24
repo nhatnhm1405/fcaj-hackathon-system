@@ -9,7 +9,7 @@ import { API_BASE_URL } from "@/shared/apiClient";
 import { AppFooter } from "@/shared/components/AppFooter";
 import { NotificationDetailModal } from "@/shared/components/NotificationDetailModal";
 import { NavbarRoleTimer } from "@/shared/components/NavbarRoleTimer";
-import brandLogo from "@/imports/image.png";
+import brandLogo from "@/imports/seal-logo.svg";
 
 const NAVBAR_H = 60;
 
@@ -426,8 +426,8 @@ function TopNavbar({ pageTitle, collapsed, onToggleCollapse, currentUser, onLogo
           title="Go to home"
           style={{ display: "flex", alignItems: "center", gap: 10, height: 44, overflow: "hidden", background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
         >
-          <div style={{ width: 96, height: 44, overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <img src={brandLogo} alt="SEAL" style={{ height: 96, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 6px rgba(34,197,94,0.4))", pointerEvents: "none" }} />
+          <div style={{ height: 44, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <img src={brandLogo} alt="SEAL" style={{ height: 36, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 6px rgba(34,197,94,0.4))", pointerEvents: "none" }} />
           </div>
           <span style={{ color: C.text, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", background: "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", whiteSpace: "nowrap" }}>
             SEAL Hackathon

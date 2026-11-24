@@ -2,9 +2,9 @@ import { useNavigate } from "react-router";
 import { Github } from "lucide-react";
 import { C } from "@/shared/components/PixelComponents";
 import { useRules } from "@/app/providers/RulesProvider";
-import brandLogo from "@/imports/image.png";
+import brandLogo from "@/imports/seal-logo.svg";
 
-const GITHUB_URL = "https://github.com/nhatnhm1405/seal-hackathon-system.git";
+const GITHUB_URL = "https://github.com/nhatnhm1405/fcaj-hackathon-system";
 const CONTACT_EMAIL = "sealhackathon.system@gmail.com";
 const mono = "'JetBrains Mono', monospace";
 
@@ -114,7 +114,7 @@ export function AppFooter() {
               src={brandLogo}
               alt="SEAL"
               style={{
-                height: 180,
+                height: 84,
                 width: "auto",
                 objectFit: "contain",
                 flexShrink: 0,
@@ -136,31 +136,29 @@ export function AppFooter() {
                 style={{
                   fontFamily: mono,
                   fontWeight: 900,
-                  fontSize: "clamp(24px, 2.6vw, 34px)",
-                  letterSpacing: "0.14em",
+                  fontSize: "clamp(20px, 2.6vw, 34px)",
+                  letterSpacing: "clamp(0.04em, 0.4vw, 0.14em)",
                   lineHeight: 1,
                   background: C.gradientPrimary,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                   textShadow: "0 0 28px rgba(34,197,94,0.3)",
-                  whiteSpace: "nowrap",
-                  width: "max-content",
+                  width: "fit-content",
                 }}
               >
-                SEAL HACKATHON
+                FCAJ HACKATHON
               </span>
               <span
                 style={{
                   color: C.textMuted,
                   fontFamily: mono,
                   fontSize: "clamp(10px, 0.95vw, 12px)",
-                  letterSpacing: "0.14em",
-                  lineHeight: 1.2,
-                  whiteSpace: "nowrap",
+                  letterSpacing: "0.08em",
+                  lineHeight: 1.5,
                 }}
               >
-                Software Engineering Agile League HACKATHON
+                First Cloud AI Journey · SEAL on AWS
               </span>
             </div>
           </div>
@@ -304,7 +302,7 @@ export function AppFooter() {
               letterSpacing: "0.04em",
             }}
           >
-            © 2026 SEAL Hackathon. All rights reserved.
+            © 2026 FCAJ Hackathon. All rights reserved.
           </span>
           <div
             style={{
