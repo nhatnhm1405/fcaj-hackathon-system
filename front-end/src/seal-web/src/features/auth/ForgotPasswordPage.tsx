@@ -4,7 +4,7 @@ import { C, GradientText, PixelButton, PixelInput, FloatingParticles } from "@/s
 import { AppFooter } from "@/shared/components/AppFooter";
 import { apiErrorMessage, authApi } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
-import brandLogo from "@/imports/image.png";
+import brandLogo from "@/imports/seal-logo.svg";
 
 type ResetStep = "email" | "otp" | "password";
 const OTP_EXPIRATION_MINUTES = 10;
@@ -134,10 +134,10 @@ export function ForgotPasswordPage() {
         <div style={{ position: "relative", zIndex: 2, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
             <div style={{ height: 72, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-              <img src={brandLogo} alt="SEAL" style={{ height: 144, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
+              <img src={brandLogo} alt="SEAL" style={{ height: 64, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.4))" }} />
             </div>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: "0.08em" }}>
-              <GradientText>HACKATHON Management System</GradientText>
+              <GradientText>SEAL HACKATHON Management System</GradientText>
             </span>
           </div>
 

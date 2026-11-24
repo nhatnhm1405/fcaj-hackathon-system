@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Github, Mail } from "lucide-react";
 import {
@@ -9,48 +10,108 @@ import {
 } from "@/shared/components/PixelComponents";
 import { AppFooter } from "@/shared/components/AppFooter";
 import { useAuth } from "@/app/providers/AuthProvider";
-import brandLogo from "@/imports/image.png";
-import KhanhNHL from "@/imports/KhannhNLH.jpg";
-import NhatNHM from "@/imports/NhatNHM.jpg";
-import TrangNHK from "@/imports/TrangNHK.jpg";
-import DaoNH from "@/imports/DaoHN.jpg";
+import brandLogo from "@/imports/seal-logo.svg";
 
 const mono = "'JetBrains Mono', monospace";
 
-const team = [
+// Members and roles follow the GitHub project (nhatnhm1405/fcaj-hackathon-system,
+// issues #4–#17). Photos are the members' GitHub avatars, keyed by account id so
+// they survive a username change.
+interface Member {
+  name: string;
+  login: string;
+  githubId: number;
+  role: string;
+  desc: string;
+  accent: string;
+  email?: string;
+}
+
+const team: Member[] = [
   {
     name: "Nguyễn Huỳnh Minh Nhật",
-    role: "Lead Engineer & Architect",
-    photo: NhatNHM, // ← CHÈN ẢNH TẠI ĐÂY — VD: "/src/imports/nhat.jpg"
-    desc: "Designs the platform's role-based access model, scoring engine, and judge workflows. Loves clean APIs and merciless code reviews.",
-    accent: C.green,
-    socials: { github: "https://github.com/nhatnhm1405", email: "https://mail.google.com/mail/?view=cm&to=nghminhnhat2006@gmail.com" },
+    login: "nhatnhm1405",
+    githubId: 187357833,
+    role: "Team Lead",
+    desc: "Sets the project scope, owns the proposal and the AWS architecture, and coordinates the rollout across the team.",
+    accent: "#22c55e", // hex: the cards append alpha digits, which a CSS variable cannot take
+    email: "nghminhnhat2006@gmail.com",
   },
   {
     name: "Nguyễn Huỳnh Khánh Trang",
-    role: "Frontend & UI/UX",
-    photo: TrangNHK, // ← CHÈN ẢNH TẠI ĐÂY — VD: "/src/imports/khanh.jpg"
-    desc: "Owns the cyberpunk visual language and pixel-art component library. Pushes pixels until they glow exactly right.",
+    login: "KTrangg",
+    githubId: 213317437,
+    role: "Frontend",
+    desc: "Owns the React app and user flows, its S3 + CloudFront hosting, and the interface for AI judging jobs.",
     accent: C.blue,
-    socials: { github: "https://github.com/KTrangg", email: "https://mail.google.com/mail/?view=cm&to=erutrang2004@gmail.com" },
-  },
-  {
-    name: "Đào Hoàng Nhật",
-    role: "Backend & DevOps",
-    photo: DaoNH, // ← CHÈN ẢNH TẠI ĐÂY — VD: "/src/imports/hoang.jpg"
-    desc: "Keeps the leaderboard live, the submissions stamped, and the deploys boring. Believes in zero-downtime everything.",
-    accent: C.cyan,
-    socials: { github: "https://github.com/hoangnhat1407", email: "https://mail.google.com/mail/?view=cm&to=daonhat082@gmail.com" },
+    email: "erutrang2004@gmail.com",
   },
   {
     name: "Nguyễn Lê Hữu Khánh",
-    role: "Frontend & UI/UX",
-    photo: KhanhNHL, // ← CHÈN ẢNH TẠI ĐÂY — VD: "/src/imports/trang.jpg"
-    desc: "Owns the cyberpunk visual language and pixel-art component library. Pushes pixels until they glow exactly right.",
+    login: "HuuKhanh2608",
+    githubId: 220602952,
+    role: "Backend 1 · Scrum Master",
+    desc: "Owns data storage, database migrations, the AI job API and its contract, and keeps the sprint on track.",
+    accent: C.cyan,
+    email: "nguyenlekhanh2608@gmail.com",
+  },
+  {
+    name: "Trần Vương Quân",
+    login: "nauppnouv",
+    githubId: 190932859,
+    role: "Backend 2 · AWS",
+    desc: "Builds the AWS infrastructure and release pipeline: ECR images, SQS messaging, the HTTPS edge and worker deployment.",
     accent: C.purple,
-    socials: { github: "https://github.com/HuuKhanh2608", email: "https://mail.google.com/mail/?view=cm&to=nguyenlekhanh@gmail.com" },
+  },
+  {
+    name: "Thoth3010",
+    login: "Thoth3010",
+    githubId: 186658249,
+    role: "AI Engineer",
+    desc: "Builds the AI grading worker: DeepSeek evaluation against the rubric, with evidence traced back to the source code.",
+    accent: C.orange,
   },
 ];
+
+function MemberPhoto({ member }: { member: Member }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <span style={{
+        color: member.accent, fontFamily: mono, fontSize: 40, fontWeight: 900,
+        opacity: 0.3, letterSpacing: "-0.03em", userSelect: "none",
+        textShadow: `0 0 30px ${member.accent}`,
+      }}>
+        {member.name.split(" ").slice(-2).map((n) => n[0]).join("")}
+      </span>
+    );
+  }
+  return (
+    <>
+      <img
+        src={`https://avatars.githubusercontent.com/u/${member.githubId}?v=4&s=460`}
+        alt={member.name}
+        onError={() => setFailed(true)}
+        style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%",
+          objectFit: "cover", objectPosition: "center",
+          display: "block",
+        }}
+      />
+      {/* gradient mờ sang phải để blend với content */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: `linear-gradient(to right, transparent 82%, ${C.surface} 100%)`,
+      }} />
+      {/* scanline nhẹ */}
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px)",
+        pointerEvents: "none",
+      }} />
+    </>
+  );
+}
 
 function PageHeader() {
   const navigate = useNavigate();
@@ -65,7 +126,7 @@ function PageHeader() {
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}>
         <button onClick={() => navigate(homePath)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-          <img src={brandLogo} alt="SEAL" style={{ height: 80, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35))" }} />
+          <img src={brandLogo} alt="SEAL" style={{ height: 42, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35))" }} />
           <span style={{ background: C.gradientPrimary, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontFamily: mono, fontWeight: 700, fontSize: 14, letterSpacing: "0.06em" }}>
             SEAL Hackathon
           </span>
@@ -93,7 +154,7 @@ export function TeamPage() {
             <br /><span style={{ color: C.text }}>Builders</span>
           </h1>
           <p style={{ color: C.textMuted, fontFamily: mono, fontSize: 15, lineHeight: 1.8, maxWidth: 640, margin: "0 auto" }}>
-            Four engineers, designers, and operators who built SEAL because we wanted the tool we wished we had.
+            Five builders bringing the SEAL hackathon platform to AWS for FCAJ — First Cloud AI Journey.
           </p>
         </div>
       </section>
@@ -102,9 +163,11 @@ export function TeamPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
           <SectionHeader title="The Crew" gradient />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 fade-in-section" style={{ marginTop: 48 }}>
-            {team.map((m) => (
+            {team.map((m, i) => (
               <div
-                key={m.name}
+                key={m.login}
+                // Odd headcount: the lead takes the first row, centred at one column.
+                className={i === 0 && team.length % 2 === 1 ? "sm:col-span-2 sm:w-[calc(50%-10px)] sm:justify-self-center" : undefined}
                 style={{
                   background: C.surface,
                   border: `1px solid ${m.accent}30`,
@@ -139,39 +202,7 @@ export function TeamPage() {
                   flexShrink: 0, overflow: "hidden",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  {m.photo ? (
-                    <>
-                      <img
-                        src={m.photo}
-                        alt={m.name}
-                        style={{
-                          width: "100%", height: "100%",
-                          objectFit: "cover", objectPosition: "center top",
-                          display: "block",
-                        }}
-                      />
-                      {/* gradient mờ sang phải để blend với content */}
-                      <div style={{
-                        position: "absolute", inset: 0,
-                        background: `linear-gradient(to right, transparent 60%, ${C.surface} 100%)`,
-                      }} />
-                      {/* scanline nhẹ */}
-                      <div style={{
-                        position: "absolute", inset: 0,
-                        backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px)",
-                        pointerEvents: "none",
-                      }} />
-                    </>
-                  ) : (
-                    /* Fallback initials */
-                    <span style={{
-                      color: m.accent, fontFamily: mono, fontSize: 40, fontWeight: 900,
-                      opacity: 0.3, letterSpacing: "-0.03em", userSelect: "none",
-                      textShadow: `0 0 30px ${m.accent}`,
-                    }}>
-                      {m.name.split(" ").slice(-2).map((n) => n[0]).join("")}
-                    </span>
-                  )}
+                  <MemberPhoto member={m} />
 
                   {/* Góc bracket trên trái */}
                   <div style={{ position: "absolute", top: 7, left: 7, width: 12, height: 12, borderTop: `2px solid ${m.accent}99`, borderLeft: `2px solid ${m.accent}99` }} />
@@ -195,8 +226,11 @@ export function TeamPage() {
                     </div>
 
                     {/* Tên */}
-                    <div style={{ color: C.text, fontFamily: mono, fontSize: 14, fontWeight: 800, marginBottom: 8, lineHeight: 1.3 }}>
+                    <div style={{ color: C.text, fontFamily: mono, fontSize: 14, fontWeight: 800, marginBottom: 2, lineHeight: 1.3 }}>
                       {m.name}
+                    </div>
+                    <div style={{ color: m.accent, fontFamily: mono, fontSize: 11, marginBottom: 8 }}>
+                      @{m.login}
                     </div>
 
                     {/* Mô tả */}
@@ -208,8 +242,8 @@ export function TeamPage() {
                   {/* Socials */}
                   <div style={{ display: "flex", gap: 8 }}>
                     {[
-                      { icon: Github, href: m.socials.github, label: "GitHub" },
-                      { icon: Mail,   href: m.socials.email,  label: "Email" },
+                      { icon: Github, href: `https://github.com/${m.login}`, label: "GitHub" },
+                      ...(m.email ? [{ icon: Mail, href: `https://mail.google.com/mail/?view=cm&to=${m.email}`, label: "Email" }] : []),
                     ].map(({ icon: Icon, href, label }) => (
                       <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                         style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid ${C.border}`, color: C.textMuted, transition: "all 0.15s" }}
