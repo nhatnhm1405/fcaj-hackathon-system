@@ -1,0 +1,92 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SEAL v3 CI/CD. Lets GitHub Actions release without stored AWS keys (OIDC, short-lived credentials).
+Parameters:
+  Repository:
+    Type: String
+    Default: nhatnhm1405@187357833/fcaj-hackathon-system@1416989924
+    Description: Immutable subject prefix of the repository (gh api repos/OWNER/REPO/actions/oidc/customization/sub).
+  Environment:
+    Type: String
+    Default: aws-v3
+    Description: GitHub environment. Restrict its deployment branches to main.
+  DistributionId:
+    Type: String
+    AllowedPattern: '^[A-Z0-9]+$'
+Resources:
+  GitHubProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList: [sts.amazonaws.com]
+  # A fixed command: GitHub can start a release but cannot run anything else on the hosts.
+  ReleaseDocument:
+    Type: AWS::SSM::Document
+    Properties:
+      Name: fcaj-v3-release
+      DocumentType: Command
+      DocumentFormat: YAML
+      UpdateMethod: NewVersion
+      Content:
+        schemaVersion: '2.2'
+        description: Release the image recorded in /fcaj/v3/backend/release.
+        mainSteps:
+          - action: aws:runShellScript
+            name: release
+            inputs:
+              timeoutSeconds: '900'
+              runCommand: [/usr/local/bin/seal-release]
+  ReleaseRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: fcaj-v3-github-release
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Federated: !Ref GitHubProvider}
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: !Sub repo:${Repository}:environment:${Environment}
+      Policies:
+        - PolicyName: release
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - {Effect: Allow, Action: 'ecr:GetAuthorizationToken', Resource: '*'}
+              - Effect: Allow
+                Action:
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:BatchGetImage
+                  - ecr:CompleteLayerUpload
+                  - ecr:DescribeImages
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:InitiateLayerUpload
+                  - ecr:PutImage
+                  - ecr:UploadLayerPart
+                Resource: !Sub arn:${AWS::Partition}:ecr:ap-southeast-1:${AWS::AccountId}:repository/fcaj-poc-backend
+              - Effect: Allow
+                Action: s3:ListBucket
+                Resource: !Sub arn:${AWS::Partition}:s3:::fcaj-v3-web-${AWS::AccountId}-ap-southeast-1
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource: !Sub arn:${AWS::Partition}:s3:::fcaj-v3-web-${AWS::AccountId}-ap-southeast-1/*
+              - Effect: Allow
+                Action: cloudfront:CreateInvalidation
+                Resource: !Sub arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${DistributionId}
+              - Effect: Allow
+                Action: [ssm:GetParameter, ssm:PutParameter]
+                Resource: !Sub arn:${AWS::Partition}:ssm:ap-southeast-1:${AWS::AccountId}:parameter/fcaj/v3/backend/release
+              - Effect: Allow
+                Action: ssm:SendCommand
+                Resource: !Sub arn:${AWS::Partition}:ssm:ap-southeast-1:${AWS::AccountId}:document/${ReleaseDocument}
+              - Effect: Allow
+                Action: ssm:SendCommand
+                Resource: !Sub arn:${AWS::Partition}:ec2:ap-southeast-1:${AWS::AccountId}:instance/*
+                Condition: {StringEquals: {ssm:resourceTag/SealRole: api}}
+              # These read actions have no resource-level permissions.
+              - {Effect: Allow, Action: ['ssm:ListCommands', 'ssm:ListCommandInvocations'], Resource: '*'}
+Outputs:
+  ReleaseRoleArn: {Value: !GetAtt ReleaseRole.Arn}

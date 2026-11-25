@@ -1,0 +1,122 @@
+name: Release AWS v3
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: aws-v3-release
+  cancel-in-progress: false
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Backend tests
+        working-directory: back-end/src/seal-api
+        run: sh ./mvnw -B -Dspring.profiles.active=test package
+      - name: MySQL 8.4 integration tests in disposable local DB
+        working-directory: back-end/src/seal-api
+        run: bash Test/run-ai-mysql-tests.sh
+      - name: Build image from the tested JAR
+        run: |
+          set -euo pipefail
+          image="seal-backend-ci:$GITHUB_SHA"
+          docker build --platform linux/amd64 -f back-end/src/seal-api/Dockerfile.release --label "org.opencontainers.image.revision=$GITHUB_SHA" -t "$image" back-end/src/seal-api
+          docker save "$image" | gzip > "$RUNNER_TEMP/backend-image.tar.gz"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v3-backend-image
+          path: ${{ runner.temp }}/backend-image.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: front-end/src/seal-web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: front-end/src/seal-web/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          VITE_API_URL: https://sealaws.io.vn
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v3-frontend
+          path: front-end/src/seal-web/dist
+          if-no-files-found: error
+          retention-days: 1
+  release:
+    # Off until the role from infra/v3/cicd.yaml is recorded as a repository variable.
+    if: github.ref == 'refs/heads/main' && vars.AWS_V3_ROLE_ARN != ''
+    needs: [backend, frontend]
+    environment: aws-v3
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      RELEASE_PARAMETER: /fcaj/v3/backend/release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: v3-backend-image
+          path: ${{ runner.temp }}/image
+      - uses: actions/download-artifact@v4
+        with:
+          name: v3-frontend
+          path: ${{ runner.temp }}/web
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_V3_ROLE_ARN }}
+          aws-region: ap-southeast-1
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: ecr
+      - name: Publish immutable backend image
+        env:
+          REPOSITORY: ${{ steps.ecr.outputs.registry }}/fcaj-poc-backend
+          IMAGE_TAG: v3-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          docker load --input "$RUNNER_TEMP/image/backend-image.tar.gz"
+          image="seal-backend-ci:$GITHUB_SHA"
+          test "$(docker image inspect --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' "$image")" = "$GITHUB_SHA"
+          docker tag "$image" "$REPOSITORY:$IMAGE_TAG"
+          docker push "$REPOSITORY:$IMAGE_TAG"
+          digest="$(aws ecr describe-images --repository-name fcaj-poc-backend --image-ids "imageTag=$IMAGE_TAG" --query 'imageDetails[0].imageDigest' --output text)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          echo "NEW_RELEASE=$REPOSITORY@$digest $GITHUB_SHA" >> "$GITHUB_ENV"
+      - name: Upload frontend assets
+        # Old pages keep working: hashed files are added, nothing is deleted.
+        run: |
+          set -euo pipefail
+          bucket="fcaj-v3-web-$(aws sts get-caller-identity --query Account --output text)-ap-southeast-1"
+          echo "WEB_BUCKET=$bucket" >> "$GITHUB_ENV"
+          aws s3 sync "$RUNNER_TEMP/web" "s3://$bucket" --exclude index.html --cache-control "public,max-age=31536000,immutable" --only-show-errors
+      - name: Release backend one host at a time
+        run: bash .github/scripts/release-v3-backend.sh
+      - name: Publish the new frontend
+        run: |
+          set -euo pipefail
+          aws s3 cp "$RUNNER_TEMP/web/index.html" "s3://$WEB_BUCKET/index.html" --cache-control "no-cache,max-age=0,must-revalidate" --only-show-errors
+          aws cloudfront create-invalidation --distribution-id "${{ vars.AWS_V3_DISTRIBUTION_ID }}" --paths '/*' --query Invalidation.Status --output text
+      - name: Check the public website
+        run: curl -fsS --retry 5 --retry-delay 5 -o /dev/null https://sealaws.io.vn/
