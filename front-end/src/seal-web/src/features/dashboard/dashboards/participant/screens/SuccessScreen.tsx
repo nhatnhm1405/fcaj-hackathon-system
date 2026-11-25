@@ -54,7 +54,7 @@ export function SuccessScreen({
                         display: "inline-flex", alignItems: "center", gap: 6,
                         background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.4)",
                         color: "#eab308", fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 10, letterSpacing: "0.14em", padding: "5px 16px", marginBottom: 32,
+                        fontSize: 12, letterSpacing: "0.14em", padding: "5px 16px", marginBottom: 32,
                     }}>
                         <span style={{ width: 6, height: 6, background: "#eab308", borderRadius: "50%", display: "inline-block" }} />
                         PENDING APPROVAL

@@ -289,7 +289,7 @@ export function CyberStatCard({ value, label, icon, trend, accent = "green", sub
           {label}
         </div>
         {sublabel && (
-          <div style={{ color: C.textBlue, fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>{sublabel}</div>
+          <div style={{ color: C.textBlue, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>{sublabel}</div>
         )}
       </div>
 
@@ -449,8 +449,8 @@ export function PixelProgress({ value, max = 100, label, color = C.green, showVa
     <div className="flex flex-col gap-1">
       {(label || showValue) && (
         <div className="flex justify-between items-center">
-          {label && <span style={{ color: C.textMuted, fontSize: 11, fontFamily: "'JetBrains Mono', monospace" }}>{label}</span>}
-          {showValue && <span style={{ color: C.green, fontSize: 11, fontFamily: "'JetBrains Mono', monospace" }}>{value}/{max}</span>}
+          {label && <span style={{ color: C.textMuted, fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>{label}</span>}
+          {showValue && <span style={{ color: C.green, fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>{value}/{max}</span>}
         </div>
       )}
       <div style={{ height: 5, background: C.surface3, borderRadius: 0, overflow: "hidden", border: `1px solid ${C.border}` }}>

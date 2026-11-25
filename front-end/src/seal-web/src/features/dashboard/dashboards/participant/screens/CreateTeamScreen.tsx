@@ -110,7 +110,7 @@ export function CreateTeamScreen({
     }
 
     const labelStyle: React.CSSProperties = {
-        color: C.greenMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+        color: C.greenMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
         letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 8,
     };
 
@@ -190,7 +190,7 @@ export function CreateTeamScreen({
                             boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(34,197,94,0.08)",
                             padding: "14px 16px",
                         }}>
-                            <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", marginBottom: 10 }}>
+                            <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.14em", marginBottom: 10 }}>
                                 GOOD TO KNOW
                             </div>
                             <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 9 }}>
@@ -212,7 +212,7 @@ export function CreateTeamScreen({
             </div>
 
             {loadError && (
-                <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, padding: "10px 14px", marginBottom: 16 }}>
+                <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "10px 14px", marginBottom: 16 }}>
                     ERROR: {loadError}
                 </div>
             )}
@@ -254,7 +254,7 @@ export function CreateTeamScreen({
                             cursor: "default", color: selectedEvent ? C.text : C.textMuted,
                         }}>
                             <span>{selectedEvent ? selectedEvent.name : "Loading event…"}</span>
-                            <span style={{ color: C.greenMuted, fontSize: 10, letterSpacing: "0.08em" }}>CURRENT</span>
+                            <span style={{ color: C.greenMuted, fontSize: 12, letterSpacing: "0.08em" }}>CURRENT</span>
                         </div>
                     </div>
 
@@ -272,7 +272,7 @@ export function CreateTeamScreen({
                     </div>
 
                     {error && (
-                        <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, padding: "10px 12px" }}>
+                        <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "10px 12px" }}>
                             ERROR: {error}
                         </div>
                     )}

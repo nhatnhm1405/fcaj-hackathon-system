@@ -178,14 +178,14 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                         </button>
                         <span style={{ color: C.green, fontFamily: mono, fontSize: 15, fontWeight: 700 }}>Team Invitations</span>
                     </div>
-                    <div style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.3)", color: C.blue, fontFamily: mono, fontSize: 10, letterSpacing: "0.1em", padding: "2px 10px" }}>
+                    <div style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.3)", color: C.blue, fontFamily: mono, fontSize: 12, letterSpacing: "0.1em", padding: "2px 10px" }}>
                         {pendingCount} PENDING
                     </div>
                 </div>
 
                 <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: 20 }}>
                     {error && (
-                        <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: mono, fontSize: 11, padding: "10px 14px" }}>ERROR: {error}</div>
+                        <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: mono, fontSize: 12, padding: "10px 14px" }}>ERROR: {error}</div>
                     )}
 
                     {/* Received invites */}
@@ -217,9 +217,9 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
                                         <div>
                                             <div style={{ color: C.text, fontFamily: mono, fontSize: 15, fontWeight: 700, marginBottom: 4 }}>{inv.teamName}</div>
-                                            <div style={{ color: C.textMuted, fontFamily: mono, fontSize: 11 }}>{inv.eventName ?? "—"} · {inv.trackName ?? "—"}</div>
+                                            <div style={{ color: C.textMuted, fontFamily: mono, fontSize: 12 }}>{inv.eventName ?? "—"} · {inv.trackName ?? "—"}</div>
                                         </div>
-                                        <div style={{ background: s.bg, border: `1px solid ${s.border}`, color: s.color, fontFamily: mono, fontSize: 9, letterSpacing: "0.12em", padding: "3px 10px", flexShrink: 0 }}>{status}</div>
+                                        <div style={{ background: s.bg, border: `1px solid ${s.border}`, color: s.color, fontFamily: mono, fontSize: 12, letterSpacing: "0.12em", padding: "3px 10px", flexShrink: 0 }}>{status}</div>
                                     </div>
 
                                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -227,26 +227,26 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                             background: inv.teamStatus === 'APPROVED' ? "rgba(34,197,94,0.08)" : "rgba(234,179,8,0.08)",
                                             border: `1px solid ${inv.teamStatus === 'APPROVED' ? "rgba(34,197,94,0.25)" : "rgba(234,179,8,0.25)"}`,
                                             color: inv.teamStatus === 'APPROVED' ? C.green : "#eab308",
-                                            fontFamily: mono, fontSize: 9, letterSpacing: "0.1em", padding: "2px 10px",
+                                            fontFamily: mono, fontSize: 12, letterSpacing: "0.1em", padding: "2px 10px",
                                         }}>
                                             TEAM {inv.teamStatus ?? "—"}
                                         </span>
                                         {inv.trackName && (
-                                            <span style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.2)", color: "#06b6d4", fontFamily: mono, fontSize: 9, letterSpacing: "0.1em", padding: "2px 10px" }}>{inv.trackName}</span>
+                                            <span style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.2)", color: "#06b6d4", fontFamily: mono, fontSize: 12, letterSpacing: "0.1em", padding: "2px 10px" }}>{inv.trackName}</span>
                                         )}
                                     </div>
 
                                     {inv.message && (
-                                        <div style={{ background: "rgba(0,0,0,0.2)", border: `1px solid ${C.border}`, padding: "10px 14px", color: C.textMuted, fontFamily: mono, fontSize: 11, lineHeight: 1.7, fontStyle: "italic" }}>
+                                        <div style={{ background: "rgba(0,0,0,0.2)", border: `1px solid ${C.border}`, padding: "10px 14px", color: C.textMuted, fontFamily: mono, fontSize: 12, lineHeight: 1.7, fontStyle: "italic" }}>
                                             "{inv.message}"
                                         </div>
                                     )}
 
                                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                        <div style={{ color: "rgba(134,239,172,0.5)", fontFamily: mono, fontSize: 10 }}>
+                                        <div style={{ color: "rgba(134,239,172,0.5)", fontFamily: mono, fontSize: 12 }}>
                                             From <span style={{ color: C.textMuted }}>{inv.invitedByName}</span>
                                         </div>
-                                        <div style={{ color: "rgba(134,239,172,0.35)", fontFamily: mono, fontSize: 10 }}>{fmtShort(inv.createdAt)}</div>
+                                        <div style={{ color: "rgba(134,239,172,0.35)", fontFamily: mono, fontSize: 12 }}>{fmtShort(inv.createdAt)}</div>
                                     </div>
 
                                     {status === 'PENDING' && (
@@ -257,7 +257,7 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                             <button
                                                 onClick={() => handleDecline(inv)}
                                                 disabled={busy === inv.inviteId}
-                                                style={{ padding: "9px 16px", background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.25)", color: "#ef4444", fontFamily: mono, fontSize: 11, letterSpacing: "0.06em", cursor: "pointer", borderRadius: 0 }}
+                                                style={{ padding: "9px 16px", background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.25)", color: "#ef4444", fontFamily: mono, fontSize: 12, letterSpacing: "0.06em", cursor: "pointer", borderRadius: 0 }}
                                             >
                                                 DECLINE
                                             </button>
@@ -267,7 +267,7 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                                     setAcceptConfirmTarget(inv);
                                                 }}
                                                 disabled={busy === inv.inviteId}
-                                                style={{ flex: 1, padding: "9px 12px", background: "rgba(34,197,94,0.1)", border: `1px solid rgba(34,197,94,0.4)`, color: C.green, fontFamily: mono, fontSize: 11, letterSpacing: "0.06em", cursor: "pointer", borderRadius: 0, fontWeight: 700 }}
+                                                style={{ flex: 1, padding: "9px 12px", background: "rgba(34,197,94,0.1)", border: `1px solid rgba(34,197,94,0.4)`, color: C.green, fontFamily: mono, fontSize: 12, letterSpacing: "0.06em", cursor: "pointer", borderRadius: 0, fontWeight: 700 }}
                                             >
                                                 ACCEPT INVITE
                                             </button>
@@ -275,13 +275,13 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                     )}
 
                                     {status === 'ACCEPTED' && (
-                                        <div style={{ display: "flex", alignItems: "center", gap: 8, color: C.green, fontFamily: mono, fontSize: 11, fontWeight: 700 }}>
+                                        <div style={{ display: "flex", alignItems: "center", gap: 8, color: C.green, fontFamily: mono, fontSize: 12, fontWeight: 700 }}>
                                             <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M4 12l5 5L20 7" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                                             Invite accepted — welcome to the team!
                                         </div>
                                     )}
                                     {status === 'DECLINED' && (
-                                        <div style={{ color: "rgba(239,68,68,0.7)", fontFamily: mono, fontSize: 11 }}>Invitation declined.</div>
+                                        <div style={{ color: "rgba(239,68,68,0.7)", fontFamily: mono, fontSize: 12 }}>Invitation declined.</div>
                                     )}
                                 </div>
                             );
@@ -294,7 +294,7 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                             <div>
                                 <div style={{ color: C.green, fontFamily: mono, fontSize: 15, fontWeight: 700 }}>Find a Team</div>
                             </div>
-                            <div style={{ color: C.cyan, border: "1px solid rgba(6,182,212,0.25)", background: "rgba(6,182,212,0.06)", fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", padding: "4px 9px", whiteSpace: "nowrap" }}>
+                            <div style={{ color: C.cyan, border: "1px solid rgba(6,182,212,0.25)", background: "rgba(6,182,212,0.06)", fontFamily: mono, fontSize: 12, letterSpacing: "0.08em", padding: "4px 9px", whiteSpace: "nowrap" }}>
                                 {sortedResults.length} OPEN
                             </div>
                         </div>
@@ -306,7 +306,7 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                         </div>
 
                         {searched && sortedResults.length === 0 && (
-                            <p style={{ color: C.textMuted, fontFamily: mono, fontSize: 11, marginTop: 12 }}>No teams with open seats match.</p>
+                            <p style={{ color: C.textMuted, fontFamily: mono, fontSize: 12, marginTop: 12 }}>No teams with open seats match.</p>
                         )}
 
                         {sortedResults.length > 0 && (
@@ -374,7 +374,7 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                             }}>
                                                 <div style={{ padding: "0 12px 14px 12px", display: "flex", flexDirection: "column", gap: 13 }}>
                                                     <div>
-                                                        <div style={{ display: "flex", justifyContent: "space-between", color: C.green, fontFamily: mono, fontSize: 10, marginBottom: 6 }}>
+                                                        <div style={{ display: "flex", justifyContent: "space-between", color: C.green, fontFamily: mono, fontSize: 12, marginBottom: 6 }}>
                                                             <span>Members</span>
                                                             <span>{t.memberCount}/{MAX_TEAM_SIZE}</span>
                                                         </div>
@@ -447,10 +447,10 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
 function TeamMeta({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
     return (
         <div style={{ border: `1px solid ${C.border}`, background: "rgba(15,23,42,0.5)", padding: "9px 10px", minWidth: 0 }}>
-            <div style={{ color: C.textMuted, fontFamily: mono, fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
+            <div style={{ color: C.textMuted, fontFamily: mono, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
                 {label}
             </div>
-            <div style={{ color: accent ? C.cyan : C.text, fontFamily: mono, fontSize: 11, fontWeight: 800, lineHeight: 1.4, overflowWrap: "anywhere" }}>
+            <div style={{ color: accent ? C.cyan : C.text, fontFamily: mono, fontSize: 12, fontWeight: 800, lineHeight: 1.4, overflowWrap: "anywhere" }}>
                 {value}
             </div>
         </div>
