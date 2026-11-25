@@ -18,6 +18,7 @@ import logging
 import os
 import re
 import sys
+import time
 from typing import Any, Dict, List, Optional, Tuple
 import uuid
 
@@ -75,6 +76,9 @@ class LambdaRuntimeConfig:
     max_source_chars: int
     max_output_tokens: int = DEFAULT_LAMBDA_MAX_OUTPUT_TOKENS
     budget_exhausted_error_code: str = "MOCK_PROCESSING_FAILED"
+    deepseek_thinking_mode: str = "disabled"
+    deepseek_reasoning_effort: str = "none"
+    http_timeout_seconds: int = 75
 
     @classmethod
     def from_env(cls) -> "LambdaRuntimeConfig":
@@ -104,6 +108,19 @@ class LambdaRuntimeConfig:
         max_out_raw = os.getenv("LAMBDA_MAX_OUTPUT_TOKENS") or str(DEFAULT_LAMBDA_MAX_OUTPUT_TOKENS)
         max_output_tokens = max(256, min(8192, int(max_out_raw)))
 
+        timeout_raw = os.getenv("LAMBDA_HTTP_TIMEOUT_SECONDS") or "75"
+        http_timeout_seconds = max(10, min(120, int(timeout_raw)))
+
+        thinking_mode = (os.getenv("DEEPSEEK_THINKING_MODE") or "disabled").strip().lower()
+        if thinking_mode not in {"disabled", "enabled"}:
+            raise ValueError("Invalid DEEPSEEK_THINKING_MODE; expected 'disabled' or 'enabled'")
+
+        reasoning_effort = (os.getenv("DEEPSEEK_REASONING_EFFORT") or "none").strip().lower()
+        if reasoning_effort not in {"none", "low", "high", "max"}:
+            raise ValueError(
+                "Invalid DEEPSEEK_REASONING_EFFORT; expected 'none', 'low', 'high', or 'max'"
+            )
+
         budget_code = (
             os.getenv("AI_BUDGET_EXHAUSTED_ERROR_CODE") or "MOCK_PROCESSING_FAILED"
         ).strip()
@@ -118,7 +135,7 @@ class LambdaRuntimeConfig:
             storage_prefix=prefix,
             results_queue_url=results_queue_url,
             ai_provider=(os.getenv("AI_PROVIDER") or "deepseek").strip().lower(),
-            deepseek_model=(os.getenv("DEEPSEEK_MODEL") or "deepseek-chat").strip(),
+            deepseek_model=(os.getenv("DEEPSEEK_MODEL") or "deepseek-flash").strip(),
             deepseek_api_url=(
                 os.getenv("DEEPSEEK_API_URL") or "https://api.deepseek.com/chat/completions"
             ).strip(),
@@ -126,6 +143,9 @@ class LambdaRuntimeConfig:
             max_source_chars=max_source_chars,
             max_output_tokens=max_output_tokens,
             budget_exhausted_error_code=budget_code,
+            deepseek_thinking_mode=thinking_mode,
+            deepseek_reasoning_effort=reasoning_effort,
+            http_timeout_seconds=http_timeout_seconds,
         )
 
 
@@ -481,6 +501,27 @@ def validate_and_load_job_inputs(
     if not isinstance(source.get("files"), list) or not source["files"]:
         raise ContractValidationError("Source files must be a non-empty list")
 
+    repo_tree = source.get("repoTree")
+    if repo_tree is not None:
+        if not isinstance(repo_tree, dict):
+            raise ContractValidationError("Source repoTree must be a JSON object")
+        entries = repo_tree.get("entries")
+        if entries is not None:
+            if not isinstance(entries, list) or len(entries) > 5000:
+                raise ContractValidationError("Source repoTree.entries exceeds bounds")
+            for entry in entries:
+                if not isinstance(entry, dict):
+                    raise ContractValidationError("Source repoTree entry must be an object")
+                epath = entry.get("path")
+                if (
+                    not isinstance(epath, str)
+                    or not epath.strip()
+                    or any(ch in epath for ch in ("\x00", "\r", "\n"))
+                    or epath.startswith(("/", "\\"))
+                    or ".." in epath.replace("\\", "/").split("/")
+                ):
+                    raise ContractValidationError("Invalid path in source repoTree entry")
+
     rubric = _validate_and_read_ref(
         store,
         input_refs["rubric"],
@@ -579,6 +620,7 @@ def process_job_message(
     grader: AIGrader,
 ) -> Dict[str, Any]:
     """Xử lý trọn vẹn 1 job: đọc/verify S3 -> chấm AI -> ghi S3 bất biến -> gửi SQS Results."""
+    started = time.monotonic()
     request, manifest, source, rubric = validate_and_load_job_inputs(raw_message_body, store)
     job_id = request["jobId"]
 
@@ -593,6 +635,7 @@ def process_job_message(
             rubric_criteria=rubric["criteria"],
             submission_description=description,
             max_total_chars=config.max_source_chars,
+            repo_tree=source.get("repoTree"),
         )
     except ModelBudgetExhaustedError:
         failure_doc = build_v1_failure_message(
@@ -612,6 +655,7 @@ def process_job_message(
             "status": "FAILED",
             "errorCode": config.budget_exhausted_error_code,
             "messageId": failure_doc["messageId"],
+            "durationMs": int((time.monotonic() - started) * 1000),
         }
 
     output_doc = build_v1_output_document(request, evaluation)
@@ -634,7 +678,24 @@ def process_job_message(
         "status": "SUCCEEDED",
         "resultKey": result_ref["key"],
         "messageId": completion_doc["messageId"],
+        "durationMs": int((time.monotonic() - started) * 1000),
+        "usage": evaluation.get("usage", {}),
+        "coverage": evaluation.get("coverage", {}),
     }
+
+
+def _build_remaining_time_fn(context: Optional[Any]):
+    if context is None or not hasattr(context, "get_remaining_time_in_millis"):
+        return None
+
+    def _remaining() -> Optional[float]:
+        try:
+            ms = context.get_remaining_time_in_millis()
+            return float(ms) / 1000.0 if ms is not None else None
+        except Exception:
+            return None
+
+    return _remaining
 
 
 def lambda_handler(
@@ -674,6 +735,10 @@ def lambda_handler(
         provider=runtime_cfg.ai_provider,
         base_url=runtime_cfg.deepseek_api_url if runtime_cfg.ai_provider == "deepseek" else None,
         max_tokens=runtime_cfg.max_output_tokens,
+        timeout=runtime_cfg.http_timeout_seconds if runtime_cfg.ai_provider == "deepseek" else None,
+        deepseek_thinking=runtime_cfg.deepseek_thinking_mode,
+        deepseek_reasoning_effort=runtime_cfg.deepseek_reasoning_effort,
+        remaining_time_fn=_build_remaining_time_fn(context),
     )
 
     failures: List[Dict[str, str]] = []
@@ -682,7 +747,20 @@ def lambda_handler(
         body = record.get("body", "")
         try:
             outcome = process_job_message(body, runtime_cfg, store, sqs, grader)
-            logger.info("Processed AI jobId=%s status=%s", outcome["jobId"], outcome["status"])
+            logger.info(
+                "AI_JOB_METRIC %s",
+                json.dumps(
+                    {
+                        "jobId": outcome["jobId"],
+                        "status": outcome["status"],
+                        "durationMs": outcome.get("durationMs"),
+                        "usage": outcome.get("usage"),
+                        "coverage": outcome.get("coverage"),
+                    },
+                    separators=(",", ":"),
+                    ensure_ascii=False,
+                ),
+            )
         except Exception as exc:
             logger.exception("Failed SQS messageId=%s: %s", sqs_msg_id, type(exc).__name__)
             if sqs_msg_id:

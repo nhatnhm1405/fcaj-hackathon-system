@@ -66,7 +66,7 @@ class TestSqsWorker(unittest.TestCase):
             storage_prefix="poc",
             results_queue_url="https://sqs.ap-southeast-1.amazonaws.com/123456789012/fcaj-results",
             ai_provider="deepseek",
-            deepseek_model="deepseek-chat",
+            deepseek_model="deepseek-flash",
             deepseek_api_url="https://api.deepseek.com/chat/completions",
             deepseek_api_key_parameter=None,
             max_source_chars=120000,
@@ -102,7 +102,7 @@ class TestSqsWorker(unittest.TestCase):
         sqs = MagicMock()
         sqs.receive_message.return_value = {}
         store = S3ArtifactStore(_InMemoryS3(), "test-bucket", "poc")
-        grader = AIGrader(api_key="test-key", model_name="deepseek-chat", provider="deepseek")
+        grader = AIGrader(api_key="test-key", model_name="deepseek-flash", provider="deepseek")
 
         result = poll_once(cfg, store=store, sqs_client=sqs, grader=grader)
         self.assertIsNone(result)
@@ -130,7 +130,7 @@ class TestSqsWorker(unittest.TestCase):
             ]
         }
         store = S3ArtifactStore(s3, "test-bucket", "poc")
-        grader = AIGrader(api_key="test-key", model_name="deepseek-chat", provider="deepseek")
+        grader = AIGrader(api_key="test-key", model_name="deepseek-flash", provider="deepseek")
 
         ai_payload = {
             "choices": [
@@ -201,7 +201,7 @@ class TestSqsWorker(unittest.TestCase):
             ]
         }
         store = S3ArtifactStore(_InMemoryS3(), "test-bucket", "poc")
-        grader = AIGrader(api_key="test-key", model_name="deepseek-chat", provider="deepseek")
+        grader = AIGrader(api_key="test-key", model_name="deepseek-flash", provider="deepseek")
 
         with self.assertRaises(Exception):
             poll_once(cfg, store=store, sqs_client=sqs, grader=grader)

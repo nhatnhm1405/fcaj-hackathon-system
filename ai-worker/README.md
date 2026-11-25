@@ -5,8 +5,8 @@ Module AI độc lập thực hiện tự động đánh giá mã nguồn reposi
 Hiện hỗ trợ 2 chế độ vận hành:
 1. **AWS Lambda AI Worker v3 (`src/lambda_handler.py` — Kiến trúc mục tiêu AWS v3):**
    - Trigger từ **Amazon SQS (Jobs)** chứa envelope `fcaj.ai.message.v1` (`AI_JOB_REQUESTED`).
-   - Đọc và kiểm tra SHA-256 + `sizeBytes` của `input-manifest.json`, `source.json`, `rubric.json` trên **S3 (Application)** (không cần gọi GitHub trực tiếp, không cần nằm trong VPC).
-   - Đọc `DEEPSEEK_API_KEY` từ **SSM Parameter Store** (hoặc biến môi trường), gọi **DeepSeek API** (`AI_PROVIDER=deepseek`, `deepseek-chat`).
+   - Đọc và kiểm tra SHA-256 + `sizeBytes` của `input-manifest.json`, `source.json` (hỗ trợ trường tùy chọn `repoTree`), `rubric.json` trên **S3 (Application)** (không cần gọi GitHub trực tiếp, không cần nằm trong VPC).
+   - Đọc `DEEPSEEK_API_KEY` từ **SSM Parameter Store** (hoặc biến môi trường), gọi **DeepSeek API** (`AI_PROVIDER=deepseek`, `deepseek-flash`, mặc định tắt thinking để tối ưu độ trễ và JSON 4096 tokens).
    - Hậu kiểm chặt `safeText` (loại bỏ secret, URL, email, NUL) và giới hạn dòng khớp `JobResultValidator` của Backend.
    - Ghi kết quả `fcaj.ai.output.v1` lên S3 (`results/{jobId}/output.json`) với `If-None-Match: "*"` (idempotent khi retry) và gửi `AI_JOB_COMPLETED` vào **Amazon SQS (Results)**.
 2. **CLI / Local AI (`src/ai_grader.py`, `src/mock_worker.py`):** Giữ tương thích cho chạy thử cục bộ với Ollama/Qwen3 hoặc Cloud AI fallback.
@@ -48,15 +48,19 @@ ai-worker/
 - **Concurrency & Trigger:**
   - Trigger từ `SQS (Jobs)` với `BatchSize = 1`, bật `ReportBatchItemFailures`
   - `MaximumConcurrency = 2` (hoặc `ReservedConcurrentExecutions = 2`) để kiểm soát chi phí và tránh rate limit của DeepSeek
-  - **Timeout:** đặt khoảng `120s`–`180s` (lưu ý `VisibilityTimeout` của SQS Jobs phải `>= 6 ×` timeout thực tế nếu kéo dài timeout hàm, hoặc giữ timeout hàm `<= 20s` khi `VisibilityTimeout = 120s` và tăng `VisibilityTimeout` lên `>= 720s` nếu đặt timeout Lambda `120s`)
+  - **Timeout:** đặt khoảng `120s`–`180s` (HTTP call DeepSeek mặc định `75s`; lưu ý `VisibilityTimeout` của SQS Jobs đặt `>= 720s` tức `>= 6 ×` timeout hàm để tránh retry chồng chéo)
 - **Biến môi trường Lambda:**
   - `AI_PROVIDER=deepseek`
-  - `DEEPSEEK_MODEL=deepseek-chat`
-  - `DEEPSEEK_API_KEY_PARAMETER=/fcaj/poc/deepseek-api-key` (hoặc truyền `DEEPSEEK_API_KEY` trực tiếp khi test)
+  - `DEEPSEEK_MODEL=deepseek-flash`
+  - `DEEPSEEK_THINKING_MODE=disabled`
+  - `DEEPSEEK_REASONING_EFFORT=none`
+  - `DEEPSEEK_API_KEY_PARAMETER=/fcaj/v3/worker/deepseek-api-key` (hoặc truyền `DEEPSEEK_API_KEY` trực tiếp khi test)
   - `APP_STORAGE_BUCKET=<tên-bucket-application>`
   - `APP_STORAGE_PREFIX=poc`
   - `APP_AI_JOBS_RESULTS_QUEUE_URL=<url-sqs-results>`
   - `LAMBDA_MAX_SOURCE_CHARS=120000`
+  - `LAMBDA_MAX_OUTPUT_TOKENS=4096`
+  - `LAMBDA_HTTP_TIMEOUT_SECONDS=75`
 - **Quyền IAM tối thiểu cho Lambda Execution Role:**
   - `s3:GetObject`, `s3:GetObjectVersion` trên `<bucket>/<prefix>/inputs/*`, `<bucket>/<prefix>/rubrics/*`, `<bucket>/<prefix>/results/*`
   - `s3:PutObject` trên `<bucket>/<prefix>/results/*`

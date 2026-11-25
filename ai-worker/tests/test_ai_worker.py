@@ -335,7 +335,7 @@ class TestPromptAndAIGrader(unittest.TestCase):
     def test_deepseek_grader_rejects_truncated_length_response(self, mock_urlopen):
         fake_api_response = {
             "id": "chatcmpl-truncated",
-            "model": "deepseek-chat",
+            "model": "deepseek-flash",
             "choices": [
                 {
                     "index": 0,

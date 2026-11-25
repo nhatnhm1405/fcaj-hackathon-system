@@ -127,6 +127,9 @@ def build_grader(runtime: LambdaRuntimeConfig, ssm_client: Optional[Any] = None)
         provider=runtime.ai_provider,
         base_url=runtime.deepseek_api_url if runtime.ai_provider == "deepseek" else None,
         max_tokens=runtime.max_output_tokens,
+        timeout=runtime.http_timeout_seconds if runtime.ai_provider == "deepseek" else None,
+        deepseek_thinking=runtime.deepseek_thinking_mode,
+        deepseek_reasoning_effort=runtime.deepseek_reasoning_effort,
     )
 
 
