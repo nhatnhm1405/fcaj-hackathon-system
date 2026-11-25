@@ -4,6 +4,7 @@ import { PixelMenu } from "@/shared/components/PixelMenu";
 import { ApiError, apiErrorMessage, eventsApi, HackathonEvent, Prize, prizesApi, Round, roundsApi, Team, teamsApi } from "@/shared/apiClient";
 import { ConfirmDialog } from "@/shared/components/ConfirmDialog";
 import { useNotifications } from "@/app/providers/NotificationProvider";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 
 const mono = "'JetBrains Mono', monospace";
 
@@ -72,9 +73,10 @@ function PrizeNameField({ prize, disabled, onSave }: { prize: Prize; disabled: b
 }
 
 export function CoordPrizesPage() {
+  const demoEventId = useDemoEventId();
   const { addToast } = useNotifications();
   const [events, setEvents] = useState<HackathonEvent[]>([]);
-  const currentEvent = useMemo(() => pickCurrentEvent(events), [events]);
+  const currentEvent = useMemo(() => demoEventId == null ? pickCurrentEvent(events) : events[0] ?? null, [demoEventId, events]);
   const selectedEventId = currentEvent?.eventId ?? null;
   const [finalRound, setFinalRound] = useState<Round | null>(null);
   const [teams, setTeams] = useState<Team[]>([]);
@@ -90,11 +92,11 @@ export function CoordPrizesPage() {
     setLoading(true);
     setLoadError(null);
 
-    eventsApi.getAll()
+    eventsApi.getCoordinatorEvents(demoEventId)
       .then((response) => setEvents(response.data ?? []))
       .catch((err) => setLoadError(err instanceof ApiError ? err.message : "Failed to load events."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [demoEventId]);
 
   const reloadPrizes = useCallback((eventId: number) =>
     prizesApi.getAll(eventId)

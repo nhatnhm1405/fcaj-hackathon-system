@@ -91,6 +91,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
            "AND u.userId NOT IN (" +
            "  SELECT tm.user.userId FROM TeamMember tm " +
            "  JOIN TeamEventEntry te ON te.team = tm.team " +
-           "  WHERE te.event.eventId = :eventId)")
+           "  WHERE te.event.eventId = :eventId) " +
+           "AND (u.email LIKE CONCAT('%+event', CAST(:eventId AS string), '@seal-demo.invalid') " +
+           "  OR (u.email NOT LIKE '%@seal-demo.invalid' AND NOT EXISTS (" +
+           "    SELECT 1 FROM HackathonEvent e WHERE e.eventId = :eventId AND " +
+           HackathonEventRepository.DEMO_EVENT + "))))")
     List<User> findGroupableFreeAgents(@Param("eventId") Integer eventId);
 }

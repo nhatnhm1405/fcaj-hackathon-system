@@ -78,8 +78,14 @@ export function PixelMenu({
     const rect = anchorRef.current?.getBoundingClientRect();
     if (!rect) return;
     const estHeight = items.length * EST_ITEM_HEIGHT + 16;
-    const openUp = rect.bottom + estHeight > window.innerHeight && rect.top > estHeight;
-    const style: React.CSSProperties = { position: "fixed", zIndex: 500, minWidth };
+    const roomAbove = rect.top - 12;
+    const roomBelow = window.innerHeight - rect.bottom - 12;
+    const openUp = roomBelow < estHeight && roomAbove > roomBelow;
+    const style: React.CSSProperties = {
+      position: "fixed", zIndex: 500, minWidth,
+      maxHeight: Math.max(0, openUp ? roomAbove : roomBelow),
+      overflowY: "auto",
+    };
     if (openUp) style.bottom = window.innerHeight - rect.top + 4;
     else style.top = rect.bottom + 4;
     if (align === "right") style.right = Math.max(8, window.innerWidth - rect.right);
@@ -94,7 +100,7 @@ export function PixelMenu({
   }, [open]);
 
   // Dismissal: outside pointerdown (covers touch), Escape (refocus trigger),
-  // any scroll (capture — the fixed panel would detach from its anchor), resize.
+  // scroll outside the menu (the fixed panel would detach from its anchor), resize.
   useEffect(() => {
     if (!open) return;
     function onPointerDown(e: PointerEvent) {
@@ -113,12 +119,16 @@ export function PixelMenu({
     }
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
-    window.addEventListener("scroll", close, true);
+    function onScroll(e: Event) {
+      if (e.target instanceof Node && panelRef.current?.contains(e.target)) return;
+      close();
+    }
+    window.addEventListener("scroll", onScroll, true);
     window.addEventListener("resize", close);
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("scroll", close, true);
+      window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", close);
     };
   }, [open]);
@@ -193,13 +203,13 @@ export function PixelMenu({
                   display: "flex", alignItems: "center", gap: 8, width: "100%", textAlign: "left",
                   cursor: entry.disabled ? "not-allowed" : "pointer",
                   background: "none", border: "none", padding: "8px 12px",
-                  color: entry.danger ? "#f87171" : C.text,
+                  color: entry.danger ? "var(--c-badge-red)" : C.text,
                   opacity: entry.disabled ? 0.45 : 1,
                   fontFamily: MONO, fontSize: 12, whiteSpace: "nowrap",
                 }}
-                onMouseEnter={(e) => { if (!entry.disabled) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+                onMouseEnter={(e) => { if (!entry.disabled) (e.currentTarget as HTMLElement).style.background = "var(--c-menu-hover)"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "none"; }}
-                onFocus={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+                onFocus={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--c-menu-hover)"; }}
                 onBlur={(e) => { (e.currentTarget as HTMLElement).style.background = "none"; }}
               >
                 {entry.icon}

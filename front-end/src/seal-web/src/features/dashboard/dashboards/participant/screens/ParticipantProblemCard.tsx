@@ -81,7 +81,7 @@ export function ParticipantProblemCard({ eventId, trackId }: { eventId: number; 
                 {problem?.fileName}
               </button>
               {problem?.fileSize ? (
-                <span style={{ color: C.textDim, fontFamily: MONO, fontSize: 11 }}>{formatSize(problem.fileSize)}</span>
+                <span style={{ color: C.textDim, fontFamily: MONO, fontSize: 12 }}>{formatSize(problem.fileSize)}</span>
               ) : null}
               <PixelBadge color="green">RELEASED</PixelBadge>
             </div>

@@ -716,11 +716,11 @@ function EventsSection({ data }: { data: LandingData }) {
                   onKeyDown={registrationOpen ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goRegister(); } } : undefined}
                   style={{
                     background: C.surface,
-                    border: `1px solid ${accent}33`,
+                    border: `1px solid color-mix(in srgb, ${accent} 20%, transparent)`,
                     padding: "20px 24px",
                     position: "relative",
                     overflow: "hidden",
-                    boxShadow: `0 0 20px ${accent}10`,
+                    boxShadow: `0 0 20px color-mix(in srgb, ${accent} 6%, transparent)`,
                     cursor: registrationOpen ? "pointer" : "default",
                   }}
                 >
@@ -742,7 +742,7 @@ function EventsSection({ data }: { data: LandingData }) {
 
                   {/* Single, subtle CTA line — the whole card is the link. */}
                   {registrationOpen && (
-                    <div style={{ marginTop: 16, paddingTop: 14, borderTop: `1px solid ${accent}22`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                    <div style={{ marginTop: 16, paddingTop: 14, borderTop: `1px solid color-mix(in srgb, ${accent} 13%, transparent)`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <span style={{ color: accent, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.06em" }}>Register for this event</span>
                       <span style={{ color: accent, fontFamily: "'JetBrains Mono', monospace", fontSize: 15 }}>→</span>
                     </div>

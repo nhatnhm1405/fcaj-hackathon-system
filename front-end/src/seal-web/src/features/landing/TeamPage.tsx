@@ -170,7 +170,7 @@ export function TeamPage() {
                 className={i === 0 && team.length % 2 === 1 ? "sm:col-span-2 sm:w-[calc(50%-10px)] sm:justify-self-center" : undefined}
                 style={{
                   background: C.surface,
-                  border: `1px solid ${m.accent}30`,
+                  border: `1px solid color-mix(in srgb, ${m.accent} 19%, transparent)`,
                   position: "relative",
                   overflow: "hidden",
                   display: "flex",
@@ -181,33 +181,33 @@ export function TeamPage() {
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.transform = "translateY(-3px)";
-                  el.style.boxShadow = `0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px ${m.accent}55`;
-                  el.style.borderColor = `${m.accent}66`;
+                  el.style.boxShadow = `0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px color-mix(in srgb, ${m.accent} 33%, transparent)`;
+                  el.style.borderColor = `color-mix(in srgb, ${m.accent} 40%, transparent)`;
                 }}
                 onMouseLeave={(e) => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.transform = "translateY(0)";
                   el.style.boxShadow = `0 2px 24px rgba(0,0,0,0.35)`;
-                  el.style.borderColor = `${m.accent}30`;
+                  el.style.borderColor = `color-mix(in srgb, ${m.accent} 19%, transparent)`;
                 }}
               >
                 {/* Accent line trên cùng */}
-                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${m.accent}cc, ${m.accent}11)` }} />
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, color-mix(in srgb, ${m.accent} 80%, transparent), color-mix(in srgb, ${m.accent} 7%, transparent))` }} />
 
                 {/* ── Cột ảnh bên trái ── */}
                 <div style={{
                   width: 130, minWidth: 130, position: "relative",
-                  background: `linear-gradient(160deg, ${m.accent}18 0%, ${C.bg} 100%)`,
-                  borderRight: `1px solid ${m.accent}20`,
+                  background: `linear-gradient(160deg, color-mix(in srgb, ${m.accent} 9%, transparent) 0%, ${C.bg} 100%)`,
+                  borderRight: `1px solid color-mix(in srgb, ${m.accent} 13%, transparent)`,
                   flexShrink: 0, overflow: "hidden",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <MemberPhoto member={m} />
 
                   {/* Góc bracket trên trái */}
-                  <div style={{ position: "absolute", top: 7, left: 7, width: 12, height: 12, borderTop: `2px solid ${m.accent}99`, borderLeft: `2px solid ${m.accent}99` }} />
+                  <div style={{ position: "absolute", top: 7, left: 7, width: 12, height: 12, borderTop: `2px solid color-mix(in srgb, ${m.accent} 60%, transparent)`, borderLeft: `2px solid color-mix(in srgb, ${m.accent} 60%, transparent)` }} />
                   {/* Góc bracket dưới trái */}
-                  <div style={{ position: "absolute", bottom: 7, left: 7, width: 12, height: 12, borderBottom: `2px solid ${m.accent}99`, borderLeft: `2px solid ${m.accent}99` }} />
+                  <div style={{ position: "absolute", bottom: 7, left: 7, width: 12, height: 12, borderBottom: `2px solid color-mix(in srgb, ${m.accent} 60%, transparent)`, borderLeft: `2px solid color-mix(in srgb, ${m.accent} 60%, transparent)` }} />
                 </div>
 
                 {/* ── Cột nội dung bên phải ── */}
@@ -216,8 +216,8 @@ export function TeamPage() {
                     {/* Role badge */}
                     <div style={{
                       display: "inline-block",
-                      background: `${m.accent}15`,
-                      border: `1px solid ${m.accent}40`,
+                      background: `color-mix(in srgb, ${m.accent} 8%, transparent)`,
+                      border: `1px solid color-mix(in srgb, ${m.accent} 25%, transparent)`,
                       padding: "2px 8px", marginBottom: 8,
                     }}>
                       <span style={{ color: m.accent, fontFamily: mono, fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase" }}>
@@ -247,7 +247,7 @@ export function TeamPage() {
                     ].map(({ icon: Icon, href, label }) => (
                       <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                         style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid ${C.border}`, color: C.textMuted, transition: "all 0.15s" }}
-                        onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = m.accent; el.style.borderColor = `${m.accent}88`; el.style.background = `${m.accent}10`; }}
+                        onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = m.accent; el.style.borderColor = `color-mix(in srgb, ${m.accent} 53%, transparent)`; el.style.background = `color-mix(in srgb, ${m.accent} 6%, transparent)`; }}
                         onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = C.textMuted; el.style.borderColor = C.border; el.style.background = "transparent"; }}
                       >
                         <Icon size={13} />

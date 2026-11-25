@@ -35,9 +35,9 @@ export function ParticipantJourneyBar({ team, highlight = false }: { team?: MyTe
   const boxBorder = highlight ? "rgba(59,130,246,0.2)" : C.border;
   // Same blue glow halo as the "pending approval" PixelCard.
   const boxShadow = highlight ? "0 0 0 1px rgba(59,130,246,0.15), 0 0 24px rgba(59,130,246,0.12), inset 0 0 40px rgba(59,130,246,0.03)" : undefined;
-  const headText = highlight ? "#ffffff" : C.green;
-  const strongText = highlight ? "#ffffff" : C.text;
-  const mutedText = highlight ? "rgba(255,255,255,0.85)" : C.textMuted;
+  const headText = highlight ? "var(--c-shell-text)" : C.green;
+  const strongText = highlight ? "var(--c-shell-text)" : C.text;
+  const mutedText = highlight ? "var(--c-shell-muted)" : C.textMuted;
 
   return (
     <div style={{ position: "relative", background: boxBg, border: `1px solid ${boxBorder}`, boxShadow, padding: "18px 20px 14px", overflow: "hidden" }}>

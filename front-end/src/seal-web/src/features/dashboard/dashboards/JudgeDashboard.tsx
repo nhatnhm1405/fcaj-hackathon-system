@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@/app/providers/AuthProvider";
 import {
-  C, GradientText, PixelCard, PixelButton, PixelBadge, PixelProgress, CyberStatCard,
-} from "@/shared/components/PixelComponents";
+  ContestCard, DashboardError, DashboardStage, TaskCard, TaskNote, TaskRow,
+} from "@/features/dashboard/components/DashboardUI";
+import { eventDateRange, phaseSummary, stepDates } from "@/features/dashboard/components/eventPhase";
 import {
   assignmentsApi, eventsApi, roundsApi, scoringApi, ApiError,
-  JudgeAssignedTeam, Round,
+  HackathonEvent, JudgeAssignedTeam, Round,
 } from "@/shared/apiClient";
 
 function fmtDate(iso?: string) {
@@ -14,11 +15,10 @@ function fmtDate(iso?: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-function roundStatusColor(status?: string): "green" | "yellow" | "gray" {
-  const s = (status ?? "").toUpperCase();
-  if (s === "ACTIVE" || s === "OPEN") return "green";
-  if (s === "UPCOMING" || s === "PENDING" || s === "DRAFT") return "yellow";
-  return "gray";
+// "IN_PROGRESS" → "In progress"
+function statusLabel(status?: string): string {
+  const t = (status ?? "").replace(/_/g, " ").toLowerCase();
+  return t ? t[0].toUpperCase() + t.slice(1) : "Status unknown";
 }
 
 interface RoundStat {
@@ -33,6 +33,7 @@ export function JudgeDashboard() {
   const { currentUser } = useAuth();
 
   const [eventName, setEventName] = useState<string>("");
+  const [event, setEvent] = useState<HackathonEvent | null>(null);
   const [roundStats, setRoundStats] = useState<RoundStat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -76,6 +77,8 @@ export function JudgeDashboard() {
         }));
 
         if (cancelled) return;
+        // Display only the assigned contest, never the fallback used to resolve rounds.
+        setEvent(event && event.name === assignment?.eventName ? event : null);
         // Stable order: by round orderNumber when known, else roundId.
         stats.sort((a, b) => (a.round?.orderNumber ?? a.roundId) - (b.round?.orderNumber ?? b.roundId));
         setRoundStats(stats);
@@ -93,80 +96,52 @@ export function JudgeDashboard() {
 
   const totalTeams = roundStats.reduce((a, r) => a + r.total, 0);
   const totalScored = roundStats.reduce((a, r) => a + r.scored, 0);
-  const pending = Math.max(0, totalTeams - totalScored);
+  const isOpen = (r: RoundStat) => ["ACTIVE", "OPEN"].includes((r.round?.status ?? "").toUpperCase());
+  const openRounds = roundStats.filter(isOpen);
+  const openLeft = openRounds.reduce((n, r) => n + Math.max(0, r.total - r.scored), 0);
+  const goScore = () => navigate('/judge/score');
+
+  const leftText = `${openLeft} submission${openLeft === 1 ? "" : "s"} left`;
+  const roundName = (r: RoundStat) => r.round?.name ?? `Round #${r.roundId}`;
+
+  const summary = !event ? undefined
+    : openRounds.length === 1 ? `${roundName(openRounds[0])} open, ${openLeft > 0 ? leftText : "everything is scored"}`
+    : openRounds.length > 1 ? `${openRounds.length} rounds open, ${openLeft > 0 ? leftText : "everything is scored"}`
+    : phaseSummary(event.status, event);
 
   return (
-    <div style={{ padding: 24, display: "flex", flexDirection: "column", gap: 20 }}>
-      {/* Header */}
-      <PixelCard glow gradient style={{ padding: 24 }}>
-        <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 700, marginBottom: 6 }}>
-          Judge Console
-        </div>
-        <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
-          <GradientText>Good day, {currentUser.full_name}</GradientText>
-        </h1>
-        <p style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, marginTop: 6 }}>
-          {eventName ? <>Evaluating submissions for <span style={{ color: C.text }}>{eventName}</span>.</> : "Evaluate hackathon submissions across your assigned rounds."}
-        </p>
-      </PixelCard>
+    <DashboardStage>
+      {error && <DashboardError message={error} />}
 
-      {error && (
-        <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, padding: "10px 14px" }}>
-          ERROR: {error}
-        </div>
-      )}
+      <ContestCard
+        name={eventName || (loading ? "Loading…" : "No contest assigned")}
+        status={event?.status}
+        summary={summary}
+        dates={event ? stepDates(event.status, event) : undefined}
+        facts={roundStats.length === 0 ? [] : [
+          ...(event?.topic ? [{ label: "Topic", value: event.topic }] : []),
+          ...(event ? [{ label: "Dates", value: eventDateRange(event), mobileOnly: true }] : []),
+          { label: "Rounds assigned", value: roundStats.length },
+          { label: "Scored", value: `${totalScored} of ${totalTeams}` },
+        ]}
+      />
 
-      {/* Stat row */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16 }}>
-        <CyberStatCard value={roundStats.length} label="Rounds Assigned" accent="blue" />
-        <CyberStatCard value={totalTeams} label="Teams to Score" accent="cyan" />
-        <CyberStatCard value={totalScored} label="Scored" accent="green" />
-        <CyberStatCard value={pending} label="Pending" accent="purple" />
-      </div>
-
-      {/* Overall progress */}
-      <PixelCard style={{ padding: 20 }}>
-        <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 700, marginBottom: 12 }}>
-          Overall Progress
-        </div>
-        <PixelProgress value={totalScored} max={totalTeams || 1} label={`${totalScored}/${totalTeams} submissions finalised`} gradient />
-      </PixelCard>
-
-      {/* Per-round cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
-        {loading && (
-          <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>Loading...</div>
+      <TaskCard title="Your scoring">
+        {loading && <TaskNote>Loading…</TaskNote>}
+        {!loading && roundStats.length === 0 && !error && <TaskNote>No rounds assigned to you yet</TaskNote>}
+        {!loading && openLeft > 0 && (
+          <TaskRow name="Next submission" state={`${leftText} to score`} attention primary action="Score next submission" onAction={goScore} />
         )}
-        {!loading && roundStats.length === 0 && !error && (
-          <PixelCard style={{ padding: 20 }}>
-            <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
-              No rounds assigned to you yet.
-            </div>
-          </PixelCard>
-        )}
-        {!loading && roundStats.map(({ round, roundId, total, scored }) => {
-          const open = (round?.status ?? "").toUpperCase() === "ACTIVE" || (round?.status ?? "").toUpperCase() === "OPEN";
-          return (
-            <PixelCard key={roundId} glow glowColor="blue" style={{ padding: 20 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                <div style={{ color: C.text, fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700 }}>
-                  {round?.name ?? `Round #${roundId}`}{round?.isFinal ? " · Final" : ""}
-                </div>
-                <PixelBadge color={roundStatusColor(round?.status)}>{round?.status ?? "—"}</PixelBadge>
-              </div>
-              <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginBottom: 12 }}>
-                Deadline: {fmtDate(round?.submissionDeadline)}
-              </div>
-              <PixelProgress value={scored} max={total || 1} label={`${scored}/${total} scored`} />
-              <div style={{ marginTop: 14 }}>
-                <PixelButton variant={open ? "cyber" : "secondary"} size="sm" onClick={() => navigate('/judge/score')}>
-                  {open ? "SCORE NOW" : "VIEW"}
-                </PixelButton>
-              </div>
-            </PixelCard>
-          );
-        })}
-      </div>
-    </div>
+        {!loading && roundStats.map(r => (
+          <TaskRow
+            key={r.roundId}
+            name={roundName(r)}
+            state={`${statusLabel(r.round?.status)}, ${r.scored} of ${r.total} scored, deadline ${fmtDate(r.round?.submissionDeadline)}`}
+            action={isOpen(r) ? "Score round" : "View scores"}
+            onAction={goScore}
+          />
+        ))}
+      </TaskCard>
+    </DashboardStage>
   );
 }

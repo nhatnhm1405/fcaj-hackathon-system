@@ -275,7 +275,7 @@ export function LeaderboardPage() {
                   </div>
                 )}
                 {isFinalRound && (
-                  <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, background: "rgba(13,17,23,0.4)", fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: C.textMuted }}>
+                  <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, background: "color-mix(in srgb, var(--c-surface) 40%, transparent)", fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: C.textMuted }}>
                     Full Standings
                   </div>
                 )}

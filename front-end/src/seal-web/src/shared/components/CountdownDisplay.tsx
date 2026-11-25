@@ -66,7 +66,7 @@ export function CountdownDisplay({
             color,
             letterSpacing: "0.04em",
             fontVariantNumeric: "tabular-nums",
-            textShadow: critical ? `0 0 14px ${C.red}66` : undefined,
+            textShadow: critical ? `0 0 14px color-mix(in srgb, ${C.red} 40%, transparent)` : undefined,
           }}
         >
           {status === "IDLE" ? "--:--" : format(remainingSeconds)}

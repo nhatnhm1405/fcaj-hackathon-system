@@ -17,19 +17,19 @@ export const C = {
   greenGlowFaint:"var(--c-glow-faint)",
 
   // Blue (secondary cyber accent)
-  blue:          "#3b82f6",
-  blueBright:    "#60a5fa",
+  blue:          "var(--c-blue)",
+  blueBright:    "var(--c-blue-bright)",
   blueDim:       "#1d4ed8",
   blueGlow:      "rgba(59,130,246,0.3)",
   blueGlowFaint: "rgba(59,130,246,0.1)",
 
   // Cyan (innovation highlight)
-  cyan:      "#06b6d4",
-  cyanBright:"#22d3ee",
+  cyan:      "var(--c-cyan)",
+  cyanBright:"var(--c-cyan-bright)",
   cyanGlow:  "rgba(6,182,212,0.35)",
 
   // Purple (AI / ML accent)
-  purple:    "#8b5cf6",
+  purple:    "var(--c-purple)",
   purpleGlow:"rgba(139,92,246,0.3)",
 
   // Text
@@ -44,9 +44,9 @@ export const C = {
   borderBlue:   "var(--c-border-blue)",
 
   // Status
-  red:    "#ef4444",
-  yellow: "#eab308",
-  orange: "#f97316",
+  red:    "var(--c-red)",
+  yellow: "var(--c-yellow)",
+  orange: "var(--c-orange)",
 
   // Text placed on accent backgrounds
   onAccent: "var(--c-on-accent)",
@@ -57,9 +57,9 @@ export const C = {
   copyright: "var(--c-copyright)",
 
   // Gradients
-  gradientPrimary: "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)",
+  gradientPrimary: "var(--c-primary-gradient)",
   gradientCyber:   "linear-gradient(135deg, var(--c-surface) 0%, var(--c-surface2) 100%)",
-  gradientCard:    "linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(59,130,246,0.04) 100%)",
+  gradientCard:    "var(--c-card-gradient)",
   gradientHero:    "linear-gradient(160deg, rgba(34,197,94,0.08) 0%, rgba(59,130,246,0.06) 50%, rgba(6,182,212,0.04) 100%)",
 };
 
@@ -130,7 +130,7 @@ export function PixelButton({
       fontWeight: 700,
     },
     cyber: {
-      background: "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)",
+      background: "var(--c-primary-gradient)",
       color: "#ffffff",
       border: "none",
       boxShadow: `0 0 20px rgba(34,197,94,0.25), 0 0 40px rgba(59,130,246,0.15)`,
@@ -156,7 +156,7 @@ export function PixelButton({
     },
     warning: {
       background: "rgba(234,179,8,0.08)",
-      color: "#facc15",
+      color: "var(--c-badge-yellow)",
       border: `1px solid rgba(234,179,8,0.4)`,
       boxShadow: "inset 0 0 20px rgba(234,179,8,0.04)",
     },
@@ -213,7 +213,7 @@ export function PixelCard({ children, className = "", glow = false, glowColor = 
       onClick={onClick}
       style={{
         background: gradient ? C.gradientCard : C.surface,
-        border: `1px solid ${glow ? accentMap[glowColor] + "33" : C.border}`,
+        border: `1px solid ${glow ? `color-mix(in srgb, ${accentMap[glowColor]} 20%, transparent)` : C.border}`,
         borderRadius: 0,
         boxShadow: glow ? glowMap[glowColor] : `var(--c-card-shadow)`,
         position: "relative",
@@ -262,7 +262,7 @@ export function CyberStatCard({ value, label, icon, trend, accent = "green", sub
     <div
       style={{
         background: C.surface,
-        border: `1px solid ${a.main}22`,
+        border: `1px solid color-mix(in srgb, ${a.main} 13%, transparent)`,
         borderRadius: 0,
         padding: "20px",
         position: "relative",
@@ -289,7 +289,7 @@ export function CyberStatCard({ value, label, icon, trend, accent = "green", sub
           {label}
         </div>
         {sublabel && (
-          <div style={{ color: C.textBlue, fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>{sublabel}</div>
+          <div style={{ color: C.textBlue, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>{sublabel}</div>
         )}
       </div>
 
@@ -407,14 +407,14 @@ interface PixelBadgeProps {
 
 export function PixelBadge({ children, color = "green", glow = false }: PixelBadgeProps) {
   const colors = {
-    green:  { bg: "rgba(34,197,94,0.1)",   border: "rgba(34,197,94,0.35)",  text: "#4ade80", glow: "rgba(34,197,94,0.45)" },
-    yellow: { bg: "rgba(234,179,8,0.1)",   border: "rgba(234,179,8,0.35)",  text: "#facc15", glow: "rgba(234,179,8,0.45)" },
-    red:    { bg: "rgba(239,68,68,0.1)",   border: "rgba(239,68,68,0.35)",  text: "#f87171", glow: "rgba(239,68,68,0.45)" },
-    blue:   { bg: "rgba(59,130,246,0.1)",  border: "rgba(59,130,246,0.35)", text: "#60a5fa", glow: "rgba(59,130,246,0.45)" },
-    orange: { bg: "rgba(249,115,22,0.1)",  border: "rgba(249,115,22,0.35)", text: "#fb923c", glow: "rgba(249,115,22,0.45)" },
-    gray:   { bg: "rgba(107,114,128,0.1)", border: "rgba(107,114,128,0.3)", text: "#9ca3af", glow: "rgba(107,114,128,0.35)" },
-    cyan:   { bg: "rgba(6,182,212,0.1)",   border: "rgba(6,182,212,0.35)",  text: "#22d3ee", glow: "rgba(6,182,212,0.5)" },
-    purple: { bg: "rgba(139,92,246,0.1)",  border: "rgba(139,92,246,0.35)", text: "#a78bfa", glow: "rgba(139,92,246,0.45)" },
+    green:  { bg: "rgba(34,197,94,0.1)",   border: "rgba(34,197,94,0.35)",  text: "var(--c-badge-green)", glow: "rgba(34,197,94,0.45)" },
+    yellow: { bg: "rgba(234,179,8,0.1)",   border: "rgba(234,179,8,0.35)",  text: "var(--c-badge-yellow)", glow: "rgba(234,179,8,0.45)" },
+    red:    { bg: "rgba(239,68,68,0.1)",   border: "rgba(239,68,68,0.35)",  text: "var(--c-badge-red)", glow: "rgba(239,68,68,0.45)" },
+    blue:   { bg: "rgba(59,130,246,0.1)",  border: "rgba(59,130,246,0.35)", text: "var(--c-blue-bright)", glow: "rgba(59,130,246,0.45)" },
+    orange: { bg: "rgba(249,115,22,0.1)",  border: "rgba(249,115,22,0.35)", text: "var(--c-badge-orange)", glow: "rgba(249,115,22,0.45)" },
+    gray:   { bg: "rgba(107,114,128,0.1)", border: "rgba(107,114,128,0.3)", text: "var(--c-badge-gray)", glow: "rgba(107,114,128,0.35)" },
+    cyan:   { bg: "rgba(6,182,212,0.1)",   border: "rgba(6,182,212,0.35)",  text: "var(--c-cyan-bright)", glow: "rgba(6,182,212,0.5)" },
+    purple: { bg: "rgba(139,92,246,0.1)",  border: "rgba(139,92,246,0.35)", text: "var(--c-badge-purple)", glow: "rgba(139,92,246,0.45)" },
   };
   const c = colors[color];
   return (
@@ -449,8 +449,8 @@ export function PixelProgress({ value, max = 100, label, color = C.green, showVa
     <div className="flex flex-col gap-1">
       {(label || showValue) && (
         <div className="flex justify-between items-center">
-          {label && <span style={{ color: C.textMuted, fontSize: 11, fontFamily: "'JetBrains Mono', monospace" }}>{label}</span>}
-          {showValue && <span style={{ color: C.green, fontSize: 11, fontFamily: "'JetBrains Mono', monospace" }}>{value}/{max}</span>}
+          {label && <span style={{ color: C.textMuted, fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>{label}</span>}
+          {showValue && <span style={{ color: C.green, fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>{value}/{max}</span>}
         </div>
       )}
       <div style={{ height: 5, background: C.surface3, borderRadius: 0, overflow: "hidden", border: `1px solid ${C.border}` }}>
@@ -483,7 +483,7 @@ export function TerminalWindow({ title = "terminal", children, className = "" }:
   return (
     <div
       style={{
-        background: "#050c07",
+        background: "var(--c-terminal-bg)",
         border: `1px solid rgba(34,197,94,0.2)`,
         borderRadius: 0,
         boxShadow: `0 0 30px rgba(34,197,94,0.08), 0 0 60px rgba(59,130,246,0.04)`,
@@ -492,7 +492,7 @@ export function TerminalWindow({ title = "terminal", children, className = "" }:
     >
       <div
         style={{
-          background: "linear-gradient(90deg, #0d1117, #0a1020)",
+          background: "var(--c-terminal-head)",
           borderBottom: `1px solid rgba(34,197,94,0.15)`,
           padding: "7px 14px",
           display: "flex",
@@ -505,7 +505,7 @@ export function TerminalWindow({ title = "terminal", children, className = "" }:
           <div style={{ width: 8, height: 8, background: C.yellow, borderRadius: 0 }} />
           <div style={{ width: 8, height: 8, background: C.green, borderRadius: 0 }} />
         </div>
-        <span style={{ color: "rgba(134,239,172,0.5)", fontSize: 10, fontFamily: "'JetBrains Mono', monospace", marginLeft: 6, letterSpacing: "0.08em" }}>
+        <span style={{ color: "var(--c-terminal-label)", fontSize: 10, fontFamily: "'JetBrains Mono', monospace", marginLeft: 6, letterSpacing: "0.08em" }}>
           {title}
         </span>
         {/* Fake data-flow line */}

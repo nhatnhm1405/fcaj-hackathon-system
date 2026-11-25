@@ -1,5 +1,6 @@
 import { useState, useEffect, CSSProperties } from "react";
 import { C, PixelButton, PixelBadge, PixelCard, FloatingParticles } from "@/shared/components/PixelComponents";
+import { eventPhaseBanner } from "@/features/dashboard/components/eventPhase";
 import { teamsApi, roundsApi, HackathonEvent, ActiveEventWithTracks, Round } from "@/shared/apiClient";
 import { useTour } from "@/app/providers/TourProvider";
 import { ParticipantJourneyBar } from "@/shared/components/ParticipantJourneyBar";
@@ -36,23 +37,6 @@ function registrationDeadlineLabel(ev: ActiveEventWithTracks): { primary: string
         secondary: `Deadline: ${fmtShort(deadlineIso)}`,
         tone: "green",
     };
-}
-
-type PhaseBadge = "green" | "cyan" | "blue" | "gray" | "red" | "yellow";
-
-// Visual identity for each event phase (event.status) — drives the phase banner
-// label + colour and the header status badge, so the card never contradicts the
-// real phase (e.g. showing "REGISTRATION OPEN" during the competition).
-function eventPhaseBanner(phase: string): { label: string; color: string; bg: string; border: string; glow: string; badge: PhaseBadge } {
-    switch (phase) {
-        case "OPEN":        return { label: "REGISTRATION OPEN", color: "#22c55e", bg: "linear-gradient(90deg, rgba(34,197,94,0.18), rgba(59,130,246,0.10))", border: "rgba(34,197,94,0.45)", glow: "0 0 24px rgba(34,197,94,0.12)", badge: "green" };
-        case "SETUP":       return { label: "SETUP PHASE", color: "#22d3ee", bg: "linear-gradient(90deg, rgba(6,182,212,0.18), rgba(59,130,246,0.10))", border: "rgba(6,182,212,0.45)", glow: "0 0 24px rgba(6,182,212,0.12)", badge: "cyan" };
-        case "IN_PROGRESS": return { label: "COMPETITION LIVE", color: "#60a5fa", bg: "linear-gradient(90deg, rgba(59,130,246,0.20), rgba(139,92,246,0.10))", border: "rgba(59,130,246,0.5)", glow: "0 0 24px rgba(59,130,246,0.15)", badge: "blue" };
-        case "COMPLETED":   return { label: "EVENT COMPLETED", color: "#cbd5e1", bg: "linear-gradient(90deg, rgba(148,163,184,0.14), rgba(100,116,139,0.06))", border: "rgba(148,163,184,0.35)", glow: "none", badge: "gray" };
-        case "CANCELLED":   return { label: "EVENT CANCELLED", color: "#f87171", bg: "linear-gradient(90deg, rgba(239,68,68,0.16), rgba(239,68,68,0.06))", border: "rgba(239,68,68,0.4)", glow: "0 0 24px rgba(239,68,68,0.10)", badge: "red" };
-        case "DRAFT":       return { label: "DRAFT", color: "#facc15", bg: "linear-gradient(90deg, rgba(234,179,8,0.14), rgba(234,179,8,0.06))", border: "rgba(234,179,8,0.35)", glow: "none", badge: "yellow" };
-        default:            return { label: phase || "EVENT", color: "#cbd5e1", bg: "linear-gradient(90deg, rgba(148,163,184,0.12), rgba(100,116,139,0.05))", border: "rgba(148,163,184,0.3)", glow: "none", badge: "gray" };
-    }
 }
 
 function trackSummary(track: { name: string; description?: string }) {
@@ -98,12 +82,12 @@ export function NoTeamDashboard({
     onRequestActive?: () => void;
 }) {
     const { openTour } = useTour();
-    const txt = "#ffffff";
-    const mut = "rgba(255,255,255,0.85)";
+    const txt = "var(--c-shell-text)";
+    const mut = "var(--c-shell-muted)";
     const statPanelBorder = "rgba(34,197,94,0.24)";
-    const detailPanelBg = "rgba(8, 18, 24, 0.28)";
+    const detailPanelBg = "var(--c-tinted-panel)";
     const detailToggleBg = "rgba(59,130,246,0.08)";
-    const titleStyle: CSSProperties = { background: "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" };
+    const titleStyle: CSSProperties = { background: C.gradientPrimary, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" };
     const [events, setEvents] = useState<ActiveEventWithTracks[]>([]);
     const [roundsByEvent, setRoundsByEvent] = useState<Record<number, Round[]>>({});
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -134,7 +118,7 @@ export function NoTeamDashboard({
     }
 
     return (
-        <div className="cyber-grid-bg" style={{ position: "relative", padding: "24px", minHeight: "100%" }}>
+        <div className="cyber-grid-bg dash-page" style={{ position: "relative", minHeight: "100%", overflowX: "clip" }}>
             {/* Ambient background — same cyber grid + floating particles as the pending-approval page. */}
             <FloatingParticles count={30} />
             <div style={{ position: "absolute", top: "6%", left: "50%", transform: "translateX(-50%)", width: 520, height: 520, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.06), transparent 70%)", pointerEvents: "none" }} />
@@ -171,7 +155,7 @@ export function NoTeamDashboard({
                         <span style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
                             Your team <strong style={{ color: txt }}>{pendingTeamName}</strong> is waiting for coordinator approval.
                         </span>
-                        <span style={{ background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.4)", color: "#eab308", fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.12em", padding: "2px 10px", flexShrink: 0 }}>PENDING</span>
+                        <span style={{ background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.4)", color: "#eab308", fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.12em", padding: "2px 10px", flexShrink: 0 }}>PENDING</span>
                     </div>
                 </PixelCard>
             )}
@@ -206,8 +190,9 @@ export function NoTeamDashboard({
                                 glow
                                 glowColor="blue"
                                 gradient
+                                className="dash-event-card"
                                 style={{
-                                    padding: "28px 30px", minHeight: 236, display: "flex", flexDirection: "column", gap: 22,
+                                    minHeight: 236, display: "flex", flexDirection: "column", gap: 22,
                                     borderColor: "rgba(59,130,246,0.2)",
                                     // Inactive participants can't register yet — dim the whole event card and
                                     // block interaction; their only action is the "Request to compete" banner above.
@@ -237,27 +222,27 @@ export function NoTeamDashboard({
                                             {banner.label}
                                         </span>
                                     </div>
-                                    <div style={{ textAlign: "right" }}>
+                                    <div className="dash-event-deadline">
                                         <div style={{ color: regInfo.tone === "red" ? "#f59e0b" : regInfo.tone === "green" ? C.greenBright : txt, textShadow: regInfo.tone === "red" ? "0 0 14px rgba(245,158,11,0.55)" : regInfo.tone === "green" ? "0 0 12px rgba(34,197,94,0.35)" : undefined, fontFamily: "'JetBrains Mono', monospace", fontSize: 22, fontWeight: 900, lineHeight: 1.1 }}>
                                             {regInfo.primary}
                                         </div>
-                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginTop: 4 }}>
+                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, marginTop: 4 }}>
                                             {regInfo.secondary}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10 }}>
+                                <div className="dash-event-stats">
                                     <div style={{ ...glassTile("6,182,212"), padding: "12px 14px" }}>
-                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" }}>Tracks</div>
+                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Tracks</div>
                                         <div style={{ color: C.cyan, fontFamily: "'JetBrains Mono', monospace", fontSize: 22, fontWeight: 900, marginTop: 4 }}>{evTracks.length}</div>
                                     </div>
                                     <div style={{ ...glassTile("59,130,246"), padding: "12px 14px" }}>
-                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" }}>Rounds</div>
+                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Rounds</div>
                                         <div style={{ color: C.blueBright, fontFamily: "'JetBrains Mono', monospace", fontSize: 22, fontWeight: 900, marginTop: 4 }}>{evRounds.length}</div>
                                     </div>
                                     <div style={{ ...glassTile("34,197,94"), padding: "12px 14px" }}>
-                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" }}>Current Round</div>
+                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Current Round</div>
                                         <div style={{ color: activeRound ? C.green : mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 900, marginTop: 7 }}>
                                             {activeRound
                                                 ? `${activeRound.name ?? "Qualifier"} ACTIVE`
@@ -278,9 +263,9 @@ export function NoTeamDashboard({
                                         onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); toggleExpanded(detailKey); } }}
                                         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, background: detailOpen ? "rgba(59,130,246,0.1)" : detailToggleBg, border: `1px solid ${detailOpen ? "rgba(59,130,246,0.5)" : statPanelBorder}`, backdropFilter: "blur(2px)", padding: "10px 16px", cursor: "pointer", transition: "all 0.2s ease" }}
                                     >
-                                        <span style={{ color: detailOpen ? C.blueBright : mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>Tracks &amp; Rounds details</span>
+                                        <span style={{ color: detailOpen ? C.blueBright : mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>Tracks &amp; Rounds details</span>
                                         <span style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-                                            <span style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase" }}>{detailOpen ? "Hide" : "Show"}</span>
+                                            <span style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" }}>{detailOpen ? "Hide" : "Show"}</span>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={detailOpen ? C.blueBright : mut} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: detailOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease", pointerEvents: "none" }}>
                                                 <polyline points="6 9 12 15 18 9" />
                                             </svg>
@@ -290,10 +275,10 @@ export function NoTeamDashboard({
                                 <div style={{ maxHeight: detailOpen ? 1200 : 0, opacity: detailOpen ? 1 : 0, transform: detailOpen ? "translateY(0)" : "translateY(-8px)", overflow: "hidden", transition: "max-height 0.32s ease, opacity 0.22s ease, transform 0.25s ease" }}>
                                     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                                         <div style={{ background: detailPanelBg, border: "1px solid rgba(6,182,212,0.35)", backdropFilter: "blur(2px)", padding: "14px 16px" }}>
-                                            <div style={{ color: C.cyan, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>
+                                            <div style={{ color: C.cyan, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>
                                                 Tracks
                                             </div>
-                                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+                                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(180px, 100%), 1fr))", gap: 10 }}>
                                                 {evTracks.length === 0 ? (
                                                     <span style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>No tracks configured.</span>
                                                 ) : evTracks.map(t => (
@@ -301,7 +286,7 @@ export function NoTeamDashboard({
                                                         <div style={{ color: "#e0faff", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, letterSpacing: "0.03em", fontWeight: 900 }}>
                                                             {t.name}
                                                         </div>
-                                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, lineHeight: 1.45 }}>
+                                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, lineHeight: 1.45 }}>
                                                             {trackSummary(t)}
                                                         </div>
                                                     </div>
@@ -309,10 +294,10 @@ export function NoTeamDashboard({
                                             </div>
                                         </div>
                                         <div style={{ background: detailPanelBg, border: "1px solid rgba(59,130,246,0.35)", backdropFilter: "blur(2px)", padding: "14px 16px" }}>
-                                            <div style={{ color: C.blueBright, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>
+                                            <div style={{ color: C.blueBright, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>
                                                 Rounds
                                             </div>
-                                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10 }}>
+                                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 10 }}>
                                                 {evRounds.length === 0 ? (
                                                     <span style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>No rounds configured.</span>
                                                 ) : evRounds.map(round => {
@@ -322,7 +307,7 @@ export function NoTeamDashboard({
                                                         <div style={{ color: txt, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 800 }}>
                                                             {round.name}
                                                         </div>
-                                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginTop: 5 }}>
+                                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, marginTop: 5 }}>
                                                             <span style={{ color: rActive ? C.green : mut, fontWeight: rActive ? 800 : 400 }}>{round.status ?? "TBA"}</span> · Deadline {fmtShort(round.submissionDeadline)}
                                                         </div>
                                                     </div>
@@ -342,14 +327,14 @@ export function NoTeamDashboard({
                                         <button
                                             type="button"
                                             onClick={onWaitForInvite}
-                                            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#ffffff", background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.5)", boxShadow: "inset 0 0 20px rgba(34,197,94,0.05)", padding: "10px 20px", borderRadius: 0, cursor: "pointer", transition: "all 0.18s ease" }}
+                                            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: txt, background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.5)", boxShadow: "inset 0 0 20px rgba(34,197,94,0.05)", padding: "10px 20px", borderRadius: 0, cursor: "pointer", transition: "all 0.18s ease" }}
                                             onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(34,197,94,0.16)"; el.style.borderColor = C.green; el.style.boxShadow = "0 0 16px rgba(34,197,94,0.3)"; }}
                                             onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(34,197,94,0.08)"; el.style.borderColor = "rgba(34,197,94,0.5)"; el.style.boxShadow = "inset 0 0 20px rgba(34,197,94,0.05)"; }}
                                         >
                                             WAIT FOR INVITE
                                         </button>
                                         {pendingInviteCount > 0 && (
-                                            <span style={{ position: "absolute", top: -8, right: -8, minWidth: 20, height: 20, borderRadius: "50%", background: C.blue, color: "#fff", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 0 10px rgba(59,130,246,0.75)`, pointerEvents: "none" }}>
+                                            <span style={{ position: "absolute", top: -8, right: -8, minWidth: 20, height: 20, borderRadius: "50%", background: C.blue, color: "#fff", fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 0 10px rgba(59,130,246,0.75)`, pointerEvents: "none" }}>
                                                 {pendingInviteCount}
                                             </span>
                                         )}

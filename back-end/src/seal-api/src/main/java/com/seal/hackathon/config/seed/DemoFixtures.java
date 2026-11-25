@@ -89,20 +89,16 @@ public class DemoFixtures {
     private static final String[] EXTERNAL_UNIS =
             {"HCMUS", "HCMUT (Bách Khoa)", "UIT", "RMIT Vietnam", "Văn Lang University"};
 
-    /** Running counter so each seeded student gets a distinct MSSV. */
-    private int studentSeq = 0;
-
-    public User user(String email, String fullName, String userType, String judgeType) {
+    public User user(String email, String fullName, String userType, String judgeType, int studentNumber) {
         // Students carry an MSSV; external students also carry a university, mirroring
         // what real registration collects. Staff/judges/mentors have neither.
         String studentId = null;
         String university = null;
         if ("FPT_STUDENT".equals(userType)) {
-            studentId = String.format("SE%06d", 150000 + (++studentSeq));
+            studentId = String.format("SE%06d", 150000 + studentNumber);
         } else if ("EXTERNAL_STUDENT".equals(userType)) {
-            int n = ++studentSeq;
-            studentId = String.format("EX%06d", 210000 + n);
-            university = EXTERNAL_UNIS[n % EXTERNAL_UNIS.length];
+            studentId = String.format("EX%06d", 210000 + studentNumber);
+            university = EXTERNAL_UNIS[studentNumber % EXTERNAL_UNIS.length];
         }
         return userRepo.save(User.builder()
                 .email(email)
@@ -213,6 +209,15 @@ public class DemoFixtures {
                 .event(event).round(round).name(name)
                 .weight(BigDecimal.valueOf(weight)).maxScore(BigDecimal.valueOf(maxScore))
                 .orderNumber(order).build());
+    }
+
+    public void runningContestTimer(Round round, LocalDateTime startedAt, int seconds) {
+        LocalDateTime deadline = startedAt.plusSeconds(seconds);
+        round.setSubmissionDeadline(deadline);
+        timerRepo.save(RoundTimer.builder()
+                .round(round).phase("CONTEST").status("RUNNING")
+                .durationSeconds(seconds).startedAt(startedAt).endsAt(deadline).updatedAt(startedAt)
+                .build());
     }
 
     /** Seeds a completed phase so strict demo transitions match production rules. */

@@ -86,7 +86,7 @@ public class HackathonEventService {
     @Transactional(readOnly = true)
     public List<HackathonEventResponse> getAllHackathonEvents() {
         return hackathonEventRepository
-                .findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+                .findAllRegularEvents(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());

@@ -94,24 +94,24 @@ function InfoCard({ title, desc, accent, status }: { title: string; desc: string
     <div
       style={{
         background: C.surface,
-        border: `1px solid ${accent}22`,
+        border: `1px solid color-mix(in srgb, ${accent} 13%, transparent)`,
         padding: "24px",
         position: "relative",
         overflow: "hidden",
         transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        boxShadow: `0 0 20px ${accent}0a`,
+        boxShadow: `0 0 20px color-mix(in srgb, ${accent} 4%, transparent)`,
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.boxShadow = `0 0 30px ${accent}25, 0 8px 24px rgba(0,0,0,0.4)`;
+        el.style.boxShadow = `0 0 30px color-mix(in srgb, ${accent} 15%, transparent), 0 8px 24px rgba(0,0,0,0.4)`;
         el.style.transform = "translateY(-2px)";
-        el.style.borderColor = `${accent}44`;
+        el.style.borderColor = `color-mix(in srgb, ${accent} 27%, transparent)`;
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.boxShadow = `0 0 20px ${accent}0a`;
+        el.style.boxShadow = `0 0 20px color-mix(in srgb, ${accent} 4%, transparent)`;
         el.style.transform = "translateY(0)";
-        el.style.borderColor = `${accent}22`;
+        el.style.borderColor = `color-mix(in srgb, ${accent} 13%, transparent)`;
       }}
     >
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${accent}, transparent)`, opacity: 0.7 }} />
