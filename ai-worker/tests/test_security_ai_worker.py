@@ -139,7 +139,7 @@ class TestSecurityAIWorker(unittest.TestCase):
 
         # Kiểm tra cả payload thực sự gửi sang DeepSeek khi gọi evaluate_v1_artifacts
         fake_response = {
-            "model": "deepseek-chat",
+            "model": "deepseek-flash",
             "choices": [
                 {
                     "finish_reason": "stop",
@@ -254,7 +254,7 @@ class TestSecurityAIWorker(unittest.TestCase):
     def test_http_429_exponential_backoff_and_exhaustion(self):
         ok_resp = _FakeHTTPResponse(
             {
-                "model": "deepseek-chat",
+                "model": "deepseek-flash",
                 "choices": [{"finish_reason": "stop", "message": {"content": '{"ok": true}'}}],
             }
         )
@@ -320,7 +320,7 @@ class TestSecurityAIWorker(unittest.TestCase):
             storage_prefix="poc",
             results_queue_url="https://sqs.ap-southeast-1.amazonaws.com/123456789012/results",
             ai_provider="deepseek",
-            deepseek_model="deepseek-chat",
+            deepseek_model="deepseek-flash",
             deepseek_api_url="https://api.deepseek.com/chat/completions",
             deepseek_api_key_parameter=None,
             max_source_chars=120000,
