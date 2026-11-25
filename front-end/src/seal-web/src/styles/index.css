@@ -6,8 +6,9 @@
 @import './default_theme.css';
 @import './globals.css';
 
-/* ── App theme tokens (dark-only) ───────────────────────────────── */
-:root {
+/* ── SEAL app palette ─────────────────────────────────────────────── */
+:root, .seal-public-theme {
+  color-scheme: dark;
   --c-bg:           #070c0f;
   --c-surface:      #0d1117;
   --c-surface2:     #111827;
@@ -37,6 +38,146 @@
 
   /* Text on accent backgrounds */
   --c-on-accent:     #030b06;
+
+  --c-shell-text:    #ffffff;
+  --c-shell-muted:   rgba(255,255,255,0.85);
+  --c-shell-rule:    rgba(255,255,255,0.18);
+  --c-logout-text:   #fca5a5;
+  --c-blue:          #3b82f6;
+  --c-blue-bright:   #60a5fa;
+  --c-cyan:          #06b6d4;
+  --c-cyan-bright:   #22d3ee;
+  --c-purple:        #8b5cf6;
+  --c-red:           #ef4444;
+  --c-yellow:        #eab308;
+  --c-orange:        #f97316;
+  --c-badge-green:   #4ade80;
+  --c-badge-yellow:  #facc15;
+  --c-badge-red:     #f87171;
+  --c-badge-orange:  #fb923c;
+  --c-badge-gray:    #9ca3af;
+  --c-badge-purple:  #a78bfa;
+  --c-menu-hover:    rgba(255,255,255,0.05);
+  --c-primary-gradient: linear-gradient(135deg, #22c55e, #3b82f6);
+  --c-card-gradient: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(59,130,246,0.04));
+  --c-terminal-bg:   #050c07;
+  --c-terminal-head: linear-gradient(90deg, #0d1117, #0a1020);
+  --c-terminal-label: rgba(134,239,172,0.5);
+  --c-tinted-panel: rgba(8,18,24,0.28);
+  --c-social-bg:    #111111;
+  --c-social-hover: rgba(255,255,255,0.04);
+  --c-social-text:  #cccccc;
+  --c-social-border:#333333;
+  --c-social-label: rgba(255,255,255,0.25);
+  --c-dashboard-glow-green: rgba(34,197,94,0.20);
+  --c-dashboard-glow-blue: rgba(59,130,246,0.24);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --c-bg:            #edf5f2;
+  --c-surface:       #ffffff;
+  --c-surface2:      #f0f6f4;
+  --c-surface3:      #e0eee9;
+  --c-text:          #172f2b;
+  --c-text-muted:    #315c51;
+  --c-text-dim:      #48665e;
+  --c-text-blue:     #255691;
+  --c-border:        #b3cec3;
+  --c-border-bright: #168263;
+  --c-border-blue:   #bacfe3;
+  --c-navbar-bg:     rgba(252,255,254,0.96);
+  --c-footer-bg:     #e3efea;
+  --c-copyright:     #4b675d;
+  --c-accent:        #087052;
+  --c-accent-bright: #087c5b;
+  --c-accent-dim:    #075c45;
+  --c-glow:          rgba(8,112,82,0.14);
+  --c-glow-faint:    rgba(8,112,82,0.07);
+  --c-card-shadow:   0 2px 5px rgba(24,65,52,0.08);
+  --c-on-accent:     #ffffff;
+  --c-shell-text:    var(--c-text);
+  --c-shell-muted:   var(--c-text-muted);
+  --c-shell-rule:    #c2d7cf;
+  --c-logout-text:   #9e3035;
+  --c-blue:          #245da7;
+  --c-blue-bright:   #275a9d;
+  --c-cyan:          #0c6d80;
+  --c-cyan-bright:   #106375;
+  --c-purple:        #6242a5;
+  --c-red:           #aa3239;
+  --c-yellow:        #795608;
+  --c-orange:        #9b4817;
+  --c-badge-green:   #08664b;
+  --c-badge-yellow:  #765307;
+  --c-badge-red:     #9e3035;
+  --c-badge-orange:  #934115;
+  --c-badge-gray:    #475764;
+  --c-badge-purple:  #59408a;
+  --c-menu-hover:    #e3f0eb;
+  --c-primary-gradient: linear-gradient(135deg, #087255, #25599d);
+  --c-card-gradient: linear-gradient(135deg, #f6fcf8, #f7faff);
+  --c-terminal-bg:   #f7fbf9;
+  --c-terminal-head: linear-gradient(90deg, #e7f3ee, #eaf1fa);
+  --c-terminal-label: #47665e;
+  --c-tinted-panel: #f5faf8;
+  --c-social-bg:    var(--c-surface);
+  --c-social-hover: var(--c-surface2);
+  --c-social-text:  var(--c-text);
+  --c-social-border:var(--c-border);
+  --c-social-label: var(--c-text-dim);
+  --c-dashboard-glow-green: rgba(52,167,115,0.14);
+  --c-dashboard-glow-blue: rgba(59,130,246,0.13);
+}
+
+.seal-public-theme {
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-shell-text);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+.login-theme-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+}
+
+:root[data-theme="light"] .demo-phase-control button {
+  background: var(--c-surface) !important;
+  border-color: var(--c-border-bright);
+  box-shadow: 0 3px 12px rgba(24,65,52,0.16);
+}
+
+:root[data-theme="light"] .demo-phase-control button:hover {
+  background: var(--c-surface2) !important;
+}
+
+@media (max-width: 600px) {
+  :root[data-theme="light"] .coord-event-tabs {
+    flex-wrap: wrap;
+  }
 }
 
 /* ── Row overflow-menu affordance (hover/focus reveal) ──
@@ -138,21 +279,21 @@
   overflow: clip;
   min-height: calc(100vh - 60px);
   background-image:
-    radial-gradient(46% 60% at 12% 8%, rgba(34, 197, 94, 0.2), transparent 70%),
-    radial-gradient(50% 70% at 96% 88%, rgba(59, 130, 246, 0.24), transparent 70%),
+    radial-gradient(46% 60% at 12% 8%, var(--c-dashboard-glow-green), transparent 70%),
+    radial-gradient(50% 70% at 96% 88%, var(--c-dashboard-glow-blue), transparent 70%),
     linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(34, 197, 94, 0.08) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
 }
 .dash-panel { padding: 26px 30px; display: flex; flex-direction: column; gap: 26px; }
 .dash-panel--tasks { padding: 24px 30px 12px; gap: 14px; }
-.dash-chip { padding: 7px 14px; border: 1px solid; color: #ffffff; font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dash-chip { padding: 7px 14px; border: 1px solid; color: var(--c-shell-text); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* Facts read as one line: label and value side by side, divided by thin rules. The
    negative margin hides the rule of whichever fact starts a wrapped line. */
-.dash-facts { padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.18); overflow: hidden; }
-.dash-facts dl { display: flex; flex-wrap: wrap; gap: 10px 0; margin: 0 0 0 -23px; color: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 16px; }
-.dash-facts dl > div { display: flex; gap: 10px; min-width: 0; padding: 0 22px; border-left: 1px solid rgba(255, 255, 255, 0.3); }
+.dash-facts { padding-top: 20px; border-top: 1px solid var(--c-shell-rule); overflow: hidden; }
+.dash-facts dl { display: flex; flex-wrap: wrap; gap: 10px 0; margin: 0 0 0 -23px; color: var(--c-shell-text); font-family: 'JetBrains Mono', monospace; font-size: 16px; }
+.dash-facts dl > div { display: flex; gap: 10px; min-width: 0; padding: 0 22px; border-left: 1px solid var(--c-shell-rule); }
 .dash-facts dt { flex-shrink: 0; font-weight: 400; }
 .dash-facts dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
 .dash-facts dl > .dash-facts__mobile { display: none; }
@@ -165,18 +306,19 @@
   box-sizing: border-box;
   min-height: 54px;
   padding: 8px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  color: #ffffff;
+  border-top: 1px solid var(--c-shell-rule);
+  color: var(--c-shell-text);
   font-family: 'JetBrains Mono', monospace;
   font-size: 16px;
 }
 .dash-task--note { grid-template-columns: minmax(0, 1fr); }
 .dash-task__name { overflow-wrap: anywhere; }
 .dash-task__state { display: flex; flex-wrap: wrap; gap: 2px 16px; min-width: 0; overflow-wrap: anywhere; }
-.dash-history { padding: 12px 0 12px 234px; border-top: 1px solid rgba(255, 255, 255, 0.18); color: #ffffff; font-size: 14px; line-height: 1.6; }
-.dash-action { width: 200px; max-width: 100%; height: 34px; padding: 0 8px; color: #ffffff !important; font-size: 12px; white-space: nowrap; }
-.dash-toggle { padding: 0; border: 0; background: none; color: #ffffff; font: inherit; text-align: left; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.dash-step__label { color: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 14px; text-align: center; overflow-wrap: anywhere; }
+.dash-history { padding: 12px 0 12px 234px; border-top: 1px solid var(--c-shell-rule); color: var(--c-shell-text); font-size: 14px; line-height: 1.6; }
+.dash-action { width: 200px; max-width: 100%; height: 34px; padding: 0 8px; font-size: 12px; white-space: nowrap; }
+:root[data-theme="dark"] .dash-action { color: #ffffff !important; }
+.dash-toggle { padding: 0; border: 0; background: none; color: var(--c-shell-text); font: inherit; text-align: left; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.dash-step__label { color: var(--c-shell-text); font-family: 'JetBrains Mono', monospace; font-size: 14px; text-align: center; overflow-wrap: anywhere; }
 .dash-step__short { display: none; }
 .dash-step--active { animation: dashPulse 1.6s ease-in-out infinite; }
 @keyframes dashPulse {
@@ -208,7 +350,7 @@
   .dash-step__short { display: inline; }
   .dash-facts { padding-top: 0; border-top: 0; }
   .dash-facts dl { display: block; margin: 0; font-size: 14px; }
-  .dash-facts dl > div, .dash-facts dl > .dash-facts__mobile { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-left: 0; border-top: 1px solid rgba(255, 255, 255, 0.18); }
+  .dash-facts dl > div, .dash-facts dl > .dash-facts__mobile { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-left: 0; border-top: 1px solid var(--c-shell-rule); }
   .dash-facts dd { text-align: right; }
   .dash-task { grid-template-columns: minmax(0, 1fr) 152px; gap: 2px 12px; font-size: 14px; }
   .dash-action { width: 152px; height: 36px; padding: 0 4px; font-size: 11px; letter-spacing: 0 !important; }
@@ -220,7 +362,7 @@
 /* ── Autofill override ───────────────────────────────────────────────
    Auth forms opt out of autofill via autoComplete="off" / "new-password",
    but browsers may still force-fill. Neutralise the default light-yellow
-   highlight so filled inputs keep the dark surface + text of PixelInput. */
+   highlight so filled inputs use the same surface and text as PixelInput. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

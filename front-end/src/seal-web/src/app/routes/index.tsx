@@ -136,10 +136,15 @@ export const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      { path: "/", Component: LandingPageWrapper },
-      { path: "/about", Component: AboutPage },
-      { path: "/team", Component: TeamPage },
-      { path: "/contact", Component: ContactPage },
+      {
+        element: <div className="seal-public-theme dark"><Outlet /></div>,
+        children: [
+          { path: "/", Component: LandingPageWrapper },
+          { path: "/about", Component: AboutPage },
+          { path: "/team", Component: TeamPage },
+          { path: "/contact", Component: ContactPage },
+        ],
+      },
       {
         element: <RedirectIfAuthenticated />,
         children: [

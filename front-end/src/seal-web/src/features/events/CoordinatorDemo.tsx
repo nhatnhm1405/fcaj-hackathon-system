@@ -76,7 +76,7 @@ export function CoordinatorDemo({ children }: { children: ReactNode }) {
         {children}
       </DemoEventContext.Provider>
       {items.length > 0 && createPortal(
-        <div style={{
+        <div className="demo-phase-control" style={{
           position: "fixed", zIndex: 300,
           right: "max(20px, env(safe-area-inset-right))",
           bottom: "max(20px, env(safe-area-inset-bottom))",

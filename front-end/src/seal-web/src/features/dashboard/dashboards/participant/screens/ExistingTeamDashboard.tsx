@@ -278,7 +278,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                         style={{
                             position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 351,
                             width: "min(560px, calc(100vw - 32px))", maxHeight: "calc(100vh - 64px)", overflowY: "auto",
-                            background: C.surface, border: `1px solid ${C.green}66`,
+                            background: C.surface, border: `1px solid color-mix(in srgb, ${C.green} 40%, transparent)`,
                             boxShadow: `0 0 40px ${C.greenGlow}, 0 16px 48px rgba(0,0,0,0.4)`, padding: 28,
                         }}
                     >
@@ -326,7 +326,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                 ) : (
                     <>
                         {team.status === 'PENDING' && (
-                            <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.35)", color: "#eab308", fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "8px 12px", marginBottom: 12 }}>
+                            <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.35)", color: C.yellow, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "8px 12px", marginBottom: 12 }}>
                                 PENDING COORDINATOR APPROVAL — You cannot submit until approved.
                             </div>
                         )}
@@ -341,7 +341,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                                         style={{
                                             display: "inline-flex", alignItems: "center", gap: 6,
                                             background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.45)",
-                                            color: "#eab308", fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700,
+                                            color: C.yellow, fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700,
                                             padding: "7px 12px", cursor: "pointer", letterSpacing: "0.04em", transition: "all 0.15s",
                                         }}
                                         onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(234,179,8,0.16)"; }}
@@ -423,7 +423,7 @@ function GlassStat({ rgb, valueColor, label, value, sublabel }: {
     rgb: string; valueColor: string; label: string; value: string; sublabel?: string;
 }) {
     const MONO = "'JetBrains Mono', monospace";
-    const mut = "rgba(255,255,255,0.72)";
+    const mut = "var(--c-shell-muted)";
     return (
         <div style={{ ...glassTile(rgb), padding: "16px 18px", minHeight: 96, display: "flex", flexDirection: "column", justifyContent: "center", gap: 6 }}>
             <div style={{ color: mut, fontFamily: MONO, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600 }}>{label}</div>

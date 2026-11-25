@@ -18,7 +18,7 @@ export function SuccessScreen({
                     textAlign: "center",
                     overflow: "hidden",
                     border: "1px solid transparent",
-                    background: "linear-gradient(#0d1117, #0d1117) padding-box, linear-gradient(135deg, rgba(34,197,94,0.5), rgba(59,130,246,0.4), rgba(34,197,94,0.2)) border-box",
+                    background: `linear-gradient(${C.surface}, ${C.surface}) padding-box, linear-gradient(135deg, rgba(34,197,94,0.5), rgba(59,130,246,0.4), rgba(34,197,94,0.2)) border-box`,
                     boxShadow: "0 0 40px rgba(34,197,94,0.12), 0 0 80px rgba(59,130,246,0.08)",
                 }}>
                     <div style={{ position: "absolute", top: 0, left: 0, width: 16, height: 16, borderTop: `2px solid ${C.green}`, borderLeft: `2px solid ${C.green}` }} />

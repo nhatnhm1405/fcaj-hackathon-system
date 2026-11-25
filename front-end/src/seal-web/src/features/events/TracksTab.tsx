@@ -101,9 +101,9 @@ function TeamDropZone({ enabled, targetTrackId, onDropTeam, children, flush = fa
 // so labels read as "Ready" / "Needs 2 teams to run".
 function TrackChip({ tone, children, title }: { tone: "green" | "red" | "amber"; children: ReactNode; title?: string }) {
   const tones = {
-    green: { border: "rgba(34,197,94,0.45)", bg: "rgba(34,197,94,0.08)", color: "#4ade80" },
-    red:   { border: "rgba(239,68,68,0.45)", bg: "rgba(239,68,68,0.08)", color: "#f87171" },
-    amber: { border: "rgba(234,179,8,0.45)", bg: "rgba(234,179,8,0.08)", color: "#facc15" },
+    green: { border: "rgba(34,197,94,0.45)", bg: "rgba(34,197,94,0.08)", color: "var(--c-badge-green)" },
+    red:   { border: "rgba(239,68,68,0.45)", bg: "rgba(239,68,68,0.08)", color: "var(--c-badge-red)" },
+    amber: { border: "rgba(234,179,8,0.45)", bg: "rgba(234,179,8,0.08)", color: "var(--c-badge-yellow)" },
   };
   const t = tones[tone];
   return (
@@ -380,8 +380,8 @@ export function TracksTab({
           <div style={{ padding: 14, background: C.surface, border: `1px solid ${C.border}`, display: "flex", gap: 24, alignItems: "flex-end", flexWrap: "wrap" }}>
             {(leftoverCount ?? 0) > 0 && (
               <div>
-                <div style={{ color: "#facc15", fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 18, height: 18, border: "1.5px solid #facc15", fontSize: 12, fontWeight: 800, lineHeight: 1, flexShrink: 0 }}>!</span>
+                <div style={{ color: "var(--c-badge-yellow)", fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 18, height: 18, border: "1.5px solid var(--c-badge-yellow)", fontSize: 12, fontWeight: 800, lineHeight: 1, flexShrink: 0 }}>!</span>
                   {leftoverCount} leftover participant{leftoverCount === 1 ? '' : 's'} not grouped yet!
                 </div>
                 <PixelButton variant="warning" onClick={onOpenGrouping}>
@@ -550,7 +550,7 @@ export function TracksTab({
             team here to pull it off a track — PHẦN 4); outside SETUP it stays the
             read-only self-select view. */}
         {isSetup && showTrackStats ? (
-          <div style={{ background: C.surface, border: `1px solid ${unassignedTeams.length > 0 ? `${C.yellow}55` : C.border}` }}>
+          <div style={{ background: C.surface, border: `1px solid ${unassignedTeams.length > 0 ? `color-mix(in srgb, ${C.yellow} 33%, transparent)` : C.border}` }}>
             <div style={{ padding: 12, color: unassignedTeams.length > 0 ? C.yellow : C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em" }}>
               Unassigned teams <span style={{ color: C.textMuted }}>· {unassignedTeams.length}</span>
             </div>
@@ -567,7 +567,7 @@ export function TracksTab({
             </TeamDropZone>
           </div>
         ) : (showTrackStats && isSelfSelect && !teamsLoading && unassignedTeams.length > 0 && (
-          <div style={{ padding: 12, background: C.surface, border: `1px solid ${C.yellow}55` }}>
+          <div style={{ padding: 12, background: C.surface, border: `1px solid color-mix(in srgb, ${C.yellow} 33%, transparent)` }}>
             <div style={{ color: C.yellow, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em", marginBottom: 8 }}>
               Unassigned teams <span style={{ color: C.textMuted }}>· {unassignedTeams.length}</span>
             </div>

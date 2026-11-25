@@ -200,7 +200,7 @@ export function CreateTeamScreen({
                                     "Track is assigned later, during the setup phase.",
                                     "Team name must be unique within this event.",
                                 ].map((note) => (
-                                    <li key={note} style={{ display: "flex", gap: 8, color: "#ffffff", fontFamily: "'JetBrains Mono', monospace", fontSize: 11.5, lineHeight: 1.5 }}>
+                                    <li key={note} style={{ display: "flex", gap: 8, color: "var(--c-shell-text)", fontFamily: "'JetBrains Mono', monospace", fontSize: 11.5, lineHeight: 1.5 }}>
                                         <span style={{ color: C.green, flexShrink: 0 }}>›</span>
                                         <span>{note}</span>
                                     </li>

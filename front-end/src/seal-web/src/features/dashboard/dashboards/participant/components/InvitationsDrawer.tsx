@@ -344,7 +344,7 @@ export function InvitationsDrawer({ onClose }: { onClose: () => void }) {
                                                 }}
                                             >
                                                 <span style={{ minWidth: 0 }}>
-                                                    <span style={{ display: "block", color: selected ? "#ffffff" : C.text, fontFamily: mono, fontSize: 13, fontWeight: 900, lineHeight: 1.35, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "0.01em" }}>
+                                                    <span style={{ display: "block", color: selected ? "var(--c-shell-text)" : C.text, fontFamily: mono, fontSize: 13, fontWeight: 900, lineHeight: 1.35, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "0.01em" }}>
                                                         {t.teamName}
                                                     </span>
                                                 </span>

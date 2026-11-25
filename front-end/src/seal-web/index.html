@@ -12,9 +12,28 @@
       <title>SEAL Hackathon</title>
       <meta name="description" content="Manage hackathons effortlessly with a pixel-inspired platform featuring event management, team collaboration, and real-time leaderboards for participants." />
       <meta name="robots" content="noindex, nofollow" />
-      <!-- Dark-only base styles before React renders. -->
+      <script>
+        (() => {
+          const url = new URL(location.href);
+          const preview = url.searchParams.get("theme");
+          let theme = "dark";
+          try {
+            if (localStorage.getItem("seal-theme") === "light") theme = "light";
+          } catch {}
+          if (preview === "light" || preview === "dark") {
+            theme = preview;
+            url.searchParams.delete("theme");
+            history.replaceState(history.state, "", url);
+          }
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.classList.toggle("dark", theme === "dark");
+        })();
+      </script>
       <style>
-        html, body { height: 100%; margin: 0; background: #070c0f; color: #f0fdf4; }
+        html, body { height: 100%; margin: 0; background: var(--c-bg, #070c0f); color: var(--c-text, #f0fdf4); }
+        html[data-theme="light"], html[data-theme="light"] body {
+          background: var(--c-bg, #edf5f2); color: var(--c-text, #172f2b);
+        }
         #root { height: 100%; }
       </style>
     </head>

@@ -69,7 +69,7 @@ export function DashboardStage({ children }: { children: ReactNode }) {
 }
 
 /** Reserved for things that need the user's attention. */
-export const ATTENTION = "#facc15";
+export const ATTENTION = "var(--c-badge-yellow)";
 
 function ContestSteps({ status, dates }: { status: string; dates: string[] }) {
   const active = progressIndex(status);
@@ -89,7 +89,7 @@ function ContestSteps({ status, dates }: { status: string; dates: string[] }) {
                 style={{
                   width: 32, height: 32, borderRadius: "50%", flexShrink: 0, boxSizing: "border-box",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#ffffff", fontFamily: MONO, fontSize: 14, fontWeight: 700,
+                  color: "var(--c-shell-text)", fontFamily: MONO, fontSize: 14, fontWeight: 700,
                   border: `2px solid ${done || current ? C.green : C.border}`,
                   background: current ? "rgba(34,197,94,0.2)" : done ? "rgba(34,197,94,0.1)" : "transparent",
                   boxShadow: done ? "0 0 8px rgba(34,197,94,0.25)" : undefined,
@@ -135,7 +135,7 @@ export function ContestCard({ name, status, summary, dates = [], facts = [] }: C
   return (
     <PixelCard glow glowColor="blue" gradient className="dash-panel">
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 20px", fontFamily: MONO }}>
-        <h1 style={{ margin: 0, color: "#ffffff", fontFamily: MONO, fontSize: 26, fontWeight: 800, lineHeight: 1.2, overflowWrap: "anywhere" }}>{name}</h1>
+        <h1 style={{ margin: 0, color: "var(--c-shell-text)", fontFamily: MONO, fontSize: 26, fontWeight: 800, lineHeight: 1.2, overflowWrap: "anywhere" }}>{name}</h1>
         {phase && summary && (
           <span className="dash-chip" style={{ background: phase.bg, borderColor: phase.border }}>{summary}</span>
         )}
@@ -161,7 +161,7 @@ export function ContestCard({ name, status, summary, dates = [], facts = [] }: C
 export function TaskCard({ title, children }: { title: string; children: ReactNode }) {
   return (
     <PixelCard glow glowColor="blue" gradient className="dash-panel dash-panel--tasks">
-      <h2 style={{ margin: 0, color: "#ffffff", fontFamily: MONO, fontSize: 18, fontWeight: 800, lineHeight: 1.3 }}>{title}</h2>
+      <h2 style={{ margin: 0, color: "var(--c-shell-text)", fontFamily: MONO, fontSize: 18, fontWeight: 800, lineHeight: 1.3 }}>{title}</h2>
       <div>{children}</div>
     </PixelCard>
   );

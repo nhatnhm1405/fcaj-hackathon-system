@@ -101,11 +101,11 @@ export function ContactPage() {
           <div style={{
             display: "inline-block",
             background: C.surface,
-            border: `1px solid ${C.green}33`,
+            border: `1px solid color-mix(in srgb, ${C.green} 20%, transparent)`,
             padding: "28px 36px",
             position: "relative",
             overflow: "hidden",
-            boxShadow: `0 0 24px ${C.green}11`,
+            boxShadow: `0 0 24px color-mix(in srgb, ${C.green} 7%, transparent)`,
           }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${C.green}, transparent)`, opacity: 0.7 }} />
             <div style={{ position: "absolute", top: 0, left: 0, width: 12, height: 12, borderTop: `2px solid ${C.green}`, borderLeft: `2px solid ${C.green}` }} />
@@ -136,7 +136,7 @@ export function ContactPage() {
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.textShadow = `0 0 12px ${C.green}, 0 0 24px ${C.green}88`;
+                el.style.textShadow = `0 0 12px ${C.green}, 0 0 24px color-mix(in srgb, ${C.green} 53%, transparent)`;
                 el.style.borderBottomColor = C.green;
                 el.style.transform = "translateY(-1px)";
               }}

@@ -79,8 +79,8 @@ describe("PixelMenu", () => {
   it("styles danger items red", () => {
     renderMenu();
     fireEvent.click(trigger());
-    expect(screen.getByRole("menuitem", { name: "Delete" })).toHaveStyle({ color: "#f87171" });
-    expect(screen.getByRole("menuitem", { name: "Edit" })).not.toHaveStyle({ color: "#f87171" });
+    expect(screen.getByRole("menuitem", { name: "Delete" }).style.color).toBe("var(--c-badge-red)");
+    expect(screen.getByRole("menuitem", { name: "Edit" }).style.color).not.toBe("var(--c-badge-red)");
   });
 
   it("opens on ArrowDown and focuses the first enabled item", () => {

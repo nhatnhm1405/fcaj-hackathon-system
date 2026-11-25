@@ -9,13 +9,14 @@ import { API_BASE_URL } from "@/shared/apiClient";
 import { AppFooter } from "@/shared/components/AppFooter";
 import { NotificationDetailModal } from "@/shared/components/NotificationDetailModal";
 import { NavbarRoleTimer } from "@/shared/components/NavbarRoleTimer";
+import { ThemeToggle } from "@/shared/components/ThemeToggle";
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
 import brandLogo from "@/imports/seal-logo.svg";
 
 const NAVBAR_H = 60;
 const SIDEBAR_W = 248;
-const WHITE = "#ffffff";
-const LOGOUT_TEXT = "#fca5a5";
+const SHELL_TEXT = "var(--c-shell-text)";
+const LOGOUT_TEXT = "var(--c-logout-text)";
 // Below this width the sidebar stops taking layout space and becomes a drawer.
 const MOBILE_QUERY = "(max-width: 860px)";
 
@@ -150,11 +151,11 @@ function getPageTitle(pathname: string): string {
 
 function roleBadgeStyle(role: string): { bg: string; color: string } {
   switch (role) {
-    case "ADMIN": return { bg: "rgba(239,68,68,0.35)", color: WHITE };
-    case "COORDINATOR": return { bg: "rgba(234,179,8,0.35)", color: WHITE };
-    case "MENTOR": return { bg: "rgba(6,182,212,0.35)", color: WHITE };
-    case "JUDGE": return { bg: "rgba(59,130,246,0.35)", color: WHITE };
-    default: return { bg: "rgba(34,197,94,0.35)", color: WHITE };
+    case "ADMIN": return { bg: "rgba(239,68,68,0.35)", color: SHELL_TEXT };
+    case "COORDINATOR": return { bg: "rgba(234,179,8,0.35)", color: SHELL_TEXT };
+    case "MENTOR": return { bg: "rgba(6,182,212,0.35)", color: SHELL_TEXT };
+    case "JUDGE": return { bg: "rgba(59,130,246,0.35)", color: SHELL_TEXT };
+    default: return { bg: "rgba(34,197,94,0.35)", color: SHELL_TEXT };
   }
 }
 
@@ -223,7 +224,7 @@ function NotificationBell() {
           onMouseEnter={(e) => { if (!open) (e.currentTarget as HTMLElement).style.background = "rgba(34,197,94,0.06)"; }}
           onMouseLeave={(e) => { if (!open) (e.currentTarget as HTMLElement).style.background = "none"; }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={WHITE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={SHELL_TEXT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
             <path d="M13.73 21a2 2 0 0 1-3.46 0" />
           </svg>
@@ -260,7 +261,7 @@ function NotificationBell() {
               borderBottom: `1px solid ${C.border}`,
               flexShrink: 0,
             }}>
-              <span style={{ color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em" }}>
+              <span style={{ color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em" }}>
                 Notifications
                 {unreadCount > 0 && (
                   <span> · {unreadCount} unread</span>
@@ -271,7 +272,7 @@ function NotificationBell() {
                   onClick={markAllRead}
                   style={{
                     background: "none", border: "none", cursor: "pointer",
-                    color: WHITE, fontFamily: "'JetBrains Mono', monospace",
+                    color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace",
                     fontSize: 12, letterSpacing: "0.04em", padding: 0,
                     transition: "color 0.15s",
                   }}
@@ -286,7 +287,7 @@ function NotificationBell() {
             {/* List */}
             <div style={{ overflowY: "auto", flex: 1 }}>
               {userNotifications.length === 0 ? (
-                <div style={{ padding: "24px 16px", color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, textAlign: "center" }}>
+                <div style={{ padding: "24px 16px", color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, textAlign: "center" }}>
                   No notifications
                 </div>
               ) : (
@@ -315,14 +316,14 @@ function NotificationBell() {
                     }} />
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-                        <span style={{ color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700 }}>
+                        <span style={{ color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700 }}>
                           {n.title}
                         </span>
                       </div>
-                      <div style={{ color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, lineHeight: 1.5, marginBottom: 4 }}>
+                      <div style={{ color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, lineHeight: 1.5, marginBottom: 4 }}>
                         {n.message}
                       </div>
-                      <div style={{ color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.02em" }}>
+                      <div style={{ color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.02em" }}>
                         {fmtTime(n.created_at)}
                       </div>
                     </div>
@@ -394,7 +395,7 @@ function TopNavbar({ pageTitle, collapsed, onToggleCollapse, currentUser, onLogo
           style={{
             background: collapsed ? "rgba(34,197,94,0.08)" : "transparent",
             border: `1px solid ${collapsed ? "rgba(34,197,94,0.4)" : "rgba(34,197,94,0.15)"}`,
-            color: WHITE,
+            color: SHELL_TEXT,
             cursor: "pointer",
             width: 38,
             height: 38,
@@ -437,7 +438,7 @@ function TopNavbar({ pageTitle, collapsed, onToggleCollapse, currentUser, onLogo
           <div style={{ height: 44, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img src={brandLogo} alt="SEAL" style={{ height: 36, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 6px rgba(34,197,94,0.4))", pointerEvents: "none" }} />
           </div>
-          <span className="dash-navbar__brand-text" style={{ color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
+          <span className="dash-navbar__brand-text" style={{ color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
             SEAL Hackathon
           </span>
         </button>
@@ -449,6 +450,7 @@ function TopNavbar({ pageTitle, collapsed, onToggleCollapse, currentUser, onLogo
       <div className="dash-navbar__actions" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
         <NavbarRoleTimer role={currentUser.role} teamId={currentUser.team_id} />
 
+        <ThemeToggle />
         <NotificationBell />
 
         {/* User menu */}
@@ -520,7 +522,7 @@ function TopNavbar({ pageTitle, collapsed, onToggleCollapse, currentUser, onLogo
               {canSwitchRole && (
                 <button
                   onClick={() => { onSwitchRole(); setUserMenuOpen(false); }}
-                  style={{ width: "100%", padding: "10px 14px", background: "transparent", border: "none", cursor: "pointer", textAlign: "left", color: WHITE, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, borderRadius: 0, display: "flex", alignItems: "center", gap: 10 }}
+                  style={{ width: "100%", padding: "10px 14px", background: "transparent", border: "none", cursor: "pointer", textAlign: "left", color: SHELL_TEXT, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, borderRadius: 0, display: "flex", alignItems: "center", gap: 10 }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(59,130,246,0.08)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                 >
@@ -611,7 +613,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   // resolves the concrete screen internally, no /admin/... redirect), so this
   // can't be a pathname check alone.
   const isAdminRoute = currentUser.role === "ADMIN";
-  const sideText = WHITE;
+  const sideText = SHELL_TEXT;
   const sideStrong = C.text;
   const dashboardSidebarGrid = `radial-gradient(100% 46% at 50% 20%, rgba(34,197,94,0.10) 0%, transparent 72%), radial-gradient(130% 60% at 50% 46%, transparent 0%, transparent 32%, ${C.surface} 92%), linear-gradient(rgba(59,130,246,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.05) 1px, transparent 1px)`;
   const dashboardMainGrid = `radial-gradient(60% 50% at 50% 34%, rgba(34,197,94,0.06) 0%, transparent 72%), radial-gradient(85% 75% at 50% 40%, transparent 0%, transparent 42%, ${C.bg} 90%), linear-gradient(rgba(59,130,246,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.05) 1px, transparent 1px)`;
@@ -891,14 +893,14 @@ function LogoutConfirmModal({ open, userName, onCancel, onConfirm }: { open: boo
           <h2 style={{ fontFamily: mono, fontWeight: 800, fontSize: 18, letterSpacing: "0.04em", color: C.text, margin: 0 }}>Log out?</h2>
         </div>
 
-        <p style={{ color: WHITE, fontFamily: mono, fontSize: 13, lineHeight: 1.7, margin: "0 0 22px" }}>
+        <p style={{ color: SHELL_TEXT, fontFamily: mono, fontSize: 13, lineHeight: 1.7, margin: "0 0 22px" }}>
           You're signed in as <span style={{ color: C.text, fontWeight: 700 }}>{userName}</span>. You'll need to log in again to continue.
         </p>
 
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
           <button
             onClick={onCancel}
-            style={{ padding: "9px 18px", background: "transparent", border: `1px solid ${C.border}`, color: WHITE, cursor: "pointer", fontFamily: mono, fontSize: 12, letterSpacing: "0.06em", borderRadius: 0, transition: "all 0.15s" }}
+            style={{ padding: "9px 18px", background: "transparent", border: `1px solid ${C.border}`, color: SHELL_TEXT, cursor: "pointer", fontFamily: mono, fontSize: 12, letterSpacing: "0.06em", borderRadius: 0, transition: "all 0.15s" }}
             onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = C.text; el.style.borderColor = C.borderBright; }}
             onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = C.border; }}
           >

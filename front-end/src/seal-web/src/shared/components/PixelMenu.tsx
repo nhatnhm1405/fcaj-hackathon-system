@@ -203,13 +203,13 @@ export function PixelMenu({
                   display: "flex", alignItems: "center", gap: 8, width: "100%", textAlign: "left",
                   cursor: entry.disabled ? "not-allowed" : "pointer",
                   background: "none", border: "none", padding: "8px 12px",
-                  color: entry.danger ? "#f87171" : C.text,
+                  color: entry.danger ? "var(--c-badge-red)" : C.text,
                   opacity: entry.disabled ? 0.45 : 1,
                   fontFamily: MONO, fontSize: 12, whiteSpace: "nowrap",
                 }}
-                onMouseEnter={(e) => { if (!entry.disabled) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+                onMouseEnter={(e) => { if (!entry.disabled) (e.currentTarget as HTMLElement).style.background = "var(--c-menu-hover)"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "none"; }}
-                onFocus={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+                onFocus={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--c-menu-hover)"; }}
                 onBlur={(e) => { (e.currentTarget as HTMLElement).style.background = "none"; }}
               >
                 {entry.icon}

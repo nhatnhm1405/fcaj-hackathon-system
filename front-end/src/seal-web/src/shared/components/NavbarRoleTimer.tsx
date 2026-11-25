@@ -211,7 +211,7 @@ export function NavbarRoleTimer({ role, teamId }: NavbarRoleTimerProps) {
       <span
         className="navbar-role-timer__time"
         // Red/yellow keep warning about time; the normal state is white.
-        style={{ color: presentation.color === C.green || presentation.color === C.textMuted ? "#ffffff" : presentation.color, fontFamily: mono }}
+        style={{ color: presentation.color === C.green || presentation.color === C.textMuted ? "var(--c-shell-text)" : presentation.color, fontFamily: mono }}
       >
         {timeText}
       </span>

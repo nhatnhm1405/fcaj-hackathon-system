@@ -9,6 +9,8 @@ import { AppFooter } from "@/shared/components/AppFooter";
 import { SocialAuthButtons } from "@/features/auth/SocialAuthButtons";
 import brandLogo from "@/imports/seal-logo.svg";
 
+import { ThemeToggle } from "@/shared/components/ThemeToggle";
+
 const PENDING_APPROVAL_MESSAGE =
   "Your account is awaiting coordinator approval. Please wait until it is approved before signing in.";
 
@@ -76,6 +78,7 @@ export function LoginPage() {
     <div style={{ background: C.bg, display: "flex", flexDirection: "column", minHeight: "100vh" }}>
 
     <div style={{ flex: 1, position: "relative", overflow: "hidden" }} className="cyber-grid-bg">
+      <div className="login-theme-toggle"><ThemeToggle /></div>
       <FloatingParticles count={30} />
       {/* Ambient blobs */}
       <div style={{ position: "absolute", top: "10%", left: "5%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(34,197,94,0.08), transparent 70%)", pointerEvents: "none" }} />

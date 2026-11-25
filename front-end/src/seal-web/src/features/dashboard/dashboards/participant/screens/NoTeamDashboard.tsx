@@ -82,12 +82,12 @@ export function NoTeamDashboard({
     onRequestActive?: () => void;
 }) {
     const { openTour } = useTour();
-    const txt = "#ffffff";
-    const mut = "rgba(255,255,255,0.85)";
+    const txt = "var(--c-shell-text)";
+    const mut = "var(--c-shell-muted)";
     const statPanelBorder = "rgba(34,197,94,0.24)";
-    const detailPanelBg = "rgba(8, 18, 24, 0.28)";
+    const detailPanelBg = "var(--c-tinted-panel)";
     const detailToggleBg = "rgba(59,130,246,0.08)";
-    const titleStyle: CSSProperties = { background: "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" };
+    const titleStyle: CSSProperties = { background: C.gradientPrimary, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" };
     const [events, setEvents] = useState<ActiveEventWithTracks[]>([]);
     const [roundsByEvent, setRoundsByEvent] = useState<Record<number, Round[]>>({});
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});

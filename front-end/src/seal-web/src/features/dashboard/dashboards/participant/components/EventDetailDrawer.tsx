@@ -60,8 +60,8 @@ export function EventDetailDrawer({
 
     const seasonLabel = `${(event.season ?? "").toUpperCase()} ${event.year ?? ""}`.trim();
 
-    const txt = "#ffffff";
-    const mut = "rgba(255,255,255,0.85)";
+    const txt = "var(--c-shell-text)";
+    const mut = "var(--c-shell-muted)";
     // Real event status drives the badge colour (not always green).
     const st = (event.status ?? "").toUpperCase();
     const statusBadgeColor: "green" | "blue" | "red" | "yellow" =

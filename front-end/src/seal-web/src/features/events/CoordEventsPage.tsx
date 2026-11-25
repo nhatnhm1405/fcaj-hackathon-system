@@ -405,6 +405,7 @@ export function CoordEventsPage() {
           </div>
 
           <PixelTabs
+            className="coord-event-tabs"
             tabs={[
               { id: "tracks", label: "Tracks" },
               { id: "rounds", label: "Rounds" },
