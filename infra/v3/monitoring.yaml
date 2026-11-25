@@ -1,0 +1,181 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SEAL v3 monitoring. CloudWatch alarms and a monthly budget that notify the operations team through SNS.
+Parameters:
+  AlertEmail:
+    Type: String
+    AllowedPattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+    Description: Receives a confirmation email first; alerts arrive only after it is confirmed.
+  LoadBalancerName:
+    Type: String
+    Default: ''
+    AllowedPattern: '^(app/.+)?$'
+    Description: The app/... part of the load balancer ARN. Empty while the runtime stack is deleted.
+  TargetGroupName:
+    Type: String
+    Default: ''
+    AllowedPattern: '^(targetgroup/.+)?$'
+    Description: The targetgroup/... part of the target group ARN. Empty while the runtime stack is deleted.
+  MonthlyBudgetUsd:
+    Type: Number
+    Default: 50
+    Description: Usage before credits, so that spending is visible while credits still cover it.
+Conditions:
+  HasRuntime: !And [!Not [!Equals [!Ref LoadBalancerName, '']], !Not [!Equals [!Ref TargetGroupName, '']]]
+Resources:
+  Topic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: fcaj-v3-alerts
+      Subscription:
+        - {Protocol: email, Endpoint: !Ref AlertEmail}
+  TopicPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics: [!Ref Topic]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: [cloudwatch.amazonaws.com, budgets.amazonaws.com]}
+            Action: sns:Publish
+            Resource: !Ref Topic
+            Condition: {StringEquals: {'aws:SourceAccount': !Ref AWS::AccountId}}
+
+  # Web
+  NoHealthyHost:
+    Type: AWS::CloudWatch::Alarm
+    Condition: HasRuntime
+    Properties:
+      AlarmName: fcaj-v3-web-no-healthy-host
+      AlarmDescription: No API host answers the health check. The website is down.
+      Namespace: AWS/ApplicationELB
+      MetricName: HealthyHostCount
+      Dimensions:
+        - {Name: LoadBalancer, Value: !Ref LoadBalancerName}
+        - {Name: TargetGroup, Value: !Ref TargetGroupName}
+      Statistic: Maximum
+      Period: 60
+      EvaluationPeriods: 3
+      Threshold: 1
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: breaching
+      AlarmActions: [!Ref Topic]
+      OKActions: [!Ref Topic]
+  ServerErrors:
+    Type: AWS::CloudWatch::Alarm
+    Condition: HasRuntime
+    Properties:
+      AlarmName: fcaj-v3-web-5xx
+      AlarmDescription: The backend returned at least 10 server errors in 5 minutes.
+      Namespace: AWS/ApplicationELB
+      MetricName: HTTPCode_Target_5XX_Count
+      Dimensions:
+        - {Name: LoadBalancer, Value: !Ref LoadBalancerName}
+        - {Name: TargetGroup, Value: !Ref TargetGroupName}
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 10
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Topic]
+
+  # Database
+  DatabaseCpu:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: fcaj-v3-db-cpu
+      AlarmDescription: Database CPU above 80 percent for 15 minutes.
+      Namespace: AWS/RDS
+      MetricName: CPUUtilization
+      Dimensions: [{Name: DBInstanceIdentifier, Value: fcaj-v3-mysql}]
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 3
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Topic]
+  DatabaseStorage:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: fcaj-v3-db-storage
+      AlarmDescription: Less than 3 GB of database storage left.
+      Namespace: AWS/RDS
+      MetricName: FreeStorageSpace
+      Dimensions: [{Name: DBInstanceIdentifier, Value: fcaj-v3-mysql}]
+      Statistic: Minimum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 3221225472
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Topic]
+
+  # AI jobs
+  JobDlq:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: fcaj-v3-ai-job-dlq
+      AlarmDescription: An AI job failed after all retries.
+      Namespace: AWS/SQS
+      MetricName: ApproximateNumberOfMessagesVisible
+      Dimensions: [{Name: QueueName, Value: fcaj-poc-ai-jobs-dlq}]
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 0
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Topic]
+  ResultDlq:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: fcaj-v3-ai-result-dlq
+      AlarmDescription: The backend could not process an AI result after all retries.
+      Namespace: AWS/SQS
+      MetricName: ApproximateNumberOfMessagesVisible
+      Dimensions: [{Name: QueueName, Value: fcaj-poc-ai-results-dlq}]
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 0
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Topic]
+  WorkerErrors:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: fcaj-v3-ai-worker-errors
+      AlarmDescription: The AI worker crashed or timed out at least 3 times in 15 minutes.
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions: [{Name: FunctionName, Value: fcaj-v3-ai-worker}]
+      Statistic: Sum
+      Period: 900
+      EvaluationPeriods: 1
+      Threshold: 3
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Topic]
+
+  # Cost
+  Budget:
+    Type: AWS::Budgets::Budget
+    DependsOn: TopicPolicy
+    Properties:
+      Budget:
+        BudgetName: fcaj-v3-monthly
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit: {Amount: !Ref MonthlyBudgetUsd, Unit: USD}
+        CostTypes: {IncludeCredit: false, IncludeRefund: false}
+      NotificationsWithSubscribers:
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 50}
+          Subscribers: [{SubscriptionType: SNS, Address: !Ref Topic}]
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 80}
+          Subscribers: [{SubscriptionType: SNS, Address: !Ref Topic}]
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 100}
+          Subscribers: [{SubscriptionType: SNS, Address: !Ref Topic}]
+Outputs:
+  TopicArn: {Value: !Ref Topic}

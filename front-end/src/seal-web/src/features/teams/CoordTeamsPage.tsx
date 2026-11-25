@@ -3,7 +3,8 @@ import { List } from "lucide-react";
 import {
   C, GradientText, PixelCard, PixelButton, PixelBadge,
 } from "@/shared/components/PixelComponents";
-import { apiFetch, ApiError, apiErrorMessage } from "@/shared/apiClient";
+import { apiFetch, ApiError, apiErrorMessage, eventsApi } from "@/shared/apiClient";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 import { useNotifications } from "@/app/providers/NotificationProvider";
 import { usePendingTeams } from "@/app/providers/PendingTeamsProvider";
 import { TeamDetailModal, type TeamInfoRow } from "@/shared/components/TeamDetailModal";
@@ -374,6 +375,7 @@ function RemoveMemberModal({
 }
 
 export function CoordTeamsPage() {
+  const demoEventId = useDemoEventId();
   const { addToast } = useNotifications();
   // Sidebar's "Teams" badge — refreshed after every approve/reject/disqualify
   // so it stays in sync without a page reload (mirrors PendingAccountsProvider).
@@ -409,7 +411,7 @@ export function CoordTeamsPage() {
   useEffect(() => {
     setEventsLoading(true);
     setEventsError(null);
-    apiFetch<{ data: ApiEvent[] }>('/api/events')
+    eventsApi.getCoordinatorEvents(demoEventId)
       .then(res => {
         const rows = (res.data ?? []).map(normalizeEvent);
         setEvents(rows);
@@ -419,7 +421,7 @@ export function CoordTeamsPage() {
         setEventsError(err instanceof ApiError ? err.message : "Failed to load events.");
       })
       .finally(() => setEventsLoading(false));
-  }, []);
+  }, [demoEventId]);
 
   // Tracks and teams are both scoped per-event on the backend, so refetch
   // whenever the selected event changes.

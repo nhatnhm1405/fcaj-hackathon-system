@@ -17,6 +17,10 @@ leads_grading_result.json
 
 # Internal Benchmark scripts & docs (chỉ lưu nội bộ, không công khai lên GitHub)
 docs/
-benchmark_lead_project.py
+scripts/
+benchmark_*.py
+*ec2*.sh
+*ec2*.py
+*.pem
 lead_*.json
 lead_*.md

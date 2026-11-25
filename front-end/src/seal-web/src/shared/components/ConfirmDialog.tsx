@@ -118,7 +118,7 @@ export function ConfirmDialog({
         </div>
 
         {warning && (
-          <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.4)", color: "#eab308", fontFamily: MONO, fontSize: 11, lineHeight: 1.7, padding: "10px 12px", marginBottom: 16 }}>
+          <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.4)", color: C.yellow, fontFamily: MONO, fontSize: 11, lineHeight: 1.7, padding: "10px 12px", marginBottom: 16 }}>
             ⚠ {warning}
           </div>
         )}

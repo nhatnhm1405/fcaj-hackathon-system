@@ -1,4 +1,5 @@
-# AI Worker sử dụng Python standard library cho core runtime (zero external dependencies)
-# Các thư viện bên dưới phục vụ kiểm thử tự động (Automated Testing)
+# AI Worker sử dụng Python standard library cho core runtime; AWS Lambda runtime có sẵn boto3.
+# Các thư viện bên dưới phục vụ chạy cục bộ với AWS SDK và kiểm thử tự động (Automated Testing).
+boto3>=1.34.0
 pytest>=8.0.0
 pytest-mock>=3.12.0

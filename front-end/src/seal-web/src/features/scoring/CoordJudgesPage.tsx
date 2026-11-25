@@ -9,6 +9,7 @@ import {
   HackathonEvent, Round, Track, UserItem, JudgeRosterItem, MentorRosterItem, Team,
 } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 import {
   mono, HEAD_BG, HEAD_BORDER, MENTOR_HEAD_BG, MENTOR_HEAD_BORDER, MENTOR_CELL_BG, MENTOR_TEXT,
   FINAL_BG, FINAL_BORDER, TRACK_COL, CELL_COL,
@@ -39,9 +40,10 @@ type Active =
   | null;
 
 export function CoordJudgesPage() {
+  const demoEventId = useDemoEventId();
   const { addToast, addActionNotification } = useNotifications();
   const [events, setEvents] = useState<HackathonEvent[]>([]);
-  const currentEvent = useMemo(() => pickCurrentEvent(events), [events]);
+  const currentEvent = useMemo(() => demoEventId == null ? pickCurrentEvent(events) : events[0] ?? null, [demoEventId, events]);
   const selectedEventId = currentEvent?.eventId ?? null;
   const assignmentMutable = ASSIGNMENT_MUTABLE_STATUSES.has((currentEvent?.status ?? "").toUpperCase());
   const [rounds, setRounds] = useState<Round[]>([]);
@@ -74,13 +76,13 @@ export function CoordJudgesPage() {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      eventsApi.getAll().then(r => r.data ?? []),
+      eventsApi.getCoordinatorEvents(demoEventId).then(r => r.data ?? []),
       coordinatorApi.getStaff().then(r => r.data ?? []).catch(() => [] as UserItem[]),
     ])
       .then(([evs, st]) => { setEvents(evs); setStaff(st); })
       .catch(err => setLoadError(err instanceof ApiError ? err.message : "Failed to load events."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [demoEventId]);
 
   const reloadJudges = useCallback((eventId: number) =>
     coordinatorApi.getJudgeRoster(eventId).then(r => setJudges(r.data ?? [])).catch(() => setJudges([])), []);

@@ -113,6 +113,18 @@ jobs:
       - name: Verify MySQL 8.4 migrations and AI job delivery
         run: bash Test/run-ai-mysql-tests.sh
 
+      - name: Verify release image builds and survives artifact transfer
+        run: |
+          set -euo pipefail
+          image="seal-backend-ci:$GITHUB_SHA"
+          docker build --platform linux/amd64 -f Dockerfile.release --label "org.opencontainers.image.revision=$GITHUB_SHA" -t "$image" .
+          image_id="$(docker image inspect --format '{{.Id}}' "$image")"
+          docker save "$image" | gzip > "$RUNNER_TEMP/backend-image.tar.gz"
+          docker image rm "$image"
+          docker load --input "$RUNNER_TEMP/backend-image.tar.gz"
+          test "$(docker image inspect --format '{{.Id}}' "$image")" = "$image_id"
+          test "$(docker image inspect --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' "$image")" = "$GITHUB_SHA"
+
   python:
     name: Python worker unit tests
     runs-on: ubuntu-latest

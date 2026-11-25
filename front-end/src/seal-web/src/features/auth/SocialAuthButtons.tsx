@@ -41,10 +41,10 @@ function SocialButton({ onClick, children, logo }: SocialButtonProps) {
         alignItems: "center",
         gap: 12,
         padding: "10px 16px",
-        background: hovered ? "rgba(255,255,255,0.04)" : "#111",
-        border: hovered ? `1px solid ${C.green}` : "1px solid #333",
+        background: hovered ? "var(--c-social-hover)" : "var(--c-social-bg)",
+        border: hovered ? `1px solid ${C.green}` : "1px solid var(--c-social-border)",
         boxShadow: hovered ? `0 0 10px rgba(34,197,94,0.15)` : "none",
-        color: hovered ? "#ffffff" : "#cccccc",
+        color: hovered ? "var(--c-shell-text)" : "var(--c-social-text)",
         fontFamily: "'JetBrains Mono', monospace",
         fontSize: 13,
         letterSpacing: "0.04em",
@@ -73,11 +73,11 @@ export function SocialAuthButtons() {
     <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
       {/* Divider */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "20px 0 16px" }}>
-        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
-        <span style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", whiteSpace: "nowrap" }}>
+        <div style={{ flex: 1, height: 1, background: "var(--c-shell-rule)" }} />
+        <span style={{ color: "var(--c-social-label)", fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", whiteSpace: "nowrap" }}>
           — or continue with —
         </span>
-        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+        <div style={{ flex: 1, height: 1, background: "var(--c-shell-rule)" }} />
       </div>
 
       {/* Buttons */}

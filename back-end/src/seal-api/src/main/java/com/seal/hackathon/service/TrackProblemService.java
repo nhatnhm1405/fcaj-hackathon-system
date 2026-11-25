@@ -70,10 +70,7 @@ public class TrackProblemService {
     @Transactional
     public TrackProblemResponse uploadProblem(Integer actorUserId, Integer eventId,
                                               Integer trackId, MultipartFile file) {
-        Track track = requireTrackInEvent(eventId, trackId);
-        requireCoordinator(actorUserId, eventId);
-        requireEventAllowsProblemMutation(track.getEvent(), "upload a problem");
-
+        Track track = requireTrackForUpload(actorUserId, eventId, trackId);
         if (file == null || file.isEmpty()) {
             throw new BadRequestException("No problem file was uploaded.");
         }
@@ -86,29 +83,49 @@ public class TrackProblemService {
             throw new BadRequestException("Only PDF, DOC, DOCX or ZIP files are allowed.");
         }
 
-        try {
-            String storageKey = "problems/" + eventId + "/" + trackId + "/" + java.util.UUID.randomUUID() + "." + ext;
-            byte[] bytes;
-            try (var input = file.getInputStream()) { bytes = input.readNBytes((int) MAX_FILE_SIZE + 1); }
-            if (bytes.length > MAX_FILE_SIZE) throw new BadRequestException("Problem file must be 20MB or smaller.");
-            storage.put(storageKey, bytes, resolveContentType(null, ext));
-            deleteAfterCompletion(track.getProblemStorageKey(), storageKey);
-
-            track.setProblemStorageKey(storageKey);
-            track.setProblemFileName(originalName);
-            track.setProblemFileSize((long) bytes.length);
-            track.setProblemContentType(resolveContentType(null, ext));
-            track.setProblemUploadedAt(LocalDateTime.now());
-            // released flag is intentionally left unchanged: replacing a typo in an
-            // already-published problem keeps it published; hiding it is a separate
-            // explicit "retract" action.
-            trackRepository.save(track);
+        byte[] bytes;
+        try (var input = file.getInputStream()) {
+            bytes = input.readNBytes((int) MAX_FILE_SIZE + 1);
         } catch (IOException e) {
             throw new BadRequestException("Failed to store the uploaded problem file.");
         }
+        return storeProblem(actorUserId, track, originalName, ext, bytes);
+    }
+
+    // Demo archives are built server-side and written inside the demo seed transaction.
+    void uploadDemoArchive(int actorUserId, int eventId, int trackId, String fileName, byte[] bytes) {
+        Track track = requireTrackForUpload(actorUserId, eventId, trackId);
+        storeProblem(actorUserId, track, fileName, "zip", bytes);
+    }
+
+    private Track requireTrackForUpload(Integer actorUserId, Integer eventId, Integer trackId) {
+        Track track = requireTrackInEvent(eventId, trackId);
+        requireCoordinator(actorUserId, eventId);
+        requireEventAllowsProblemMutation(track.getEvent(), "upload a problem");
+        return track;
+    }
+
+    private TrackProblemResponse storeProblem(int actorUserId, Track track, String name, String ext, byte[] bytes) {
+        if (bytes.length > MAX_FILE_SIZE) {
+            throw new BadRequestException("Problem file must be 20MB or smaller.");
+        }
+        int eventId = track.getEvent().getEventId();
+        int trackId = track.getTrackId();
+        String storageKey = "problems/" + eventId + "/" + trackId + "/" + java.util.UUID.randomUUID() + "." + ext;
+        String contentType = resolveContentType(null, ext);
+        storage.put(storageKey, bytes, contentType);
+        deleteAfterCompletion(track.getProblemStorageKey(), storageKey);
+
+        track.setProblemStorageKey(storageKey);
+        track.setProblemFileName(name);
+        track.setProblemFileSize((long) bytes.length);
+        track.setProblemContentType(contentType);
+        track.setProblemUploadedAt(LocalDateTime.now());
+        // Replacing a problem preserves its release status.
+        trackRepository.save(track);
 
         auditLogService.record(actorUserId, "UPLOAD_PROBLEM", "TRACK", trackId, null,
-                Map.of("eventId", eventId, "fileName", track.getProblemFileName()));
+                Map.of("eventId", eventId, "fileName", name));
         return mapToResponse(track);
     }
 
