@@ -47,6 +47,8 @@ from src.github_fetcher import _safe_extract_zip, parse_github_owner_repo  # noq
 from src.lambda_handler import (  # noqa: E402
     LambdaRuntimeConfig,
     lambda_handler,
+    ContractValidationError,
+    _omitted_file_count,
 )
 
 
@@ -435,6 +437,106 @@ class TestSecurityAIWorker(unittest.TestCase):
             self.assertIn("main.py", files_dict)
             self.assertNotIn("escape.txt", files_dict)
             self.assertGreaterEqual(stats["skipped_files"], 1)
+
+
+class TestFairSourceCoverage(unittest.TestCase):
+    """Repo lớn hơn ngân sách phải được đọc đều và nói rõ phần chưa đọc."""
+
+    @staticmethod
+    def _file(path, lines, width=40):
+        return {"path": path, "content": "\n".join(f"{i:04d} {path}".ljust(width, "x") for i in range(lines))}
+
+    def _large_repo(self):
+        files = [self._file(f"back-end/app/module_{i}.py", 100) for i in range(40)]
+        files += [self._file("front-end/src/App.tsx", 600), self._file("front-end/src/api.ts", 30)]
+        files += [self._file(f"docs/guide_{i}.md", 300) for i in range(5)]
+        files += [self._file("back-end/requirements.txt", 3)]
+        return files
+
+    def test_small_repository_is_read_completely(self):
+        files = [self._file("src/a.py", 5), self._file("README.md", 2), {"path": "src/__init__.py", "content": ""}]
+        context, visible, stats = build_v1_source_context(files, max_total_chars=10_000)
+        self.assertEqual(stats["total_files"], 3)
+        self.assertEqual((stats["partial_files"], stats["skipped_files"], stats["coverage_percent"]), (0, 0, 100))
+        self.assertEqual(visible["src/a.py"], 5)
+        self.assertNotIn("CHƯA ĐỌC", context)
+
+    def test_large_backend_does_not_push_out_the_frontend(self):
+        context, visible, stats = build_v1_source_context(self._large_repo(), max_total_chars=40_000)
+        self.assertLessEqual(stats["total_chars"], 40_000)
+        self.assertGreater(stats["total_chars"], 36_000)
+        self.assertEqual(visible["front-end/src/api.ts"], 30)
+        self.assertGreater(visible["front-end/src/App.tsx"], 250)
+        self.assertEqual(visible["back-end/requirements.txt"], 3)
+        self.assertEqual(sum(1 for p in visible if p.startswith("back-end/app/")), 40)
+        docs = sum(len(c) for c in context.split("FILE: docs/")[1:])
+        self.assertGreater(docs, 0)
+        self.assertIn("FILE CHỈ ĐỌC MỘT PHẦN:", context)
+
+    def test_documents_may_use_space_that_code_does_not_need(self):
+        files = [self._file("src/a.py", 10), self._file("docs/long.md", 400)]
+        _, visible, stats = build_v1_source_context(files, max_total_chars=10_000)
+        self.assertEqual(visible["src/a.py"], 10)
+        self.assertGreater(visible["docs/long.md"], 200)
+        self.assertLessEqual(stats["total_chars"], 10_000)
+
+    def test_unreadable_single_line_file_gives_its_space_to_others(self):
+        files = [
+            {"path": "web/lib.min.js", "content": "x" * 50_000},
+            self._file("web/main.js", 200),
+            self._file("api/main.py", 200),
+        ]
+        context, visible, stats = build_v1_source_context(files, max_total_chars=17_000)
+        self.assertNotIn("web/lib.min.js", visible)
+        self.assertEqual((visible["web/main.js"], visible["api/main.py"]), (200, 200))
+        self.assertEqual(stats["skipped_files"], 1)
+        self.assertIn("FILE CHƯA ĐỌC:\n- web/lib.min.js", context)
+
+    def test_omitted_files_are_reported_to_model_and_judge(self):
+        grader = AIGrader(api_key="test", provider="deepseek")
+        sent = {}
+
+        def fake_provider(prompt):
+            sent["prompt"] = prompt
+            return (
+                {
+                    "criteria_results": [{"criteria_id": 1, "score": 5, "feedback": "Ổn."}],
+                    "evidence": [
+                        {"criteria_id": 1, "type": "NEUTRAL", "file_path": "src/big.py", "line_start": 1, "line_end": 2, "comment": "Đã đọc."},
+                        {"criteria_id": 1, "type": "PENALTY", "file_path": "src/big.py", "line_start": 900, "line_end": 901, "comment": "Chưa đọc."},
+                    ],
+                    "repo_analysis": {"note": "Ghi chú của model."},
+                },
+                "deepseek-flash",
+            )
+
+        with patch.object(grader, "_call_provider", side_effect=fake_provider):
+            output = grader.evaluate_v1_artifacts(
+                submission_id=1,
+                commit_sha="a" * 40,
+                source_files=[self._file("src/big.py", 1000)],
+                rubric_criteria=[{"criteriaId": 1, "name": "Kỹ thuật", "maxScore": 10, "weight": 1}],
+                max_total_chars=4_000,
+                omitted_file_count=2,
+            )
+        insight = output["insight"]
+        note = insight["repo"]["note"]
+        self.assertIn("đọc đủ 0/3 file", note)
+        self.assertIn("đọc một phần 1 file, chưa đọc 2 file (9% nội dung", note)
+        self.assertTrue(note.endswith("Ghi chú của model."))
+        self.assertIn("KHÔNG được xem toàn bộ bài nộp", sent["prompt"])
+        self.assertIn("2 file không được thu thập", sent["prompt"])
+        # Dẫn chứng trỏ vào phần chưa đọc bị loại.
+        self.assertEqual(
+            insight["criteriaInsights"][0]["evidence"], [{"path": "src/big.py", "startLine": 1, "endLine": 2}]
+        )
+
+    def test_omitted_count_defaults_to_zero_and_rejects_bad_values(self):
+        self.assertEqual(_omitted_file_count({}), 0)
+        self.assertEqual(_omitted_file_count({"omittedFileCount": 7}), 7)
+        for bad in (-1, True, "3", 1.5, None):
+            with self.assertRaises(ContractValidationError):
+                _omitted_file_count({"omittedFileCount": bad})
 
 
 if __name__ == "__main__":

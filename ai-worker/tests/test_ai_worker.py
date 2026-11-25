@@ -323,6 +323,8 @@ class TestPromptAndAIGrader(unittest.TestCase):
         self.assertEqual(output.overall_score, 8.05)
         # Kiểm tra ghi nhận đúng model thực tế từ server response
         self.assertEqual(output.model_name, "deepseek-v4.1-flash-1017")
+        sent_payload = json.loads(mock_urlopen.call_args[0][0].data.decode("utf-8"))
+        self.assertEqual(sent_payload["thinking"], {"type": "disabled"})
         # Kiểm tra đã strip tiền tố '  13: ' và che mật khẩu 'TrangNhi2004'
         ev = output.evidence[0]
         self.assertEqual(ev.file_path, "src/main/resources/application.properties")

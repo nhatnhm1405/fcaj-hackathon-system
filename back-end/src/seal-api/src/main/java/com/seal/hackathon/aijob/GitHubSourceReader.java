@@ -8,10 +8,15 @@ import java.net.http.*;
 import java.nio.charset.*;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-/** Public GitHub only. Fixed HTTPS hosts, no redirects, credentials, archives or code execution. */
+/**
+ * Public GitHub only. Fixed HTTPS hosts, no redirects, credentials, archives or code execution.
+ * Two API requests per snapshot (commit, tree) because unauthenticated clients share 60 per hour per IP address.
+ * File bodies come from the raw host, pinned to the commit and checked against the blob hashes of the tree.
+ */
 @Component
 @ConditionalOnProperty(name="app.ai.jobs.enabled", havingValue="true")
 public class GitHubSourceReader {
@@ -23,6 +28,10 @@ public class GitHubSourceReader {
     GitHubSourceReader(HttpClient client,Duration snapshotBudget) { this.client=client; this.snapshotBudget=snapshotBudget; }
     @jakarta.annotation.PreDestroy
     void shutdown() { client.shutdownNow(); }
+    static final int MAX_FILES=300, MAX_FILE_BYTES=100_000, MAX_TOTAL_BYTES=1_000_000;
+    private static final int PARALLEL_DOWNLOADS=6;
+    /** Documents and data give way to code when a repository exceeds the limits. */
+    private static final Set<String> SECONDARY=Set.of("md","txt","json","yml","yaml","xml","toml");
     private static final Set<String> EXT=Set.of("java","kt","py","js","jsx","ts","tsx","json","md","txt","yml","yaml","sql","html","css","go","rs","c","cpp","h","cs","xml","toml");
     public record Source(String commitSha, ObjectNode document) {}
     static String repository(String url) {
@@ -59,40 +68,80 @@ public class GitHubSourceReader {
         if(!treeSha.equals(tree.path("sha").asText())) throw JobException.invalid("INVALID_REPOSITORY_REVISION");
         if(tree.path("truncated").asBoolean(true) || !tree.path("tree").isArray() || tree.path("tree").size()>2000)
             throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
-        ObjectNode source=JobJson.object().put("schemaVersion","fcaj.ai.source.github.v1").put("fixtureOnly",false).put("commitSha",sha);
-        var files=source.putArray("files"); int bytesTotal=0;
-        var selected=new ArrayList<JsonNode>();
+        var candidates=new ArrayList<JsonNode>();
         for(JsonNode entry:tree.path("tree")) {
             if("commit".equals(entry.path("type").asText()) || "160000".equals(entry.path("mode").asText()))
                 throw JobException.invalid("SUBMODULES_NOT_SUPPORTED");
-            String path=entry.path("path").asText();
             if(!"blob".equals(entry.path("type").asText()) || !"100644".equals(entry.path("mode").asText()) && !"100755".equals(entry.path("mode").asText())) continue;
-            if(!selectedPath(path)) continue;
-            if(entry.path("size").asLong(Long.MAX_VALUE)>100_000 || selected.size()>=40) throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
-            selected.add(entry);
+            if(!selectedPath(entry.path("path").asText()) || entry.path("size").asLong(Long.MAX_VALUE)==0) continue;
+            if(!entry.path("sha").asText().matches("[0-9a-f]{40}")) throw JobException.invalid("INVALID_REPOSITORY_REVISION");
+            candidates.add(entry);
         }
-        selected.sort(Comparator.comparing(e -> e.path("path").asText()));
-        for(JsonNode entry:selected) {
-            if(System.nanoTime()>budget.get()) throw BoundedHttp.timedOut();
-            String blob=entry.path("sha").asText();
-            if(!blob.matches("[0-9a-f]{40}")) throw JobException.invalid("INVALID_REPOSITORY_REVISION");
-            JsonNode body=get(base+"/git/blobs/"+blob,150_000);
-            if(!"base64".equals(body.path("encoding").asText())) throw JobException.invalid("INVALID_REPOSITORY_SOURCE");
-            byte[] bytes;
-            try { bytes=Base64.getDecoder().decode(body.path("content").asText().replace("\n", "").replace("\r", "")); }
-            catch(IllegalArgumentException bad) { throw JobException.invalid("INVALID_REPOSITORY_SOURCE"); }
-            bytesTotal+=bytes.length;
-            if(bytes.length>100_000 || bytesTotal>1_000_000) throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
-            if(!blob.equals(gitBlobHash(bytes))) throw JobException.invalid("INVALID_REPOSITORY_SOURCE");
+        var selected=withinLimits(candidates);
+        // Files left out by a limit are counted so that the reader never claims to have seen the whole repository.
+        int omitted=candidates.size()-selected.size();
+        var bodies=download(repo,sha,selected);
+        ObjectNode source=JobJson.object().put("schemaVersion","fcaj.ai.source.github.v1").put("fixtureOnly",false).put("commitSha",sha);
+        var files=source.putArray("files");
+        for(int i=0;i<selected.size();i++) {
+            byte[] bytes=bodies.get(i);
+            if(!selected.get(i).path("sha").asText().equals(gitBlobHash(bytes))) throw JobException.invalid("INVALID_REPOSITORY_SOURCE");
             String text;
             try { text=StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT).decode(java.nio.ByteBuffer.wrap(bytes)).toString(); }
-            catch(CharacterCodingException bad) { continue; }
-            if(text.indexOf('\0')>=0) continue;
+            catch(CharacterCodingException bad) { omitted++; continue; }
+            if(text.indexOf('\0')>=0) { omitted++; continue; }
             if(text.startsWith("version https://git-lfs.github.com/spec/")) throw JobException.invalid("GIT_LFS_NOT_SUPPORTED");
-            files.addObject().put("path",entry.path("path").asText()).put("content",text);
+            files.addObject().put("path",selected.get(i).path("path").asText()).put("content",text);
         }
         if(files.isEmpty()) throw JobException.invalid("REPOSITORY_HAS_NO_SUPPORTED_SOURCE");
+        source.put("omittedFileCount",omitted);
         return new Source(sha,source);
+    }
+    /** Code first, then small files first, so that one large part cannot push out the others. Result is sorted by path. */
+    static List<JsonNode> withinLimits(List<JsonNode> candidates) {
+        var ranked=new ArrayList<>(candidates);
+        ranked.sort(Comparator.comparing((JsonNode e) -> SECONDARY.contains(extension(e.path("path").asText())))
+                .thenComparingLong(e -> e.path("size").asLong(Long.MAX_VALUE)).thenComparing(e -> e.path("path").asText()));
+        var selected=new ArrayList<JsonNode>(); long total=0;
+        for(JsonNode entry:ranked) {
+            long size=entry.path("size").asLong(Long.MAX_VALUE);
+            if(size>MAX_FILE_BYTES || selected.size()>=MAX_FILES || total+size>MAX_TOTAL_BYTES) continue;
+            total+=size; selected.add(entry);
+        }
+        selected.sort(Comparator.comparing(e -> e.path("path").asText()));
+        return selected;
+    }
+    private List<byte[]> download(String repo,String sha,List<JsonNode> selected) {
+        long deadline=budget.get();
+        var pool=Executors.newFixedThreadPool(PARALLEL_DOWNLOADS,Thread.ofVirtual().factory());
+        try {
+            var results=new ExecutorCompletionService<byte[]>(pool);
+            var pending=new ArrayList<Future<byte[]>>();
+            for(JsonNode entry:selected) pending.add(results.submit(() -> raw(repo,sha,entry.path("path").asText(),deadline)));
+            // Completion order: the first failure stops the remaining downloads.
+            for(int i=0;i<pending.size();i++) results.take().get();
+            var bodies=new ArrayList<byte[]>();
+            for(var body:pending) bodies.add(body.resultNow());
+            return bodies;
+        } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw JobException.invalid("REPOSITORY_FETCH_UNAVAILABLE");
+        } catch(ExecutionException e) {
+            if(e.getCause() instanceof JobException job) throw job;
+            throw JobException.invalid("REPOSITORY_FETCH_UNAVAILABLE");
+        } finally { pool.shutdownNow(); }
+    }
+    byte[] raw(String repo,String sha,String path,long deadline) {
+        long remaining=deadline-System.nanoTime();
+        if(remaining<=0) throw BoundedHttp.timedOut();
+        Duration timeout=Duration.ofNanos(Math.min(Duration.ofSeconds(15).toNanos(),remaining));
+        String encoded=URLEncoder.encode(path,StandardCharsets.UTF_8).replace("+","%20").replace("%2F","/");
+        var request=HttpRequest.newBuilder(URI.create("https://raw.githubusercontent.com/"+repo+"/"+sha+"/"+encoded))
+                .timeout(Duration.ofSeconds(15)).header("User-Agent","fcaj-backend-snapshot").GET().build();
+        return BoundedHttp.fetch(client,request,MAX_FILE_BYTES,timeout);
+    }
+    private static String extension(String path) {
+        return path.substring(path.lastIndexOf('.')+1).toLowerCase(Locale.ROOT);
     }
     static String gitBlobHash(byte[] bytes) {
         try {

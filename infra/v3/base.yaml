@@ -1,0 +1,282 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  SEAL v3 long-lived layer for a fresh account (ap-southeast-1): network, private MySQL,
+  frontend bucket, API role and the regional certificate. Deploy infra/cloudformation/poc.yaml first.
+Parameters:
+  DomainName:
+    Type: String
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]+\.[a-z]{2,}$'
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: Public zone for DomainName. NS delegation must already work, or the certificate waits forever.
+  CloudFrontPrefixListId:
+    Type: String
+    AllowedPattern: '^pl-[0-9a-f]+$'
+    Description: Id of com.amazonaws.global.cloudfront.origin-facing in this region.
+  MultiAZ:
+    Type: String
+    Default: 'false'
+    AllowedValues: ['true', 'false']
+    Description: Contest season only. Not available on the AWS Free account plan.
+  BackupRetentionDays:
+    Type: Number
+    Default: 1
+    MinValue: 1
+    MaxValue: 35
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.20.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags: [{Key: Name, Value: fcaj-v3}]
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: {VpcId: !Ref Vpc, InternetGatewayId: !Ref InternetGateway}
+  PublicA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.20.0.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags: [{Key: Name, Value: v3-public-a}]
+  PublicB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.20.1.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Tags: [{Key: Name, Value: v3-public-b}]
+  AppA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.20.10.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags: [{Key: Name, Value: v3-app-a}]
+  AppB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.20.11.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Tags: [{Key: Name, Value: v3-app-b}]
+  DbA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.20.20.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags: [{Key: Name, Value: v3-db-a}]
+  DbB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.20.21.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Tags: [{Key: Name, Value: v3-db-b}]
+  PublicRoutes:
+    Type: AWS::EC2::RouteTable
+    Properties: {VpcId: !Ref Vpc, Tags: [{Key: Name, Value: v3-public}]}
+  PublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties: {RouteTableId: !Ref PublicRoutes, DestinationCidrBlock: 0.0.0.0/0, GatewayId: !Ref InternetGateway}
+  PublicAssocA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PublicA, RouteTableId: !Ref PublicRoutes}
+  PublicAssocB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PublicB, RouteTableId: !Ref PublicRoutes}
+  # The NAT default route is added by runtime.yaml, so it disappears when runtime is switched off.
+  AppRoutes:
+    Type: AWS::EC2::RouteTable
+    Properties: {VpcId: !Ref Vpc, Tags: [{Key: Name, Value: v3-app}]}
+  AppAssocA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref AppA, RouteTableId: !Ref AppRoutes}
+  AppAssocB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref AppB, RouteTableId: !Ref AppRoutes}
+  DbRoutes:
+    Type: AWS::EC2::RouteTable
+    Properties: {VpcId: !Ref Vpc, Tags: [{Key: Name, Value: v3-db}]}
+  DbAssocA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref DbA, RouteTableId: !Ref DbRoutes}
+  DbAssocB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref DbB, RouteTableId: !Ref DbRoutes}
+  S3Endpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref Vpc
+      ServiceName: !Sub com.amazonaws.${AWS::Region}.s3
+      VpcEndpointType: Gateway
+      RouteTableIds: [!Ref AppRoutes]
+
+  AlbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SEAL v3 ALB, reachable from CloudFront only
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, SourcePrefixListId: !Ref CloudFrontPrefixListId}
+  ApiSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SEAL v3 API hosts, reachable from the ALB only
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 8443, ToPort: 8443, SourceSecurityGroupId: !Ref AlbSecurityGroup}
+  DbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SEAL v3 MySQL, reachable from API hosts only
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 3306, ToPort: 3306, SourceSecurityGroupId: !Ref ApiSecurityGroup}
+
+  DbSubnets:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: SEAL v3 private database subnets
+      SubnetIds: [!Ref DbA, !Ref DbB]
+  DbParameters:
+    Type: AWS::RDS::DBParameterGroup
+    Properties:
+      Family: mysql8.4
+      Description: SEAL v3 - the application deploy gate requires case1 and utf8mb4_0900_ai_ci
+      Parameters:
+        # Can only be set while the instance is being created.
+        lower_case_table_names: '1'
+        character_set_server: utf8mb4
+        collation_server: utf8mb4_0900_ai_ci
+  Database:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+    Properties:
+      DBInstanceIdentifier: fcaj-v3-mysql
+      # Same catalog name as the code-first database dump (seal_hackathon.bak).
+      DBName: seal_hackathon
+      Engine: mysql
+      EngineVersion: '8.4'
+      DBInstanceClass: db.t4g.micro
+      AllocatedStorage: '20'
+      StorageType: gp3
+      StorageEncrypted: true
+      MultiAZ: !Ref MultiAZ
+      PubliclyAccessible: false
+      MasterUsername: fcaj_admin
+      ManageMasterUserPassword: true
+      BackupRetentionPeriod: !Ref BackupRetentionDays
+      DeletionProtection: true
+      CopyTagsToSnapshot: true
+      CACertificateIdentifier: rds-ca-rsa2048-g1
+      DBParameterGroupName: !Ref DbParameters
+      DBSubnetGroupName: !Ref DbSubnets
+      VPCSecurityGroups: [!Ref DbSecurityGroup]
+
+  WebBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Sub fcaj-v3-web-${AWS::AccountId}-${AWS::Region}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration: [{ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}}]
+      VersioningConfiguration: {Status: Enabled}
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+  WebBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          # The distribution lives in another region's stack; limit to distributions of this account.
+          - Sid: CloudFrontRead
+            Effect: Allow
+            Principal: {Service: cloudfront.amazonaws.com}
+            Action: s3:GetObject
+            Resource: !Sub ${WebBucket.Arn}/*
+            Condition:
+              StringLike: {'AWS:SourceArn': !Sub 'arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/*'}
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource: [!GetAtt WebBucket.Arn, !Sub '${WebBucket.Arn}/*']
+            Condition: {Bool: {'aws:SecureTransport': 'false'}}
+
+  ApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - {Effect: Allow, Principal: {Service: ec2.amazonaws.com}, Action: sts:AssumeRole}
+      ManagedPolicyArns: [!Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore']
+      Policies:
+        - PolicyName: runtime
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - {Effect: Allow, Action: 'ecr:GetAuthorizationToken', Resource: '*'}
+              - Effect: Allow
+                Action: [ecr:BatchCheckLayerAvailability, ecr:GetDownloadUrlForLayer, ecr:BatchGetImage]
+                Resource: !Sub arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/fcaj-poc-backend
+              - Effect: Allow
+                Action: [s3:GetObject, s3:GetObjectVersion, s3:PutObject, s3:DeleteObject, s3:DeleteObjectVersion]
+                Resource: !Sub arn:${AWS::Partition}:s3:::fcaj-poc-data-${AWS::AccountId}-${AWS::Region}/poc/*
+              - Effect: Allow
+                Action: sqs:SendMessage
+                Resource: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-jobs
+              - Effect: Allow
+                Action: [sqs:ReceiveMessage, sqs:DeleteMessage]
+                Resource: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-results
+              - Effect: Allow
+                Action: ssm:GetParameter
+                Resource: !Sub arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/fcaj/v3/backend/*
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/fcaj/poc/backend:*
+  ApiInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: {Roles: [!Ref ApiRole]}
+
+  RegionalCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      # CloudFront forwards the viewer Host, so both names must be covered.
+      DomainName: !Ref DomainName
+      SubjectAlternativeNames: [!Sub 'origin.${DomainName}']
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - {DomainName: !Ref DomainName, HostedZoneId: !Ref HostedZoneId}
+        - {DomainName: !Sub 'origin.${DomainName}', HostedZoneId: !Ref HostedZoneId}
+Outputs:
+  VpcId: {Value: !Ref Vpc, Export: {Name: fcaj-v3-VpcId}}
+  PublicA: {Value: !Ref PublicA, Export: {Name: fcaj-v3-PublicA}}
+  PublicB: {Value: !Ref PublicB, Export: {Name: fcaj-v3-PublicB}}
+  AppA: {Value: !Ref AppA, Export: {Name: fcaj-v3-AppA}}
+  AppB: {Value: !Ref AppB, Export: {Name: fcaj-v3-AppB}}
+  AppRoutes: {Value: !Ref AppRoutes, Export: {Name: fcaj-v3-AppRoutes}}
+  AlbSecurityGroup: {Value: !Ref AlbSecurityGroup, Export: {Name: fcaj-v3-AlbSecurityGroup}}
+  ApiSecurityGroup: {Value: !Ref ApiSecurityGroup, Export: {Name: fcaj-v3-ApiSecurityGroup}}
+  ApiInstanceProfileArn: {Value: !GetAtt ApiInstanceProfile.Arn, Export: {Name: fcaj-v3-ApiInstanceProfileArn}}
+  RegionalCertificateArn: {Value: !Ref RegionalCertificate, Export: {Name: fcaj-v3-RegionalCertificateArn}}
+  DatabaseAddress: {Value: !GetAtt Database.Endpoint.Address}
+  MasterSecretArn:
+    Description: Read the fcaj_admin password in the Secrets Manager console; never paste it into chat or Git.
+    Value: !GetAtt Database.MasterUserSecret.SecretArn
+  WebBucketName: {Value: !Ref WebBucket}
+  WebBucketDomain: {Value: !GetAtt WebBucket.RegionalDomainName}

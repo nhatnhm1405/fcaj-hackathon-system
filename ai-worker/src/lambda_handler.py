@@ -571,6 +571,14 @@ def build_v1_failure_message(
     return msg
 
 
+def _omitted_file_count(source: Dict[str, Any]) -> int:
+    """Số file backend không thu thập vì giới hạn; snapshot cũ không có trường này."""
+    value = source.get("omittedFileCount", 0)
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ContractValidationError("Invalid source omittedFileCount")
+    return value
+
+
 def process_job_message(
     raw_message_body: str,
     config: LambdaRuntimeConfig,
@@ -593,6 +601,7 @@ def process_job_message(
             rubric_criteria=rubric["criteria"],
             submission_description=description,
             max_total_chars=config.max_source_chars,
+            omitted_file_count=_omitted_file_count(source),
         )
     except ModelBudgetExhaustedError:
         failure_doc = build_v1_failure_message(

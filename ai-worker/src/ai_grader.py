@@ -41,7 +41,6 @@ from src.schema import (
 )
 from src.code_cleaner import (
     DEFAULT_MAX_TOTAL_CHARS,
-    _file_priority_key,
     format_code_with_line_numbers,
 )
 
@@ -296,18 +295,88 @@ def detect_tech_stack(paths: List[str], max_items: int = 20) -> List[str]:
     return detected
 
 
+# Tài liệu và cấu hình chỉ được dùng phần nhỏ của ngân sách khi code đã cần hết chỗ.
+_SECONDARY_EXTENSIONS = {".md", ".txt", ".json", ".yml", ".yaml", ".xml", ".toml"}
+_SECONDARY_BUDGET_RATIO = 0.15
+_MAX_LISTED_COVERAGE_FILES = 40
+
+
+def _fair_shares(sizes: Dict[str, int], budget: int) -> Dict[str, int]:
+    """
+    Chia ngân sách công bằng: phần nhỏ lấy đủ, chỗ còn thừa nhường cho phần lớn,
+    không phần nào được vượt mức chung. Tổng không vượt quá ngân sách.
+    """
+    shares: Dict[str, int] = {}
+    remaining = max(0, budget)
+    ordered = sorted(sizes, key=lambda name: (sizes[name], name))
+    for index, name in enumerate(ordered):
+        shares[name] = min(sizes[name], remaining // (len(ordered) - index))
+        remaining -= shares[name]
+    return shares
+
+
+def _code_areas(paths: List[str]) -> Dict[str, str]:
+    """Khu vực của mỗi file code (ví dụ back-end / front-end): cấp thư mục đầu tiên làm các file tách nhau ra."""
+    parents = [path.split("/")[:-1] for path in paths]
+    depth = len(os.path.commonprefix(parents)) if parents else 0
+    return {
+        path: "/".join(parts[: depth + 1]) if len(parts) > depth else "/"
+        for path, parts in zip(paths, parents)
+    }
+
+
+def _allocate_source_budget(sizes: Dict[str, int], budget: int) -> Dict[str, int]:
+    """Số ký tự mỗi file được đọc: chia giữa code và tài liệu, giữa các khu vực code, rồi giữa các file."""
+    if sum(sizes.values()) <= budget:
+        return dict(sizes)
+    secondary = {p: n for p, n in sizes.items() if os.path.splitext(p)[1].lower() in _SECONDARY_EXTENSIONS}
+    code = {p: n for p, n in sizes.items() if p not in secondary}
+    # Bên nào không dùng hết phần của mình thì nhường cho bên kia.
+    secondary_budget = max(int(budget * _SECONDARY_BUDGET_RATIO), budget - sum(code.values()))
+    secondary_budget = min(secondary_budget, sum(secondary.values()))
+
+    areas = _code_areas(list(code))
+    area_sizes: Dict[str, int] = {}
+    for path, size in code.items():
+        area_sizes[areas[path]] = area_sizes.get(areas[path], 0) + size
+
+    allocation = _fair_shares(secondary, secondary_budget)
+    for area, share in _fair_shares(area_sizes, budget - secondary_budget).items():
+        allocation.update(_fair_shares({p: n for p, n in code.items() if areas[p] == area}, share))
+    return allocation
+
+
+def _keep_whole_lines(content: str, limit: int) -> Optional[str]:
+    """Giữ các dòng đầu nguyên vẹn trong giới hạn; None nếu không giữ được dòng có nội dung nào."""
+    if len(content) <= limit:
+        return content
+    cut = limit if content[limit] == "\n" else content.rfind("\n", 0, limit)
+    kept = content[:cut] if cut > 0 else ""
+    return kept if kept.strip() else None
+
+
+def _format_coverage_list(title: str, items: List[str]) -> str:
+    if not items:
+        return ""
+    listed = items[:_MAX_LISTED_COVERAGE_FILES]
+    if len(items) > len(listed):
+        listed.append(f"... và {len(items) - len(listed)} file khác")
+    return f"{title}\n" + "\n".join(f"- {item}" for item in listed) + "\n"
+
+
 def build_v1_source_context(
     source_files: List[Dict[str, Any]],
     max_total_chars: Optional[int] = None,
+    omitted_file_count: int = 0,
 ) -> Tuple[str, Dict[str, int], Dict[str, Any]]:
     """
-    Chuyển đổi mảng files trong source.json (`fcaj.ai.source.github.v1`) thành ngữ cảnh
-    đánh số dòng, đồng thời tính chính xác số dòng thực của từng file theo quy tắc
-    `split("\\n", -1).length` của Java Backend.
+    Chuyển đổi mảng files trong source.json (`fcaj.ai.source.github.v1`) thành ngữ cảnh đánh số dòng.
+    Trả về số dòng model thực sự được xem của từng file (quy tắc `split("\\n", -1).length` của Java
+    Backend), để dẫn chứng không trỏ vào phần chưa đọc. File quá dài chỉ giữ các dòng đầu nguyên vẹn.
     """
     budget = DEFAULT_MAX_TOTAL_CHARS if max_total_chars is None else max_total_chars
-    line_counts_by_path: Dict[str, int] = {}
-    file_entries: List[Tuple[str, str]] = []
+    contents: Dict[str, str] = {}
+    original_lines: Dict[str, int] = {}
 
     for entry in source_files:
         if not isinstance(entry, dict):
@@ -317,51 +386,69 @@ def build_v1_source_context(
         if not path or not isinstance(content, str):
             continue
         # Khớp chính xác Java: f.path("content").asText().split("\n", -1).length
-        line_counts_by_path[path] = len(content.split("\n"))
-        file_entries.append((path, content))
+        original_lines[path] = len(content.split("\n"))
+        # Che secret và vô hiệu hóa thẻ ranh giới trước khi cắt budget / đưa vào prompt
+        contents[path] = sanitize_untrusted_code_for_prompt(content)
 
-    preferred_exts = {".java", ".kt", ".py", ".ts", ".tsx", ".js", ".jsx", ".go", ".cs", ".rs", ".sql"}
-    file_entries.sort(key=lambda item: _file_priority_key(item[0], preferred_exts))
+    sizes = {path: len(content) for path, content in contents.items()}
+    unread: List[str] = []
+    while True:
+        remaining_sizes = {path: size for path, size in sizes.items() if path not in unread}
+        allocation = (
+            _allocate_source_budget(remaining_sizes, budget) if budget and budget > 0 else remaining_sizes
+        )
+        kept_by_path = {
+            path: _keep_whole_lines(contents[path], share) for path, share in allocation.items()
+        }
+        # File không lấy được dòng nào (ví dụ file nén một dòng) nhường chỗ cho file khác.
+        unusable = [path for path, kept in kept_by_path.items() if kept is None]
+        if not unusable:
+            break
+        unread.extend(unusable)
 
     selected_for_prompt: Dict[str, str] = {}
-    total_chars = 0
-    total_lines = 0
-    skipped_files = 0
+    visible_lines: Dict[str, int] = {}
+    partial: List[str] = []
+    for path, kept in kept_by_path.items():
+        selected_for_prompt[path] = kept
+        if len(kept) == sizes[path]:
+            visible_lines[path] = original_lines[path]
+            continue
+        visible_lines[path] = min(len(kept.split("\n")), original_lines[path])
+        partial.append(f"{path} (đọc {visible_lines[path]}/{original_lines[path]} dòng đầu)")
 
-    for path, content in file_entries:
-        # Che secret và vô hiệu hóa thẻ ranh giới trước khi cắt budget / đưa vào prompt
-        safe_content = sanitize_untrusted_code_for_prompt(content)
-        if budget is not None and budget > 0:
-            if total_chars >= budget:
-                skipped_files += 1
-                continue
-            remaining = budget - total_chars
-            if len(safe_content) > remaining:
-                kept_lines: List[str] = []
-                used = 0
-                for ln in safe_content.splitlines():
-                    add_len = len(ln) + (1 if kept_lines else 0)
-                    if used + add_len > remaining:
-                        break
-                    kept_lines.append(ln)
-                    used += add_len
-                if not kept_lines:
-                    skipped_files += 1
-                    continue
-                safe_content = "\n".join(kept_lines)
-
-        selected_for_prompt[path] = safe_content
-        total_chars += len(safe_content)
-        total_lines += len(safe_content.splitlines())
-
+    total_chars = sum(len(content) for content in selected_for_prompt.values())
+    available_chars = sum(sizes.values())
     stats = {
         "total_files": len(selected_for_prompt),
-        "total_lines": total_lines,
+        "total_lines": sum(len(content.splitlines()) for content in selected_for_prompt.values()),
         "total_chars": total_chars,
-        "skipped_files": skipped_files,
-        "source_file_count": len(file_entries),
+        "skipped_files": len(unread) + max(0, omitted_file_count),
+        "source_file_count": len(contents),
+        "partial_files": len(partial),
+        "repository_file_count": len(contents) + max(0, omitted_file_count),
+        "coverage_percent": total_chars * 100 // available_chars if available_chars else 100,
     }
-    return format_code_with_line_numbers(selected_for_prompt), line_counts_by_path, stats
+
+    coverage = _format_coverage_list("FILE CHỈ ĐỌC MỘT PHẦN:", sorted(partial)) + _format_coverage_list(
+        "FILE CHƯA ĐỌC:", sorted(unread)
+    )
+    if omitted_file_count > 0:
+        coverage += f"Ngoài ra {omitted_file_count} file không được thu thập vì vượt giới hạn.\n"
+    return coverage + format_code_with_line_numbers(selected_for_prompt), visible_lines, stats
+
+
+def _coverage_note(stats: Dict[str, Any], commit_sha: str) -> str:
+    """Câu do hệ thống tạo (không phải model) để giám khảo biết AI đã đọc bao nhiêu."""
+    full = stats["total_files"] - stats["partial_files"]
+    note = f"AI đã đọc đủ {full}/{stats['repository_file_count']} file tại commit {commit_sha[:12]}"
+    if stats["partial_files"]:
+        note += f", đọc một phần {stats['partial_files']} file"
+    if stats["skipped_files"]:
+        note += f", chưa đọc {stats['skipped_files']} file"
+    if stats["partial_files"] or stats["skipped_files"]:
+        note += f" ({stats['coverage_percent']}% nội dung thu thập được). Nhận xét có thể thiếu phần chưa đọc"
+    return note + "."
 
 
 def _format_rubric_lines(criteria_items: List[Dict[str, Any]]) -> str:
@@ -429,6 +516,12 @@ def _build_rubric_and_code_prompt(
         f"- Thống kê mã nguồn đã thu thập: {stats.get('total_files', 0)} files, "
         f"{stats.get('total_lines', 0)} dòng code (bỏ qua {stats.get('skipped_files', 0)} files)."
     )
+    if stats.get("partial_files") or stats.get("skipped_files"):
+        info_lines.append(
+            "- LƯU Ý: bạn KHÔNG được xem toàn bộ bài nộp. Không kết luận bài thiếu chức năng, kiểm thử, "
+            "tài liệu hay giao diện chỉ vì chúng nằm trong phần chưa đọc, và không trừ điểm vì lý do đó; "
+            "hãy ghi THIEU_DU_LIEU cho phần không có đủ thông tin."
+        )
     info_str = "\n".join(info_lines)
     safe_code_context = sanitize_untrusted_code_for_prompt(code_context)
 
@@ -755,6 +848,8 @@ class AIGrader:
             "temperature": self.temperature,
             "max_tokens": self.max_tokens,
             "response_format": {"type": "json_object"},
+            # Model DeepSeek mới bật thinking mặc định; token suy luận tính vào max_tokens và dễ làm cắt cụt JSON.
+            "thinking": {"type": "disabled"},
         }
 
         req = urllib.request.Request(
@@ -1043,6 +1138,7 @@ class AIGrader:
         rubric_criteria: List[Dict[str, Any]],
         submission_description: Optional[str] = None,
         max_total_chars: Optional[int] = None,
+        omitted_file_count: int = 0,
     ) -> Dict[str, Any]:
         """
         Đánh giá trực tiếp từ source.json và rubric.json của contract fcaj.ai.message.v1,
@@ -1052,7 +1148,7 @@ class AIGrader:
             raise ValueError("Rubric must contain at least 1 criterion")
 
         code_context, line_counts_by_path, stats = build_v1_source_context(
-            source_files, max_total_chars=max_total_chars
+            source_files, max_total_chars=max_total_chars, omitted_file_count=omitted_file_count
         )
         user_prompt = build_v1_user_prompt(
             submission_id=submission_id,
@@ -1205,10 +1301,9 @@ class AIGrader:
             )
 
         repo_note = sanitize_safe_text(
-            raw_repo.get("note")
-            or f"Đã phân tích {stats['total_files']}/{stats['source_file_count']} file tại commit {commit_sha[:12]}.",
+            f"{_coverage_note(stats, commit_sha)} {raw_repo.get('note') or ''}".strip(),
             max_len=1000,
-            fallback=f"Đã phân tích snapshot tại commit {commit_sha[:12]}.",
+            fallback=_coverage_note(stats, commit_sha),
         )
 
         return {

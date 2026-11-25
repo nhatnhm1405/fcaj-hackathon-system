@@ -56,7 +56,7 @@ ai-worker/
   - `APP_STORAGE_BUCKET=<tên-bucket-application>`
   - `APP_STORAGE_PREFIX=poc`
   - `APP_AI_JOBS_RESULTS_QUEUE_URL=<url-sqs-results>`
-  - `LAMBDA_MAX_SOURCE_CHARS=120000`
+  - `LAMBDA_MAX_SOURCE_CHARS=120000` (repo lớn hơn mức này được đọc đều giữa các khu vực code, tài liệu tối đa khoảng 15%; `repo.note` ghi rõ đã đọc bao nhiêu)
 - **Quyền IAM tối thiểu cho Lambda Execution Role:**
   - `s3:GetObject`, `s3:GetObjectVersion` trên `<bucket>/<prefix>/inputs/*`, `<bucket>/<prefix>/rubrics/*`, `<bucket>/<prefix>/results/*`
   - `s3:PutObject` trên `<bucket>/<prefix>/results/*`
