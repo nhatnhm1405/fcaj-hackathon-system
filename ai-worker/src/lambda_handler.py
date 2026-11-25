@@ -22,7 +22,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import uuid
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from src.ai_grader import AIGrader
+from src.ai_grader import AIGrader, ModelBudgetExhaustedError, sanitize_safe_text
 
 logger = logging.getLogger(__name__)
 if not logger.handlers:
@@ -34,6 +34,8 @@ MAX_MANIFEST_BYTES = 262_144
 MAX_RUBRIC_BYTES = 262_144
 MAX_OUTPUT_BYTES = 262_144
 MAX_SOURCE_BYTES = 8_000_000
+DEFAULT_LAMBDA_MAX_OUTPUT_TOKENS = 4096
+DEFAULT_LAMBDA_MAX_SOURCE_CHARS = 120_000
 
 IDENTITY_FIELDS = (
     "jobId",
@@ -48,6 +50,7 @@ IDENTITY_FIELDS = (
 
 _HEX40_RE = re.compile(r"^[a-f0-9]{40}$")
 _HEX64_RE = re.compile(r"^[a-f0-9]{64}$")
+_ERROR_CODE_RE = re.compile(r"^[A-Z0-9_]{1,60}$")
 _OUTPUT_KEY_NAME = "output.json"
 
 # Cache key ở mức module để tái sử dụng giữa các lần gọi warm của AWS Lambda
@@ -70,6 +73,8 @@ class LambdaRuntimeConfig:
     deepseek_api_url: str
     deepseek_api_key_parameter: Optional[str]
     max_source_chars: int
+    max_output_tokens: int = DEFAULT_LAMBDA_MAX_OUTPUT_TOKENS
+    budget_exhausted_error_code: str = "MOCK_PROCESSING_FAILED"
 
     @classmethod
     def from_env(cls) -> "LambdaRuntimeConfig":
@@ -91,8 +96,22 @@ class LambdaRuntimeConfig:
         max_chars_raw = (
             os.getenv("LAMBDA_MAX_SOURCE_CHARS")
             or os.getenv("CODE_CLEANER_MAX_TOTAL_CHARS")
-            or "120000"
+            or str(DEFAULT_LAMBDA_MAX_SOURCE_CHARS)
         )
+        # Giới hạn <= 240,000 ký tự để nằm gọn dưới ngưỡng 60k input token của AI-02
+        max_source_chars = max(1000, min(240_000, int(max_chars_raw)))
+
+        max_out_raw = os.getenv("LAMBDA_MAX_OUTPUT_TOKENS") or str(DEFAULT_LAMBDA_MAX_OUTPUT_TOKENS)
+        max_output_tokens = max(256, min(8192, int(max_out_raw)))
+
+        budget_code = (
+            os.getenv("AI_BUDGET_EXHAUSTED_ERROR_CODE") or "MOCK_PROCESSING_FAILED"
+        ).strip()
+        if not _ERROR_CODE_RE.match(budget_code):
+            raise ValueError(
+                "Invalid AI_BUDGET_EXHAUSTED_ERROR_CODE; must match ^[A-Z0-9_]{1,60}$"
+            )
+
         return cls(
             aws_region=region,
             storage_bucket=bucket,
@@ -104,7 +123,9 @@ class LambdaRuntimeConfig:
                 os.getenv("DEEPSEEK_API_URL") or "https://api.deepseek.com/chat/completions"
             ).strip(),
             deepseek_api_key_parameter=param_name,
-            max_source_chars=max(1000, int(max_chars_raw)),
+            max_source_chars=max_source_chars,
+            max_output_tokens=max_output_tokens,
+            budget_exhausted_error_code=budget_code,
         )
 
 
@@ -519,6 +540,37 @@ def build_v1_completion_message(
     return msg
 
 
+def build_v1_failure_message(
+    request: Dict[str, Any],
+    error_code: str,
+    error_message: str,
+    occurred_at: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Đóng gói completion message `AI_JOB_COMPLETED` trạng thái `FAILED` (không đính kèm `result`)."""
+    ts = occurred_at or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    message_id = str(
+        uuid.uuid5(
+            uuid.NAMESPACE_URL,
+            f"fcaj-ai-completion:{request['jobId']}:{request['inputRevision']}:FAILED",
+        )
+    )
+    msg: Dict[str, Any] = {field: request[field] for field in IDENTITY_FIELDS}
+    msg["schemaVersion"] = "fcaj.ai.message.v1"
+    msg["eventType"] = "AI_JOB_COMPLETED"
+    msg["messageId"] = message_id
+    msg["occurredAt"] = ts
+    msg["status"] = "FAILED"
+    msg["error"] = {
+        "code": error_code,
+        "message": sanitize_safe_text(
+            error_message,
+            max_len=1000,
+            fallback="AI provider budget exhausted.",
+        ),
+    }
+    return msg
+
+
 def process_job_message(
     raw_message_body: str,
     config: LambdaRuntimeConfig,
@@ -533,14 +585,34 @@ def process_job_message(
     snap = manifest.get("submissionSnapshot")
     description = snap.get("description") if isinstance(snap, dict) else None
 
-    evaluation = grader.evaluate_v1_artifacts(
-        submission_id=request["submissionId"],
-        commit_sha=request["commitSha"],
-        source_files=source["files"],
-        rubric_criteria=rubric["criteria"],
-        submission_description=description,
-        max_total_chars=config.max_source_chars,
-    )
+    try:
+        evaluation = grader.evaluate_v1_artifacts(
+            submission_id=request["submissionId"],
+            commit_sha=request["commitSha"],
+            source_files=source["files"],
+            rubric_criteria=rubric["criteria"],
+            submission_description=description,
+            max_total_chars=config.max_source_chars,
+        )
+    except ModelBudgetExhaustedError:
+        failure_doc = build_v1_failure_message(
+            request,
+            config.budget_exhausted_error_code,
+            "AI provider budget exhausted; stopped without infinite retry.",
+        )
+        failure_bytes = _compact_json_bytes(failure_doc)
+        if len(failure_bytes) > MAX_MESSAGE_BYTES:
+            raise ContractValidationError("AI_JOB_COMPLETED failure message exceeds MAX_MESSAGE_BYTES")
+        sqs_client.send_message(
+            QueueUrl=config.results_queue_url,
+            MessageBody=failure_bytes.decode("utf-8"),
+        )
+        return {
+            "jobId": job_id,
+            "status": "FAILED",
+            "errorCode": config.budget_exhausted_error_code,
+            "messageId": failure_doc["messageId"],
+        }
 
     output_doc = build_v1_output_document(request, evaluation)
     output_bytes = _compact_json_bytes(output_doc)
@@ -601,6 +673,7 @@ def lambda_handler(
         model_name=runtime_cfg.deepseek_model if runtime_cfg.ai_provider == "deepseek" else None,
         provider=runtime_cfg.ai_provider,
         base_url=runtime_cfg.deepseek_api_url if runtime_cfg.ai_provider == "deepseek" else None,
+        max_tokens=runtime_cfg.max_output_tokens,
     )
 
     failures: List[Dict[str, str]] = []

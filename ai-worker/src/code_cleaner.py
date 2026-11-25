@@ -132,6 +132,7 @@ def scan_and_collect_sources(
     if custom_ignore_dirs:
         ignore_dirs.update(custom_ignore_dirs)
 
+    real_root = os.path.realpath(root_dir)
     preferred_exts: Set[str] = set()
     if target_languages:
         for lang in target_languages:
@@ -140,24 +141,39 @@ def scan_and_collect_sources(
     candidate_paths: List[Tuple[str, str]] = []
     skipped_files_count = 0
 
-    for dirpath, dirnames, filenames in os.walk(root_dir):
+    for dirpath, dirnames, filenames in os.walk(root_dir, followlinks=False):
         rel_dir = os.path.relpath(dirpath, root_dir).replace("\\", "/")
         if rel_dir != "." and _should_ignore_rel_path(rel_dir, ignore_dirs):
             dirnames[:] = []
             continue
 
-        # Lọc bỏ thư mục nằm trong danh sách ignore ngay tại walk và sắp xếp cố định
+        # Lọc bỏ thư mục nằm trong danh sách ignore và mọi thư mục symlink ngay tại walk
         dirnames[:] = sorted(
             d
             for d in dirnames
             if d not in ignore_dirs
             and not d.startswith(".")
+            and not os.path.islink(os.path.join(dirpath, d))
             and not _should_ignore_rel_path(
                 f"{rel_dir}/{d}" if rel_dir != "." else d, ignore_dirs
             )
         )
 
         for filename in sorted(filenames):
+            full_path = os.path.join(dirpath, filename)
+            if os.path.islink(full_path):
+                skipped_files_count += 1
+                continue
+
+            try:
+                real_file = os.path.realpath(full_path)
+                if os.path.commonpath([real_root, real_file]) != real_root:
+                    skipped_files_count += 1
+                    continue
+            except ValueError:
+                skipped_files_count += 1
+                continue
+
             if filename in DEFAULT_IGNORE_FILES:
                 skipped_files_count += 1
                 continue
@@ -167,7 +183,6 @@ def scan_and_collect_sources(
                 skipped_files_count += 1
                 continue
 
-            full_path = os.path.join(dirpath, filename)
             rel_path = os.path.relpath(full_path, root_dir).replace("\\", "/")
 
             if _should_ignore_rel_path(rel_path, ignore_dirs):
@@ -190,6 +205,14 @@ def scan_and_collect_sources(
             continue
 
         try:
+            if os.path.islink(full_path):
+                skipped_files_count += 1
+                continue
+            real_file = os.path.realpath(full_path)
+            if os.path.commonpath([real_root, real_file]) != real_root:
+                skipped_files_count += 1
+                continue
+
             file_size = os.path.getsize(full_path)
             if file_size > MAX_FILE_SIZE_BYTES or file_size == 0:
                 skipped_files_count += 1
