@@ -1,0 +1,297 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  SEAL v3 paid-by-the-hour layer: NAT, ALB and API Auto Scaling group.
+  Delete this stack to stop paying for it; data stays in the base and poc stacks.
+Parameters:
+  DomainName:
+    Type: String
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+  OriginSecret:
+    Type: String
+    NoEcho: true
+    MinLength: 32
+    AllowedPattern: '^[A-Za-z0-9]+$'
+    Description: Same value as in edge.yaml; requests without it get 403 from the ALB.
+  InstanceType:
+    Type: String
+    Default: t3.small
+    AllowedValues: [t3.small, t3.medium]
+    Description: The AWS Free account plan allows t3.small.
+  DesiredCapacity:
+    Type: Number
+    Default: 1
+    MinValue: 0
+    MaxValue: 2
+  HealthCheckType:
+    Type: String
+    Default: EC2
+    AllowedValues: [EC2, ELB]
+    Description: Use EC2 until the first release works, then ELB, or a failing host is replaced while you debug it.
+  UbuntuImage:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id
+Resources:
+  NatAddress:
+    Type: AWS::EC2::EIP
+    Properties: {Domain: vpc}
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NatAddress.AllocationId
+      SubnetId: !ImportValue fcaj-v3-PublicA
+  AppDefaultRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !ImportValue fcaj-v3-AppRoutes
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Scheme: internet-facing
+      Subnets: [!ImportValue fcaj-v3-PublicA, !ImportValue fcaj-v3-PublicB]
+      SecurityGroups: [!ImportValue fcaj-v3-AlbSecurityGroup]
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !ImportValue fcaj-v3-VpcId
+      Protocol: HTTPS
+      Port: 8443
+      TargetType: instance
+      HealthCheckProtocol: HTTPS
+      HealthCheckPath: /health/ready
+      HealthCheckIntervalSeconds: 15
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      Matcher: {HttpCode: '200'}
+      TargetGroupAttributes:
+        - {Key: deregistration_delay.timeout_seconds, Value: '60'}
+        # OAuth keeps its state in one instance's memory.
+        - {Key: stickiness.enabled, Value: 'true'}
+        - {Key: stickiness.type, Value: lb_cookie}
+        - {Key: stickiness.lb_cookie.duration_seconds, Value: '3600'}
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Protocol: HTTPS
+      Port: 443
+      SslPolicy: ELBSecurityPolicy-TLS13-1-2-2021-06
+      Certificates: [{CertificateArn: !ImportValue fcaj-v3-RegionalCertificateArn}]
+      DefaultActions:
+        - Type: fixed-response
+          FixedResponseConfig: {StatusCode: '403', ContentType: text/plain, MessageBody: Forbidden}
+  ForwardRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn: !Ref Listener
+      Priority: 1
+      Conditions:
+        - Field: http-header
+          HttpHeaderConfig: {HttpHeaderName: X-Origin-Verify, Values: [!Ref OriginSecret]}
+      Actions: [{Type: forward, TargetGroupArn: !Ref TargetGroup}]
+  OriginRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub origin.${DomainName}
+      Type: A
+      AliasTarget: {DNSName: !GetAtt LoadBalancer.DNSName, HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID}
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    DependsOn: [AppDefaultRoute, ForwardRule]
+    Properties:
+      VPCZoneIdentifier: [!ImportValue fcaj-v3-AppA, !ImportValue fcaj-v3-AppB]
+      MinSize: !Ref DesiredCapacity
+      DesiredCapacity: !Ref DesiredCapacity
+      # Fresh accounts allow 5 vCPU: two t3.small. Raise the EC2 quota before raising this.
+      MaxSize: '2'
+      HealthCheckType: !Ref HealthCheckType
+      HealthCheckGracePeriod: 600
+      TargetGroupARNs: [!Ref TargetGroup]
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+      Tags:
+        - {Key: Name, Value: fcaj-v3-api, PropagateAtLaunch: true}
+        - {Key: SealRole, Value: api, PropagateAtLaunch: true}
+  ScaleOnCpu:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification: {PredefinedMetricType: ASGAverageCPUUtilization}
+        TargetValue: 60
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: !Ref UbuntuImage
+        InstanceType: !Ref InstanceType
+        CreditSpecification: {CpuCredits: standard}
+        IamInstanceProfile: {Arn: !ImportValue fcaj-v3-ApiInstanceProfileArn}
+        SecurityGroupIds: [!ImportValue fcaj-v3-ApiSecurityGroup]
+        # Hop limit 2 lets the backend container use the instance role.
+        MetadataOptions: {HttpTokens: required, HttpPutResponseHopLimit: 2}
+        BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {VolumeSize: 20, VolumeType: gp3, Encrypted: true}
+        # Literal block without Sub: shell ${...} must reach the host unchanged.
+        UserData:
+          Fn::Base64: |
+            #!/usr/bin/env bash
+            # Launch-template user data for the v3 API hosts (Ubuntu 24.04 x86_64, private subnet).
+            # No secrets here: everything private is read from Parameter Store at run time.
+            set -euo pipefail
+            exec > >(tee /var/log/seal-bootstrap.log) 2>&1
+            export HOME=/root DEBIAN_FRONTEND=noninteractive PATH="$PATH:/snap/bin"
+
+            # t3.small has 2 GiB; keep a small swap file as a cushion for the JVM.
+            fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+            echo '/swapfile none swap sw 0 0' >> /etc/fstab
+
+            apt-get update
+            apt-get install -y ca-certificates curl nginx openssl mysql-client
+            snap install aws-cli --classic
+            # Compose >= 2.30 is required for env_file.format=raw, so use Docker's own repository.
+            install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+              > /etc/apt/sources.list.d/docker.list
+            # Container logs go to CloudWatch with the instance role.
+            install -d /etc/docker
+            cat > /etc/docker/daemon.json <<'JSON'
+            {"log-driver":"awslogs","log-opts":{"awslogs-region":"ap-southeast-1","awslogs-group":"/fcaj/poc/backend"}}
+            JSON
+            apt-get update
+            apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+            install -d -m 700 /etc/seal
+            # Public CA bundle for the operator's mysql client (one-time DB user setup).
+            curl -fsSL https://truststore.pki.rds.amazonaws.com/ap-southeast-1/ap-southeast-1-bundle.pem -o /etc/seal/rds-ca-bundle.pem
+            # Same content as back-end/src/seal-api/deploy/compose.aws.example.yml (loopback only).
+            cat > /etc/seal/compose.aws.yml <<'YAML'
+            services:
+              seal-backend:
+                image: ${CANDIDATE_BACKEND_IMAGE:?Candidate image is required}
+                restart: unless-stopped
+                env_file:
+                  - path: ${DEPLOY_RUNTIME_ENV_FILE:?Private runtime environment file is required}
+                    format: raw
+                environment:
+                  SPRING_PROFILES_ACTIVE: ${DEPLOY_SPRING_PROFILES_ACTIVE:-aws}
+                  SPRING_DATASOURCE_URL: ${DEPLOY_RUNTIME_JDBC_URL:?Exact runtime JDBC URL is required}
+                  APP_BUILD_REVISION: ${CANDIDATE_REVISION:?Exact source SHA is required}
+                ports:
+                  - "127.0.0.1:8080:8080"
+                volumes:
+                  - type: bind
+                    source: ${DEPLOY_DB_TRUSTSTORE_FILE:?Provision the RDS truststore first}
+                    target: /run/secrets/rds-truststore.p12
+                    read_only: true
+            YAML
+
+            # ALB -> nginx :8443 (self-signed; ALB does not validate target certificates) -> loopback :8080.
+            openssl req -x509 -newkey rsa:2048 -nodes -days 825 -subj /CN=seal-api.internal \
+              -keyout /etc/ssl/private/seal.key -out /etc/ssl/certs/seal.crt
+            cat > /etc/nginx/conf.d/seal.conf <<'NGINX'
+            server {
+                listen 8443 ssl default_server;
+                server_name _;
+                ssl_certificate     /etc/ssl/certs/seal.crt;
+                ssl_certificate_key /etc/ssl/private/seal.key;
+                client_max_body_size 21m;
+                location / {
+                    proxy_pass http://127.0.0.1:8080;
+                    proxy_http_version 1.1;
+                    proxy_set_header Host $host;
+                    proxy_set_header X-Forwarded-Host $host;
+                    proxy_set_header X-Forwarded-Proto https;
+                    proxy_set_header X-Forwarded-Port 443;
+                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_read_timeout 60s;
+                }
+            }
+            NGINX
+            rm -f /etc/nginx/sites-enabled/default
+            nginx -t
+            systemctl restart nginx
+
+            # Same command for first boot, scale-out and every release (SSM Run Command).
+            cat > /usr/local/bin/seal-release <<'RELEASE'
+            #!/usr/bin/env bash
+            set -euo pipefail
+            umask 077
+            export HOME=/root PATH="$PATH:/snap/bin"
+            REGION=ap-southeast-1
+            param() {
+              aws ssm get-parameter --region "$REGION" --with-decryption --name "/fcaj/v3/backend/$1" \
+                --query Parameter.Value --output text | tr -d '\r'
+            }
+            param runtime-env > /etc/seal/runtime.env
+            param migration-env > /etc/seal/migration.env
+            # "release" holds: <ecr-repo>@sha256:<digest> <40-character commit SHA>
+            release="$(param release)"
+            read -r DEPLOY_IMAGE CANDIDATE_REVISION <<<"$release"
+            [[ "$DEPLOY_IMAGE" =~ ^[0-9]{12}\.dkr\.ecr\.ap-southeast-1\.amazonaws\.com/[a-z0-9/_-]+@sha256:[0-9a-f]{64}$ ]]
+            [[ "$CANDIDATE_REVISION" =~ ^[0-9a-f]{40}$ ]]
+            value() { sed -n "s/^$1=//p" /etc/seal/runtime.env; }
+            DEPLOY_RUNTIME_JDBC_URL="$(value SPRING_DATASOURCE_URL)"
+            DEPLOY_SPRING_PROFILES_ACTIVE="$(value SPRING_PROFILES_ACTIVE)"
+            DEPLOY_COMPOSE_FILE=/etc/seal/compose.aws.yml
+            DEPLOY_RUNTIME_ENV_FILE=/etc/seal/runtime.env
+            DEPLOY_MIGRATION_ENV_FILE=/etc/seal/migration.env
+            DEPLOY_DB_CATALOG=seal_hackathon
+            DEPLOY_DB_TRUSTSTORE_FILE=/etc/seal/rds-truststore.p12
+            DEPLOY_DB_MODE="${DEPLOY_DB_MODE:-verify-only}"
+            CANDIDATE_BACKEND_IMAGE="$DEPLOY_IMAGE"
+            export DEPLOY_IMAGE CANDIDATE_REVISION DEPLOY_RUNTIME_JDBC_URL DEPLOY_SPRING_PROFILES_ACTIVE \
+              DEPLOY_COMPOSE_FILE DEPLOY_RUNTIME_ENV_FILE DEPLOY_MIGRATION_ENV_FILE DEPLOY_DB_CATALOG \
+              DEPLOY_DB_TRUSTSTORE_FILE DEPLOY_DB_MODE CANDIDATE_BACKEND_IMAGE
+            aws ecr get-login-password --region "$REGION" |
+              docker login --username AWS --password-stdin "${DEPLOY_IMAGE%%/*}" >/dev/null
+            docker pull "$DEPLOY_IMAGE" >/dev/null
+            work="$(mktemp -d /tmp/seal-release.XXXXXXXX)"
+            box="$(docker create "$DEPLOY_IMAGE")"
+            trap 'docker rm "$box" >/dev/null 2>&1 || true; rm -rf -- "$work"' EXIT
+            docker cp "$box:/opt/seal/rds-truststore.p12" /etc/seal/rds-truststore.p12
+            docker cp "$box:/opt/seal/deploy-verified.sh" "$work/deploy-verified.sh"
+            # One-time: adopt the restored code-first dump. Marks the V1 shape as baseline (rejected unless the
+            # restored schema matches exactly), then applies V2 and V3. No accounts or rows are created.
+            if [ "$DEPLOY_DB_MODE" = adopt-restored ]; then
+              SEAL_BACKUP_FILE="${SEAL_BACKUP_FILE:?Path of the restored dump is required}"
+              SEAL_BACKUP_SHA256="${SEAL_BACKUP_SHA256:?Reviewed dump checksum is required}"
+              echo "$SEAL_BACKUP_SHA256  $SEAL_BACKUP_FILE" | sha256sum --check --status
+              db_cli() {
+                docker run --rm --env-file "$DEPLOY_MIGRATION_ENV_FILE" \
+                  -e "BE1_EXPECTED_RUNTIME_JDBC_URL=$DEPLOY_RUNTIME_JDBC_URL" \
+                  -e BE1_MIGRATION_BACKUP_PATH=/run/restore.bak -e "BE1_MIGRATION_BACKUP_SHA256=$SEAL_BACKUP_SHA256" \
+                  -e "BE1_MIGRATION_BACKUP_CATALOG=$DEPLOY_DB_CATALOG" \
+                  --mount "type=bind,src=$SEAL_BACKUP_FILE,dst=/run/restore.bak,readonly" \
+                  --mount "type=bind,src=$DEPLOY_DB_TRUSTSTORE_FILE,dst=/run/secrets/rds-truststore.p12,readonly" \
+                  --entrypoint java "$DEPLOY_IMAGE" -Dloader.main=com.seal.hackathon.db.DatabaseMigrationMain \
+                  -cp /app/app.jar org.springframework.boot.loader.launch.PropertiesLauncher "$1" "$DEPLOY_DB_CATALOG"
+              }
+              db_cli baseline-v1
+              db_cli migrate
+              DEPLOY_DB_MODE=verify-only
+            fi
+            bash "$work/deploy-verified.sh"
+            for _ in $(seq 1 60); do
+              if curl -fsS http://127.0.0.1:8080/health/version 2>/dev/null | grep -q "$CANDIDATE_REVISION" &&
+                 curl -fsS http://127.0.0.1:8080/health/ready >/dev/null 2>&1; then
+                echo "RELEASE_OK $CANDIDATE_REVISION"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "RELEASE_FAILED: readiness or revision check did not pass" >&2
+            exit 1
+            RELEASE
+            chmod 700 /usr/local/bin/seal-release
+            /usr/local/bin/seal-release
+Outputs:
+  AutoScalingGroupName: {Value: !Ref AutoScalingGroup}
