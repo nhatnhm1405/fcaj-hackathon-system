@@ -12,6 +12,7 @@ import { RegisterPage } from "@/features/auth/RegisterPage";
 import { PendingApprovalPage } from "@/features/auth/PendingApprovalPage";
 import { RoleSelector } from "@/features/auth/RoleSelector";
 import { DashboardLayout } from "@/app/layouts/DashboardLayout";
+import { CoordinatorDemo } from "@/features/events/CoordinatorDemo";
 import { RoleDashboardPage } from "@/features/dashboard/RoleDashboardPage";
 import { JudgeDashboard } from "@/features/dashboard/dashboards/JudgeDashboard";
 import { MentorDashboard } from "@/features/dashboard/dashboards/MentorDashboard";
@@ -101,9 +102,12 @@ function RoleGate() {
 }
 
 function DashboardWrapper() {
+  const { currentUser } = useAuth();
   return (
     <DashboardLayout>
-      <Outlet />
+      {currentUser?.role === "COORDINATOR"
+        ? <CoordinatorDemo><Outlet /></CoordinatorDemo>
+        : <Outlet />}
     </DashboardLayout>
   );
 }

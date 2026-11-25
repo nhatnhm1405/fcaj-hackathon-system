@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 import {
   C, GradientText, PixelCard, PixelButton, PixelBadge, PixelTabs,
 } from "@/shared/components/PixelComponents";
 import { PixelMenu, type PixelMenuEntry } from "@/shared/components/PixelMenu";
-import { apiFetch, ApiError, apiErrorMessage, reopenRequestsApi, type ReopenRequest, teamsApi, type Team } from "@/shared/apiClient";
+import { apiFetch, ApiError, apiErrorMessage, eventsApi, reopenRequestsApi, type ReopenRequest, teamsApi, type Team } from "@/shared/apiClient";
 import { ConfirmDialog, type ConfirmVariant } from "@/shared/components/ConfirmDialog";
 import { usePermissions } from "@/shared/permissions";
 import { useNotifications } from "@/app/providers/NotificationProvider";
 import {
-  EventStatus, TrackMode, EventRow, ApiEvent,
+  EventStatus, TrackMode, EventRow,
   normalizeEvent, eventStatusBadge, EventDateBadge, EventName, nextStatusActions, statusChangeCopy, pickDefaultEvent, EventsListCard,
   TrackRow, RoundRow, ApiTrack, ApiRound, normalizeTrack, normalizeRound, PendingAction,
 } from "@/features/events/eventUtils";
@@ -38,6 +39,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 export function CoordEventsPage() {
   const { canChangeEventStatus, canCompleteEvent, canRequestReopen } = usePermissions();
   const { addToast } = useNotifications();
+  const demoEventId = useDemoEventId();
 
   const [events, setEvents] = useState<EventRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -86,7 +88,7 @@ export function CoordEventsPage() {
   useEffect(() => {
     setLoading(true);
     setFetchError(null);
-    apiFetch<{ data: ApiEvent[] }>('/api/events')
+    eventsApi.getCoordinatorEvents(demoEventId)
       .then(res => {
         const rows = (res.data ?? []).map(normalizeEvent);
         setEvents(rows);
@@ -96,7 +98,7 @@ export function CoordEventsPage() {
       })
       .catch(err => setFetchError(err instanceof ApiError ? err.message : "Failed to load events."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [demoEventId]);
 
   // ── Load tracks + rounds when the selected event changes ──────────
   useEffect(() => {

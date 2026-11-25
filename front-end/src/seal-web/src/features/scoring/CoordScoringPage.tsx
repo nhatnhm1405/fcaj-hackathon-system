@@ -9,6 +9,7 @@ import {
   HackathonEvent, Round, Submission, RoundResult, Prize, SubmissionScoringProgress,
 } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 
 function fmtDT(iso?: string | null): string {
   if (!iso) return "—";
@@ -50,9 +51,10 @@ const RESULT_COLS_NON_FINAL = ["12%", "38%", "25%", "25%"];
 const RESULT_COLS_FINAL = ["10%", "27%", "26%", "18%", "19%"];
 
 export function CoordScoringPage() {
+  const demoEventId = useDemoEventId();
   const { addToast } = useNotifications();
   const [events, setEvents] = useState<HackathonEvent[]>([]);
-  const currentEvent = useMemo(() => pickCurrentEvent(events), [events]);
+  const currentEvent = useMemo(() => demoEventId == null ? pickCurrentEvent(events) : events[0] ?? null, [demoEventId, events]);
   const selectedEventId = currentEvent?.eventId ?? null;
   const [rounds, setRounds] = useState<Round[]>([]);
   const [selectedRoundId, setSelectedRoundId] = useState<number | null>(null);
@@ -80,11 +82,11 @@ export function CoordScoringPage() {
   useEffect(() => {
     setLoading(true);
     setLoadError(null);
-    eventsApi.getAll()
+    eventsApi.getCoordinatorEvents(demoEventId)
       .then(res => setEvents(res.data ?? []))
       .catch(err => setLoadError(err instanceof ApiError ? err.message : "Failed to load events."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [demoEventId]);
 
   // Rounds when event changes.
   useEffect(() => {
@@ -313,10 +315,10 @@ export function CoordScoringPage() {
           additionally type-to-confirm gated since participants see the results
           the moment it lands. */}
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <PixelButton variant="cyber" disabled={busy || selectedRoundId == null || !allScoringComplete} onClick={() => setConfirmAction("finalize")}>
+        <PixelButton variant="cyber" disabled={busy || currentEvent?.status !== "IN_PROGRESS" || selectedRoundId == null || !allScoringComplete} onClick={() => setConfirmAction("finalize")}>
           {busy ? "WORKING…" : "CALCULATE RANKINGS"}
         </PixelButton>
-        <PixelButton variant="secondary" disabled={busy || results.length === 0 || allPublished} onClick={() => setConfirmAction("publish")}>
+        <PixelButton variant="secondary" disabled={busy || currentEvent?.status !== "IN_PROGRESS" || results.length === 0 || allPublished} onClick={() => setConfirmAction("publish")}>
           {allPublished ? "PUBLISHED" : "PUBLISH RESULTS"}
         </PixelButton>
         <PixelButton variant="ghost" disabled={results.length === 0} onClick={exportCsv}>EXPORT CSV</PixelButton>

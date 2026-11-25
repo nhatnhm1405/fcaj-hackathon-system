@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@/app/providers/AuthProvider";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 import { usePendingAccounts } from "@/app/providers/PendingAccountsProvider";
 import { AnnouncementComposerModal } from "@/shared/components/AnnouncementComposerModal";
 import {
@@ -37,6 +38,7 @@ function pickDefaultEvent(events: HackathonEvent[]): HackathonEvent | null {
 }
 
 export function CoordinatorDashboard() {
+  const demoEventId = useDemoEventId();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { pendingCount } = usePendingAccounts();
@@ -74,16 +76,16 @@ export function CoordinatorDashboard() {
   }, []);
 
   useEffect(() => {
-    eventsApi.getAll()
+    eventsApi.getCoordinatorEvents(demoEventId)
       .then(res => {
         const evs = res.data ?? [];
         setEvents(evs);
-        setEvent(pickDefaultEvent(evs));
+        setEvent(demoEventId == null ? pickDefaultEvent(evs) : evs[0] ?? null);
       })
       .catch(err => setError(err instanceof ApiError ? err.message : "Failed to load events."));
     loadAnnHistory();
     loadPendingAccounts();
-  }, [loadAnnHistory, loadPendingAccounts]);
+  }, [demoEventId, loadAnnHistory, loadPendingAccounts]);
 
   useEffect(() => {
     if (!event) { setTeams([]); setRoundCount(0); setClosedRounds(0); setTotalSubs(0); return; }

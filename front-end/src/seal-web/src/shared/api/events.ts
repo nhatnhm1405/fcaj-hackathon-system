@@ -43,12 +43,31 @@ export interface UpdateEventPayload {
   endDate?: string;
 }
 
+export type DemoPhase = "DRAFT" | "OPEN" | "SETUP" | "CONTEST" | "SCORING" | "COMPLETED" | "CANCELLED";
+
+export const demoPhasesApi = {
+  getAll: () =>
+    apiFetch<ApiResponse<DemoPhase[]>>('/api/coordinator/demo-phases'),
+
+  open: (phase: DemoPhase, fresh = false) =>
+    apiFetch<ApiResponse<{ eventId: number }>>(
+      `/api/coordinator/demo-phases/${phase}${fresh ? "?fresh=true" : ""}`,
+      { method: 'POST' },
+    ),
+};
+
 export const eventsApi = {
   getAll: () =>
     apiFetch<ApiResponse<HackathonEvent[]>>('/api/events'),
 
   getById: (eventId: number) =>
     apiFetch<ApiResponse<HackathonEvent>>(`/api/events/${eventId}`),
+
+  getCoordinatorEvents: async (demoEventId: number | null): Promise<ApiResponse<HackathonEvent[]>> => {
+    if (demoEventId == null) return eventsApi.getAll();
+    const response = await eventsApi.getById(demoEventId);
+    return { ...response, data: [response.data] };
+  },
 
   create: (payload: CreateEventPayload) =>
     apiFetch<ApiResponse<HackathonEvent>>('/api/events', {

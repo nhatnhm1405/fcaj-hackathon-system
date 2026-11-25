@@ -78,8 +78,14 @@ export function PixelMenu({
     const rect = anchorRef.current?.getBoundingClientRect();
     if (!rect) return;
     const estHeight = items.length * EST_ITEM_HEIGHT + 16;
-    const openUp = rect.bottom + estHeight > window.innerHeight && rect.top > estHeight;
-    const style: React.CSSProperties = { position: "fixed", zIndex: 500, minWidth };
+    const roomAbove = rect.top - 12;
+    const roomBelow = window.innerHeight - rect.bottom - 12;
+    const openUp = roomBelow < estHeight && roomAbove > roomBelow;
+    const style: React.CSSProperties = {
+      position: "fixed", zIndex: 500, minWidth,
+      maxHeight: Math.max(0, openUp ? roomAbove : roomBelow),
+      overflowY: "auto",
+    };
     if (openUp) style.bottom = window.innerHeight - rect.top + 4;
     else style.top = rect.bottom + 4;
     if (align === "right") style.right = Math.max(8, window.innerWidth - rect.right);
@@ -94,7 +100,7 @@ export function PixelMenu({
   }, [open]);
 
   // Dismissal: outside pointerdown (covers touch), Escape (refocus trigger),
-  // any scroll (capture — the fixed panel would detach from its anchor), resize.
+  // scroll outside the menu (the fixed panel would detach from its anchor), resize.
   useEffect(() => {
     if (!open) return;
     function onPointerDown(e: PointerEvent) {
@@ -113,12 +119,16 @@ export function PixelMenu({
     }
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
-    window.addEventListener("scroll", close, true);
+    function onScroll(e: Event) {
+      if (e.target instanceof Node && panelRef.current?.contains(e.target)) return;
+      close();
+    }
+    window.addEventListener("scroll", onScroll, true);
     window.addEventListener("resize", close);
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("scroll", close, true);
+      window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", close);
     };
   }, [open]);
