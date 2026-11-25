@@ -2,7 +2,7 @@
 
 Cập nhật 25/11/2026. Nguồn: `aws-architect.drawio`, `origin/main` `7e017fb`, `origin/develop` `237d654`.
 Quyết định: dựng ở **account riêng, trống, dùng credit**; không đụng PoC đang chạy ở account khác.
-Trạng thái: mục 1–9 và AI worker, alarm, CloudTrail, WAF (Count) ở mục 11 đã chạy trên AWS ngày 24–25/11/2026. **Chưa chạy:** GitHub Actions, OAuth, SES. Không ghi account ID, endpoint, secret thật vào file này; lưu ở `docs/vq/` (đã ignore).
+Trạng thái: mục 1–9 và AI worker, OAuth, alarm, CloudTrail, WAF (Count), GitHub Actions ở mục 11 đã chạy trên AWS ngày 24–25/11/2026. **Chưa chạy:** SES. Không ghi account ID, endpoint, secret thật vào file này; lưu ở `docs/vq/` (đã ignore).
 
 ## 0. Đọc trước
 
@@ -342,7 +342,7 @@ aws cloudformation deploy --region ap-southeast-1 --stack-name fcaj-v3-ai-worker
 
 `deepseek-chat` bị DeepSeek ngừng từ 24/07/2026, nên dùng `deepseek-flash`. Model mới bật thinking mặc định, token suy nghĩ tính vào giới hạn output; worker cần gửi `"thinking": {"type": "disabled"}` (người phụ trách AI xác nhận trước khi đóng gói bản mới). Sau đó bật hai cờ `APP_AI_JOBS_*ENABLED` trong `runtime-env` và chạy mục 10. Source bài thi gửi sang DeepSeek cần được ban tổ chức đồng ý.
 
-2. **OAuth**: tạo app riêng, callback `https://sealaws.io.vn/login/oauth2/code/google` và `/github`; thêm client ID/secret và `SPRING_PROFILES_ACTIVE=aws,oauth-google,oauth-github`.
+2. **OAuth**: tạo app riêng, callback `https://sealaws.io.vn/login/oauth2/code/google` và `/github`; rồi chạy `infra/v3/set-oauth.ps1 -Provider github|google -State on` (tự nhập client ID/secret) và document `fcaj-v3-release` để hai máy nạp lại. Kiểm tra: `/oauth2/authorization/github` và `/google` trả 302. Hạn chế của code: GitHub để email riêng tư thì báo `EMAIL_NOT_FOUND`; mỗi tài khoản chỉ liên kết một nhà cung cấp.
 3. **SES**: chỉ sau khi sửa code; verify DKIM, xin production access, host `email-smtp.ap-southeast-1.amazonaws.com:587`.
 4. **CloudWatch/Budgets → SNS email**: `infra/v3/monitoring.yaml` (stack `fcaj-v3-monitoring`, 7 alarm và 1 budget). Email phải bấm xác nhận thì mới nhận cảnh báo. Runtime tạo lại thì ALB/target group đổi tên: deploy lại với `LoadBalancerName` (phần `app/...` của ARN) và `TargetGroupName` (phần `targetgroup/...`) mới. Trước khi xoá runtime, deploy với hai giá trị rỗng để không báo động nhầm.
 5. **CloudTrail → S3**: deploy lại `fcaj-poc` (quyền ghi `cloudtrail/`, tự xoá sau 90 ngày) rồi mới deploy `infra/v3/audit.yaml` (stack `fcaj-v3-audit`).
