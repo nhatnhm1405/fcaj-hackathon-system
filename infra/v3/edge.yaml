@@ -23,9 +23,15 @@ Parameters:
     Default: Count
     AllowedValues: [Count, Block]
     Description: Start with Count, read sampled requests, then switch to Block.
+  LoginLimitMode:
+    Type: String
+    Default: Count
+    AllowedValues: [Count, Block]
+    Description: Action of the strict login-attempt rule. Count first, then Block.
 Conditions:
   UseWaf: !Equals [!Ref EnableWaf, 'true']
   Blocking: !Equals [!Ref WafMode, Block]
+  LoginBlocking: !Equals [!Ref LoginLimitMode, Block]
 Rules:
   CloudFrontRegion:
     Assertions:
@@ -91,8 +97,53 @@ Resources:
               # Uploads are allowed up to 20 MB by the application.
               RuleActionOverrides: [{Name: SizeRestrictions_BODY, ActionToUse: {Count: {}}}]
           VisibilityConfig: {SampledRequestsEnabled: true, CloudWatchMetricsEnabled: true, MetricName: common}
-        - Name: login-rate
+        # Password, sign-up and OTP attempts only: guessing passwords or reset codes.
+        - Name: login-attempts
           Priority: 3
+          Action: !If [LoginBlocking, {Block: {}}, {Count: {}}]
+          Statement:
+            RateBasedStatement:
+              AggregateKeyType: IP
+              EvaluationWindowSec: 300
+              Limit: 100
+              ScopeDownStatement:
+                AndStatement:
+                  Statements:
+                    - ByteMatchStatement:
+                        FieldToMatch: {Method: {}}
+                        PositionalConstraint: EXACTLY
+                        SearchString: POST
+                        TextTransformations: [{Priority: 0, Type: NONE}]
+                    - OrStatement:
+                        Statements:
+                          - ByteMatchStatement:
+                              FieldToMatch: {UriPath: {}}
+                              PositionalConstraint: EXACTLY
+                              SearchString: /api/auth/login
+                              TextTransformations: [{Priority: 0, Type: LOWERCASE}]
+                          - ByteMatchStatement:
+                              FieldToMatch: {UriPath: {}}
+                              PositionalConstraint: EXACTLY
+                              SearchString: /api/auth/register
+                              TextTransformations: [{Priority: 0, Type: LOWERCASE}]
+                          - ByteMatchStatement:
+                              FieldToMatch: {UriPath: {}}
+                              PositionalConstraint: EXACTLY
+                              SearchString: /api/auth/forgot-password
+                              TextTransformations: [{Priority: 0, Type: LOWERCASE}]
+                          - ByteMatchStatement:
+                              FieldToMatch: {UriPath: {}}
+                              PositionalConstraint: EXACTLY
+                              SearchString: /api/auth/verify-reset-otp
+                              TextTransformations: [{Priority: 0, Type: LOWERCASE}]
+                          - ByteMatchStatement:
+                              FieldToMatch: {UriPath: {}}
+                              PositionalConstraint: EXACTLY
+                              SearchString: /api/auth/reset-password
+                              TextTransformations: [{Priority: 0, Type: LOWERCASE}]
+          VisibilityConfig: {SampledRequestsEnabled: true, CloudWatchMetricsEnabled: true, MetricName: login-attempts}
+        - Name: login-rate
+          Priority: 4
           Action: !If [Blocking, {Block: {}}, {Count: {}}]
           Statement:
             RateBasedStatement:
