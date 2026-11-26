@@ -198,6 +198,19 @@ class DemoWavesTest {
                 .hasSize(3).allSatisfy(a -> assertThat(a.getTrack()).isNull());
     }
 
+    @Test
+    void leavesDraftEventsAlone() {
+        User coordinator = fixtures.user("coordinator3@example.test", "Coordinator", "STAFF", null, 0);
+        LocalDateTime now = LocalDateTime.now();
+        HackathonEvent draft = fixtures.event("Draft", "FALL", 2027, "DRAFT", "RANDOM",
+                now.minusDays(1), now.plusDays(10), now.plusDays(12), now.plusDays(14));
+
+        assertThat(waves.list()).noneMatch(e -> e.eventId() == draft.getEventId());
+        assertThatThrownBy(() -> waves.run(draft.getEventId(), Wave.REGISTRATION, coordinator.getUserId()))
+                .isInstanceOf(BadRequestException.class).hasMessageContaining("DRAFT");
+        assertThat(tracks.findAllByEvent_EventId(draft.getEventId())).isEmpty();
+    }
+
     private WaveState stateOf(int eventId, Wave wave) {
         return waves.list().stream().filter(e -> e.eventId() == eventId).findFirst().orElseThrow()
                 .waves().stream().filter(s -> s.wave() == wave).findFirst().orElseThrow();
