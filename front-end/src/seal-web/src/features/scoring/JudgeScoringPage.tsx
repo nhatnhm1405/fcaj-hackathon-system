@@ -1,10 +1,10 @@
-import { useState, useEffect, useMemo, useCallback, type ReactNode, type MouseEvent as ReactMouseEvent } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef, type ReactNode, type MouseEvent as ReactMouseEvent } from "react";
 import { Bot, RefreshCw, Users, Github, Play, FileText } from "lucide-react";
 import {
   C, GradientText, PixelCard, PixelButton, PixelBadge,
 } from "@/shared/components/PixelComponents";
 import {
-  assignmentsApi, roundsApi, submissionsApi, scoringApi, aiApi, ApiError, apiErrorMessage,
+  assignmentsApi, roundsApi, submissionsApi, scoringApi, requestSubmissionInsight, aiErrorMessage, ApiError, apiErrorMessage,
   Round, Submission, ScoringCriteria, ScoreRecord, AiInsight, JudgeAssignedTeam,
 } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
@@ -84,6 +84,9 @@ export function JudgeScoringPage() {
   const [aiInsight, setAiInsight] = useState<AiInsight | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  // Cancels the in-flight AI request when the judge switches submission or leaves.
+  const aiAbortRef = useRef<AbortController | null>(null);
+  useEffect(() => () => aiAbortRef.current?.abort(), []);
 
   // ── Load assignment → event → rounds ────────────────────────────────
   useEffect(() => {
@@ -196,6 +199,8 @@ export function JudgeScoringPage() {
     setActionError(null);
     setShowTeamDetail(false);
     // AI insight is per-submission — drop it when switching submissions.
+    aiAbortRef.current?.abort();
+    aiAbortRef.current = null;
     setAiInsight(null);
     setAiError(null);
     setAiLoading(false);
@@ -203,16 +208,24 @@ export function JudgeScoringPage() {
 
   async function askAi() {
     if (!selectedSub || !open) return;
+    aiAbortRef.current?.abort();
+    const controller = new AbortController();
+    aiAbortRef.current = controller;
     setAiError(null);
     setAiLoading(true);
     try {
-      const res = await aiApi.getSubmissionInsights(selectedSub.submissionId);
-      setAiInsight(res.data);
+      const insight = await requestSubmissionInsight(selectedSub.submissionId, { signal: controller.signal });
+      if (!controller.signal.aborted) setAiInsight(insight);
     } catch (err) {
-      setAiError(apiErrorMessage(err, "Failed to generate AI insights."));
-      addToast({ type: "warning", title: "AI ASSIST FAILED", message: apiErrorMessage(err, "Failed to generate AI insights.") });
+      if (controller.signal.aborted) return;
+      const message = aiErrorMessage(err);
+      setAiError(message);
+      addToast({ type: "warning", title: "AI ASSIST FAILED", message });
     } finally {
-      setAiLoading(false);
+      if (aiAbortRef.current === controller) {
+        aiAbortRef.current = null;
+        setAiLoading(false);
+      }
     }
   }
 

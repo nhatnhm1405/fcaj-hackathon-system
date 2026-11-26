@@ -188,7 +188,7 @@ class TestLambdaHandlerV1(unittest.TestCase):
             storage_prefix="poc",
             results_queue_url="https://sqs.ap-southeast-1.amazonaws.com/582129522297/fcaj-poc-ai-results",
             ai_provider="deepseek",
-            deepseek_model="deepseek-chat",
+            deepseek_model="deepseek-flash",
             deepseek_api_url="https://api.deepseek.com/chat/completions",
             deepseek_api_key_parameter="/fcaj/poc/deepseek-api-key",
             max_source_chars=120000,
@@ -277,7 +277,7 @@ class TestLambdaHandlerV1(unittest.TestCase):
         }
         fake_api_resp = {
             "id": "chatcmpl-v3",
-            "model": "deepseek-chat",
+            "model": "deepseek-flash",
             "choices": [
                 {
                     "index": 0,
@@ -371,7 +371,7 @@ class TestLambdaHandlerV1(unittest.TestCase):
             "generatedAt": "2026-10-28T04:55:00Z",
             "provenance": {
                 "mode": "MOCK",
-                "modelId": "deepseek-chat",
+                "modelId": "deepseek-flash",
                 "modelRevision": "deepseek-v3",
                 "adapterVersion": "fcaj-lambda-worker-v1",
             },
@@ -396,14 +396,14 @@ class TestLambdaHandlerV1(unittest.TestCase):
                     "redFlags": [],
                 },
                 "disclaimer": "Reference only.",
-                "model": "deepseek-chat",
+                "model": "deepseek-flash",
             },
         }
         existing_bytes = json.dumps(existing_output, separators=(",", ":")).encode("utf-8")
         s3.seed(f"poc/results/{self.job_id}/output.json", existing_bytes)
 
         fake_api_resp = {
-            "model": "deepseek-chat",
+            "model": "deepseek-flash",
             "choices": [
                 {
                     "finish_reason": "stop",
@@ -462,7 +462,7 @@ class TestLambdaHandlerV1(unittest.TestCase):
             json.dumps({"schemaVersion": "fcaj.ai.output.v1", "jobId": "wrong-id"}).encode("utf-8"),
         )
         fake_api_resp = {
-            "model": "deepseek-chat",
+            "model": "deepseek-flash",
             "choices": [
                 {
                     "finish_reason": "stop",
