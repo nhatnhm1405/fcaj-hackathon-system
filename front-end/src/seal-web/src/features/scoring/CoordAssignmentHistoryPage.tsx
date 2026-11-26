@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDemoEventId } from "@/features/events/CoordinatorDemo";
 import { C, GradientText, PixelBadge, PixelCard } from "@/shared/components/PixelComponents";
 import { MemberTextList } from "@/shared/components/MemberTextList";
 import {
@@ -88,6 +89,7 @@ function EventHistoryDetail({ detail }: { detail: CoordinatorEventHistory }) {
 }
 
 export function CoordAssignmentHistoryPage() {
+  const demoEventId = useDemoEventId();
   const [events, setEvents] = useState<HackathonEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -96,7 +98,7 @@ export function CoordAssignmentHistoryPage() {
   const [loadingDetail, setLoadingDetail] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    eventsApi.getAll()
+    eventsApi.getCoordinatorEvents(demoEventId)
       .then(response => {
         const ended = (response.data ?? [])
           .filter(e => e.status === "COMPLETED" || e.status === "CANCELLED")
@@ -105,7 +107,7 @@ export function CoordAssignmentHistoryPage() {
       })
       .catch(err => setError(err instanceof ApiError ? err.message : "Failed to load event history."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [demoEventId]);
 
   function toggle(eventId: number) {
     setOpen(previous => {

@@ -5,3 +5,5 @@ back-end/src/seal-api/deploy/*.sh.example text eol=lf
 back-end/src/seal-api/src/main/resources/db/** text eol=lf
 docs/contracts/ai-job-v1/** text eol=lf
 docs/checks/** text eol=lf
+infra/v3/*.yaml text eol=lf
+infra/v3/*.sh text eol=lf

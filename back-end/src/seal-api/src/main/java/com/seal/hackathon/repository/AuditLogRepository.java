@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface AuditLogRepository extends JpaRepository<AuditLog, Integer> {
 
+    boolean existsByActionAndTargetTypeAndTargetId(String action, String targetType, Integer targetId);
+
     /**
      * Newest-first audit entries with the actor fetched eagerly so a review UI can
      * show the actor's name without an extra query per row.

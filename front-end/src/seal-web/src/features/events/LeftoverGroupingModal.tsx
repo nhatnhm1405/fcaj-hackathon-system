@@ -186,7 +186,7 @@ export function LeftoverGroupingModal({ eventId, teams, onClose, onCommitted, on
         style={{
           position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 401,
           width: "min(640px, calc(100vw - 32px))", maxHeight: "calc(100vh - 64px)", overflowY: "auto",
-          background: C.surface, border: `1px solid ${C.green}66`,
+          background: C.surface, border: `1px solid color-mix(in srgb, ${C.green} 40%, transparent)`,
           boxShadow: `0 0 40px ${C.greenGlow}, 0 16px 48px rgba(0,0,0,0.4)`, padding: 28,
         }}
       >

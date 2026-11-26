@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SEAL v3 AI worker. Lambda outside the VPC, fed by the AI jobs queue.
+Parameters:
+  CodeKey:
+    Type: String
+    AllowedPattern: '^lambda/ai-worker-[0-9a-f]{40}\.zip$'
+    Description: Zip of ai-worker/src in the data bucket, named after its source commit.
+  DeepSeekModel:
+    Type: String
+    Default: deepseek-flash
+    Description: deepseek-chat was discontinued by DeepSeek on 2026-07-24.
+  TriggerEnabled:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+    Description: Set false to pause processing; jobs then wait in the queue.
+Resources:
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Properties:
+      LogGroupName: /aws/lambda/fcaj-v3-ai-worker
+      RetentionInDays: 14
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - {Effect: Allow, Principal: {Service: lambda.amazonaws.com}, Action: sts:AssumeRole}
+      Policies:
+        - PolicyName: worker
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: [s3:GetObject, s3:GetObjectVersion]
+                Resource:
+                  - !Sub arn:${AWS::Partition}:s3:::fcaj-poc-data-${AWS::AccountId}-${AWS::Region}/poc/inputs/*
+                  - !Sub arn:${AWS::Partition}:s3:::fcaj-poc-data-${AWS::AccountId}-${AWS::Region}/poc/rubrics/*
+                  - !Sub arn:${AWS::Partition}:s3:::fcaj-poc-data-${AWS::AccountId}-${AWS::Region}/poc/results/*
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource: !Sub arn:${AWS::Partition}:s3:::fcaj-poc-data-${AWS::AccountId}-${AWS::Region}/poc/results/*
+              - Effect: Allow
+                Action: [sqs:ReceiveMessage, sqs:DeleteMessage, sqs:GetQueueAttributes]
+                Resource: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-jobs
+              - Effect: Allow
+                Action: sqs:SendMessage
+                Resource: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-results
+              - Effect: Allow
+                Action: ssm:GetParameter
+                Resource: !Sub arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/fcaj/v3/worker/deepseek-api-key
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !GetAtt LogGroup.Arn
+  Worker:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: fcaj-v3-ai-worker
+      Runtime: python3.12
+      Handler: src.lambda_handler.lambda_handler
+      Role: !GetAtt Role.Arn
+      Timeout: 180
+      MemorySize: 512
+      LoggingConfig: {LogGroup: !Ref LogGroup}
+      Code:
+        S3Bucket: !Sub fcaj-poc-data-${AWS::AccountId}-${AWS::Region}
+        S3Key: !Ref CodeKey
+      Environment:
+        Variables:
+          AI_PROVIDER: deepseek
+          DEEPSEEK_MODEL: !Ref DeepSeekModel
+          DEEPSEEK_API_KEY_PARAMETER: /fcaj/v3/worker/deepseek-api-key
+          APP_STORAGE_BUCKET: !Sub fcaj-poc-data-${AWS::AccountId}-${AWS::Region}
+          APP_STORAGE_PREFIX: poc
+          APP_AI_JOBS_RESULTS_QUEUE_URL: !Sub https://sqs.${AWS::Region}.${AWS::URLSuffix}/${AWS::AccountId}/fcaj-poc-ai-results
+          LAMBDA_MAX_SOURCE_CHARS: '120000'
+          LAMBDA_MAX_OUTPUT_TOKENS: '8192'
+  Trigger:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      FunctionName: !Ref Worker
+      EventSourceArn: !Sub arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:fcaj-poc-ai-jobs
+      BatchSize: 1
+      Enabled: !Ref TriggerEnabled
+      FunctionResponseTypes: [ReportBatchItemFailures]
+      ScalingConfig: {MaximumConcurrency: 2}
+Outputs:
+  FunctionName: {Value: !Ref Worker}

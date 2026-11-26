@@ -5,6 +5,7 @@ import { useNotifications } from "@/app/providers/NotificationProvider";
 import {
     C, GradientText, PixelCard, PixelButton, PixelBadge, FloatingParticles,
 } from "@/shared/components/PixelComponents";
+import { DashboardHero, SectionTitle } from "@/features/dashboard/components/DashboardUI";
 import {
     teamsApi, tracksApi, roundsApi, submissionsApi, resultsApi, notificationsApi, supportApi,
     MyTeam, Track, Round, RoundResult, SubmissionEligibility, Notification, ApiError, apiErrorMessage,
@@ -177,7 +178,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
     const lockReason = teamLockReason(team.eventStatus);
 
     return (
-        <div className="cyber-grid-bg" style={{ position: "relative", minHeight: "100%", padding: 24 }}>
+        <div className="cyber-grid-bg dash-page" style={{ position: "relative", minHeight: "100%", overflowX: "clip" }}>
             {/* Same ambient backdrop as the no-team dashboard — cyber grid, floating
                 particles and a soft radial glow. */}
             <FloatingParticles count={30} />
@@ -185,13 +186,11 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
             <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 20 }}>
             <ParticipantJourneyBar team={team} highlight />
 
-            <PixelCard glow glowColor="blue" gradient style={{ padding: 24 }}>
-                <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 700, marginBottom: 6 }}>
-                    {isLeader ? 'Team Leader Console' : 'Participant Console'}
-                </div>
-                <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
-                    <GradientText>Good day, {currentUser.full_name}</GradientText>
-                </h1>
+            <DashboardHero
+                glowColor="blue"
+                eyebrow={isLeader ? 'Team Leader Console' : 'Participant Console'}
+                title={<>Good day, {currentUser.full_name}</>}
+            >
                 <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 10, flexWrap: "wrap" }}>
                     <span style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
                         {isLeader ? `Leading` : `Member of`} {team.name}
@@ -200,7 +199,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                     <PixelBadge color={isLeader ? 'cyan' : 'blue'}>{isLeader ? 'LEADER' : 'MEMBER'}</PixelBadge>
                     {isDormant && <PixelBadge color="gray">SEASON ENDED</PixelBadge>}
                 </div>
-            </PixelCard>
+            </DashboardHero>
 
             {inactive && (
                 <PixelCard glow glowColor="blue" gradient style={{ padding: 16 }}>
@@ -235,7 +234,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                     )}
                 </div>
             ) : (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 16 }}>
                     <GlassStat
                         rgb={eliminated || eligibilityUnavailable ? "239,68,68" : waitingForResults ? "234,179,8" : "34,197,94"}
                         valueColor={eliminated || eligibilityUnavailable ? C.red : waitingForResults ? C.yellow : C.green}
@@ -262,7 +261,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
             )}
 
             {error && (
-                <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, padding: "10px 14px" }}>ERROR: {error}</div>
+                <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.35)", color: C.red, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "10px 14px" }}>ERROR: {error}</div>
             )}
 
             {/* Track picker — modal. Sits below the ConfirmDialog (z 400) so the
@@ -279,17 +278,17 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                         style={{
                             position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 351,
                             width: "min(560px, calc(100vw - 32px))", maxHeight: "calc(100vh - 64px)", overflowY: "auto",
-                            background: C.surface, border: `1px solid ${C.green}66`,
+                            background: C.surface, border: `1px solid color-mix(in srgb, ${C.green} 40%, transparent)`,
                             boxShadow: `0 0 40px ${C.greenGlow}, 0 16px 48px rgba(0,0,0,0.4)`, padding: 28,
                         }}
                     >
                         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${C.green}, transparent)` }} />
                         <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 18, fontWeight: 800, color: C.text, marginBottom: 4 }}>Choose your track</h2>
-                        <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginBottom: 18 }}>
+                        <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, marginBottom: 18 }}>
                             This assigns your whole team — you can't change it yourself afterwards.
                         </div>
                         {tracks.length === 0 ? (
-                            <p style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>Loading tracks…</p>
+                            <p style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>Loading tracks…</p>
                         ) : (
                             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                                 {tracks.map(t => (
@@ -318,8 +317,8 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
             )}
 
             {/* Team info */}
-            <PixelCard glow glowColor="blue" gradient style={{ padding: 24 }}>
-                <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Team Info</div>
+            <PixelCard glow glowColor="blue" gradient className="dash-card">
+                <SectionTitle>Team Info</SectionTitle>
                 {isDormant ? (
                     <div style={{ background: "rgba(107,114,128,0.08)", border: `1px solid ${C.border}`, color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "14px 16px" }}>
                         Track, event, and round details are from the last completed season and stay hidden until this team rejoins an active one.
@@ -327,11 +326,11 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                 ) : (
                     <>
                         {team.status === 'PENDING' && (
-                            <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.35)", color: "#eab308", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, padding: "8px 12px", marginBottom: 12 }}>
+                            <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.35)", color: C.yellow, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, padding: "8px 12px", marginBottom: 12 }}>
                                 PENDING COORDINATOR APPROVAL — You cannot submit until approved.
                             </div>
                         )}
-                        <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1.5fr 1fr 1fr", gap: 16 }}>
+                        <div className="dash-info-grid">
                             <InfoRow label="Team" value={team.name} accent="green" />
                             <InfoRow label="Event" value={team.eventName ?? "—"} sub={team.eventTopic} accent="blue" />
                             {needsTrackPick ? (
@@ -382,10 +381,10 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
             </PixelCard>
 
             {/* Activity feed (from the user's notifications) */}
-            <PixelCard glow glowColor="blue" gradient style={{ padding: 20 }}>
-                <div style={{ color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 700, marginBottom: 12 }}>Activity Feed</div>
+            <PixelCard glow glowColor="blue" gradient className="dash-card">
+                <SectionTitle>Activity Feed</SectionTitle>
                 {feed.length === 0 ? (
-                    <p style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>No recent activity.</p>
+                    <p style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>No recent activity.</p>
                 ) : (
                     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                         {feed.map(n => (
@@ -393,7 +392,7 @@ export function ExistingTeamDashboard({ inactive, requestingActive, activeReques
                                 <div style={{ width: 6, height: 6, background: n.isRead ? C.textMuted : C.green, marginTop: 6, flexShrink: 0, boxShadow: n.isRead ? "none" : `0 0 6px ${C.green}` }} />
                                 <div style={{ flex: 1 }}>
                                     <div style={{ color: C.text, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>{n.title}{n.content ? ` — ${n.content}` : ""}</div>
-                                    <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, marginTop: 4 }}>
+                                    <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, marginTop: 4 }}>
                                         {fmtDT(n.createdAt)}
                                     </div>
                                 </div>
@@ -424,12 +423,12 @@ function GlassStat({ rgb, valueColor, label, value, sublabel }: {
     rgb: string; valueColor: string; label: string; value: string; sublabel?: string;
 }) {
     const MONO = "'JetBrains Mono', monospace";
-    const mut = "rgba(255,255,255,0.72)";
+    const mut = "var(--c-shell-muted)";
     return (
         <div style={{ ...glassTile(rgb), padding: "16px 18px", minHeight: 96, display: "flex", flexDirection: "column", justifyContent: "center", gap: 6 }}>
-            <div style={{ color: mut, fontFamily: MONO, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600 }}>{label}</div>
+            <div style={{ color: mut, fontFamily: MONO, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600 }}>{label}</div>
             <div style={{ color: valueColor, fontFamily: MONO, fontSize: 22, fontWeight: 900, lineHeight: 1.1 }}>{value}</div>
-            {sublabel && <div style={{ color: mut, fontFamily: MONO, fontSize: 11 }}>{sublabel}</div>}
+            {sublabel && <div style={{ color: mut, fontFamily: MONO, fontSize: 12 }}>{sublabel}</div>}
         </div>
     );
 }
@@ -463,20 +462,20 @@ function InfoRow({ label, value, badge, action, mentorNames, sub, accent = "gree
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${M.text}, transparent)`, opacity: 0.6 }} />
             <div style={{ position: "absolute", top: 0, left: 0, width: 12, height: 12, borderTop: `2px solid ${M.text}`, borderLeft: `2px solid ${M.text}`, opacity: 0.8 }} />
             {/* Small, dim label so the large glowing value dominates the tile. */}
-            <div style={{ color: `rgba(${M.rgb},0.85)`, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600 }}>{label}</div>
+            <div style={{ color: `rgba(${M.rgb},0.85)`, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600 }}>{label}</div>
             {action ?? (
                 <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", filter: `drop-shadow(0 0 10px rgba(${M.rgb},0.5))` }}>
-                    <GradientText from={M.from} to={M.to} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 23, fontWeight: 800, lineHeight: 1.15 }}>{value}</GradientText>
+                    <GradientText from={M.from} to={M.to} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, fontWeight: 800, lineHeight: 1.15, overflowWrap: "anywhere" }}>{value}</GradientText>
                     {badge && <PixelBadge color={roundStatusColor(badge)}>{badge}</PixelBadge>}
                 </div>
             )}
             {sub && (
-                <div style={{ color: M.to, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 600, lineHeight: 1.5, marginTop: 2, textShadow: `0 0 8px rgba(${M.rgb},0.4)` }}>
+                <div style={{ color: M.to, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 600, lineHeight: 1.5, marginTop: 2, textShadow: `0 0 8px rgba(${M.rgb},0.4)` }}>
                     {sub}
                 </div>
             )}
             {mentorNames && mentorNames.length > 0 && (
-                <div style={{ color: M.text, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 600, lineHeight: 1.55, marginTop: 2, display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
+                <div style={{ color: M.text, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 600, lineHeight: 1.55, marginTop: 2, display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
                     <span style={{ color: `rgba(${M.rgb},0.7)`, flexShrink: 0 }}>
                         {mentorNames.length === 1 ? "Mentor" : "Mentors"} ·
                     </span>
@@ -529,7 +528,7 @@ function TrackOption({ track, onPick }: { track: Track; onPick: () => void }) {
                 )}
             </div>
             {track.description && (
-                <div style={{ color: C.textMuted, fontFamily: MONO, fontSize: 11, lineHeight: 1.5, marginTop: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                <div style={{ color: C.textMuted, fontFamily: MONO, fontSize: 12, lineHeight: 1.5, marginTop: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                     {track.description}
                 </div>
             )}

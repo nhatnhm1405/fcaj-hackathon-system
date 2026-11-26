@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, type ReactNode, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import { useNavigate } from "react-router";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import {
   C, GradientText, PixelButton, PixelBadge,
   FloatingParticles, TerminalWindow, TypingText, CircuitLines,
@@ -7,7 +8,10 @@ import {
 import { useAuth } from "@/app/providers/AuthProvider";
 import { eventsApi, roundsApi, resultsApi, HackathonEvent, Round, RoundResult } from "@/shared/apiClient";
 import { AppFooter } from "@/shared/components/AppFooter";
-import brandLogo from "@/imports/image.png";
+import { SealMascot } from "./SealMascot";
+import { TwinkleField } from "./TwinkleField";
+import { prefersReducedMotion } from "./motion";
+import brandLogo from "@/imports/seal-logo.svg";
 import Hero from "@/imports/Hero.jpg"
 import fptLogo from "@/imports/fpt-logo.png";
 import G1 from "@/imports/Hackathon.jpg";
@@ -116,12 +120,7 @@ function fmtDate(iso?: string): string {
 
 // ── Scroll / reveal primitives (landing polish) ───────────────────
 // All motion below is opt-out: honours the OS "reduce motion" setting, either
-// via the `.landing-reveal` / `.landing-marquee` CSS overrides or the runtime check.
-function prefersReducedMotion(): boolean {
-  return typeof window !== "undefined"
-    && typeof window.matchMedia === "function"
-    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
+// via the `.landing-reveal` / `.landing-marquee` CSS overrides or prefersReducedMotion().
 
 // window.scrollY, throttled to one update per animation frame (for parallax).
 function useScrollY(): number {
@@ -393,16 +392,6 @@ function NeonImageFrame({ src, label, height, borderColor = C.green }: {
   );
 }
 
-const sponsors = [
-  { name: "TechCorp", tier: "platinum" },
-  { name: "DevHub", tier: "platinum" },
-  { name: "CodeLab", tier: "gold" },
-  { name: "ByteWave", tier: "gold" },
-  { name: "SyncIO", tier: "silver" },
-  { name: "NullPtr", tier: "silver" },
-  { name: "OpenSrc", tier: "silver" },
-];
-
 const faqs = [
   { q: "Who can participate?", a: "Any student or developer 18+. Teams of 3-5 members. Students, professionals, and hobbyists are all welcome." },
   { q: "Is it free to join?", a: "Yes — participation is completely free. All you need is a registered account on this platform." },
@@ -410,15 +399,6 @@ const faqs = [
   { q: "How are projects judged?", a: "Innovation, technical depth, design quality, and real-world impact — scored by a panel of expert judges per round." },
   { q: "What are the prizes?", a: "Cash prizes, cloud credits, hardware, mentorship sessions, and fast-track interviews at sponsor companies." },
   { q: "Can I use existing code?", a: "Open-source libraries and frameworks are fine. The core project must be built during the event." },
-];
-
-const features = [
-  { title: "Team Registration", desc: "Build a team, pick a track, go — in minutes.", accent: C.green },
-  { title: "Project Submission", desc: "Repo, demo, deck. Submitted and timestamped.", accent: C.blue },
-  { title: "Multi-Round Judging", desc: "Blind, multi-round scoring. Zero spreadsheets.", accent: C.cyan },
-  { title: "Live Leaderboard", desc: "Rankings that move the instant scores land.", accent: C.purple },
-  { title: "Event Management", desc: "Rounds, tracks, deadlines — one console.", accent: C.blue },
-  { title: "Announcements & Alerts", desc: "Instant alerts the moment anything changes.", accent: C.green },
 ];
 
 // Smooth-scroll to a section on the landing page. Used by the "Event
@@ -431,7 +411,6 @@ function scrollToLandingSection(id: string) {
 
 const NAV_LINKS = [
   { label: "Home", href: "#hero" },
-  { label: "About", href: "#features" },
   { label: "Events", href: "#events" },
   { label: "Timeline", href: "#timeline" },
   { label: "Gallery", href: "#gallery" },
@@ -475,11 +454,11 @@ function NavBar({ navigate }: { navigate: (p: Page) => void }) {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}>
         {/* LEFT — logo + brand */}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ height: 80, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
+          <div style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
             <img
               src={brandLogo}
               alt="SEAL"
-              style={{ height: 160, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35)) drop-shadow(0 0 16px rgba(59,130,246,0.2))" }}
+              style={{ height: 42, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(34,197,94,0.35)) drop-shadow(0 0 16px rgba(59,130,246,0.2))" }}
             />
           </div>
           <span style={{ display: "inline-flex", alignItems: "baseline", overflow: "hidden", color: C.text, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 14, letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
@@ -597,6 +576,7 @@ function HeroSection({ navigate, data }: { navigate: (p: Page) => void; data: La
       <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px)", pointerEvents: "none", zIndex: 1 }} />
 
       <FloatingParticles count={32} className="z-0" />
+      <TwinkleField count={54} />
 
       <div style={{
           maxWidth: 1200, width: "100%", margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 2,
@@ -693,86 +673,6 @@ function HeroSection({ navigate, data }: { navigate: (p: Page) => void; data: La
   );
 }
 
-// A Features card: fades + rises on scroll, its top edge and corner bracket
-// "draw" in a beat later, and it tilts in 3D toward the cursor while hovered.
-function FeatureCard({ feat, delay }: { feat: { title: string; desc: string; accent: string }; delay: number }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  const onMove = (e: ReactPointerEvent) => {
-    if (prefersReducedMotion()) return;
-    const el = ref.current; if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(700px) rotateX(${-py * 7}deg) rotateY(${px * 7}deg) translateY(-4px)`;
-    el.style.boxShadow = `0 0 30px ${feat.accent}25, 0 8px 24px rgba(0,0,0,0.4)`;
-    el.style.borderColor = `${feat.accent}44`;
-  };
-  const onLeave = () => {
-    const el = ref.current; if (!el) return;
-    el.style.transform = "none";
-    el.style.boxShadow = `0 0 20px ${feat.accent}0a`;
-    el.style.borderColor = `${feat.accent}22`;
-  };
-  return (
-    <div
-      ref={ref}
-      className="landing-reveal"
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      style={{
-        background: C.surface,
-        border: `1px solid ${feat.accent}22`,
-        padding: "24px",
-        height: "100%",
-        position: "relative",
-        overflow: "hidden",
-        opacity: inView ? 1 : 0,
-        transform: inView ? "none" : "translateY(28px)",
-        transition: "opacity 0.6s ease-out, transform 0.3s ease-out, box-shadow 0.2s ease, border-color 0.2s ease",
-        transitionDelay: `${delay}ms`,
-        boxShadow: `0 0 20px ${feat.accent}0a`,
-        transformStyle: "preserve-3d",
-        willChange: "transform",
-      }}
-    >
-      {/* top edge — draws left→right a beat after the card lands */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${feat.accent}, transparent)`, opacity: 0.7, transform: inView ? "scaleX(1)" : "scaleX(0)", transformOrigin: "left", transition: "transform 0.6s ease-out", transitionDelay: `${delay + 150}ms` }} />
-      {/* corner bracket — pops in last */}
-      <div style={{ position: "absolute", top: 0, left: 0, width: 10, height: 10, borderTop: `2px solid ${feat.accent}`, borderLeft: `2px solid ${feat.accent}`, opacity: inView ? 0.8 : 0, transform: inView ? "scale(1)" : "scale(0.2)", transformOrigin: "top left", transition: "opacity 0.4s ease, transform 0.4s ease", transitionDelay: `${delay + 320}ms` }} />
-      <div style={{ position: "absolute", bottom: -16, right: -16, width: 64, height: 64, borderRadius: "50%", background: `radial-gradient(circle, ${feat.accent}18, transparent 70%)`, pointerEvents: "none" }} />
-
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ color: feat.accent, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.06em", marginBottom: 8 }}>
-          {feat.title}
-        </div>
-        <div style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, lineHeight: 1.7 }}>
-          {feat.desc}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FeaturesSection() {
-  return (
-    <section id="features" style={{ background: C.bg, padding: "100px 0" }} className="cyber-grid-bg">
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
-        <Reveal>
-          <DecodeHeading title="Everything You Need" subtitle="From signup to results — one platform." />
-        </Reveal>
-
-        <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(34,197,94,0.4), rgba(59,130,246,0.4), transparent)", margin: "40px 0" }} />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {features.map((feat, i) => (
-            <FeatureCard key={i} feat={feat} delay={i * 90} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function EventsSection({ data }: { data: LandingData }) {
   const { current, upcoming, currentRounds, loading } = data;
   const accent = C.green;
@@ -790,9 +690,10 @@ function EventsSection({ data }: { data: LandingData }) {
   }
 
   return (
-    <section id="events" style={{ background: "#070b12", padding: "100px 0", borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
-        <DecodeHeading title="Events" subtitle="Explore current hackathons in progress and upcoming opportunities to compete." />
+    <section id="events" style={{ background: "#070b12", padding: "100px 0", borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, position: "relative" }}>
+      <TwinkleField />
+      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
+        <DecodeHeading title="Events" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
           {/* Ongoing — real current event */}
@@ -815,11 +716,11 @@ function EventsSection({ data }: { data: LandingData }) {
                   onKeyDown={registrationOpen ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goRegister(); } } : undefined}
                   style={{
                     background: C.surface,
-                    border: `1px solid ${accent}33`,
+                    border: `1px solid color-mix(in srgb, ${accent} 20%, transparent)`,
                     padding: "20px 24px",
                     position: "relative",
                     overflow: "hidden",
-                    boxShadow: `0 0 20px ${accent}10`,
+                    boxShadow: `0 0 20px color-mix(in srgb, ${accent} 6%, transparent)`,
                     cursor: registrationOpen ? "pointer" : "default",
                   }}
                 >
@@ -841,7 +742,7 @@ function EventsSection({ data }: { data: LandingData }) {
 
                   {/* Single, subtle CTA line — the whole card is the link. */}
                   {registrationOpen && (
-                    <div style={{ marginTop: 16, paddingTop: 14, borderTop: `1px solid ${accent}22`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                    <div style={{ marginTop: 16, paddingTop: 14, borderTop: `1px solid color-mix(in srgb, ${accent} 13%, transparent)`, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <span style={{ color: accent, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700, letterSpacing: "0.06em" }}>Register for this event</span>
                       <span style={{ color: accent, fontFamily: "'JetBrains Mono', monospace", fontSize: 15 }}>→</span>
                     </div>
@@ -933,7 +834,7 @@ function MysteryEventCard({ hasEvent }: { hasEvent: boolean }) {
   );
 }
 
-interface Milestone { label: string; date: string; desc: string; icon: string; status: Phase; }
+interface Milestone { label: string; date: string; icon: string; status: Phase; }
 
 // Build the timeline from the real current event's lifecycle + rounds.
 function buildMilestones(data: LandingData): Milestone[] {
@@ -957,7 +858,6 @@ function buildMilestones(data: LandingData): Milestone[] {
   ms.push({
     label: "Registration",
     date: ev ? fmtDate(ev.registrationStart) : "TBA",
-    desc: "Team sign-ups and registration window for the event.",
     icon: "📅",
     status: regStatus,
   });
@@ -968,9 +868,6 @@ function buildMilestones(data: LandingData): Milestone[] {
     ms.push({
       label: r.name,
       date: fmtDate(r.startTime),
-      desc: r.isFinal
-        ? "Final round — top teams compete for the title."
-        : "Build & submit, then judges score this round.",
       icon: roundIcons[i] ?? "⭐",
       status: roundPhase(r.status),
     });
@@ -980,7 +877,6 @@ function buildMilestones(data: LandingData): Milestone[] {
   ms.push({
     label: "Results & Awards",
     date: ev ? fmtDate(ev.endDate) : "TBA",
-    desc: "Winners announced on the live leaderboard and prizes awarded.",
     icon: "🏆",
     status: ev?.status === "COMPLETED" ? "completed" : "upcoming",
   });
@@ -996,9 +892,6 @@ function TimelineSection({ data }: { data: LandingData }) {
   const fillPct = lastDone >= 0 ? (lastDone / N) * 100 : 0;
   const trackLeftPct = 50 / N;
   const trackWidthPct = 100 - 100 / N;
-  const scheduleSubtitle = data.current
-    ? `Live schedule for ${data.current.name}`
-    : "Key dates and milestones for the season";
   const neon = "#00ff88";
   const neonDim = "rgba(0,255,136,0.18)";
   const neonGlow = "0 0 8px rgba(0,255,136,0.55), 0 0 20px rgba(0,255,136,0.25)";
@@ -1017,7 +910,8 @@ function TimelineSection({ data }: { data: LandingData }) {
       <div style={{ position: "absolute", top: "20%", left: "5%", width: 320, height: 320, borderRadius: "50%", background: `radial-gradient(circle, rgba(0,255,136,0.04) 0%, transparent 70%)`, pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "10%", right: "8%", width: 260, height: 260, borderRadius: "50%", background: `radial-gradient(circle, rgba(0,255,136,0.04) 0%, transparent 70%)`, pointerEvents: "none" }} />
 
-      <div ref={trackRef} style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
+      <TwinkleField />
+      <div ref={trackRef} style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 64 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(0,255,136,0.06)", border: `1px solid rgba(0,255,136,0.2)`, padding: "4px 14px", marginBottom: 20 }}>
@@ -1027,9 +921,6 @@ function TimelineSection({ data }: { data: LandingData }) {
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 900, fontSize: "clamp(24px,3.5vw,42px)", lineHeight: 1.1, background: `linear-gradient(135deg, ${neon} 0%, #22c55e 60%, #3b82f6 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", marginBottom: 12 }}>
             <DecodeText text="Hackathon Schedule" />
           </h2>
-          <p style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, letterSpacing: "0.04em" }}>
-            {scheduleSubtitle}
-          </p>
         </div>
 
         {/* Horizontal stepper (desktop) */}
@@ -1053,7 +944,6 @@ function TimelineSection({ data }: { data: LandingData }) {
                 const nodeShadow = isActive ? neonGlow : isCompleted ? "0 0 8px rgba(34,197,94,0.4)" : "none";
                 const labelColor = isCompleted ? "#4ade80" : isActive ? neon : "rgba(255,255,255,0.35)";
                 const dateColor = isCompleted ? "rgba(74,222,128,0.5)" : isActive ? "rgba(0,255,136,0.6)" : "rgba(255,255,255,0.2)";
-                const descColor = isCompleted ? "rgba(255,255,255,0.45)" : isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.2)";
 
                 return (
                   <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 2, padding: "0 4px" }}>
@@ -1093,10 +983,6 @@ function TimelineSection({ data }: { data: LandingData }) {
                       {m.date}
                     </div>
 
-                    {/* Description */}
-                    <div style={{ color: descColor, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, lineHeight: 1.6, textAlign: "center", maxWidth: 140 }}>
-                      {m.desc}
-                    </div>
                   </div>
                 );
               })}
@@ -1121,7 +1007,6 @@ function TimelineSection({ data }: { data: LandingData }) {
               const nodeShadow = isActive ? neonGlow : isCompleted ? "0 0 8px rgba(34,197,94,0.4)" : "none";
               const labelColor = isCompleted ? "#4ade80" : isActive ? neon : "rgba(255,255,255,0.35)";
               const dateColor = isCompleted ? "rgba(74,222,128,0.5)" : isActive ? "rgba(0,255,136,0.6)" : "rgba(255,255,255,0.2)";
-              const descColor = isCompleted ? "rgba(255,255,255,0.45)" : isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.2)";
 
               return (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 20, position: "relative", zIndex: 1 }}>
@@ -1150,9 +1035,6 @@ function TimelineSection({ data }: { data: LandingData }) {
                     </div>
                     <div style={{ color: dateColor, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, marginBottom: 6 }}>
                       {m.date}
-                    </div>
-                    <div style={{ color: descColor, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, lineHeight: 1.6 }}>
-                      {m.desc}
                     </div>
                   </div>
                 </div>
@@ -1332,6 +1214,7 @@ function GallerySection() {
       <div style={{ position: "absolute", bottom: "5%", right: "5%", width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 600, height: 300, background: "radial-gradient(ellipse, rgba(6,182,212,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
 
+      <TwinkleField count={45} />
       <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
         <DecodeHeading title="GALLERY" subtitle="Past events, team moments, and ceremony highlights." />
 
@@ -1440,65 +1323,12 @@ function GallerySection() {
   );
 }
 
-function SponsorsSection() {
-  return (
-    <section id="sponsors" style={{ background: C.bg, padding: "80px 0" }} className="cyber-grid-bg">
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
-        <DecodeHeading title="Our Sponsors" subtitle="Backed by world-class tech companies who believe in developer talent." />
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12, marginTop: 48 }}>
-          {sponsors.map((s) => {
-            const isPlatinum = s.tier === "platinum";
-            return (
-              <div
-                key={s.name}
-                style={{
-                  background: C.surface,
-                  border: isPlatinum ? "1px solid rgba(34,197,94,0.3)" : `1px solid ${C.border}`,
-                  padding: isPlatinum ? "14px 28px" : "10px 20px",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  color: isPlatinum ? C.green : C.textMuted,
-                  fontSize: isPlatinum ? 14 : 12,
-                  fontWeight: isPlatinum ? 700 : 400,
-                  boxShadow: isPlatinum ? `0 0 16px rgba(34,197,94,0.1), 0 0 30px rgba(59,130,246,0.06)` : "none",
-                  transition: "all 0.2s ease",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(59,130,246,0.4)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px rgba(59,130,246,0.15)`;
-                  (e.currentTarget as HTMLElement).style.color = C.blueBright;
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = isPlatinum ? "rgba(34,197,94,0.3)" : C.border;
-                  (e.currentTarget as HTMLElement).style.boxShadow = isPlatinum ? `0 0 16px rgba(34,197,94,0.1)` : "none";
-                  (e.currentTarget as HTMLElement).style.color = isPlatinum ? C.green : C.textMuted;
-                }}
-              >
-                {isPlatinum && (
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: C.gradientPrimary, opacity: 0.5 }} />
-                )}
-                {s.name}
-              </div>
-            );
-          })}
-        </div>
-        <div style={{ textAlign: "center", marginTop: 32 }}>
-          <span style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, letterSpacing: "0.04em" }}>
-            Want to sponsor?{" "}
-            <span style={{ color: C.blue, cursor: "pointer" }}>sponsors@seal-hms.io</span>
-          </span>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function FAQSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   return (
-    <section id="faq" style={{ background: "#070b12", padding: "100px 0", borderTop: `1px solid ${C.border}` }}>
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+    <section id="faq" style={{ background: "#070b12", padding: "100px 0", borderTop: `1px solid ${C.border}`, position: "relative" }}>
+      <TwinkleField />
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
         <DecodeHeading title="Common Questions" />
         <div style={{ marginTop: 48, display: "flex", flexDirection: "column", gap: 4 }}>
           {faqs.map((item, i) => (
@@ -1570,48 +1400,68 @@ function InnovationStrip() {
   );
 }
 
-function CTASection({ navigate }: { navigate: (p: Page) => void }) {
-  // Same auth-aware routing as the hero CTAs — no forced re-login for an
-  // already-authenticated visitor.
-  const { isAuthenticated } = useAuth();
+// Fixed corner arrows that jump to the top / bottom of the page. The arrow for
+// the end the visitor is already at is hidden. It is faded out rather than given
+// the disabled attribute, which would drop focus and cut the smooth scroll short.
+function ScrollJumpButtons() {
+  const [atTop, setAtTop] = useState(true);
+  const [atBottom, setAtBottom] = useState(false);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const el = document.documentElement;
+        setAtTop(el.scrollTop < 40);
+        setAtBottom(el.scrollTop + el.clientHeight > el.scrollHeight - 40);
+      });
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); cancelAnimationFrame(raf); };
+  }, []);
+
+  function jump(top: number) {
+    window.scrollTo({ top, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+  }
+
+  const buttons = [
+    { label: "Scroll to top", Icon: ArrowUp, hidden: atTop, onClick: () => jump(0) },
+    { label: "Scroll to bottom", Icon: ArrowDown, hidden: atBottom, onClick: () => jump(document.documentElement.scrollHeight) },
+  ];
+
   return (
-    <section
-      style={{
-        padding: "100px 24px",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
-        background: C.bg,
-      }}
-      className="cyber-grid-bg"
-    >
-      <FloatingParticles count={18} />
-      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 600, height: 300, background: "radial-gradient(ellipse, rgba(34,197,94,0.06) 0%, rgba(59,130,246,0.04) 50%, transparent 70%)", pointerEvents: "none" }} />
-
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 580, margin: "0 auto" }}>
-        <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "clamp(28px,4vw,52px)", fontWeight: 900, lineHeight: 1.15, marginBottom: 20, color: "white" }}>Boot Up Your<br /><GradientText from={C.green} to={C.blue}>Hackathon Journey</GradientText></h2>
-        <p style={{ color: C.textMuted, fontFamily: "'JetBrains Mono', monospace", fontSize: 15, lineHeight: 1.8, marginBottom: 36 }}>
-          Join thousands of builders on the platform. Your next breakthrough starts with a single commit.
-        </p>
-
-        <div
+    <div style={{ position: "fixed", right: 20, bottom: 20, zIndex: 90, display: "flex", flexDirection: "column", gap: 8 }}>
+      {buttons.map(({ label, Icon, hidden, onClick }) => (
+        <button
+          key={label}
+          type="button"
+          aria-label={label}
+          title={label}
+          aria-disabled={hidden}
+          tabIndex={hidden ? -1 : undefined}
+          onClick={onClick}
           style={{
-            background: "linear-gradient(#0d1117, #0d1117) padding-box, linear-gradient(135deg, #22c55e44, #3b82f644, #06b6d444) border-box",
-            border: "1px solid transparent",
-            padding: "28px",
-            marginBottom: 24,
+            width: 44, height: 44,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(7,12,15,0.85)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid rgba(34,197,94,0.4)",
+            color: C.green,
+            cursor: "pointer",
+            opacity: hidden ? 0 : 1,
+            pointerEvents: hidden ? "none" : "auto",
+            transition: "opacity 0.2s, box-shadow 0.18s",
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 18px rgba(34,197,94,0.4)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "none"; }}
         >
-          <div className="flex justify-center gap-3">
-            <PixelButton variant="cyber" size="lg" onClick={() => navigate(isAuthenticated ? "dashboard" : "register")}>{isAuthenticated ? "GO TO DASHBOARD" : "GET STARTED FREE"}</PixelButton>
-            <PixelButton variant="secondary" size="lg" onClick={() => scrollToLandingSection("#events")}>EVENT REGISTRATION</PixelButton>
-          </div>
-          <p style={{ color: "rgba(134,239,172,0.4)", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginTop: 16, letterSpacing: "0.04em" }}>
-            No credit card required · Free forever · Open source
-          </p>
-        </div>
-      </div>
-    </section>
+          <Icon size={20} />
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -1625,18 +1475,17 @@ export function LandingPage({ navigate, hideChrome = false }: { navigate: (p: Pa
       {!hideChrome && <CursorSpotlight />}
       {!hideChrome && <NavBar navigate={navigate} />}
       {/* Hero stays immediate (above the fold); everything below reveals on scroll.
-          Features & Gallery manage their own staggered reveals internally, so they
-          are not wrapped here. Directions alternate to keep the descent lively. */}
+          Gallery manages its own staggered reveal internally, so it is not wrapped
+          here. Directions alternate to keep the descent lively. */}
       <HeroSection navigate={navigate} data={data} />
       <Reveal><InnovationStrip /></Reveal>
-      <FeaturesSection />
       <Reveal direction="left" sweep><EventsSection data={data} /></Reveal>
       <Reveal direction="up" sweep><TimelineSection data={data} /></Reveal>
       <GallerySection />
-      <Reveal direction="right" sweep><SponsorsSection /></Reveal>
       <Reveal direction="up" sweep><FAQSection /></Reveal>
-      <Reveal direction="scale" sweep><CTASection navigate={navigate} /></Reveal>
       {!hideChrome && <AppFooter />}
+      {!hideChrome && <ScrollJumpButtons />}
+      {!hideChrome && <SealMascot />}
     </div>
   );
 }

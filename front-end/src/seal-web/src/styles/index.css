@@ -6,8 +6,9 @@
 @import './default_theme.css';
 @import './globals.css';
 
-/* ── App theme tokens (dark-only) ───────────────────────────────── */
-:root {
+/* ── SEAL app palette ─────────────────────────────────────────────── */
+:root, .seal-public-theme {
+  color-scheme: dark;
   --c-bg:           #070c0f;
   --c-surface:      #0d1117;
   --c-surface2:     #111827;
@@ -37,6 +38,146 @@
 
   /* Text on accent backgrounds */
   --c-on-accent:     #030b06;
+
+  --c-shell-text:    #ffffff;
+  --c-shell-muted:   rgba(255,255,255,0.85);
+  --c-shell-rule:    rgba(255,255,255,0.18);
+  --c-logout-text:   #fca5a5;
+  --c-blue:          #3b82f6;
+  --c-blue-bright:   #60a5fa;
+  --c-cyan:          #06b6d4;
+  --c-cyan-bright:   #22d3ee;
+  --c-purple:        #8b5cf6;
+  --c-red:           #ef4444;
+  --c-yellow:        #eab308;
+  --c-orange:        #f97316;
+  --c-badge-green:   #4ade80;
+  --c-badge-yellow:  #facc15;
+  --c-badge-red:     #f87171;
+  --c-badge-orange:  #fb923c;
+  --c-badge-gray:    #9ca3af;
+  --c-badge-purple:  #a78bfa;
+  --c-menu-hover:    rgba(255,255,255,0.05);
+  --c-primary-gradient: linear-gradient(135deg, #22c55e, #3b82f6);
+  --c-card-gradient: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(59,130,246,0.04));
+  --c-terminal-bg:   #050c07;
+  --c-terminal-head: linear-gradient(90deg, #0d1117, #0a1020);
+  --c-terminal-label: rgba(134,239,172,0.5);
+  --c-tinted-panel: rgba(8,18,24,0.28);
+  --c-social-bg:    #111111;
+  --c-social-hover: rgba(255,255,255,0.04);
+  --c-social-text:  #cccccc;
+  --c-social-border:#333333;
+  --c-social-label: rgba(255,255,255,0.25);
+  --c-dashboard-glow-green: rgba(34,197,94,0.20);
+  --c-dashboard-glow-blue: rgba(59,130,246,0.24);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --c-bg:            #edf5f2;
+  --c-surface:       #ffffff;
+  --c-surface2:      #f0f6f4;
+  --c-surface3:      #e0eee9;
+  --c-text:          #172f2b;
+  --c-text-muted:    #315c51;
+  --c-text-dim:      #48665e;
+  --c-text-blue:     #255691;
+  --c-border:        #b3cec3;
+  --c-border-bright: #168263;
+  --c-border-blue:   #bacfe3;
+  --c-navbar-bg:     rgba(252,255,254,0.96);
+  --c-footer-bg:     #e3efea;
+  --c-copyright:     #4b675d;
+  --c-accent:        #087052;
+  --c-accent-bright: #087c5b;
+  --c-accent-dim:    #075c45;
+  --c-glow:          rgba(8,112,82,0.14);
+  --c-glow-faint:    rgba(8,112,82,0.07);
+  --c-card-shadow:   0 2px 5px rgba(24,65,52,0.08);
+  --c-on-accent:     #ffffff;
+  --c-shell-text:    var(--c-text);
+  --c-shell-muted:   var(--c-text-muted);
+  --c-shell-rule:    #c2d7cf;
+  --c-logout-text:   #9e3035;
+  --c-blue:          #245da7;
+  --c-blue-bright:   #275a9d;
+  --c-cyan:          #0c6d80;
+  --c-cyan-bright:   #106375;
+  --c-purple:        #6242a5;
+  --c-red:           #aa3239;
+  --c-yellow:        #795608;
+  --c-orange:        #9b4817;
+  --c-badge-green:   #08664b;
+  --c-badge-yellow:  #765307;
+  --c-badge-red:     #9e3035;
+  --c-badge-orange:  #934115;
+  --c-badge-gray:    #475764;
+  --c-badge-purple:  #59408a;
+  --c-menu-hover:    #e3f0eb;
+  --c-primary-gradient: linear-gradient(135deg, #087255, #25599d);
+  --c-card-gradient: linear-gradient(135deg, #f6fcf8, #f7faff);
+  --c-terminal-bg:   #f7fbf9;
+  --c-terminal-head: linear-gradient(90deg, #e7f3ee, #eaf1fa);
+  --c-terminal-label: #47665e;
+  --c-tinted-panel: #f5faf8;
+  --c-social-bg:    var(--c-surface);
+  --c-social-hover: var(--c-surface2);
+  --c-social-text:  var(--c-text);
+  --c-social-border:var(--c-border);
+  --c-social-label: var(--c-text-dim);
+  --c-dashboard-glow-green: rgba(52,167,115,0.14);
+  --c-dashboard-glow-blue: rgba(59,130,246,0.13);
+}
+
+.seal-public-theme {
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-shell-text);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+.login-theme-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+}
+
+:root[data-theme="light"] .demo-phase-control button {
+  background: var(--c-surface) !important;
+  border-color: var(--c-border-bright);
+  box-shadow: 0 3px 12px rgba(24,65,52,0.16);
+}
+
+:root[data-theme="light"] .demo-phase-control button:hover {
+  background: var(--c-surface2) !important;
+}
+
+@media (max-width: 600px) {
+  :root[data-theme="light"] .coord-event-tabs {
+    flex-wrap: wrap;
+  }
 }
 
 /* ── Row overflow-menu affordance (hover/focus reveal) ──
@@ -56,33 +197,6 @@
 }
 @media (hover: none) {
   .row-action { opacity: 1; }
-}
-
-/* ── Admin dashboard stat row ──
-   The "Current Event" tile carries a name + status + date badge, so it needs
-   more room than the plain number tiles beside it. 2 equal columns on
-   mobile (tiles wrap to a 2nd row), a 2fr:1fr:1fr:1fr split from md up. */
-.admin-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-@media (min-width: 768px) {
-  .admin-stat-grid { grid-template-columns: 1.8fr 1fr 1fr 1fr; }
-}
-
-/* ── Current-event tile grid backdrop ──
-   Same graph-paper pattern as .cyber-grid-bg but with the line/glow opacity
-   turned up — .cyber-grid-bg is tuned to sit behind an entire page, so at
-   card scale it barely registered. Scoped to this one tile; the rest of the
-   dashboard (and other cards) stay plain. */
-.event-card-grid-bg {
-  background-image:
-    radial-gradient(ellipse at 20% 30%, rgba(34, 197, 94, 0.14) 0%, transparent 60%),
-    radial-gradient(ellipse at 85% 80%, rgba(6, 182, 212, 0.12) 0%, transparent 60%),
-    linear-gradient(rgba(34, 197, 94, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 197, 94, 0.16) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 18px 18px, 18px 18px;
 }
 
 /* Persistent phase timer in the authenticated navbar. Context is progressively
@@ -122,10 +236,133 @@
   }
 }
 
+/* ── Dashboard shell + role dashboards ──
+   Layout only; colours stay with the Pixel components. The navbar sheds its
+   secondary text as it narrows so it never forces horizontal scrolling. */
+.dash-navbar { padding: 0 20px; gap: 16px; }
+.dash-navbar__actions { gap: 12px; }
+.dash-navbar__brand { display: flex; }
+.dash-navbar__user-text { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; text-align: left; }
+
+@media (max-width: 860px) {
+  .dash-navbar { padding: 0 12px; gap: 8px; }
+  .dash-navbar__actions { gap: 4px; }
+  .dash-navbar__brand-text,
+  .dash-navbar__divider,
+  .dash-navbar__user-text { display: none; }
+}
+@media (max-width: 480px) {
+  .dash-navbar__brand { display: none; }
+  .dash-notif-panel {
+    position: fixed !important;
+    top: 64px !important;
+    right: 12px !important;
+    left: 12px;
+    width: auto !important;
+  }
+}
+
+.dash-page { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+.dash-card { padding: 20px; }
+.dash-card--hero { padding: 24px; }
+.dash-hero-title { font-size: 26px; }
+
+.dash-info-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.dash-event-card { padding: 28px 30px; }
+.dash-event-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.dash-event-deadline { text-align: right; }
+
+/* Staff dashboards: cyber-grid stage, then a contest card and a work list whose three
+   columns (name, state, button) line up on every role. */
+.dash-stage {
+  position: relative;
+  overflow: clip;
+  min-height: calc(100vh - 60px);
+  background-image:
+    radial-gradient(46% 60% at 12% 8%, var(--c-dashboard-glow-green), transparent 70%),
+    radial-gradient(50% 70% at 96% 88%, var(--c-dashboard-glow-blue), transparent 70%),
+    linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.08) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+}
+.dash-panel { padding: 26px 30px; display: flex; flex-direction: column; gap: 26px; }
+.dash-panel--tasks { padding: 24px 30px 12px; gap: 14px; }
+.dash-chip { padding: 7px 14px; border: 1px solid; color: var(--c-shell-text); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Facts read as one line: label and value side by side, divided by thin rules. The
+   negative margin hides the rule of whichever fact starts a wrapped line. */
+.dash-facts { padding-top: 20px; border-top: 1px solid var(--c-shell-rule); overflow: hidden; }
+.dash-facts dl { display: flex; flex-wrap: wrap; gap: 10px 0; margin: 0 0 0 -23px; color: var(--c-shell-text); font-family: 'JetBrains Mono', monospace; font-size: 16px; }
+.dash-facts dl > div { display: flex; gap: 10px; min-width: 0; padding: 0 22px; border-left: 1px solid var(--c-shell-rule); }
+.dash-facts dt { flex-shrink: 0; font-weight: 400; }
+.dash-facts dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+.dash-facts dl > .dash-facts__mobile { display: none; }
+
+.dash-task {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 200px;
+  align-items: center;
+  gap: 8px 24px;
+  box-sizing: border-box;
+  min-height: 54px;
+  padding: 8px 0;
+  border-top: 1px solid var(--c-shell-rule);
+  color: var(--c-shell-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+}
+.dash-task--note { grid-template-columns: minmax(0, 1fr); }
+.dash-task__name { overflow-wrap: anywhere; }
+.dash-task__state { display: flex; flex-wrap: wrap; gap: 2px 16px; min-width: 0; overflow-wrap: anywhere; }
+.dash-history { padding: 12px 0 12px 234px; border-top: 1px solid var(--c-shell-rule); color: var(--c-shell-text); font-size: 14px; line-height: 1.6; }
+.dash-action { width: 200px; max-width: 100%; height: 34px; padding: 0 8px; font-size: 12px; white-space: nowrap; }
+:root[data-theme="dark"] .dash-action { color: #ffffff !important; }
+.dash-toggle { padding: 0; border: 0; background: none; color: var(--c-shell-text); font: inherit; text-align: left; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.dash-step__label { color: var(--c-shell-text); font-family: 'JetBrains Mono', monospace; font-size: 14px; text-align: center; overflow-wrap: anywhere; }
+.dash-step__short { display: none; }
+.dash-step--active { animation: dashPulse 1.6s ease-in-out infinite; }
+@keyframes dashPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  50% { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .dash-step--active { animation: none; } }
+
+@media (min-width: 640px) {
+  .dash-info-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1200px) {
+  .dash-info-grid { grid-template-columns: 0.8fr 1.5fr 1fr 1fr; }
+}
+@media (max-width: 1000px) {
+  .dash-task { grid-template-columns: minmax(0, 1fr) 200px; }
+  .dash-task__name { grid-column: 1 / -1; }
+  .dash-history { padding-left: 0; }
+}
+@media (max-width: 640px) {
+  .dash-page { padding: 16px; gap: 16px; }
+  .dash-card, .dash-card--hero, .dash-event-card { padding: 16px; }
+  .dash-hero-title { font-size: 22px; }
+  .dash-panel { padding: 20px 16px; gap: 18px; }
+  .dash-panel--tasks { padding: 18px 16px 8px; gap: 10px; }
+  .dash-chip { width: 100%; box-sizing: border-box; padding: 8px 12px; font-size: 14px; }
+  .dash-step__label { font-size: 12px; }
+  .dash-step__long { display: none; }
+  .dash-step__short { display: inline; }
+  .dash-facts { padding-top: 0; border-top: 0; }
+  .dash-facts dl { display: block; margin: 0; font-size: 14px; }
+  .dash-facts dl > div, .dash-facts dl > .dash-facts__mobile { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-left: 0; border-top: 1px solid var(--c-shell-rule); }
+  .dash-facts dd { text-align: right; }
+  .dash-task { grid-template-columns: minmax(0, 1fr) 152px; gap: 2px 12px; font-size: 14px; }
+  .dash-action { width: 152px; height: 36px; padding: 0 4px; font-size: 11px; letter-spacing: 0 !important; }
+  .dash-event-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dash-event-stats > :last-child { grid-column: 1 / -1; }
+  .dash-event-deadline { text-align: left; }
+}
+
 /* ── Autofill override ───────────────────────────────────────────────
    Auth forms opt out of autofill via autoComplete="off" / "new-password",
    but browsers may still force-fill. Neutralise the default light-yellow
-   highlight so filled inputs keep the dark surface + text of PixelInput. */
+   highlight so filled inputs use the same surface and text as PixelInput. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

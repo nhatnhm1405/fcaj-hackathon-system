@@ -43,12 +43,64 @@ export interface UpdateEventPayload {
   endDate?: string;
 }
 
+export type DemoPhase = "DRAFT" | "OPEN" | "SETUP" | "CONTEST" | "SCORING" | "COMPLETED" | "CANCELLED";
+
+export const demoPhasesApi = {
+  getAll: () =>
+    apiFetch<ApiResponse<DemoPhase[]>>('/api/coordinator/demo-phases'),
+
+  open: (phase: DemoPhase, fresh = false) =>
+    apiFetch<ApiResponse<{ eventId: number }>>(
+      `/api/coordinator/demo-phases/${phase}${fresh ? "?fresh=true" : ""}`,
+      { method: 'POST' },
+    ),
+};
+
+export type DemoWave = "REGISTRATION" | "SUBMISSIONS" | "SCORES";
+
+export interface DemoWaveState {
+  wave: DemoWave;
+  done: boolean;
+  blockedBy: string | null;
+}
+
+export interface DemoWaveEvent {
+  eventId: number;
+  eventName: string;
+  eventStatus: string;
+  waves: DemoWaveState[];
+}
+
+export interface DemoWaveResult {
+  eventId: number;
+  wave: DemoWave;
+  added: Record<string, number>;
+}
+
+// Off on the server unless app.demo.waves.enabled=true; the list call then fails and no menu shows.
+export const demoWavesApi = {
+  getAll: () =>
+    apiFetch<ApiResponse<DemoWaveEvent[]>>('/api/coordinator/demo-waves'),
+
+  run: (eventId: number, wave: DemoWave) =>
+    apiFetch<ApiResponse<DemoWaveResult>>(
+      `/api/coordinator/demo-waves/${eventId}/${wave}`,
+      { method: 'POST' },
+    ),
+};
+
 export const eventsApi = {
   getAll: () =>
     apiFetch<ApiResponse<HackathonEvent[]>>('/api/events'),
 
   getById: (eventId: number) =>
     apiFetch<ApiResponse<HackathonEvent>>(`/api/events/${eventId}`),
+
+  getCoordinatorEvents: async (demoEventId: number | null): Promise<ApiResponse<HackathonEvent[]>> => {
+    if (demoEventId == null) return eventsApi.getAll();
+    const response = await eventsApi.getById(demoEventId);
+    return { ...response, data: [response.data] };
+  },
 
   create: (payload: CreateEventPayload) =>
     apiFetch<ApiResponse<HackathonEvent>>('/api/events', {

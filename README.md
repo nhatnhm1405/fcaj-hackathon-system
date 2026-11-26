@@ -10,4 +10,10 @@ Source bàn giao03/11 đã push lên `feature/seal-be1-handoff-2026-11-03`, comm
 - [Kết quả BE1 local ngày 03/11](docs/report/seal-be1-local-completion-2026-11-03.md).
 - [Runbook dữ liệu và kiểm luồng API MOCK](docs/plans/seal-be1-smoke-data-runbook.md).
 
+## Demo vòng đời event
+
+Trên backend profile `local`, đặt `DEMO_PHASES_ENABLED=true` trong `back-end/src/seal-api/.env` hoặc trong biến môi trường rồi khởi động lại backend. Đăng nhập với vai trò Event Coordinator và bấm **Demo phases** ở góc dưới bên phải. Event demo **SEAL AWS** dùng dữ liệu mẫu của SEAL Summer và có các mốc Draft, Open, Setup, Contest, Scoring & Results, Completed và Cancelled. Setup đã phân track cho toàn bộ đội được duyệt để có thể bấm **Start Event** ngay.
+
+Chọn **Restart this phase** để mở một bản demo mới ở mốc đang chọn. **Exit demo** đưa bạn về danh sách event thường.
+
 Database chuẩn hiện tại dùng Flyway V1→V2→V3. RDS mới cần catalog rỗng đã cấu hình đúng; DB cũ cần quy trình backup/review riêng trước baseline. `docker-compose.yml` ở root vẫn phục vụ môi trường dev MySQL8.0; xem hướng dẫn bàn giao để chuẩn bị cấu hình AWS.

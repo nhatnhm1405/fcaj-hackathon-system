@@ -67,6 +67,147 @@ MAX_FILE_SIZE_BYTES = 150 * 1024
 # Giới hạn tổng số ký tự mã nguồn để bảo vệ ngữ cảnh (KV cache) cho Local AI trên EC2
 DEFAULT_MAX_TOTAL_CHARS = int(os.getenv("CODE_CLEANER_MAX_TOTAL_CHARS", "35000"))
 
+RANKING_ALGORITHM_VERSION = "rank-v1"
+
+_RUBRIC_KEYWORD_BUCKETS: Dict[str, Tuple[str, ...]] = {
+    "security": ("security", "auth", "jwt", "oauth", "permission", "bảo mật", "phân quyền", "validation", "xss", "sql"),
+    "testing": ("test", "unit", "integration", "coverage", "e2e", "kiểm thử", "ci/cd", "cicd", "workflow", "quality"),
+    "frontend": ("ui", "ux", "frontend", "react", "component", "page", "giao diện", "accessibility", "responsive"),
+    "architecture": ("architecture", "technical", "design", "database", "schema", "api", "backend", "kiến trúc", "kỹ thuật", "triển khai"),
+}
+
+_PRIMARY_CODE_EXTS: Set[str] = {
+    ".java", ".kt", ".py", ".ts", ".tsx", ".js", ".jsx", ".go", ".cs", ".rs", ".sql",
+}
+_ROOT_HIGH_SIGNAL_NAMES: Set[str] = {
+    "readme", "readme.md", "readme.txt", "pom.xml", "build.gradle", "build.gradle.kts",
+    "package.json", "pyproject.toml", "requirements.txt", "go.mod", "cargo.toml",
+    "dockerfile", "docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml",
+    ".env.example",
+}
+_CORE_PATH_TOKENS: Tuple[str, ...] = (
+    "/controller", "/controllers", "/service", "/services", "/security", "/auth",
+    "/domain", "/entity", "/entities", "/model", "/models", "/repository", "/repositories",
+    "/api/", "/routes", "/router", "/aijob/", "/lambda_handler", "/sqs_worker",
+    "/db/migration", "controller.", "service.", "securityconfig",
+)
+_ENTRY_FILENAMES: Set[str] = {
+    "main.py", "app.py", "server.py", "lambda_handler.py", "main.java", "application.java",
+    "index.ts", "index.tsx", "app.ts", "app.tsx", "main.ts", "main.tsx", "server.ts", "server.js",
+}
+_UI_STYLE_EXTS: Set[str] = {".css", ".scss", ".sass", ".less", ".svg"}
+_DATA_EXTS: Set[str] = {".json", ".csv", ".xml", ".txt"}
+
+
+def extract_rubric_signal_buckets(
+    rubric_criteria: Optional[List[Dict[str, Any]]],
+) -> Set[str]:
+    """Rút trích tập nhóm tín hiệu tất định từ tên & mô tả các tiêu chí Rubric."""
+    if not rubric_criteria:
+        return set()
+    parts: List[str] = []
+    for item in rubric_criteria:
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("name") or "")
+        desc = str(item.get("description") or "")
+        parts.append(f"{name} {desc}".lower())
+    haystack = " ".join(parts)
+    matched: Set[str] = set()
+    for bucket, keywords in _RUBRIC_KEYWORD_BUCKETS.items():
+        if any(kw in haystack for kw in keywords):
+            matched.add(bucket)
+    return matched
+
+
+def compute_file_rank_score(
+    rel_path: str,
+    content_len: int = 0,
+    rubric_buckets: Optional[Set[str]] = None,
+) -> Tuple[int, str]:
+    """
+    Tính khóa sắp xếp tất định (-score, rel_path) để chọn các file giàu tín hiệu nhất
+    trong giới hạn token budget. Cùng đầu vào luôn cho cùng một thứ tự 100%.
+    """
+    norm = rel_path.replace("\\", "/").strip("/").lower()
+    base = norm.rsplit("/", 1)[-1]
+    _, ext = os.path.splitext(base)
+    buckets = rubric_buckets or set()
+    score = 0
+
+    is_root = "/" not in norm
+    if base in _ROOT_HIGH_SIGNAL_NAMES or norm.startswith(".github/workflows/"):
+        score += 1000 if (is_root or base.startswith("readme") or norm.startswith(".github/workflows/")) else 850
+    elif base.startswith("readme"):
+        score += 900
+
+    padded_norm = f"/{norm}"
+    is_test_file = (
+        "/test/" in padded_norm
+        or "/tests/" in padded_norm
+        or "/__tests__/" in padded_norm
+        or base.endswith((".test.ts", ".test.tsx", ".test.js", ".test.jsx", ".spec.ts", ".spec.tsx"))
+        or base.startswith("test_")
+        or base.endswith(("test.java", "tests.java", "_test.py", "_test.go"))
+    )
+    is_core_domain = (
+        not is_test_file
+        and (
+            any(tok in padded_norm for tok in _CORE_PATH_TOKENS)
+            or ext == ".sql"
+            or base in _ENTRY_FILENAMES
+        )
+    )
+
+    if is_core_domain:
+        score += 700
+    elif is_test_file:
+        score += 420
+
+    is_core_dir = any(
+        tok in norm for tok in ("src/", "app/", "back-end/", "front-end/", "backend/", "frontend/", "ai-worker/")
+    )
+    if is_core_dir and ext in _PRIMARY_CODE_EXTS:
+        score += 500
+    elif ext in _PRIMARY_CODE_EXTS:
+        score += 300
+    elif is_core_dir:
+        score += 150
+
+    # Cộng điểm tất định theo nhóm tiêu chí xuất hiện trong Rubric (tối đa +240)
+    rubric_bonus = 0
+    if "security" in buckets and any(k in padded_norm for k in ("/security", "/auth", "jwt", "oauth", "validator", "guard")):
+        rubric_bonus += 80
+    if "testing" in buckets and (is_test_file or norm.startswith(".github/workflows/")):
+        rubric_bonus += 80
+    if "frontend" in buckets and any(k in norm for k in ("front-end/", "frontend/", "/pages/", "/features/", "/components/")) and ext in {".tsx", ".jsx", ".ts", ".js"}:
+        rubric_bonus += 80
+    if "architecture" in buckets and (is_core_domain or base in _ROOT_HIGH_SIGNAL_NAMES):
+        rubric_bonus += 80
+    score += min(240, rubric_bonus)
+
+    # Phạt nhẹ boilerplate UI / dữ liệu tĩnh / file quá dài để nhường token cho logic lõi
+    if "/components/ui/" in padded_norm or ext in _UI_STYLE_EXTS:
+        score -= 150
+    if (ext in _DATA_EXTS or any(k in padded_norm for k in ("/seed", "/fixtures", "/mock", "/mocks", "/sample"))) and base not in _ROOT_HIGH_SIGNAL_NAMES and base != "tsconfig.json":
+        score -= 200
+    if content_len > 40_000:
+        score -= 50
+
+    return (-score, rel_path)
+
+
+def rank_source_entries(
+    file_entries: List[Tuple[str, str]],
+    rubric_criteria: Optional[List[Dict[str, Any]]] = None,
+) -> List[Tuple[str, str]]:
+    """Sắp xếp danh sách `(path, content)` theo Smart Ranking tất định (tie-break theo path)."""
+    buckets = extract_rubric_signal_buckets(rubric_criteria)
+    return sorted(
+        file_entries,
+        key=lambda item: compute_file_rank_score(item[0], len(item[1]), rubric_buckets=buckets),
+    )
+
 
 def is_binary_string(bytes_content: bytes) -> bool:
     """Kiểm tra nhanh xem file có phải dạng nhị phân không (chứa null byte)."""
@@ -132,6 +273,7 @@ def scan_and_collect_sources(
     if custom_ignore_dirs:
         ignore_dirs.update(custom_ignore_dirs)
 
+    real_root = os.path.realpath(root_dir)
     preferred_exts: Set[str] = set()
     if target_languages:
         for lang in target_languages:
@@ -140,24 +282,39 @@ def scan_and_collect_sources(
     candidate_paths: List[Tuple[str, str]] = []
     skipped_files_count = 0
 
-    for dirpath, dirnames, filenames in os.walk(root_dir):
+    for dirpath, dirnames, filenames in os.walk(root_dir, followlinks=False):
         rel_dir = os.path.relpath(dirpath, root_dir).replace("\\", "/")
         if rel_dir != "." and _should_ignore_rel_path(rel_dir, ignore_dirs):
             dirnames[:] = []
             continue
 
-        # Lọc bỏ thư mục nằm trong danh sách ignore ngay tại walk và sắp xếp cố định
+        # Lọc bỏ thư mục nằm trong danh sách ignore và mọi thư mục symlink ngay tại walk
         dirnames[:] = sorted(
             d
             for d in dirnames
             if d not in ignore_dirs
             and not d.startswith(".")
+            and not os.path.islink(os.path.join(dirpath, d))
             and not _should_ignore_rel_path(
                 f"{rel_dir}/{d}" if rel_dir != "." else d, ignore_dirs
             )
         )
 
         for filename in sorted(filenames):
+            full_path = os.path.join(dirpath, filename)
+            if os.path.islink(full_path):
+                skipped_files_count += 1
+                continue
+
+            try:
+                real_file = os.path.realpath(full_path)
+                if os.path.commonpath([real_root, real_file]) != real_root:
+                    skipped_files_count += 1
+                    continue
+            except ValueError:
+                skipped_files_count += 1
+                continue
+
             if filename in DEFAULT_IGNORE_FILES:
                 skipped_files_count += 1
                 continue
@@ -167,7 +324,6 @@ def scan_and_collect_sources(
                 skipped_files_count += 1
                 continue
 
-            full_path = os.path.join(dirpath, filename)
             rel_path = os.path.relpath(full_path, root_dir).replace("\\", "/")
 
             if _should_ignore_rel_path(rel_path, ignore_dirs):
@@ -190,6 +346,14 @@ def scan_and_collect_sources(
             continue
 
         try:
+            if os.path.islink(full_path):
+                skipped_files_count += 1
+                continue
+            real_file = os.path.realpath(full_path)
+            if os.path.commonpath([real_root, real_file]) != real_root:
+                skipped_files_count += 1
+                continue
+
             file_size = os.path.getsize(full_path)
             if file_size > MAX_FILE_SIZE_BYTES or file_size == 0:
                 skipped_files_count += 1

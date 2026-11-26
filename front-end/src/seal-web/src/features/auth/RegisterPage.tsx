@@ -6,7 +6,7 @@ import {
 import { AppFooter } from "@/shared/components/AppFooter";
 import { SocialAuthButtons } from "@/features/auth/SocialAuthButtons";
 import { UniversitySelect } from "@/shared/components/UniversitySelect";
-import brandLogo from "@/imports/image.png";
+import brandLogo from "@/imports/seal-logo.svg";
 import { apiFetch, ApiError, apiErrorMessage } from "@/shared/apiClient";
 import { useNotifications } from "@/app/providers/NotificationProvider";
 import {
@@ -127,7 +127,7 @@ export function RegisterPage() {
       <div style={{ position: "relative", zIndex: 2, maxWidth: 560, margin: "0 auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, justifyContent: "center" }}>
           <div style={{ height: 100, overflow: "visible", flexShrink: 0, display: "flex", alignItems: "center" }}>
-            <img src={brandLogo} alt="HMS" style={{ height: 200, width: "auto", objectFit: "contain" }} />
+            <img src={brandLogo} alt="SEAL" style={{ height: 88, width: "auto", objectFit: "contain" }} />
           </div>
         </div>
 

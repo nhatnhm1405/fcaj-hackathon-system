@@ -1,6 +1,7 @@
 package com.seal.hackathon.config.seed;
 
 import com.seal.hackathon.dto.request.AutoGeneratePrizesRequest;
+import com.seal.hackathon.dto.request.UpdateEventRequest;
 import com.seal.hackathon.entity.HackathonEvent;
 import com.seal.hackathon.entity.Round;
 import com.seal.hackathon.entity.ScoringCriteria;
@@ -48,16 +49,16 @@ public class DemoScenario {
     private static final Logger log = LoggerFactory.getLogger(DemoScenario.class);
 
     public static final String DEMO_EVENT_NAME = "SEAL Summer 2026";
+    public static final String DEMO_PHASE_EVENT_NAME = "SEAL AWS";
     /** Seeded in every scenario (incl. S0) — used as the "already seeded?" guard. */
     public static final String COORDINATOR_EMAIL = "coordinator@fpt.edu.vn";
     private static final int YEAR = 2026;
-    private static final int MEMBERS_PER_TEAM = 3;   // 1 leader + 2 members
     private static final int TOP_PER_TRACK_ADVANCE = 2;  // top 2 of EACH track advance to the final
     private static final int PRELIM_JUDGES_PER_TRACK = 2;
     private static final double MAX_SCORE = 10.0;
 
     // name + weight; max score is MAX_SCORE for all (see requirements §6.2)
-    private static final String[][] CRITERIA = {
+    static final String[][] CRITERIA = {
             {"Ý tưởng", "1.0"}, {"Kỹ thuật", "1.5"}, {"UI/UX", "1.0"},
             {"Hoàn thiện", "1.0"}, {"Trình bày", "0.5"},
     };
@@ -75,10 +76,11 @@ public class DemoScenario {
     };
     // 4 tracks (see requirements §5). TEAMS_PER_TRACK[i] teams in TRACKS[i] → 15 teams total.
     // Prelim takes top 2 of each track → 8 finalists; final ranks them, top 3 get prizes.
-    private static final String[] TRACKS = {"Web Application", "AI Solution", "Education Tech", "Social Impact"};
+    static final String[] TRACKS = {"Web Application", "AI Solution", "Education Tech", "Social Impact"};
     private static final int[] TEAMS_PER_TRACK = {4, 4, 4, 3};
+    private static final int TOTAL_TEAMS = java.util.Arrays.stream(TEAMS_PER_TRACK).sum();
     /** Team names — football clubs, cycled if there are more teams than names. */
-    private static final String[] CLUBS = {
+    static final String[] CLUBS = {
             "Arsenal", "Barcelona", "Real Madrid", "Bayern Munich",
             "Liverpool", "Manchester City", "Chelsea", "Juventus",
             "PSG", "AC Milan", "Inter Milan", "Tottenham",
@@ -90,7 +92,7 @@ public class DemoScenario {
             "Tottenham", "Napoli", "Atlético Madrid", "Borussia Dortmund",
     };
     /** Participant names — footballers, cycled if there are more players than names. */
-    private static final String[] PLAYERS = {
+    static final String[] PLAYERS = {
             "Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Erling Haaland",
             "Kevin De Bruyne", "Vinícius Júnior", "Mohamed Salah", "Harry Kane",
             "Robert Lewandowski", "Luka Modrić", "Neymar Jr", "Sadio Mané",
@@ -110,73 +112,109 @@ public class DemoScenario {
     private final PrizeService prizeService;
     private final HackathonEventService hackathonEventService;
 
-    private int participantSeq = 0;
-    private int maxStrength = 2;
+    public enum Phase {
+        DRAFT("DRAFT"), OPEN("OPEN"), SETUP("SETUP"), CONTEST("IN_PROGRESS"),
+        SCORING("IN_PROGRESS"), COMPLETED("COMPLETED"), CANCELLED("CANCELLED");
+
+        private final String status;
+
+        Phase(String status) {
+            this.status = status;
+        }
+
+        public String status() {
+            return status;
+        }
+    }
 
     @Transactional
     public void seed(String scenario) {
-        // Validate the optional audit actor before producing any S3 demo data.
-        if ("S3".equals(scenario)) {
+        Phase phase = switch (scenario) {
+            case "S1" -> Phase.OPEN;
+            case "S25" -> Phase.SCORING;
+            case "S3" -> Phase.COMPLETED;
+            default -> throw new IllegalArgumentException("Unknown demo scenario: " + scenario);
+        };
+        if (phase == Phase.COMPLETED) {
             fx.adminActor();
         }
-        // ── 1. ACCOUNTS (every scenario) ─────────────────────────────
-        User coordinator = fx.user(COORDINATOR_EMAIL, "Event Coordinator", "STAFF", null);
+        User coordinator = fx.user(COORDINATOR_EMAIL, "Event Coordinator", "STAFF", null, 0);
         fx.grant(coordinator, "EVENT_COORDINATOR", null);
-        User judge1 = staff("judge1@fpt.edu.vn", "Nguyễn Văn Ronaldo", "INTERNAL", "JUDGE");
-        User judge2 = staff("judge2@fpt.edu.vn", "Trần Văn Haaland", "INTERNAL", "JUDGE");
-        User judge3 = staff("judge3@fpt.edu.vn", "Pham Van Salah", "INTERNAL", "JUDGE");
-        User judge4 = staff("judge4@fpt.edu.vn", "Vu Van Mbappe", "INTERNAL", "JUDGE");
-        User judge5 = staff("judge5@fpt.edu.vn", "Đỗ Văn Zidane", "INTERNAL", "JUDGE");
-        User judge6 = staff("judge6@fpt.edu.vn", "Bùi Văn Iniesta", "INTERNAL", "JUDGE");
-        User judge7 = staff("judge7@fpt.edu.vn", "Ngô Văn Xavi", "INTERNAL", "JUDGE");
-        User judge8 = staff("judge8@fpt.edu.vn", "Dương Văn Kaká", "INTERNAL", "JUDGE");
-        User guestJudge = staff("guestjudge@gmail.com", "Lê Văn Messi", "GUEST", "JUDGE");
-        // One mentor per track (business rule: a mentor manages exactly one track per event).
-        User mentor1 = staff("mentor1@fpt.edu.vn", "Lê Minh Gia Mẫn", null, "MENTOR");
-        User mentor2 = staff("mentor2@fpt.edu.vn", "Hồ Văn Mendes", null, "MENTOR");
-        User mentor3 = staff("mentor3@fpt.edu.vn", "Phạm Văn Guardiola", null, "MENTOR");
-        User mentor4 = staff("mentor4@fpt.edu.vn", "Vũ Văn Klopp", null, "MENTOR");
-        // spare accounts to demo live actions (register/create team) alongside the seed
-        fx.user("leader1@fpt.edu.vn", "Hoàng Văn Neymar Jr.", "FPT_STUDENT", null);
-        fx.user("member1@fpt.edu.vn", "Đinh Văn Kane", "FPT_STUDENT", null);
+        seed(phase, coordinator, true);
+    }
 
-        // ── 2-4. EVENT + STRUCTURE ───────────────────────────────────
-        Window w = windowFor(scenario);
-        HackathonEvent event = fx.event(DEMO_EVENT_NAME, "SUMMER", YEAR,
-                eventStatusFor(scenario), "RANDOM", w.regStart, w.regEnd, w.start, w.end);
-        fx.grant(coordinator, "EVENT_COORDINATOR", event.getEventId());
+    // Called inside the same transaction that records the demo event's audit marker.
+    public int seedPhase(Phase phase, User coordinator) {
+        return seed(phase, coordinator, false);
+    }
+
+    private int seed(Phase phase, User coordinator, boolean startup) {
+        Window w = windowFor(phase);
+        String eventName = startup ? DEMO_EVENT_NAME : DEMO_PHASE_EVENT_NAME;
+        String initialStatus = switch (phase) {
+            case SETUP -> "OPEN";
+            case COMPLETED -> "IN_PROGRESS";
+            default -> phase.status();
+        };
+        HackathonEvent event = fx.event(eventName, "SUMMER", YEAR, initialStatus, "RANDOM",
+                w.regStart, w.regEnd, w.start, w.end);
+        int eventId = event.getEventId();
+        fx.grant(coordinator, "EVENT_COORDINATOR", eventId);
+
+        People people = new People(startup ? null : eventId);
+        User judge1 = people.staff("judge1@fpt.edu.vn", "Nguyễn Văn Ronaldo", "INTERNAL", "JUDGE");
+        User judge2 = people.staff("judge2@fpt.edu.vn", "Trần Văn Haaland", "INTERNAL", "JUDGE");
+        User judge3 = people.staff("judge3@fpt.edu.vn", "Pham Van Salah", "INTERNAL", "JUDGE");
+        User judge4 = people.staff("judge4@fpt.edu.vn", "Vu Van Mbappe", "INTERNAL", "JUDGE");
+        User judge5 = people.staff("judge5@fpt.edu.vn", "Đỗ Văn Zidane", "INTERNAL", "JUDGE");
+        User judge6 = people.staff("judge6@fpt.edu.vn", "Bùi Văn Iniesta", "INTERNAL", "JUDGE");
+        User judge7 = people.staff("judge7@fpt.edu.vn", "Ngô Văn Xavi", "INTERNAL", "JUDGE");
+        User judge8 = people.staff("judge8@fpt.edu.vn", "Dương Văn Kaká", "INTERNAL", "JUDGE");
+        User guestJudge = people.staff("guestjudge@gmail.com", "Lê Văn Messi", "GUEST", "JUDGE");
+        // One mentor per track (business rule: a mentor manages exactly one track per event).
+        User mentor1 = people.staff("mentor1@fpt.edu.vn", "Lê Minh Gia Mẫn", null, "MENTOR");
+        User mentor2 = people.staff("mentor2@fpt.edu.vn", "Hồ Văn Mendes", null, "MENTOR");
+        User mentor3 = people.staff("mentor3@fpt.edu.vn", "Phạm Văn Guardiola", null, "MENTOR");
+        User mentor4 = people.staff("mentor4@fpt.edu.vn", "Vũ Văn Klopp", null, "MENTOR");
+        // spare accounts to demo live actions (register/create team) alongside the seed
+        if (startup) {
+            people.student("leader1@fpt.edu.vn", "Hoàng Văn Neymar Jr.", "FPT_STUDENT", 1);
+            people.student("member1@fpt.edu.vn", "Đinh Văn Kane", "FPT_STUDENT", 2);
+        }
 
         List<Track> tracks = new ArrayList<>();
         for (String name : TRACKS) {
             tracks.add(fx.track(event, name));
         }
-        Round prelim = fx.round(event, 1, "Vòng loại", false, roundStatusFor(scenario, true),
+        Round prelim = fx.round(event, 1, "Vòng loại", false, roundStatusFor(phase, true),
                 w.start, w.start.plusDays(7), w.start.plusDays(6), TOP_PER_TRACK_ADVANCE);
-        Round finalRound = fx.round(event, 2, "Vòng chung kết", true, roundStatusFor(scenario, false),
+        Round finalRound = fx.round(event, 2, "Vòng chung kết", true, roundStatusFor(phase, false),
                 w.start.plusDays(8), w.start.plusDays(14), w.start.plusDays(13), null);
         List<ScoringCriteria> prelimCriteria = criteriaFor(event, prelim);
         List<ScoringCriteria> finalCriteria = criteriaFor(event, finalRound);
         // ── S1: forming teams (no tracks yet — assigned at SETUP) ────
-        if ("S1".equals(scenario)) {
-            fx.team(event, null, "Arsenal", "APPROVED", participant(), members(2));
-            fx.team(event, null, "Barcelona", "APPROVED", participant(), members(2));
-            fx.team(event, null, "Real Madrid (pending)", "PENDING", participant(), members(2));
-            fx.team(event, null, "Chelsea (solo)", "APPROVED", participant(), List.of());       // solo → free agent for grouping
-            fx.team(event, null, "Juventus (solo)", "APPROVED", participant(), List.of());      // solo → free agent for grouping
-            fx.team(event, null, "Bayern (pair)", "APPROVED", participant(), members(1));        // pair → grown in place on grouping
+        if (phase == Phase.DRAFT) {
+            return eventId;
+        }
+        if (phase == Phase.OPEN || phase == Phase.CANCELLED) {
+            fx.team(event, null, "Arsenal", "APPROVED", people.participant(), people.members(2));
+            fx.team(event, null, "Barcelona", "APPROVED", people.participant(), people.members(2));
+            fx.team(event, null, "Real Madrid (pending)", "PENDING", people.participant(), people.members(2));
+            fx.team(event, null, "Chelsea (solo)", "APPROVED", people.participant(), List.of());       // solo → free agent for grouping
+            fx.team(event, null, "Juventus (solo)", "APPROVED", people.participant(), List.of());      // solo → free agent for grouping
+            fx.team(event, null, "Bayern (pair)", "APPROVED", people.participant(), people.members(1));        // pair → grown in place on grouping
             // Nine regular squads bring the forming-stage roster to 15 teams total
             // without removing the pending/solo/pair cases above.
             for (String teamName : S1_EXTRA_APPROVED_TEAMS) {
-                fx.team(event, null, teamName, "APPROVED", participant(), members(2));
+                fx.team(event, null, teamName, "APPROVED", people.participant(), people.members(2));
             }
             // Teamless registrants: approved & active students who never joined a squad.
             // SETUP leftover-grouping sweeps these up too (see LeftoverGroupingService).
             for (int i = 0; i < 3; i++) {
-                participant();
+                people.participant();
             }
-            log.info("[demo] S1 seeded — OPEN event: 15 teams (14 approved, 1 pending; 2 solo + 1 pair)"
-                    + " + 3 teamless registrants for grouping.");
-            return;
+            log.info("[demo] {} seeded with 15 forming teams and 3 teamless registrants.", phase);
+            return eventId;
         }
 
         // One mentor per track — a mentor manages exactly one track per event.
@@ -187,19 +225,14 @@ public class DemoScenario {
 
         // ── 5-6. APPROVED ROSTER IN TRACKS + judges + submissions ────
         List<Slot> slots = new ArrayList<>();
-        int numTracks = tracks.size();
-        int totalTeams = 0;
-        for (int c : TEAMS_PER_TRACK) totalTeams += c;
-        maxStrength = totalTeams;                 // normalizes strength to [0,1]
-        // Strength = totalTeams − (seed*numTracks + trackIdx): every track's #1 seed
-        // outranks every #2 seed, so the final's top 3 are three DIFFERENT track winners.
-        for (int t = 0; t < numTracks; t++) {
+        // Each track's #1 seed outranks every #2 seed.
+        for (int t = 0; t < tracks.size(); t++) {
             Track track = tracks.get(t);
             for (int seed = 0; seed < TEAMS_PER_TRACK[t]; seed++) {
-                User leader = participant();
+                User leader = people.participant();
                 String teamName = CLUBS[slots.size() % CLUBS.length];
-                Team team = fx.team(event, track, teamName, "APPROVED", leader, members(2));
-                int strength = totalTeams - (seed * numTracks + t);
+                Team team = fx.team(event, track, teamName, "APPROVED", leader, people.members(2));
+                int strength = TOTAL_TEAMS - (seed * tracks.size() + t);
                 slots.add(new Slot(team, track, leader, strength));
             }
         }
@@ -224,9 +257,21 @@ public class DemoScenario {
         fx.assignJudge(judge2, finalRound, null);
         fx.assignJudge(guestJudge, finalRound, null);
 
+        if (phase == Phase.SETUP) {
+            UpdateEventRequest request = new UpdateEventRequest();
+            request.setStatus("SETUP");
+            hackathonEventService.updateEvent(eventId, request);
+            return eventId;
+        }
+
         List<Submission> prelimSubs = new ArrayList<>();
         for (Slot s : slots) {
             prelimSubs.add(fx.submission(s.team, prelim, s.leader));
+        }
+
+        if (phase == Phase.CONTEST) {
+            fx.runningContestTimer(prelim, LocalDateTime.now(), 3600);
+            return eventId;
         }
 
         // Every judge assigned to each preliminary (round, track) cell has
@@ -275,11 +320,11 @@ public class DemoScenario {
         // submission fully scored by all judges — so JudgeScoringCompletenessService
         // passes. The coordinator's live flow runs on top: Calculate ranking
         // (finalizeRound) → auto-generate prizes → announce (award).
-        if ("S25".equals(scenario)) {
+        if (phase == Phase.SCORING) {
             log.info("[demo] S2.5 seeded — IN_PROGRESS: prelim FINALIZED, {} finalists submitted & fully "
                     + "scored in the ACTIVE final round; awaiting final ranking calculation → prize award.",
                     advancing.size());
-            return;
+            return eventId;
         }
 
         // ── S3: replay exactly what the coordinator/admin would do after loading S25.
@@ -301,11 +346,14 @@ public class DemoScenario {
         // ── 10. SYSTEM LOG (S3 only) ──────────────────────────────────
         // A believable admin audit trail spanning the event's lifetime, so the
         // System Logs screen has something to show in the fullest demo scenario.
-        seedSystemLog(coordinator, judge1, judge2, guestJudge, mentor1, mentor2);
+        if (startup) {
+            seedSystemLog(coordinator, judge1, judge2, guestJudge, mentor1, mentor2);
+        }
 
         log.info("[demo] S3 seeded from the S2.5 cut-point — COMPLETED event, {} teams across {} tracks, "
                         + "{} published final results, {} announced prizes.",
                 slots.size(), tracks.size(), finalResultCount, prizeCount);
+        return eventId;
     }
 
     /** Writes a spread-out SystemLog history: account creation → role grants →
@@ -414,16 +462,10 @@ public class DemoScenario {
     }
 
     private double normalizedStrength(int strength) {
-        return maxStrength <= 1 ? 1.0 : (double) (strength - 1) / (maxStrength - 1);
+        return (double) (strength - 1) / (TOTAL_TEAMS - 1);
     }
 
     // ── helpers ──────────────────────────────────────────────────────
-
-    private User staff(String email, String name, String judgeType, String roleName) {
-        User u = fx.user(email, name, "STAFF", judgeType);
-        fx.grant(u, roleName, null);
-        return u;
-    }
 
     private List<ScoringCriteria> criteriaFor(HackathonEvent event, Round round) {
         List<ScoringCriteria> list = new ArrayList<>();
@@ -434,40 +476,61 @@ public class DemoScenario {
         return list;
     }
 
-    private User participant() {
-        String name = PLAYERS[participantSeq % PLAYERS.length];
-        participantSeq++;
-        String type = participantSeq % 3 == 0 ? "EXTERNAL_STUDENT" : "FPT_STUDENT";
-        return fx.user("p" + participantSeq + "@fpt.edu.vn", name, type, null);
-    }
+    private class People {
+        private final Integer demoEventId;
+        private int participantSeq;
 
-    private List<User> members(int count) {
-        List<User> list = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            list.add(participant());
+        People(Integer demoEventId) {
+            this.demoEventId = demoEventId;
         }
-        return list;
+
+        private String email(String original) {
+            if (demoEventId == null) return original;
+            return original.substring(0, original.indexOf('@')) + "+event" + demoEventId + "@seal-demo.invalid";
+        }
+
+        User staff(String email, String name, String judgeType, String roleName) {
+            User user = fx.user(email(email), name, "STAFF", judgeType, 0);
+            fx.grant(user, roleName, demoEventId);
+            return user;
+        }
+
+        User student(String email, String name, String type, int number) {
+            return fx.user(email(email), name, type, null, number);
+        }
+
+        User participant() {
+            String name = PLAYERS[participantSeq % PLAYERS.length];
+            int number = ++participantSeq;
+            String type = number % 3 == 0 ? "EXTERNAL_STUDENT" : "FPT_STUDENT";
+            return student("p" + number + "@fpt.edu.vn", name, type, number + 2);
+        }
+
+        List<User> members(int count) {
+            List<User> list = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                list.add(participant());
+            }
+            return list;
+        }
     }
 
-    private String eventStatusFor(String scenario) {
-        return switch (scenario) {
-            case "S1" -> "OPEN";
-            default -> "IN_PROGRESS"; // S25 cut-point; S3 completes through HackathonEventService
+    private String roundStatusFor(Phase phase, boolean prelim) {
+        return switch (phase) {
+            case CONTEST -> prelim ? "ACTIVE" : "PENDING";
+            case SCORING, COMPLETED -> prelim ? "FINALIZED" : "ACTIVE";
+            default -> "PENDING";
         };
     }
 
-    private String roundStatusFor(String scenario, boolean prelim) {
-        return switch (scenario) {
-            case "S1" -> "PENDING";
-            default -> prelim ? "FINALIZED" : "ACTIVE"; // shared S25/S3 cut-point
-        };
-    }
-
-    private Window windowFor(String scenario) {
+    private Window windowFor(Phase phase) {
         LocalDateTime now = LocalDateTime.now();
-        return switch (scenario) {
-            case "S1" -> new Window(now.minusDays(5), now.plusDays(15), now.plusDays(20), now.plusDays(40));
-            default -> new Window(now.minusDays(45), now.minusDays(25), now.minusDays(16), now.plusDays(5));
+        return switch (phase) {
+            case DRAFT -> new Window(now.plusDays(2), now.plusDays(15), now.plusDays(20), now.plusDays(40));
+            case OPEN, CANCELLED -> new Window(now.minusDays(5), now.plusDays(15), now.plusDays(20), now.plusDays(40));
+            case SETUP -> new Window(now.minusDays(20), now.minusDays(2), now.plusDays(2), now.plusDays(23));
+            case CONTEST -> new Window(now.minusDays(20), now.minusDays(5), now.minusDays(1), now.plusDays(20));
+            case SCORING, COMPLETED -> new Window(now.minusDays(45), now.minusDays(25), now.minusDays(16), now.plusDays(5));
         };
     }
 

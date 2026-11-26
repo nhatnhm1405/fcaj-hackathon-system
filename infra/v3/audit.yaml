@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SEAL v3 audit. CloudTrail records who changed what in the account. Deploy fcaj-poc first (bucket permission).
+Resources:
+  Trail:
+    Type: AWS::CloudTrail::Trail
+    Properties:
+      # The name is part of the bucket permission in infra/cloudformation/poc.yaml.
+      TrailName: fcaj-v3
+      IsLogging: true
+      # All Regions: CloudFront, WAF and IAM changes are recorded in us-east-1.
+      IsMultiRegionTrail: true
+      IncludeGlobalServiceEvents: true
+      EnableLogFileValidation: true
+      S3BucketName: !Sub fcaj-poc-data-${AWS::AccountId}-${AWS::Region}
+      S3KeyPrefix: cloudtrail
+Outputs:
+  TrailArn: {Value: !GetAtt Trail.Arn}

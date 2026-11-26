@@ -60,8 +60,8 @@ export function EventDetailDrawer({
 
     const seasonLabel = `${(event.season ?? "").toUpperCase()} ${event.year ?? ""}`.trim();
 
-    const txt = "#ffffff";
-    const mut = "rgba(255,255,255,0.85)";
+    const txt = "var(--c-shell-text)";
+    const mut = "var(--c-shell-muted)";
     // Real event status drives the badge colour (not always green).
     const st = (event.status ?? "").toUpperCase();
     const statusBadgeColor: "green" | "blue" | "red" | "yellow" =
@@ -93,7 +93,7 @@ export function EventDetailDrawer({
                     {/* Event heading */}
                     <div>
                         <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10, flexWrap: "wrap" }}>
-                            <span style={{ background: "rgba(34,197,94,0.1)", border: `1px solid rgba(34,197,94,0.3)`, color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", padding: "2px 10px" }}>{seasonLabel}</span>
+                            <span style={{ background: "rgba(34,197,94,0.1)", border: `1px solid rgba(34,197,94,0.3)`, color: C.green, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.1em", padding: "2px 10px" }}>{seasonLabel}</span>
                             <PixelBadge color={statusBadgeColor}>{event.status}</PixelBadge>
                         </div>
                         <h2 style={{ lineHeight: 1.1, marginBottom: 8 }}>
@@ -127,7 +127,7 @@ export function EventDetailDrawer({
                                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${C.green}, transparent)`, opacity: 0.5 }} />
                                     <div style={{ color: txt, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700 }}>{tr.name}</div>
                                     {tr.description && (
-                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, lineHeight: 1.5 }}>{tr.description}</div>
+                                        <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, lineHeight: 1.5 }}>{tr.description}</div>
                                     )}
                                 </div>
                             ))}
@@ -158,10 +158,10 @@ export function EventDetailDrawer({
                                                 <div style={{ color: isActive ? C.green : txt, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, marginBottom: 4 }}>
                                                     Round {r.orderNumber} — {r.name}{r.isFinal ? " · Final" : ""}
                                                 </div>
-                                                <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 10 }}>Deadline: {fmtDate(r.submissionDeadline)}</div>
+                                                <div style={{ color: mut, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>Deadline: {fmtDate(r.submissionDeadline)}</div>
                                             </div>
                                             {r.status && (
-                                                <div style={{ background: badge.bg, color: badge.color, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.12em", padding: "3px 10px", flexShrink: 0, boxShadow: badge.shadow }}>{r.status}</div>
+                                                <div style={{ background: badge.bg, color: badge.color, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: "0.12em", padding: "3px 10px", flexShrink: 0, boxShadow: badge.shadow }}>{r.status}</div>
                                             )}
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@ export function EventDetailDrawer({
                                 style={{
                                     background: "none", border: "none", cursor: "pointer",
                                     color: "rgba(239,68,68,0.75)", fontFamily: "'JetBrains Mono', monospace",
-                                    fontSize: 11, padding: "4px 0", textAlign: "center", letterSpacing: "0.04em",
+                                    fontSize: 12, padding: "4px 0", textAlign: "center", letterSpacing: "0.04em",
                                 }}
                             >
                                 Leave this event

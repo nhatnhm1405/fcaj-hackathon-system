@@ -18,7 +18,7 @@ export function SuccessScreen({
                     textAlign: "center",
                     overflow: "hidden",
                     border: "1px solid transparent",
-                    background: "linear-gradient(#0d1117, #0d1117) padding-box, linear-gradient(135deg, rgba(34,197,94,0.5), rgba(59,130,246,0.4), rgba(34,197,94,0.2)) border-box",
+                    background: `linear-gradient(${C.surface}, ${C.surface}) padding-box, linear-gradient(135deg, rgba(34,197,94,0.5), rgba(59,130,246,0.4), rgba(34,197,94,0.2)) border-box`,
                     boxShadow: "0 0 40px rgba(34,197,94,0.12), 0 0 80px rgba(59,130,246,0.08)",
                 }}>
                     <div style={{ position: "absolute", top: 0, left: 0, width: 16, height: 16, borderTop: `2px solid ${C.green}`, borderLeft: `2px solid ${C.green}` }} />
@@ -54,7 +54,7 @@ export function SuccessScreen({
                         display: "inline-flex", alignItems: "center", gap: 6,
                         background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.4)",
                         color: "#eab308", fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 10, letterSpacing: "0.14em", padding: "5px 16px", marginBottom: 32,
+                        fontSize: 12, letterSpacing: "0.14em", padding: "5px 16px", marginBottom: 32,
                     }}>
                         <span style={{ width: 6, height: 6, background: "#eab308", borderRadius: "50%", display: "inline-block" }} />
                         PENDING APPROVAL
