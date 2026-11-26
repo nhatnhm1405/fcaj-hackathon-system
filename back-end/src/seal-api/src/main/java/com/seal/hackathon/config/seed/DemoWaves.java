@@ -105,11 +105,11 @@ public class DemoWaves {
     private final AuditLogRepository auditLogRepo;
     private final RoundTimerService timers;
 
-    /** Every event that is still running, with which waves are done or why one cannot run yet. */
+    /** Every published event that is still running, with which waves are done or why one cannot run yet. */
     @Transactional(readOnly = true)
     public List<EventWaves> list() {
         return eventRepo.findAllRegularEvents(Sort.by("eventId")).stream()
-                .filter(event -> !isClosed(event))
+                .filter(event -> !outOfDemo(event))
                 .map(event -> new EventWaves(event.getEventId(), event.getName(), event.getStatus(),
                         Arrays.stream(Wave.values()).map(wave -> state(event, wave)).toList()))
                 .toList();
@@ -156,7 +156,7 @@ public class DemoWaves {
     }
 
     private String blocker(HackathonEvent event, Wave wave) {
-        if (isClosed(event)) {
+        if (outOfDemo(event)) {
             return "The event is " + event.getStatus() + ".";
         }
         List<Round> rounds = roundRepo.findAllByEvent_EventIdOrderByOrderNumber(event.getEventId());
@@ -192,8 +192,11 @@ public class DemoWaves {
         return null;
     }
 
-    private static boolean isClosed(HackathonEvent event) {
-        return "COMPLETED".equalsIgnoreCase(event.getStatus()) || "CANCELLED".equalsIgnoreCase(event.getStatus());
+    /** Draft events are not published yet, and closed ones are history: demo data never goes into either. */
+    private static boolean outOfDemo(HackathonEvent event) {
+        String status = event.getStatus();
+        return "DRAFT".equalsIgnoreCase(status) || "COMPLETED".equalsIgnoreCase(status)
+                || "CANCELLED".equalsIgnoreCase(status);
     }
 
     private Round singleRound(HackathonEvent event) {
