@@ -47,4 +47,42 @@ class GitHubSourceReaderTest {
         assertThatThrownBy(() -> JobJson.parse("{\"status\":\"FAILED\",\"status\":\"SUCCEEDED\"}")).isInstanceOf(JobException.class);
         assertThatThrownBy(() -> JobJson.parse("{} {}" )).isInstanceOf(JobException.class);
     }
+    private static com.fasterxml.jackson.databind.JsonNode entry(String path,long size) {
+        return JobJson.parse("{\"path\":\""+path+"\",\"size\":"+size+"}");
+    }
+    private static java.util.List<String> paths(java.util.List<com.fasterxml.jackson.databind.JsonNode> entries) {
+        return entries.stream().map(e -> e.path("path").asText()).toList();
+    }
+    @Test void largeRepositorySendsItsMostRelevantFilesInsteadOfFailing() {
+        var candidates=new java.util.ArrayList<com.fasterxml.jackson.databind.JsonNode>();
+        for(int i=0;i<40;i++) candidates.add(entry("app/module"+i+".py",1_000));
+        for(int i=0;i<6;i++) candidates.add(entry("docs/note"+i+".md",1_000));
+        for(int i=0;i<6;i++) candidates.add(entry("web/src/deep/page"+i+".tsx",1_000));
+        candidates.add(entry("README.md",1_000));
+        candidates.add(entry("web/index.html",1_000));
+        candidates.add(entry("package.json",1_000));
+        candidates.add(entry("requirements.txt",1_000));
+
+        var selected=paths(GitHubSourceReader.selectMostRelevant(candidates));
+
+        assertThat(selected).hasSize(GitHubSourceReader.MAX_FILES).isSorted()
+                .contains("README.md","app/module0.py","web/src/deep/page5.tsx","web/index.html","requirements.txt")
+                .doesNotContain("docs/note0.md");
+    }
+    @Test void selectionStaysWithinTheTotalSizeBudget() {
+        var candidates=java.util.List.of(entry("a.py",600_000),entry("b.py",600_000),entry("c.py",300_000));
+        assertThat(paths(GitHubSourceReader.selectMostRelevant(candidates))).containsExactly("a.py","c.py");
+    }
+    @Test void oversizedFilesAreSkippedNotFatal() {
+        var reader=spy(new GitHubSourceReader(mock(java.net.http.HttpClient.class)));String sha="a".repeat(40),tree="c".repeat(40),blob=GitHubSourceReader.gitBlobHash("text".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        doReturn(JobJson.parse("[{\"sha\":\""+sha+"\",\"commit\":{\"tree\":{\"sha\":\""+tree+"\"}}}]")).when(reader).get(contains("/commits?"),anyInt());
+        doReturn(JobJson.parse("{\"sha\":\""+tree+"\",\"truncated\":false,\"tree\":["
+                +"{\"path\":\"data/huge.json\",\"type\":\"blob\",\"mode\":\"100644\",\"size\":500000,\"sha\":\""+"d".repeat(40)+"\"},"
+                +"{\"path\":\"src/main.py\",\"type\":\"blob\",\"mode\":\"100644\",\"size\":4,\"sha\":\""+blob+"\"}]}")).when(reader).get(contains("/git/trees/"),anyInt());
+        doReturn(JobJson.parse("{\"encoding\":\"base64\",\"content\":\""+Base64.getEncoder().encodeToString("text".getBytes(java.nio.charset.StandardCharsets.UTF_8))+"\"}")).when(reader).get(contains("/git/blobs/"),anyInt());
+        var files=reader.collect("https://github.com/example/project").document().path("files");
+        assertThat(files).hasSize(1);
+        assertThat(files.get(0).path("path").asText()).isEqualTo("src/main.py");
+        verify(reader,never()).get(contains("/git/blobs/"+"d".repeat(40)),anyInt());
+    }
 }

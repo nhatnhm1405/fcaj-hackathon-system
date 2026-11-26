@@ -23,6 +23,9 @@ public class GitHubSourceReader {
     GitHubSourceReader(HttpClient client,Duration snapshotBudget) { this.client=client; this.snapshotBudget=snapshotBudget; }
     @jakarta.annotation.PreDestroy
     void shutdown() { client.shutdownNow(); }
+    static final int MAX_FILES=50;
+    static final int MAX_FILE_BYTES=100_000;
+    static final int MAX_TOTAL_BYTES=1_000_000;
     private static final Set<String> EXT=Set.of("java","kt","py","js","jsx","ts","tsx","json","md","txt","yml","yaml","sql","html","css","go","rs","c","cpp","h","cs","xml","toml");
     public record Source(String commitSha, ObjectNode document) {}
     static String repository(String url) {
@@ -61,17 +64,18 @@ public class GitHubSourceReader {
             throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
         ObjectNode source=JobJson.object().put("schemaVersion","fcaj.ai.source.github.v1").put("fixtureOnly",false).put("commitSha",sha);
         var files=source.putArray("files"); int bytesTotal=0;
-        var selected=new ArrayList<JsonNode>();
+        var candidates=new ArrayList<JsonNode>();
         for(JsonNode entry:tree.path("tree")) {
             if("commit".equals(entry.path("type").asText()) || "160000".equals(entry.path("mode").asText()))
                 throw JobException.invalid("SUBMODULES_NOT_SUPPORTED");
             String path=entry.path("path").asText();
             if(!"blob".equals(entry.path("type").asText()) || !"100644".equals(entry.path("mode").asText()) && !"100755".equals(entry.path("mode").asText())) continue;
             if(!selectedPath(path)) continue;
-            if(entry.path("size").asLong(Long.MAX_VALUE)>100_000 || selected.size()>=40) throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
-            selected.add(entry);
+            // A file too large to send is skipped rather than failing the whole repository.
+            if(entry.path("size").asLong(Long.MAX_VALUE)>MAX_FILE_BYTES) continue;
+            candidates.add(entry);
         }
-        selected.sort(Comparator.comparing(e -> e.path("path").asText()));
+        var selected=selectMostRelevant(candidates);
         for(JsonNode entry:selected) {
             if(System.nanoTime()>budget.get()) throw BoundedHttp.timedOut();
             String blob=entry.path("sha").asText();
@@ -82,7 +86,7 @@ public class GitHubSourceReader {
             try { bytes=Base64.getDecoder().decode(body.path("content").asText().replace("\n", "").replace("\r", "")); }
             catch(IllegalArgumentException bad) { throw JobException.invalid("INVALID_REPOSITORY_SOURCE"); }
             bytesTotal+=bytes.length;
-            if(bytes.length>100_000 || bytesTotal>1_000_000) throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
+            if(bytes.length>MAX_FILE_BYTES || bytesTotal>MAX_TOTAL_BYTES) throw JobException.invalid("REPOSITORY_LIMIT_EXCEEDED");
             if(!blob.equals(gitBlobHash(bytes))) throw JobException.invalid("INVALID_REPOSITORY_SOURCE");
             String text;
             try { text=StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT).decode(java.nio.ByteBuffer.wrap(bytes)).toString(); }
@@ -94,6 +98,38 @@ public class GitHubSourceReader {
         if(files.isEmpty()) throw JobException.invalid("REPOSITORY_HAS_NO_SUPPORTED_SOURCE");
         return new Source(sha,source);
     }
+    /**
+     * Each file costs one GitHub API call, and anonymous calls are limited per hour, so a
+     * large repository sends its most relevant files instead of being rejected: source code
+     * and the root README first, then markup, then configuration and other text, shallow
+     * paths before deep ones. The result is in path order.
+     */
+    static List<JsonNode> selectMostRelevant(List<JsonNode> candidates) {
+        var ranked=new ArrayList<>(candidates);
+        ranked.sort(Comparator.comparingInt((JsonNode e) -> relevance(e.path("path").asText()))
+                .thenComparingInt(e -> depth(e.path("path").asText()))
+                .thenComparing(e -> e.path("path").asText()));
+        var selected=new ArrayList<JsonNode>();
+        long planned=0;
+        for(JsonNode entry:ranked) {
+            if(selected.size()>=MAX_FILES) break;
+            long size=entry.path("size").asLong(Long.MAX_VALUE);
+            if(planned+size>MAX_TOTAL_BYTES) continue;
+            planned+=size;
+            selected.add(entry);
+        }
+        selected.sort(Comparator.comparing(e -> e.path("path").asText()));
+        return selected;
+    }
+    private static final Set<String> CODE=Set.of("java","kt","py","js","jsx","ts","tsx","go","rs","c","cpp","h","cs");
+    private static final Set<String> MARKUP=Set.of("html","css","sql","xml");
+    static int relevance(String path) {
+        String lower=path.toLowerCase(Locale.ROOT);
+        if(lower.equals("readme.md")) return 0;
+        String ext=lower.substring(lower.lastIndexOf('.')+1);
+        return CODE.contains(ext) ? 0 : MARKUP.contains(ext) ? 1 : 2;
+    }
+    private static int depth(String path) { return (int) path.chars().filter(c -> c=='/').count(); }
     static String gitBlobHash(byte[] bytes) {
         try {
             var digest=java.security.MessageDigest.getInstance("SHA-1");
