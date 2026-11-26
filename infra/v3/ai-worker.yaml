@@ -76,7 +76,7 @@ Resources:
           APP_STORAGE_BUCKET: !Sub fcaj-poc-data-${AWS::AccountId}-${AWS::Region}
           APP_STORAGE_PREFIX: poc
           APP_AI_JOBS_RESULTS_QUEUE_URL: !Sub https://sqs.${AWS::Region}.${AWS::URLSuffix}/${AWS::AccountId}/fcaj-poc-ai-results
-          LAMBDA_MAX_SOURCE_CHARS: '120000'
+          LAMBDA_MAX_SOURCE_CHARS: '240000'
           LAMBDA_MAX_OUTPUT_TOKENS: '8192'
   Trigger:
     Type: AWS::Lambda::EventSourceMapping
