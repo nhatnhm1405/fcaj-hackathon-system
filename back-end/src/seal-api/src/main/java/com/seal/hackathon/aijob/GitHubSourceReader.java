@@ -11,16 +11,34 @@ import java.util.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-/** Public GitHub only. Fixed HTTPS hosts, no redirects, credentials, archives or code execution. */
+/**
+ * Public GitHub only. Fixed HTTPS hosts, no redirects, archives or code execution.
+ * An optional read-only token (app.github.token) raises the API rate limit; it is sent
+ * only to api.github.com and never logged.
+ */
 @Component
 @ConditionalOnProperty(name="app.ai.jobs.enabled", havingValue="true")
 public class GitHubSourceReader {
     private final HttpClient client;
     private final Duration snapshotBudget;
+    private final String token;
     private final ThreadLocal<Long> budget = new ThreadLocal<>();
-    public GitHubSourceReader() { this(HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).followRedirects(HttpClient.Redirect.NEVER).build()); }
+    @org.springframework.beans.factory.annotation.Autowired
+    public GitHubSourceReader(@org.springframework.beans.factory.annotation.Value("${app.github.token:}") String token) {
+        this(HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).followRedirects(HttpClient.Redirect.NEVER).build(),Duration.ofSeconds(45),token);
+    }
     GitHubSourceReader(HttpClient client) { this(client,Duration.ofSeconds(45)); }
-    GitHubSourceReader(HttpClient client,Duration snapshotBudget) { this.client=client; this.snapshotBudget=snapshotBudget; }
+    GitHubSourceReader(HttpClient client,Duration snapshotBudget) { this(client,snapshotBudget,null); }
+    GitHubSourceReader(HttpClient client,Duration snapshotBudget,String token) {
+        this.client=client; this.snapshotBudget=snapshotBudget; this.token=usableToken(token);
+    }
+    /** Blank or malformed tokens (whitespace, control characters) are ignored so a bad secret cannot inject headers. */
+    static String usableToken(String token) {
+        if(token==null) return null;
+        String trimmed=token.trim();
+        return trimmed.matches("[A-Za-z0-9_.-]{1,255}") ? trimmed : null;
+    }
+    boolean authenticated() { return token!=null; }
     @jakarta.annotation.PreDestroy
     void shutdown() { client.shutdownNow(); }
     static final int MAX_FILES=50;
@@ -42,10 +60,15 @@ public class GitHubSourceReader {
             long remaining=budget.get()==null?Duration.ofSeconds(15).toNanos():budget.get()-System.nanoTime();
             if(remaining<=0) throw BoundedHttp.timedOut();
             Duration timeout=Duration.ofNanos(Math.min(Duration.ofSeconds(15).toNanos(),remaining));
-            var request=HttpRequest.newBuilder(URI.create("https://api.github.com"+path)).timeout(Duration.ofSeconds(15))
-                    .header("Accept","application/vnd.github+json").header("X-GitHub-Api-Version","2022-11-28")
-                    .header("User-Agent","fcaj-backend-snapshot").GET().build();
+            var request=request(path);
             return JobJson.parse(new String(BoundedHttp.fetch(client,request,max,timeout),StandardCharsets.UTF_8));
+    }
+    HttpRequest request(String path) {
+        var builder=HttpRequest.newBuilder(URI.create("https://api.github.com"+path)).timeout(Duration.ofSeconds(15))
+                .header("Accept","application/vnd.github+json").header("X-GitHub-Api-Version","2022-11-28")
+                .header("User-Agent","fcaj-backend-snapshot");
+        if(token!=null) builder.header("Authorization","Bearer "+token);
+        return builder.GET().build();
     }
     public Source collect(String url) {
         budget.set(System.nanoTime()+snapshotBudget.toNanos());
