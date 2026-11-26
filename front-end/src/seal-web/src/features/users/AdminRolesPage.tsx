@@ -85,8 +85,11 @@ function GrantRoleForm({ users, events, onGranted }: {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  // SYSTEM_ADMIN and EVENT_COORDINATOR are system-wide (no event scope).
-  const systemWide = roleName === 'SYSTEM_ADMIN' || roleName === 'EVENT_COORDINATOR';
+  // SYSTEM_ADMIN is always system-wide. EVENT_COORDINATOR may be system-wide or
+  // scoped to one event: event features such as problem uploads accept only a
+  // coordinator granted for that event. The other roles need an event.
+  const systemOnly = roleName === 'SYSTEM_ADMIN';
+  const systemAllowed = systemOnly || roleName === 'EVENT_COORDINATOR';
 
   function resetForm() {
     setUserId("");
@@ -102,7 +105,7 @@ function GrantRoleForm({ users, events, onGranted }: {
       addToast({ type: 'warning', title: 'SELECT USER', message: 'Please select a user.' });
       return;
     }
-    if (!systemWide && eventId === "") {
+    if (!systemAllowed && eventId === "") {
       setError("This role requires an event scope.");
       addToast({ type: 'warning', title: 'EVENT REQUIRED', message: 'This role requires an event scope.' });
       return;
@@ -112,7 +115,7 @@ function GrantRoleForm({ users, events, onGranted }: {
       await adminApi.grantRole({
         userId: Number(userId),
         roleName,
-        eventId: systemWide ? null : Number(eventId),
+        eventId: systemOnly || eventId === "" ? null : Number(eventId),
       });
       addToast({ type: 'success', title: 'ROLE GRANTED', message: `${roleName} granted.` });
       onGranted();
@@ -149,10 +152,10 @@ function GrantRoleForm({ users, events, onGranted }: {
         </div>
         <div>
           <label style={labelStyle}>Event scope</label>
-          <select style={inputStyle} value={systemWide ? "" : eventId} disabled={systemWide}
+          <select style={inputStyle} value={systemOnly ? "" : eventId} disabled={systemOnly} aria-label="Event scope"
             onChange={(e) => setEventId(e.target.value === "" ? "" : Number(e.target.value))}>
-            <option value="">{systemWide ? "System (no event)" : "— select event —"}</option>
-            {!systemWide && events.map(ev => (
+            <option value="">{systemAllowed ? "System (no event)" : "— select event —"}</option>
+            {!systemOnly && events.map(ev => (
               <option key={ev.eventId} value={ev.eventId}>{ev.name}</option>
             ))}
           </select>
