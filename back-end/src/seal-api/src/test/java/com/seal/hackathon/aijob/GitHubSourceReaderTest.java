@@ -85,4 +85,22 @@ class GitHubSourceReaderTest {
         assertThat(files.get(0).path("path").asText()).isEqualTo("src/main.py");
         verify(reader,never()).get(contains("/git/blobs/"+"d".repeat(40)),anyInt());
     }
+    @Test void sendsTheGitHubTokenOnlyWhenConfigured() {
+        var client=mock(java.net.http.HttpClient.class);
+        var anonymous=new GitHubSourceReader(client,java.time.Duration.ofSeconds(1),"  ");
+        assertThat(anonymous.authenticated()).isFalse();
+        assertThat(anonymous.request("/repos/a/b").headers().firstValue("Authorization")).isEmpty();
+
+        var withToken=new GitHubSourceReader(client,java.time.Duration.ofSeconds(1)," github_pat_ABC123_xyz ");
+        var request=withToken.request("/repos/a/b");
+        assertThat(request.uri().getHost()).isEqualTo("api.github.com");
+        assertThat(request.headers().firstValue("Authorization")).contains("Bearer github_pat_ABC123_xyz");
+    }
+    @Test void malformedTokensAreIgnored() {
+        assertThat(GitHubSourceReader.usableToken(null)).isNull();
+        assertThat(GitHubSourceReader.usableToken("")).isNull();
+        assertThat(GitHubSourceReader.usableToken("abc\r\nX-Evil: 1")).isNull();
+        assertThat(GitHubSourceReader.usableToken("ab cd")).isNull();
+        assertThat(GitHubSourceReader.usableToken("ghp_abc-1.2")).isEqualTo("ghp_abc-1.2");
+    }
 }
