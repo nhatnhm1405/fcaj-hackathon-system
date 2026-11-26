@@ -56,6 +56,39 @@ export const demoPhasesApi = {
     ),
 };
 
+export type DemoWave = "REGISTRATION" | "SUBMISSIONS" | "SCORES";
+
+export interface DemoWaveState {
+  wave: DemoWave;
+  done: boolean;
+  blockedBy: string | null;
+}
+
+export interface DemoWaveEvent {
+  eventId: number;
+  eventName: string;
+  eventStatus: string;
+  waves: DemoWaveState[];
+}
+
+export interface DemoWaveResult {
+  eventId: number;
+  wave: DemoWave;
+  added: Record<string, number>;
+}
+
+// Off on the server unless app.demo.waves.enabled=true; the list call then fails and no menu shows.
+export const demoWavesApi = {
+  getAll: () =>
+    apiFetch<ApiResponse<DemoWaveEvent[]>>('/api/coordinator/demo-waves'),
+
+  run: (eventId: number, wave: DemoWave) =>
+    apiFetch<ApiResponse<DemoWaveResult>>(
+      `/api/coordinator/demo-waves/${eventId}/${wave}`,
+      { method: 'POST' },
+    ),
+};
+
 export const eventsApi = {
   getAll: () =>
     apiFetch<ApiResponse<HackathonEvent[]>>('/api/events'),
