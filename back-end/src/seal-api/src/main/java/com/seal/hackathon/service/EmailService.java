@@ -15,7 +15,8 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
+    // SES SMTP usernames are access keys, not addresses, so the sender is configured separately.
+    @Value("${app.mail.from:${spring.mail.username:}}")
     private String fromAddress;
 
     @Value("${app.frontend.url:http://localhost:5173}")
@@ -93,12 +94,6 @@ public class EmailService {
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(plainText, html);
-            helper.setPriority(1);
-
-            message.setHeader("Importance", "High");
-            message.setHeader("Priority", "urgent");
-            message.setHeader("X-Priority", "1");
-            message.setHeader("X-MSMail-Priority", "High");
 
             mailSender.send(message);
         } catch (MessagingException ex) {
