@@ -365,3 +365,21 @@ aws rds stop-db-instance --region ap-southeast-1 --db-instance-identifier fcaj-v
 Bật lại: start RDS, rồi chạy lệnh deploy ở mục 6 với `DesiredCapacity=2 HealthCheckType=ELB`. DB đã có user và schema nên máy tự release.
 
 Kết thúc hẳn: xóa runtime, edge, base (tắt deletion protection RDS trước; stack để lại snapshot), poc. Bucket, queue, ECR có `Retain` phải xóa riêng sau khi sao lưu. Xóa là không lấy lại được, nên xác nhận với nhóm trước.
+
+## 13. Demo trọn một vòng (demo waves)
+
+Coordinator có menu **Demo data** ở góc phải dưới. Menu chỉ hiện khi `/fcaj/v3/backend/runtime-env` có dòng `DEMO_WAVES_ENABLED=true` và đã release lại (mục 10). Xóa dòng đó rồi release lại là menu tắt.
+
+Event demo phải có đúng **một vòng** (vòng cuối). Mỗi nút chỉ chạy một lần cho một event và chỉ thêm dữ liệu:
+
+| Nút | Chạy khi | Thêm |
+|---|---|---|
+| 1. Registration | Event OPEN | Track, vòng, tiêu chí nếu thiếu; 4 team mỗi track, 2 team chờ duyệt, 1 team 1 người, 1 team 2 người, 2 người lẻ; 3 judge vòng cuối; 1 mentor mỗi track |
+| 2. Submissions | Đồng hồ CONTEST đang chạy | Bài nộp của mọi team demo |
+| 3. Scores | Đồng hồ JUDGING đang chạy | Mọi điểm còn trống, trừ điểm của judge thật cho team thật |
+
+Thứ tự demo: lùi event về OPEN, đăng nhập OAuth và đăng ký team, nút 1, duyệt team chờ, SETUP, tải đề, ghép người lẻ, chia track, tạo guest judge (judge live), IN_PROGRESS, bật CONTEST, team thật nộp bài, nút 2, dừng CONTEST, bật JUDGING, nút 3, judge live chấm bài team thật (có AI assist), chốt kết quả, tạo và công bố giải.
+
+Tài khoản demo có dạng `...+event<id>@seal-demo.invalid` và không có mật khẩu: không ai đăng nhập được, không thư nào gửi tới người thật.
+
+Muốn quay lại như trước demo: chụp snapshot RDS ngay trước demo. Khôi phục là dựng DB mới từ snapshot rồi đổi tên thế chỗ `fcaj-v3-mysql`, mất 30-45 phút và mất **mọi** thay đổi sau lúc chụp, nên báo cả nhóm trước.
