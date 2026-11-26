@@ -90,6 +90,20 @@ public class DemoFixtures {
             {"HCMUS", "HCMUT (Bách Khoa)", "UIT", "RMIT Vietnam", "Văn Lang University"};
 
     public User user(String email, String fullName, String userType, String judgeType, int studentNumber) {
+        return user(email, fullName, userType, judgeType, studentNumber, encoder.encode(DEMO_PASSWORD));
+    }
+
+    /**
+     * A demo account nobody can sign in to: no password, and an address under a
+     * reserved domain that cannot receive mail or be claimed through OAuth. Used
+     * where demo data is created on a public deployment.
+     */
+    public User loginlessUser(String email, String fullName, String userType, String judgeType, int studentNumber) {
+        return user(email, fullName, userType, judgeType, studentNumber, null);
+    }
+
+    private User user(String email, String fullName, String userType, String judgeType, int studentNumber,
+                      String passwordHash) {
         // Students carry an MSSV; external students also carry a university, mirroring
         // what real registration collects. Staff/judges/mentors have neither.
         String studentId = null;
@@ -102,7 +116,7 @@ public class DemoFixtures {
         }
         return userRepo.save(User.builder()
                 .email(email)
-                .passwordHash(encoder.encode(DEMO_PASSWORD))
+                .passwordHash(passwordHash)
                 .fullName(fullName)
                 .userType(userType)
                 .judgeType(judgeType)

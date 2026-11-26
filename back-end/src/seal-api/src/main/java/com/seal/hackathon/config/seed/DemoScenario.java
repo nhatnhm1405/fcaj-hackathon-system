@@ -58,7 +58,7 @@ public class DemoScenario {
     private static final double MAX_SCORE = 10.0;
 
     // name + weight; max score is MAX_SCORE for all (see requirements §6.2)
-    private static final String[][] CRITERIA = {
+    static final String[][] CRITERIA = {
             {"Ý tưởng", "1.0"}, {"Kỹ thuật", "1.5"}, {"UI/UX", "1.0"},
             {"Hoàn thiện", "1.0"}, {"Trình bày", "0.5"},
     };
@@ -76,11 +76,11 @@ public class DemoScenario {
     };
     // 4 tracks (see requirements §5). TEAMS_PER_TRACK[i] teams in TRACKS[i] → 15 teams total.
     // Prelim takes top 2 of each track → 8 finalists; final ranks them, top 3 get prizes.
-    private static final String[] TRACKS = {"Web Application", "AI Solution", "Education Tech", "Social Impact"};
+    static final String[] TRACKS = {"Web Application", "AI Solution", "Education Tech", "Social Impact"};
     private static final int[] TEAMS_PER_TRACK = {4, 4, 4, 3};
     private static final int TOTAL_TEAMS = java.util.Arrays.stream(TEAMS_PER_TRACK).sum();
     /** Team names — football clubs, cycled if there are more teams than names. */
-    private static final String[] CLUBS = {
+    static final String[] CLUBS = {
             "Arsenal", "Barcelona", "Real Madrid", "Bayern Munich",
             "Liverpool", "Manchester City", "Chelsea", "Juventus",
             "PSG", "AC Milan", "Inter Milan", "Tottenham",
@@ -92,7 +92,7 @@ public class DemoScenario {
             "Tottenham", "Napoli", "Atlético Madrid", "Borussia Dortmund",
     };
     /** Participant names — footballers, cycled if there are more players than names. */
-    private static final String[] PLAYERS = {
+    static final String[] PLAYERS = {
             "Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Erling Haaland",
             "Kevin De Bruyne", "Vinícius Júnior", "Mohamed Salah", "Harry Kane",
             "Robert Lewandowski", "Luka Modrić", "Neymar Jr", "Sadio Mané",
