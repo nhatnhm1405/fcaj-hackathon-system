@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SEAL v3 email. Lets SES send as the domain (DKIM, SPF, DMARC). Sends nothing by itself.
+Parameters:
+  DomainName:
+    Type: String
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+  TestRecipient:
+    Type: String
+    Default: ''
+    AllowedPattern: '^([^@\s]+@[^@\s]+\.[^@\s]+)?$'
+    Description: While SES is in the sandbox it only delivers to verified addresses. This one receives a verification email.
+Conditions:
+  HasTestRecipient: !Not [!Equals [!Ref TestRecipient, '']]
+Resources:
+  Domain:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: !Ref DomainName
+      DkimSigningAttributes: {NextSigningKeyLength: RSA_2048_BIT}
+      # Bounces return to mail.<domain>, so SPF passes for the domain itself.
+      MailFromAttributes:
+        MailFromDomain: !Sub mail.${DomainName}
+        BehaviorOnMxFailure: USE_DEFAULT_VALUE
+  Dkim1:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !GetAtt Domain.DkimDNSTokenName1
+      Type: CNAME
+      TTL: '1800'
+      ResourceRecords: [!GetAtt Domain.DkimDNSTokenValue1]
+  Dkim2:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !GetAtt Domain.DkimDNSTokenName2
+      Type: CNAME
+      TTL: '1800'
+      ResourceRecords: [!GetAtt Domain.DkimDNSTokenValue2]
+  Dkim3:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !GetAtt Domain.DkimDNSTokenName3
+      Type: CNAME
+      TTL: '1800'
+      ResourceRecords: [!GetAtt Domain.DkimDNSTokenValue3]
+  MailFromMx:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub mail.${DomainName}
+      Type: MX
+      TTL: '1800'
+      ResourceRecords: [!Sub '10 feedback-smtp.${AWS::Region}.amazonses.com']
+  MailFromSpf:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub mail.${DomainName}
+      Type: TXT
+      TTL: '1800'
+      ResourceRecords: ['"v=spf1 include:amazonses.com ~all"']
+  # Monitor only: receivers report failures but still deliver. Tighten after mail is known to pass.
+  Dmarc:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub _dmarc.${DomainName}
+      Type: TXT
+      TTL: '1800'
+      ResourceRecords: ['"v=DMARC1; p=none"']
+  Recipient:
+    Type: AWS::SES::EmailIdentity
+    Condition: HasTestRecipient
+    Properties:
+      EmailIdentity: !Ref TestRecipient
+Outputs:
+  SmtpHost: {Value: !Sub 'email-smtp.${AWS::Region}.amazonaws.com'}
